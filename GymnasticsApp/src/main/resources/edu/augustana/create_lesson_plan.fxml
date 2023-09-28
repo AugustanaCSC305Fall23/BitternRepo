@@ -12,18 +12,18 @@
    <top>
       <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="182.0" prefWidth="1109.0" spacing="20.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <Button mnemonicParsing="false" text="Print">
+            <Button fx:id="printButton" mnemonicParsing="false" text="Print">
                <font>
                   <Font size="31.0" />
                </font></Button>
-            <Button mnemonicParsing="false" text="Save">
+            <Button fx:id="saveButton" mnemonicParsing="false" mouseTransparent="true" text="Save">
                <font>
                   <Font size="31.0" />
                </font>
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Change Title">
+            <Button fx:id="titleChangeButton" alignment="CENTER" mnemonicParsing="false" text="Change Title">
                <font>
                   <Font size="31.0" />
                </font></Button>
@@ -38,7 +38,7 @@
       </HBox>
    </top>
    <bottom>
-      <Button fx:id="homeBtn" mnemonicParsing="false" onAction="#goToHome" text="Home" BorderPane.alignment="BASELINE_RIGHT">
+      <Button fx:id="homeBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#goToHome" text="Home" BorderPane.alignment="BASELINE_RIGHT">
          <BorderPane.margin>
             <Insets right="25.0" />
          </BorderPane.margin>
@@ -48,9 +48,9 @@
       </Button>
    </bottom>
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" mouseTransparent="true" prefHeight="485.0" prefWidth="1134.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField alignment="CENTER" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan">
+            <TextField alignment="CENTER" mouseTransparent="true" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
                </VBox.margin>
@@ -58,7 +58,7 @@
                   <Font size="51.0" />
                </font>
             </TextField>
-            <Button fx:id="doneButton" mnemonicParsing="false" text="Done">
+            <Button fx:id="doneButton" mnemonicParsing="false" onAction="#setTitle" text="Done">
                <font>
                   <Font size="33.0" />
                </font>
