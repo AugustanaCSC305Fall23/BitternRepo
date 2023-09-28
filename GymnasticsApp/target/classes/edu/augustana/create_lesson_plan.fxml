@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="808.0" prefWidth="1134.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
+   <top>
+      <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="182.0" prefWidth="1109.0" spacing="20.0" BorderPane.alignment="CENTER_LEFT">
+         <children>
+            <Button mnemonicParsing="false" text="Print">
+               <font>
+                  <Font size="31.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" text="Save">
+               <font>
+                  <Font size="31.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Button>
+            <Button alignment="CENTER" mnemonicParsing="false" text="Change Title">
+               <font>
+                  <Font size="31.0" />
+               </font></Button>
+            <Button fx:id="browseCardsBtn" mnemonicParsing="false" onAction="#browseCards" text="Browse Cards">
+               <font>
+                  <Font size="31.0" />
+               </font></Button>
+         </children>
+         <BorderPane.margin>
+            <Insets right="25.0" top="25.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <bottom>
+      <Button fx:id="homeBtn" mnemonicParsing="false" onAction="#goToHome" text="Home" BorderPane.alignment="BASELINE_RIGHT">
+         <BorderPane.margin>
+            <Insets right="25.0" />
+         </BorderPane.margin>
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Button>
+   </bottom>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField alignment="CENTER" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan">
+               <VBox.margin>
+                  <Insets left="100.0" right="100.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="51.0" />
+               </font>
+            </TextField>
+            <Button fx:id="doneButton" mnemonicParsing="false" text="Done">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
