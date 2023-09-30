@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="808.0" prefWidth="1134.0" spacing="15.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.HomeScreenController">
+<VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="808.0" prefWidth="1134.0" spacing="15.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.HomeScreenController">
    <children>
       <Label text="Gymnastics Planner Pro">
          <font>
@@ -15,12 +15,12 @@
          </font></Label>
       <HBox alignment="TOP_CENTER" prefHeight="111.0" prefWidth="1094.0" spacing="75.0">
          <children>
-            <Button fx:id="newLessonBtn" alignment="CENTER" mnemonicParsing="false" onAction="#createLessonPlan" prefHeight="110.0" prefWidth="234.0" text="Create New Lesson Plan" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="newLessonBtn" alignment="CENTER" mnemonicParsing="false" onAction="#createLessonPlan" prefHeight="46.0" prefWidth="282.0" text="Create New Lesson Plan" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font size="30.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" text="View Saved Lesson Plans" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="viewSavedPlansBtn" mnemonicParsing="false" onAction="#viewSavedPlans" text="View Saved Lesson Plans" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
