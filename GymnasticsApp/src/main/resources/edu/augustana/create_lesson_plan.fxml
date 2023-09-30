@@ -48,9 +48,9 @@
       </Button>
    </bottom>
    <center>
-      <VBox alignment="TOP_CENTER" mouseTransparent="true" prefHeight="485.0" prefWidth="1134.0" spacing="50.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="titleBox" alignment="TOP_CENTER" fillWidth="false" prefHeight="428.0" prefWidth="994.0" spacing="50.0" BorderPane.alignment="TOP_CENTER">
          <children>
-            <TextField alignment="CENTER" mouseTransparent="true" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan">
+            <TextField fx:id="titleField" alignment="CENTER" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
                </VBox.margin>
@@ -64,6 +64,9 @@
                </font>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="100.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>
