@@ -25,7 +25,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" text="See Sample Lesson Plans" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="viewSamplePlansBtn" mnemonicParsing="false" onAction="#viewSamplePlans" text="View Sample Lesson Plans" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>

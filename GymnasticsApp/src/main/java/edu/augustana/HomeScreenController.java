@@ -26,6 +26,9 @@ public class HomeScreenController {
     @FXML // fx:id="viewSavedPlansBtn"
     private Button viewSavedPlansBtn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="viewSamplePlansBtn"
+    private Button viewSamplePlansBtn; // Value injected by FXMLLoader
+
     @FXML
     private void browseCards() throws IOException {
         App.setRoot("card_browser");
@@ -41,12 +44,17 @@ public class HomeScreenController {
         App.setRoot("saved_lesson_plans");
     }
 
+    @FXML
+    private void viewSamplePlans() throws IOException {
+        App.setRoot("sample_lesson_plans");
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'home.fxml'.";
         assert newLessonBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'home.fxml'.";
         assert viewSavedPlansBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'home.fxml'.";
-
+        assert viewSamplePlansBtn != null : "fx:id=\"viewSamplePlansBtn\" was not injected: check your FXML file 'home.fxml'.";
     }
 
 
