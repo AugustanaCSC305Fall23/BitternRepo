@@ -23,7 +23,7 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-            <Button fx:id="titleChangeButton" alignment="CENTER" mnemonicParsing="false" text="Change Title">
+            <Button fx:id="titleChangeButton" alignment="CENTER" mnemonicParsing="false" onAction="#editTitle" text="Change Title">
                <font>
                   <Font size="31.0" />
                </font></Button>
