@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="808.0" prefWidth="1134.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
    <children>
       <TextField prefHeight="51.0" prefWidth="530.0" promptText="Search">
          <font>
@@ -131,16 +131,16 @@
                      <children>
                         <ScrollPane prefHeight="647.0" prefWidth="847.0" />
                      </children></VBox>
-                  <HBox alignment="CENTER" layoutX="-3.0" layoutY="631.0" prefHeight="112.0" prefWidth="849.0" spacing="450.0">
+                  <HBox alignment="CENTER" layoutX="24.0" layoutY="578.0" prefHeight="147.0" prefWidth="1086.0" spacing="600.0">
                      <children>
-                        <Button fx:id="backToLessonPlanBtn" mnemonicParsing="false" onAction="#backToLessonPlan" text="Return to Lesson Plan" wrapText="true">
+                        <Button fx:id="backToLessonPlanBtn" mnemonicParsing="false" onAction="#backToLessonPlan" prefHeight="61.0" prefWidth="274.0" text="Return to Lesson Plan" wrapText="true">
                            <font>
-                              <Font size="23.0" />
+                              <Font size="25.0" />
                            </font>
                         </Button>
                         <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home">
                            <font>
-                              <Font size="23.0" />
+                              <Font size="31.0" />
                            </font>
                         </Button>
                      </children>
