@@ -22,23 +22,19 @@
             <Insets left="35.0" right="35.0" top="5.0" />
          </VBox.margin>
       </TextField>
-      <SplitPane dividerPositions="0.2511032656663725" prefHeight="787.0" prefWidth="1135.0">
+      <SplitPane centerShape="false" dividerPositions="0.2511032656663725" prefHeight="787.0" prefWidth="1135.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="741.0" prefWidth="316.0">
                <children>
-                  <VBox prefHeight="747.0" prefWidth="293.0" spacing="8.0">
+                  <VBox focusTraversable="true" layoutY="7.0" prefHeight="747.0" prefWidth="293.0" spacing="8.0">
                      <children>
-                        <Label text="Filters">
-                           <font>
-                              <Font size="29.0" />
-                           </font></Label>
-                        <Label text="Level">
+                        <Label text="Difficulty">
                            <font>
                               <Font size="23.0" />
                            </font></Label>
                         <CheckBox mnemonicParsing="false" text="Easy">
                            <font>
-                              <Font size="19.0" />
+                              <Font size="18.0" />
                            </font></CheckBox>
                         <CheckBox mnemonicParsing="false" text="Medium">
                            <font>
@@ -105,16 +101,23 @@
                               <Font size="18.0" />
                            </font>
                         </CheckBox>
-                        <Button mnemonicParsing="false" text="Apply Filters">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <Button mnemonicParsing="false" text="Clear Filters">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
+                        <HBox prefHeight="42.0" prefWidth="243.0" spacing="25.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="Apply Filters">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Clear Filters">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
                      </children>
                      <padding>
                         <Insets left="20.0" />
@@ -126,15 +129,11 @@
                <children>
                   <VBox layoutX="-1.0" prefHeight="632.0" prefWidth="847.0">
                      <children>
-                        <ScrollPane prefHeight="647.0" prefWidth="847.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                          </content>
-                        </ScrollPane>
+                        <ScrollPane prefHeight="647.0" prefWidth="847.0" />
                      </children></VBox>
                   <HBox alignment="CENTER" layoutX="-3.0" layoutY="631.0" prefHeight="112.0" prefWidth="849.0" spacing="450.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Return to Lesson Plan" wrapText="true">
+                        <Button fx:id="backToLessonPlanBtn" mnemonicParsing="false" onAction="#backToLessonPlan" text="Return to Lesson Plan" wrapText="true">
                            <font>
                               <Font size="23.0" />
                            </font>
