@@ -32,15 +32,15 @@
                            <font>
                               <Font size="23.0" />
                            </font></Label>
-                        <CheckBox mnemonicParsing="false" text="Easy">
+                        <CheckBox fx:id="easyCheckBox" mnemonicParsing="false" text="Easy">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Medium">
+                        <CheckBox fx:id="mediumCheckBox" mnemonicParsing="false" text="Medium">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Hard">
+                        <CheckBox fx:id="hardCheckBox" mnemonicParsing="false" text="Hard">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
@@ -48,15 +48,15 @@
                            <font>
                               <Font size="23.0" />
                            </font></Label>
-                        <CheckBox mnemonicParsing="false" text="Boy">
+                        <CheckBox fx:id="boyCheckBox" mnemonicParsing="false" text="Boy">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Girl">
+                        <CheckBox fx:id="girlCheckBox" mnemonicParsing="false" text="Girl">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Neutral">
+                        <CheckBox fx:id="neutralCheckBox" mnemonicParsing="false" text="Neutral">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
@@ -64,51 +64,51 @@
                            <font>
                               <Font size="23.0" />
                            </font></Label>
-                        <CheckBox mnemonicParsing="false" text="Beam">
+                        <CheckBox fx:id="beamCheckBox" mnemonicParsing="false" text="Beam">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Uneven Bars">
+                        <CheckBox fx:id="unevenBarsCheckBox" mnemonicParsing="false" text="Uneven Bars">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Strength/Muscle">
+                        <CheckBox fx:id="strengthCheckBox" mnemonicParsing="false" text="Strength/Muscle">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Floor">
+                        <CheckBox fx:id="floorCheckBox" mnemonicParsing="false" text="Floor">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Vault">
+                        <CheckBox fx:id="vaultCheckBox" mnemonicParsing="false" text="Vault">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Rings">
+                        <CheckBox fx:id="ringsCheckBox" mnemonicParsing="false" text="Rings">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Pommel Horse/Mushroom">
+                        <CheckBox fx:id="pommelHorseCheckBox" mnemonicParsing="false" text="Pommel Horse/Mushroom">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Parallel Bars">
+                        <CheckBox fx:id="parallelBarsCheckBox" mnemonicParsing="false" text="Parallel Bars">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Horizontal Bars">
+                        <CheckBox fx:id="horizontalBarsCheckBox" mnemonicParsing="false" text="Horizontal Bars">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </CheckBox>
                         <HBox prefHeight="42.0" prefWidth="243.0" spacing="25.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Apply Filters">
+                              <Button fx:id="applyFiltersButton" mnemonicParsing="false" text="Apply Filters">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" text="Clear Filters">
+                              <Button fx:id="clearFiltersButton" mnemonicParsing="false" text="Clear Filters">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
