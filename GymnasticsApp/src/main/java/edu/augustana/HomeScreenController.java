@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,6 +30,12 @@ public class HomeScreenController {
     @FXML // fx:id="viewSamplePlansBtn"
     private Button viewSamplePlansBtn; // Value injected by FXMLLoader
 
+
+    @FXML
+    void exitApp(ActionEvent event) {
+        Platform.exit();
+
+    }
     @FXML
     private void browseCards() throws IOException {
         App.setRoot("card_browser");
