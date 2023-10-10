@@ -28,7 +28,7 @@ public class CreateLessonPlanController {
     @FXML private Button saveButton; // Value injected by FXMLLoader
     @FXML private Button titleChangeButton; // Value injected by FXMLLoader
     @FXML private TextField titleField; // Value injected by FXMLLoader
-    @FXML private VBox titleBox; // Value injected by FXMLLoader
+    @FXML private VBox titleVBox; // Value injected by FXMLLoader
 
     private Label title = new Label();
     private ListView<?> lessonPlan = new ListView<>();
@@ -50,22 +50,22 @@ public class CreateLessonPlanController {
         title.setFont(titleFont);
 
         //removing the done button and text field
-        titleBox.getChildren().remove(doneButton);
-        titleBox.getChildren().remove(titleField);
+        titleVBox.getChildren().remove(doneButton);
+        titleVBox.getChildren().remove(titleField);
 
         //adding the title and then a place for the cards to go
-        titleBox.getChildren().add(title);
-        titleBox.getChildren().add(lessonPlan);
+        titleVBox.getChildren().add(title);
+        titleVBox.getChildren().add(lessonPlan);
     }
 
     //I don't know if this is messing up the lesson plan
     @FXML void editTitle(ActionEvent event) {
-        titleBox.getChildren().remove(title);
-        titleBox.getChildren().remove(lessonPlan);
+        titleVBox.getChildren().remove(title);
+        titleVBox.getChildren().remove(lessonPlan);
 
-        titleBox.getChildren().add(titleField);
+        titleVBox.getChildren().add(titleField);
         titleField.setText(getTitle);
-        titleBox.getChildren().add(doneButton);
+        titleVBox.getChildren().add(doneButton);
     }
 
 }
