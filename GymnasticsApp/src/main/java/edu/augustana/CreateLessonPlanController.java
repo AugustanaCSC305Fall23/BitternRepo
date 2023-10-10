@@ -30,7 +30,7 @@ public class CreateLessonPlanController {
     @FXML private TextField titleField; // Value injected by FXMLLoader
     @FXML private VBox titleBox; // Value injected by FXMLLoader
 
-    private Label title = new Label();
+    private Label titleLabel = new Label();
     private ListView<?> lessonPlan = new ListView<>();
     private String getTitle;
 
@@ -45,22 +45,22 @@ public class CreateLessonPlanController {
     @FXML void setTitle(ActionEvent event) {
         //setting up the title
         getTitle = titleField.getText();
-        title.setText(getTitle);
+        titleLabel.setText(getTitle);
         Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 35);
-        title.setFont(titleFont);
+        titleLabel.setFont(titleFont);
 
         //removing the done button and text field
         titleBox.getChildren().remove(doneButton);
         titleBox.getChildren().remove(titleField);
 
         //adding the title and then a place for the cards to go
-        titleBox.getChildren().add(title);
+        titleBox.getChildren().add(titleLabel);
         titleBox.getChildren().add(lessonPlan);
     }
 
     //I don't know if this is messing up the lesson plan
     @FXML void editTitle(ActionEvent event) {
-        titleBox.getChildren().remove(title);
+        titleBox.getChildren().remove(titleLabel);
         titleBox.getChildren().remove(lessonPlan);
 
         titleBox.getChildren().add(titleField);
