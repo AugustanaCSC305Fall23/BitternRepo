@@ -80,6 +80,9 @@ public class CardBrowserController {
     private CheckBox vaultCheckBox; // Value injected by FXMLLoader
 
     @FXML
+    private CheckBox trampolineCheckBox;
+
+    @FXML
     private void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
     }
