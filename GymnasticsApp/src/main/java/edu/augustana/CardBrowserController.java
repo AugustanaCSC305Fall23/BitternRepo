@@ -10,11 +10,16 @@ import javafx.fxml.FXML;
  */
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 
 public class CardBrowserController {
+
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -95,6 +100,24 @@ public class CardBrowserController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";
+
+    }
+    @FXML
+    private void applyFiltersAction(ActionEvent event) throws IOException {
+        List<String> filters = new ArrayList<>();
+        List<CheckBox> filterCheckBoxes = Arrays.asList(
+                easyCheckBox, mediumCheckBox, hardCheckBox, boyCheckBox, girlCheckBox,
+                neutralCheckBox, beamCheckBox, unevenBarsCheckBox, strengthCheckBox, floorCheckBox,
+                vaultCheckBox, ringsCheckBox, pommelHorseCheckBox, parallelBarsCheckBox, horizontalBarsCheckBox
+        );
+
+        for (CheckBox cb : filterCheckBoxes) {
+            if (cb.isSelected()) {
+                filters.add(cb.getText());
+            }
+        }
+
+
 
     }
 }
