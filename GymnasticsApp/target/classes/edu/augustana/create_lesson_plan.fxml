@@ -48,7 +48,7 @@
       </Button>
    </bottom>
    <center>
-      <VBox fx:id="titleBox" alignment="TOP_CENTER" fillWidth="false" prefHeight="428.0" prefWidth="994.0" spacing="50.0" BorderPane.alignment="TOP_CENTER">
+      <VBox fx:id="titleVBox" alignment="TOP_CENTER" fillWidth="false" prefHeight="428.0" prefWidth="994.0" spacing="50.0" BorderPane.alignment="TOP_CENTER">
          <children>
             <TextField fx:id="titleField" alignment="CENTER" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan">
                <VBox.margin>
