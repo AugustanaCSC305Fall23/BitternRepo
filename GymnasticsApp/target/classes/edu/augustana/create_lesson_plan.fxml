@@ -28,7 +28,7 @@
                <font>
                   <Font size="31.0" />
                </font></Button>
-            <Button fx:id="browseCardsBtn" mnemonicParsing="false" onAction="#browseCards" text="Browse Cards">
+            <Button fx:id="browseCardsBtn" mnemonicParsing="false" onAction="#browseCardsHandler" text="Browse Cards">
                <font>
                   <Font size="31.0" />
                </font></Button>

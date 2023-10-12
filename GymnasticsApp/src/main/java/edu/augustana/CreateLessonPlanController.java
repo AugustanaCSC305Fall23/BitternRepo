@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -33,7 +32,7 @@ public class CreateLessonPlanController {
     private String title = App.getLessonPlan().getTitle();
 
 
-    @FXML void browseCards() throws IOException {
+    @FXML void browseCardsHandler() throws IOException {
         App.setRoot("card_browser");
     }
 

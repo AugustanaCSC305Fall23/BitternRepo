@@ -1,7 +1,6 @@
 package edu.augustana;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 
 public class CardBrowserController {
 
@@ -27,11 +25,11 @@ public class CardBrowserController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="applyFiltersButton"
-    private Button applyFiltersButton; // Value injected by FXMLLoader
+    @FXML // fx:id="applyFiltersBtn"
+    private Button applyFiltersBtn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="clearFiltersButton"
-    private Button clearFiltersButton; // Value injected by FXMLLoader
+    @FXML // fx:id="clearFiltersBtn"
+    private Button clearFiltersBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="backToLessonPlanBtn"
     private Button backToLessonPlanBtn; // Value injected by FXMLLoader
@@ -84,8 +82,17 @@ public class CardBrowserController {
     @FXML // fx:id="vaultCheckBox"
     private CheckBox vaultCheckBox; // Value injected by FXMLLoader
 
-    @FXML
+    @FXML // fx:id="trampolineCheckBox"
     private CheckBox trampolineCheckBox;
+
+    List<String> filters = new ArrayList<>();
+
+    private List<CheckBox> createListOfFilters() {
+        return Arrays.asList(easyCheckBox, mediumCheckBox, hardCheckBox, boyCheckBox, girlCheckBox,
+                neutralCheckBox, beamCheckBox, unevenBarsCheckBox, strengthCheckBox, floorCheckBox,
+                vaultCheckBox, ringsCheckBox, pommelHorseCheckBox, parallelBarsCheckBox, horizontalBarsCheckBox,
+                trampolineCheckBox);
+    }
 
     @FXML
     private void goToHome(ActionEvent event) throws IOException {
@@ -93,7 +100,7 @@ public class CardBrowserController {
     }
 
     @FXML
-    private void backToLessonPlan(ActionEvent event) throws IOException {
+    private void returnToLessonPlanHandler(ActionEvent event) throws IOException {
         App.setRoot("create_lesson_plan");
     }
 
@@ -104,20 +111,20 @@ public class CardBrowserController {
     }
     @FXML
     private void applyFiltersAction(ActionEvent event) throws IOException {
-        List<String> filters = new ArrayList<>();
-        List<CheckBox> filterCheckBoxes = Arrays.asList(
-                easyCheckBox, mediumCheckBox, hardCheckBox, boyCheckBox, girlCheckBox,
-                neutralCheckBox, beamCheckBox, unevenBarsCheckBox, strengthCheckBox, floorCheckBox,
-                vaultCheckBox, ringsCheckBox, pommelHorseCheckBox, parallelBarsCheckBox, horizontalBarsCheckBox
-        );
-
-        for (CheckBox cb : filterCheckBoxes) {
+        for (CheckBox cb : createListOfFilters()) {
             if (cb.isSelected()) {
                 filters.add(cb.getText());
             }
         }
+    }
 
-
-
+    @FXML
+    private void clearFiltersAction(ActionEvent event) throws IOException {
+        filters.clear();
+        for (CheckBox cb : createListOfFilters()) {
+            if (cb.isSelected()) {
+                cb.fire();
+            }
+        }
     }
 }

@@ -24,7 +24,7 @@ public class App extends Application {
 
         double height = Screen.getPrimary().getBounds().getHeight();
         double width = Screen.getPrimary().getBounds().getWidth();
-        scene = new Scene(loadFXML("home"), width - 25, height - 100);
+        scene = new Scene(loadFXML("home"), width - 25, height - 80);
         stage.setScene(scene);
         stage.show();
     }

@@ -37,23 +37,23 @@ public class HomeScreenController {
 
     }
     @FXML
-    private void browseCards() throws IOException {
+    private void browseCardsHandler() throws IOException {
         App.setRoot("card_browser");
     }
 
     @FXML
-    private void createLessonPlan() throws IOException {
+    private void createLessonPlanHandler() throws IOException {
         App.createNewLessonPlan();
         App.setRoot("create_lesson_plan");
     }
 
     @FXML
-    private void viewSavedPlans() throws IOException {
+    private void viewSavedPlansHandler() throws IOException {
         App.setRoot("saved_lesson_plans");
     }
 
     @FXML
-    private void viewSamplePlans() throws IOException {
+    private void viewSamplePlansHandler() throws IOException {
         App.setRoot("sample_lesson_plans");
     }
 

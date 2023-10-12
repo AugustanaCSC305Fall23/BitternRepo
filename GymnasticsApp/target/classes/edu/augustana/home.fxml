@@ -15,17 +15,17 @@
          </font></Label>
       <HBox alignment="TOP_CENTER" prefHeight="111.0" prefWidth="1094.0" spacing="75.0">
          <children>
-            <Button fx:id="newLessonBtn" alignment="CENTER" mnemonicParsing="false" onAction="#createLessonPlan" prefHeight="46.0" prefWidth="282.0" text="Create New Lesson Plan" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="newLessonBtn" alignment="CENTER" mnemonicParsing="false" onAction="#createLessonPlanHandler" prefHeight="46.0" prefWidth="282.0" text="Create New Lesson Plan" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="viewSavedPlansBtn" mnemonicParsing="false" onAction="#viewSavedPlans" text="View Saved Lesson Plans" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="viewSavedPlansBtn" mnemonicParsing="false" onAction="#viewSavedPlansHandler" text="View Saved Lesson Plans" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="viewSamplePlansBtn" mnemonicParsing="false" onAction="#viewSamplePlans" text="View Sample Lesson Plans" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="viewSamplePlansBtn" mnemonicParsing="false" onAction="#viewSamplePlansHandler" text="View Sample Lesson Plans" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
@@ -37,7 +37,7 @@
             </Button>
          </children>
       </HBox>
-      <Button fx:id="cardBrowserBtn" onAction="#browseCards" text="Card Browser" />
+      <Button fx:id="cardBrowserBtn" onAction="#browseCardsHandler" text="Card Browser" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
