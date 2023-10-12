@@ -43,6 +43,7 @@ public class HomeScreenController {
 
     @FXML
     private void createLessonPlan() throws IOException {
+        App.createNewLessonPlan();
         App.setRoot("create_lesson_plan");
     }
 

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -10,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
    <top>
-      <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="182.0" prefWidth="1109.0" spacing="20.0" BorderPane.alignment="CENTER_LEFT">
+      <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="72.0" prefWidth="1475.0" spacing="20.0" BorderPane.alignment="CENTER_LEFT">
          <children>
             <Button fx:id="printButton" mnemonicParsing="false" text="Print">
                <font>
@@ -23,7 +24,7 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-            <Button fx:id="titleChangeButton" alignment="CENTER" mnemonicParsing="false" onAction="#editTitle" text="Change Title">
+            <Button fx:id="titleChangeButton" alignment="CENTER" mnemonicParsing="false" onAction="#openTitleTextBox" text="Change Title">
                <font>
                   <Font size="31.0" />
                </font></Button>
@@ -48,9 +49,17 @@
       </Button>
    </bottom>
    <center>
-      <VBox fx:id="titleVBox" alignment="TOP_CENTER" fillWidth="false" prefHeight="428.0" prefWidth="994.0" spacing="50.0" BorderPane.alignment="TOP_CENTER">
+      <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="426.0" prefWidth="409.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="titleField" alignment="CENTER" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan">
+            <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
+               <font>
+                  <Font name="Britannic Bold" size="48.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="titleField" alignment="CENTER" prefHeight="324.0" prefWidth="1134.0" promptText="Enter Title of Lesson Plan" visible="false">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
                </VBox.margin>
@@ -58,15 +67,12 @@
                   <Font size="51.0" />
                </font>
             </TextField>
-            <Button fx:id="doneButton" mnemonicParsing="false" onAction="#setTitle" text="Done">
+            <Button fx:id="doneButton" mnemonicParsing="false" onAction="#setTitle" text="Done" visible="false">
                <font>
                   <Font size="33.0" />
                </font>
             </Button>
          </children>
-         <BorderPane.margin>
-            <Insets bottom="100.0" />
-         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>

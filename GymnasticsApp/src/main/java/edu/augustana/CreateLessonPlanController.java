@@ -3,7 +3,7 @@ package edu.augustana;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,43 +28,40 @@ public class CreateLessonPlanController {
     @FXML private Button saveButton; // Value injected by FXMLLoader
     @FXML private Button titleChangeButton; // Value injected by FXMLLoader
     @FXML private TextField titleField; // Value injected by FXMLLoader
-    @FXML private VBox titleVBox; // Value injected by FXMLLoader
+    @FXML private ListView<?> lessonPlanListView = new ListView<>();
+    @FXML private Label titleLabel = new Label();
+    private String title = App.getLessonPlan().getTitle();
 
-    private Label titleLabel = new Label();
-    private ListView<?> lessonPlan = new ListView<>();
-    private String getTitle;
 
-    @FXML void browseCards(ActionEvent event) throws IOException {
+    @FXML void browseCards() throws IOException {
         App.setRoot("card_browser");
     }
 
-    @FXML void goToHome(ActionEvent event) throws IOException {
+    @FXML void goToHome() throws IOException {
         App.setRoot("home");
     }
 
-    @FXML void setTitle(ActionEvent event) {
-        //setting up the title
-        getTitle = titleField.getText();
-        titleLabel.setText(getTitle);
-        Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 35);
-        titleLabel.setFont(titleFont);
-
-        //removing the done button and text field
-        titleVBox.getChildren().remove(doneButton);
-        titleVBox.getChildren().remove(titleField);
-
-        //adding the title and then a place for the cards to go
-        titleVBox.getChildren().add(titleLabel);
-        titleVBox.getChildren().add(lessonPlan);
+    @FXML void openTitleTextBox() {
+        titleLabel.setVisible(false);
+        lessonPlanListView.setVisible(false);
+        titleField.setVisible(true);
+        doneButton.setVisible(true);
     }
 
-    //I don't know if this is messing up the lesson plan
-    @FXML void editTitle(ActionEvent event) {
-        titleVBox.getChildren().remove(titleLabel);
-        titleVBox.getChildren().remove(lessonPlan);
-        titleVBox.getChildren().add(titleField);
-        titleField.setText(getTitle);
-        titleVBox.getChildren().add(doneButton);
+    @FXML void setTitle() {
+        title = titleField.getText();
+        App.getLessonPlan().changeTitle(title);
+        titleLabel.setText(title);
+        Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
+        titleLabel.setFont(titleFont);
+        titleLabel.setVisible(true);
+        lessonPlanListView.setVisible(true);
+        titleField.setVisible(false);
+        doneButton.setVisible(false);
+    }
+
+    @FXML void initialize() {
+        titleLabel.setText(title);
     }
 
 }
