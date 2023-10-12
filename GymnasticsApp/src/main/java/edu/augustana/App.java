@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Screen;
 
 import java.io.IOException;
 
@@ -17,7 +18,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("home"), 1500, 800);
+        // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
+        // to help figure out how to get the dimensions of the screen.
+
+        double height = Screen.getPrimary().getBounds().getHeight();
+        double width = Screen.getPrimary().getBounds().getWidth();
+        scene = new Scene(loadFXML("home"), width - 25, height - 100);
         stage.setScene(scene);
         stage.show();
     }
