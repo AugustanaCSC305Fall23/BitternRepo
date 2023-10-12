@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -14,15 +15,15 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
    <children>
-      <TextField maxHeight="50.0" prefHeight="15.0" prefWidth="1389.0" promptText="Search">
+      <TextField prefHeight="51.0" prefWidth="530.0" promptText="Search">
          <font>
-            <Font size="20.0" />
+            <Font size="32.0" />
          </font>
          <VBox.margin>
             <Insets left="35.0" right="35.0" top="5.0" />
          </VBox.margin>
       </TextField>
-      <SplitPane centerShape="false" dividerPositions="0.2511032656663725" prefHeight="768.0" prefWidth="1500.0">
+      <SplitPane centerShape="false" dividerPositions="0.2511032656663725" prefHeight="787.0" prefWidth="1135.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="741.0" prefWidth="316.0">
                <children>
@@ -68,7 +69,31 @@
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
+                        <CheckBox fx:id="unevenBarsCheckBox" mnemonicParsing="false" text="Uneven Bars">
+                           <font>
+                              <Font size="18.0" />
+                           </font></CheckBox>
+                        <CheckBox fx:id="strengthCheckBox" mnemonicParsing="false" text="Strength/Muscle">
+                           <font>
+                              <Font size="18.0" />
+                           </font></CheckBox>
                         <CheckBox fx:id="floorCheckBox" mnemonicParsing="false" text="Floor">
+                           <font>
+                              <Font size="18.0" />
+                           </font></CheckBox>
+                        <CheckBox fx:id="vaultCheckBox" mnemonicParsing="false" text="Vault">
+                           <font>
+                              <Font size="18.0" />
+                           </font></CheckBox>
+                        <CheckBox fx:id="ringsCheckBox" mnemonicParsing="false" text="Rings">
+                           <font>
+                              <Font size="18.0" />
+                           </font></CheckBox>
+                        <CheckBox fx:id="pommelHorseCheckBox" mnemonicParsing="false" text="Pommel Horse/Mushroom">
+                           <font>
+                              <Font size="18.0" />
+                           </font></CheckBox>
+                        <CheckBox fx:id="parallelBarsCheckBox" mnemonicParsing="false" text="Parallel Bars">
                            <font>
                               <Font size="18.0" />
                            </font></CheckBox>
@@ -77,38 +102,9 @@
                               <Font size="18.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="parallelBarsCheckBox" mnemonicParsing="false" text="Parallel Bars">
-                           <font>
-                              <Font size="18.0" />
-                           </font></CheckBox>
-                        <CheckBox fx:id="pommelHorseCheckBox" mnemonicParsing="false" text="Pommel Horse/Mushroom">
-                           <font>
-                              <Font size="18.0" />
-                           </font></CheckBox>
-                        <CheckBox fx:id="ringsCheckBox" mnemonicParsing="false" text="Rings">
-                           <font>
-                              <Font size="18.0" />
-                           </font></CheckBox>
-                        <CheckBox fx:id="strengthCheckBox" mnemonicParsing="false" text="Strength/Muscle">
-                           <font>
-                              <Font size="18.0" />
-                           </font></CheckBox>
-                        <CheckBox fx:id="trampolineCheckBox" mnemonicParsing="false" text="Trampoline">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="unevenBarsCheckBox" mnemonicParsing="false" text="Uneven Bars">
-                           <font>
-                              <Font size="18.0" />
-                           </font></CheckBox>
-                        <CheckBox fx:id="vaultCheckBox" mnemonicParsing="false" text="Vault">
-                           <font>
-                              <Font size="18.0" />
-                           </font></CheckBox>
                         <HBox prefHeight="42.0" prefWidth="243.0" spacing="25.0">
                            <children>
-                              <Button fx:id="applyFiltersButton" mnemonicParsing="false" text="Apply Filters">
+                              <Button fx:id="applyFiltersAction" mnemonicParsing="false" onAction="#applyFiltersAction" text="Apply Filters">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -132,9 +128,12 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="741.0" prefWidth="827.0">
                <children>
-                  <VBox layoutX="-1.0" prefHeight="616.0" prefWidth="847.0">
+                  <VBox layoutX="-1.0" prefHeight="632.0" prefWidth="847.0">
                      <children>
-                        <ScrollPane prefHeight="619.0" prefWidth="847.0" />
+                        <ScrollPane prefHeight="647.0" prefWidth="847.0">
+                           <content>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                           </content></ScrollPane>
                      </children></VBox>
                   <HBox alignment="CENTER" layoutX="24.0" layoutY="578.0" prefHeight="147.0" prefWidth="1086.0" spacing="600.0">
                      <children>
