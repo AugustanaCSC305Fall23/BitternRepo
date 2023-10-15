@@ -46,7 +46,7 @@
                   <Button layoutX="351.0" layoutY="343.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
                   <Button layoutX="330.0" layoutY="24.0" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" />
                   <Button fx:id="doneButton" layoutX="285.0" layoutY="88.0" mnemonicParsing="false" onAction="#setTitle" text="Done" />
-                  <TextField fx:id="titleField" layoutX="123.0" layoutY="88.0" text="Enter Title" />
+                  <TextField fx:id="titleField" layoutX="123.0" layoutY="88.0" promptText="Enter Title" />
                </children>
             </AnchorPane>
          </items>
