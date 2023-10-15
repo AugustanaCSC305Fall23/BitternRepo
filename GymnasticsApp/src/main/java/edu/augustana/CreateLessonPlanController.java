@@ -1,67 +1,35 @@
 package edu.augustana;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.event.ActionEvent;
+import org.controlsfx.control.CheckComboBox;
+
+import java.io.IOException;
 
 public class CreateLessonPlanController {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    private final ObservableList<String> filters = FXCollections.observableArrayList();
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    @FXML CheckComboBox<String> filterDropdown = new CheckComboBox<>();
 
-    @FXML private Button browseCardsBtn; // Value injected by FXMLLoader
-    @FXML private Button doneButton; // Value injected by FXMLLoader
-    @FXML private Button homeBtn; // Value injected by FXMLLoader
-    @FXML private Button printButton; // Value injected by FXMLLoader
-    @FXML private Button saveButton; // Value injected by FXMLLoader
-    @FXML private Button titleChangeButton; // Value injected by FXMLLoader
-    @FXML private TextField titleField; // Value injected by FXMLLoader
-    @FXML private ListView<?> lessonPlanListView = new ListView<>();
-    @FXML private Label titleLabel = new Label();
-    private String title = App.getLessonPlan().getTitle();
-
-
-    @FXML void browseCardsHandler() throws IOException {
-        App.setRoot("card_browser");
+    private ObservableList<String> createListOfFilters() {
+        filters.addAll("Easy", "Medium", "Hard", "Boy", "Girl", "Neutral", "Beam", "Floor", "Horizontal Bars",
+                "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault");
+        return filters;
     }
-
-    @FXML void goToHome() throws IOException {
+    @FXML
+    void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
     }
 
-    @FXML void openTitleTextBox() {
-        titleLabel.setVisible(false);
-        lessonPlanListView.setVisible(false);
-        titleField.setVisible(true);
-        doneButton.setVisible(true);
+    @FXML
+    private void initialize(){
+        //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
+        //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
+        //For checkbox where I can select multiple items
+        filterDropdown.getItems().addAll(createListOfFilters());
     }
-
-    @FXML void setTitle() {
-        title = titleField.getText();
-        App.getLessonPlan().changeTitle(title);
-        titleLabel.setText(title);
-        Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
-        titleLabel.setFont(titleFont);
-        titleLabel.setVisible(true);
-        lessonPlanListView.setVisible(true);
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-    }
-
-    @FXML void initialize() {
-        titleLabel.setText(title);
-    }
-
 }
 
