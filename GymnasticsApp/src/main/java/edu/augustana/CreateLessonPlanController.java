@@ -20,7 +20,7 @@ public class CreateLessonPlanController {
     private final ObservableList<String> filters = FXCollections.observableArrayList();
 
     @FXML CheckComboBox<String> filterDropdown = new CheckComboBox<>();
-
+    @FXML private Button editTitleButton;
     @FXML private TextField titleField;
     @FXML private Button doneButton;
     @FXML private Label titleLabel = new Label();
@@ -54,9 +54,11 @@ public class CreateLessonPlanController {
         lessonPlanListView.setVisible(false);
         titleField.setVisible(true);
         doneButton.setVisible(true);
+        editTitleButton.setVisible(false);
     }
 
     @FXML void setTitle() {
+        editTitleButton.setVisible(true);
         title = titleField.getText();
         App.getLessonPlan().changeTitle(title);
         titleLabel.setText(title);
