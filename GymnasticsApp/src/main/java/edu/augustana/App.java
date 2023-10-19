@@ -7,7 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * JavaFX App
@@ -16,6 +20,7 @@ public class App extends Application {
 
     private static Scene scene;
     private static LessonPlan lessonPlan;
+    private static CardCollection cardCollection;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -36,6 +41,20 @@ public class App extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    public static void setUpCards() throws FileNotFoundException {
+        cardCollection = new CardCollection();
+        Scanner input = new Scanner(new File("DEMO1.csv"));
+        while (input.hasNextLine()) {
+            String cardDataLine = input.nextLine();
+            Card card = new Card(cardDataLine);
+            cardCollection.addCard(card);
+        }
+    }
+
+    public static CardCollection getCardCollection() {
+        return cardCollection;
     }
 
     public static void createNewLessonPlan() {

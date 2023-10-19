@@ -12,4 +12,8 @@ public class CardCollection {
     public List<Card> getCardList() {
         return cardList;
     }
+
+    public void addCard(Card newCard) {
+        cardList.add(newCard);
+    }
 }
