@@ -8,6 +8,7 @@ public class Card {
     private String category;
     private String title;
     private String packFolder;
+    private String imageName;
     private Image image;
     private char gender;
     private char modelSex;
@@ -22,7 +23,10 @@ public class Card {
         category = cardDataArray[2];
         title = cardDataArray[3];
         packFolder = cardDataArray[4];
-        image = new Image(cardDataArray[5]);
+        imageName = cardDataArray[5];
+        // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
+        // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
+        image = new Image(getClass().getResource("/images/" + imageName).toString());
         gender = cardDataArray[6].toCharArray()[0];
         modelSex = cardDataArray[7].toCharArray()[0];
         level = cardDataArray[8];
