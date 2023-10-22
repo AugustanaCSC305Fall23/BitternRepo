@@ -25,18 +25,11 @@
             <artifactId>javafx-fxml</artifactId>
             <version>20</version>
         </dependency>
-<<<<<<< HEAD
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-<<<<<<< HEAD
-            <version>5.8</version>
-=======
             <version>4.0</version>
->>>>>>> displayImagesOnScreen
         </dependency>
-=======
->>>>>>> 5883ac11213f8b589c58450dec3b3f0f4a114255
     </dependencies>
     <build>
         <plugins>

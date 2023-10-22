@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="CompilerConfiguration">
-    <bytecodeTargetLevel>
-      <module name="GymnasticsApp" target="11" />
-    </bytecodeTargetLevel>
-  </component>
-=======
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
@@ -19,5 +10,4 @@
       </profile>
     </annotationProcessing>
   </component>
->>>>>>> 5883ac11213f8b589c58450dec3b3f0f4a114255
 </project>
