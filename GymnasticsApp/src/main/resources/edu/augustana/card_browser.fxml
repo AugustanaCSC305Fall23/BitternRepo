@@ -7,8 +7,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -137,7 +137,7 @@
                      <children>
                         <ScrollPane layoutX="60.0" layoutY="500.0" prefHeight="647.0" prefWidth="847.0">
                            <content>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                              <FlowPane fx:id="cardsFlowPane" prefWrapLength="1000.0" />
                            </content></ScrollPane>
                      </children></VBox>
                   <HBox alignment="CENTER" layoutX="13.0" layoutY="587.0" spacing="800.0">

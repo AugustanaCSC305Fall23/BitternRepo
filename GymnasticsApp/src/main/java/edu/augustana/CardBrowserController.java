@@ -1,20 +1,19 @@
 package edu.augustana;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 
-/**
- * Sample Skeleton for 'card_browser.fxml' Controller Class
- */
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 
 public class CardBrowserController {
 
@@ -85,6 +84,9 @@ public class CardBrowserController {
     @FXML // fx:id="trampolineCheckBox"
     private CheckBox trampolineCheckBox;
 
+    @FXML
+    private FlowPane cardsFlowPane;
+
     List<String> filters = new ArrayList<>();
 
     private List<CheckBox> createListOfFilters() {
@@ -106,8 +108,13 @@ public class CardBrowserController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        CardCollection cards = App.setUpCards();
+        List<Card> cardList = App.setUpCards().getCardList();
+        for (int i = 0; i < cardList.size(); i++) {
+            ImageView cardImageView = new ImageView(cardList.get(i).getImage());
+            cardsFlowPane.getChildren().add(cardImageView);
+        }
         assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";
-
     }
     @FXML
     private void applyFiltersAction(ActionEvent event) throws IOException {

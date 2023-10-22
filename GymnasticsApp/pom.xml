@@ -28,7 +28,11 @@
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
+<<<<<<< HEAD
             <version>5.8</version>
+=======
+            <version>4.0</version>
+>>>>>>> displayImagesOnScreen
         </dependency>
     </dependencies>
     <build>
