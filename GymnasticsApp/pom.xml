@@ -25,6 +25,7 @@
             <artifactId>javafx-fxml</artifactId>
             <version>20</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
@@ -34,6 +35,8 @@
             <version>4.0</version>
 >>>>>>> displayImagesOnScreen
         </dependency>
+=======
+>>>>>>> 5883ac11213f8b589c58450dec3b3f0f4a114255
     </dependencies>
     <build>
         <plugins>
