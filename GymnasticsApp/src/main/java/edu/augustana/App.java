@@ -1,17 +1,16 @@
 package edu.augustana;
 
+import com.opencsv.CSVReader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.stage.Screen;
-
-import java.io.File;
-import java.io.FileNotFoundException;
+import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * JavaFX App
@@ -20,7 +19,6 @@ public class App extends Application {
 
     private static Scene scene;
     private static LessonPlan lessonPlan;
-    private static CardCollection cardCollection;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -43,17 +41,21 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void setUpCards() throws FileNotFoundException {
-        cardCollection = new CardCollection();
-        Scanner input = new Scanner(new File("DEMO1.csv"));
-        while (input.hasNextLine()) {
-            String cardDataLine = input.nextLine();
-            Card card = new Card(cardDataLine);
-            cardCollection.addCard(card);
+    //https://www.callicoder.com/java-read-write-csv-file-opencsv/
+    public static CardCollection setUpCards() {
+        CardCollection cardCollection = new CardCollection();
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get("./src/main/resources/edu/augustana/Data/DEMO1.csv"));
+            CSVReader csvReader = new CSVReader(reader);
+            String[] nextRecord;
+            while ((nextRecord = csvReader.readNext()) != null) {
+                Card card = new Card(nextRecord);
+                cardCollection.addCard(new Card(nextRecord));
+            }
+            //System.out.println(nextRecord);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    public static CardCollection getCardCollection() {
         return cardCollection;
     }
 
@@ -62,7 +64,7 @@ public class App extends Application {
     }
 
     public static LessonPlan getLessonPlan() {
-        return lessonPlan;
+       return lessonPlan;
     }
 
     public static void main(String[] args) {
