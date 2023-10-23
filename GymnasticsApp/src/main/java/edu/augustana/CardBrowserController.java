@@ -115,10 +115,7 @@ public class CardBrowserController {
             // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
             // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
             // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
-            System.out.println(card.getImageName());
-            String imagePath = "images/" + card.getImageName();
-            System.out.println(imagePath);
-            String imageLocation = getClass().getResource(imagePath).toString();
+            String imageLocation = getClass().getResource("images/" + card.getImageName()).toString();
             Image image = new Image(imageLocation,400, 300, true, true);
             ImageView cardImageView = new ImageView(image);
             cardsFlowPane.getChildren().add(cardImageView);
