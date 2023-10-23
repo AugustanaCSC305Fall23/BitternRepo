@@ -18,10 +18,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        FileReader.fillCardCollection();
+        FileReader.createImageList();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
-
-        FileReader.fillCardCollection();
         double height = Screen.getPrimary().getBounds().getHeight();
         double width = Screen.getPrimary().getBounds().getWidth();
         scene = new Scene(loadFXML("home"), width - 25, height - 80);
