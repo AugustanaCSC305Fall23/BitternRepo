@@ -87,7 +87,7 @@ public class CardBrowserController {
     @FXML
     private FlowPane cardsFlowPane;
 
-    List<String> filters = new ArrayList<>();
+    private List<String> filters = new ArrayList<>();
 
     private List<CheckBox> createListOfFilters() {
         return Arrays.asList(easyCheckBox, mediumCheckBox, hardCheckBox, boyCheckBox, girlCheckBox,
