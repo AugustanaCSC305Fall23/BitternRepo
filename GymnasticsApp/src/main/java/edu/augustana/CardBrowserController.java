@@ -109,9 +109,18 @@ public class CardBrowserController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         CardCollection cards = App.setUpCards();
-        List<Card> cardList = App.setUpCards().getCardList();
-        for (int i = 0; i < cardList.size(); i++) {
-            ImageView cardImageView = new ImageView(cardList.get(i).getImage());
+        List<Card> cardList = cards.getCardList();
+        //for (int i = 0; i < cardList.size(); i++) {
+        for (Card card : cardList) {
+            // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
+            // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
+            // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
+            System.out.println(card.getImageName());
+            String imagePath = "images/" + card.getImageName();
+            System.out.println(imagePath);
+            String imageLocation = getClass().getResource(imagePath).toString();
+            Image image = new Image(imageLocation,400, 300, true, true);
+            ImageView cardImageView = new ImageView(image);
             cardsFlowPane.getChildren().add(cardImageView);
         }
         assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";

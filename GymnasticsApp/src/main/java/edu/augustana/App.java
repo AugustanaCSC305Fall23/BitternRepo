@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,13 +48,13 @@ public class App extends Application {
         try {
             Reader reader = Files.newBufferedReader(Paths.get("./src/main/resources/edu/augustana/Data/DEMO1.csv"));
             CSVReader csvReader = new CSVReader(reader);
+            String[] firstLine = csvReader.readNext();
             String[] nextRecord;
             while ((nextRecord = csvReader.readNext()) != null) {
-                Card card = new Card(nextRecord);
                 cardCollection.addCard(new Card(nextRecord));
             }
             //System.out.println(nextRecord);
-        } catch (IOException e) {
+        } catch (CsvValidationException | IOException e) {
             throw new RuntimeException(e);
         }
         return cardCollection;
