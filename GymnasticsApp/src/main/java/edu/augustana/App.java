@@ -46,7 +46,7 @@ public class App extends Application {
     public static CardCollection setUpCards() {
         CardCollection cardCollection = new CardCollection();
         try {
-            Reader reader = Files.newBufferedReader(Paths.get("./src/main/resources/edu/augustana/Data/DEMO1.csv"));
+            Reader reader = Files.newBufferedReader(Paths.get("src/main/resources/edu/augustana/Data/DEMO1.csv").toAbsolutePath());
             CSVReader csvReader = new CSVReader(reader);
             String[] firstLine = csvReader.readNext();
             String[] nextRecord;
