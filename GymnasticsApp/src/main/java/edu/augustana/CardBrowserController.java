@@ -108,15 +108,8 @@ public class CardBrowserController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        CardCollection cards = App.setUpCards();
-        List<Card> cardList = cards.getCardList();
-        //for (int i = 0; i < cardList.size(); i++) {
-        for (Card card : cardList) {
-            // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
-            // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
-            // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
-            String imageLocation = getClass().getResource("images/" + card.getImageName()).toString();
-            Image image = new Image(imageLocation,400, 300, true, true);
+        List<Image> imageList = FileReader.getImageList();
+        for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
             cardsFlowPane.getChildren().add(cardImageView);
         }
