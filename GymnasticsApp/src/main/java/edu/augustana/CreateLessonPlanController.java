@@ -37,7 +37,9 @@ public class CreateLessonPlanController {
     @FXML private Label titleLabel = new Label();
     @FXML private ListView<?> lessonPlanListView = new ListView<>();
     private String title = App.getLessonPlan().getTitle();
-    public List<String> checkedItems;
+    private List<String> checkedEventFilters;
+    private List<Character> checkedGenderFilters;
+    private List<String> checkedLevelFilters;
 
     private ObservableList<String> createListOfFilters(String[] categoryFilters, ObservableList<String> category) {
         category.addAll(categoryFilters);
@@ -46,17 +48,37 @@ public class CreateLessonPlanController {
     @FXML void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
     }
+
+    private void fillLists() {
+        checkedEventFilters.addAll(eventDropdown.getCheckModel().getCheckedItems());
+
+        for (int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++) {
+            if (genderDropdown.getCheckModel().getCheckedItems().get(i) == "Boy") {
+                checkedGenderFilters.add('B');
+            } else if (genderDropdown.getCheckModel().getCheckedItems().get(i) == "Girl") {
+                checkedGenderFilters.add('G');
+            } else {
+                checkedGenderFilters.add('N');
+            }
+        }
+
+        checkedLevelFilters.addAll(levelDropdown.getCheckModel().getCheckedItems());
+
+
+    }
     @FXML void applyFilters(ActionEvent event) {
-        Card check;
+        //Card cardToBeChecked;
         //probably also want to make it where they uncheck an item
-
-        //this is not the best way to do it, I am first trying to get it to work
-        checkedItems.addAll(genderDropdown.getCheckModel().getCheckedItems());
-        checkedItems.addAll(levelDropdown.getCheckModel().getCheckedItems());
-        checkedItems.addAll(eventDropdown.getCheckModel().getCheckedItems());
-        for(int i = 0; i < FileReader.getCardCollection().getCardList().size(); i++){
-            check = FileReader.getCardCollection().getCard(i);
-
+        fillLists();
+        for (Card card : FileReader.getCardCollection().getCardList()) {
+            //cardToBeChecked = FileReader.getCardCollection().getCard(i);
+            if ((checkedEventFilters == null) || (checkedEventFilters.contains(card.getEvent()))) {
+                if ((checkedGenderFilters == null) || (checkedGenderFilters.contains(card.getGender()))) {
+                    if ((checkedLevelFilters == null) || (checkedLevelFilters.contains(card.getLevel()))) {
+                        //have card displayed
+                    }
+                }
+            }
         }
     }
 
@@ -70,10 +92,10 @@ public class CreateLessonPlanController {
         if(eventDropdown.getCheckModel().getCheckedItems() != null){
 
         }
-        checkedItems.clear();
+        //checkedItems.clear();
     }
 
-    @FXML void filterSearch(KeyEvent event) {
+    @FXML void searchAction(KeyEvent event) {
 
     }
 
