@@ -34,8 +34,49 @@ public class Card {
         equipment = cardDataArray[9].split(",");
         keywords = cardDataArray[10].split(",");
     }
+    public String getCode() {
+        return code;
+    }
 
+    public String getEvent() {
+        return event;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPackFolder() {
+        return packFolder;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
     public Image getImage() {
         return image;
     }
+    public char getGender() {
+        return gender;
+    }
+
+    public char getModelSex() {
+        return modelSex;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String[] getEquipment() {
+        return equipment;
+    }
+    public String[] getKeywords() {
+        return keywords;
+    }
+
 }

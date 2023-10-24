@@ -16,4 +16,8 @@ public class CardCollection {
     public void addCard(Card newCard) {
         cardList.add(newCard);
     }
+
+    public Card getCard(int index){
+        return cardList.get(index);
+    }
 }
