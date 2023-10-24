@@ -82,14 +82,28 @@ public class CreateLessonPlanController {
 
     @FXML void clearFilters(ActionEvent event) {
         if(genderDropdown.getCheckModel().getCheckedItems() != null){
-
+            List<Integer> genderCheckIndex = genderDropdown.getCheckModel().getCheckedIndices();
+            for(int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++){
+                genderDropdown.getCheckModel().toggleCheckState(genderCheckIndex.get(i));
+            }
+            checkedGenderFilters.clear();
         }
         if(levelDropdown.getCheckModel().getCheckedItems() != null){
-
+            List<Integer> levelCheckIndex = levelDropdown.getCheckModel().getCheckedIndices();
+            for(int i = 0; i < levelDropdown.getCheckModel().getCheckedItems().size(); i++){
+                levelDropdown.getCheckModel().toggleCheckState(levelCheckIndex.get(i));
+            }
+            checkedLevelFilters.clear();
         }
         if(eventDropdown.getCheckModel().getCheckedItems() != null){
-
+            List<Integer> eventCheckIndex = eventDropdown.getCheckModel().getCheckedIndices();
+            for(int i = 0; i < eventDropdown.getCheckModel().getCheckedItems().size(); i++){
+                eventDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
+            }
+            checkedEventFilters.clear();
         }
+        cardsFlowPane.getChildren().clear();
+        drawCardSet();
         //checkedItems.clear();
     }
 
@@ -97,6 +111,13 @@ public class CreateLessonPlanController {
 
     }
 
+    private void drawCardSet(){
+        List<Image> imageList = FileReader.getImageList();
+        for (Image image : imageList) {
+            ImageView cardImageView = new ImageView(image);
+            cardsFlowPane.getChildren().add(cardImageView);
+        }
+    }
     @FXML
     private void initialize(){
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
@@ -111,12 +132,7 @@ public class CreateLessonPlanController {
         titleField.setVisible(false);
         doneButton.setVisible(false);
 
-        List<Image> imageList = FileReader.getImageList();
-        for (Image image : imageList) {
-            ImageView cardImageView = new ImageView(image);
-            cardsFlowPane.getChildren().add(cardImageView);
-        }
-
+        drawCardSet();
     }
 
     @FXML void openTitleTextBox() {
