@@ -4,6 +4,7 @@ public class GymnasticsEvent {
     private CardCollection cardsInEvent;
     private String eventTitle;
 
+
     public void addCard(Card card) {
 
     }
