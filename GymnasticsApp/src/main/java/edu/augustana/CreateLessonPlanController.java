@@ -78,6 +78,9 @@ public class CreateLessonPlanController {
                 }
             }
         }
+        checkedGenderFilters.clear();
+        checkedLevelFilters.clear();
+        checkedEventFilters.clear();
     }
 
     @FXML void clearFilters(ActionEvent event) {
@@ -86,25 +89,21 @@ public class CreateLessonPlanController {
             for(int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++){
                 genderDropdown.getCheckModel().toggleCheckState(genderCheckIndex.get(i));
             }
-            checkedGenderFilters.clear();
         }
         if(levelDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> levelCheckIndex = levelDropdown.getCheckModel().getCheckedIndices();
             for(int i = 0; i < levelDropdown.getCheckModel().getCheckedItems().size(); i++){
                 levelDropdown.getCheckModel().toggleCheckState(levelCheckIndex.get(i));
             }
-            checkedLevelFilters.clear();
         }
         if(eventDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> eventCheckIndex = eventDropdown.getCheckModel().getCheckedIndices();
             for(int i = 0; i < eventDropdown.getCheckModel().getCheckedItems().size(); i++){
                 eventDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
             }
-            checkedEventFilters.clear();
         }
         cardsFlowPane.getChildren().clear();
         drawCardSet();
-        //checkedItems.clear();
     }
 
     @FXML void searchAction(KeyEvent event) {
