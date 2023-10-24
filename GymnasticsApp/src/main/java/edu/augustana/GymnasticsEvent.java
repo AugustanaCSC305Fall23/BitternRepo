@@ -4,6 +4,10 @@ public class GymnasticsEvent {
     private CardCollection cardsInEvent;
     private String eventTitle;
 
+    public GymnasticsEvent(CardCollection cardsInEvent, String eventTitle) {
+        this.cardsInEvent = cardsInEvent;
+        this.eventTitle = eventTitle;
+    }
 
     public void addCard(Card card) {
 
