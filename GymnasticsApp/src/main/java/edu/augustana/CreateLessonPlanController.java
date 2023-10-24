@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateLessonPlanController {
@@ -37,9 +38,9 @@ public class CreateLessonPlanController {
     @FXML private Label titleLabel = new Label();
     @FXML private ListView<?> lessonPlanListView = new ListView<>();
     private String title = App.getLessonPlan().getTitle();
-    private List<String> checkedEventFilters;
-    private List<Character> checkedGenderFilters;
-    private List<String> checkedLevelFilters;
+    private List<String> checkedEventFilters = new ArrayList<>();
+    private List<Character> checkedGenderFilters = new ArrayList<>();
+    private List<String> checkedLevelFilters = new ArrayList<>();
 
     private ObservableList<String> createListOfFilters(String[] categoryFilters, ObservableList<String> category) {
         category.addAll(categoryFilters);
@@ -53,29 +54,26 @@ public class CreateLessonPlanController {
         checkedEventFilters.addAll(eventDropdown.getCheckModel().getCheckedItems());
 
         for (int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++) {
-            if (genderDropdown.getCheckModel().getCheckedItems().get(i) == "Boy") {
-                checkedGenderFilters.add('B');
-            } else if (genderDropdown.getCheckModel().getCheckedItems().get(i) == "Girl") {
-                checkedGenderFilters.add('G');
+            if (genderDropdown.getCheckModel().getCheckedItems().get(i).equals("Boy")) {
+                checkedGenderFilters.add('M');
+            } else if (genderDropdown.getCheckModel().getCheckedItems().get(i).equals("Girl")) {
+                checkedGenderFilters.add('F');
             } else {
                 checkedGenderFilters.add('N');
             }
         }
 
         checkedLevelFilters.addAll(levelDropdown.getCheckModel().getCheckedItems());
-
-
     }
     @FXML void applyFilters(ActionEvent event) {
-        //Card cardToBeChecked;
-        //probably also want to make it where they uncheck an item
+        cardsFlowPane.getChildren().clear();
         fillLists();
         for (Card card : FileReader.getCardCollection().getCardList()) {
-            //cardToBeChecked = FileReader.getCardCollection().getCard(i);
-            if ((checkedEventFilters == null) || (checkedEventFilters.contains(card.getEvent()))) {
-                if ((checkedGenderFilters == null) || (checkedGenderFilters.contains(card.getGender()))) {
-                    if ((checkedLevelFilters == null) || (checkedLevelFilters.contains(card.getLevel()))) {
-                        //have card displayed
+            if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent())) {
+                if ((checkedGenderFilters.isEmpty()) || checkedGenderFilters.contains(card.getGender())) {
+                    if ((checkedLevelFilters.isEmpty()) || checkedLevelFilters.contains(card.getLevel())) {
+                        ImageView cardImageView = new ImageView(card.getImage());
+                        cardsFlowPane.getChildren().add(cardImageView);
                     }
                 }
             }
@@ -105,7 +103,7 @@ public class CreateLessonPlanController {
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         //For checkbox where I can select multiple items
         genderDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl", "Neutral"}, genderFilters));
-        levelDropdown.getItems().addAll(createListOfFilters(new String[]{"Easy", "Medium", "Hard"}, levelFilters));
+        levelDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"}, levelFilters));
         eventDropdown.getItems().addAll(createListOfFilters(new String[]{"Beam", "Floor", "Horizontal Bars",
                 "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"}, eventFilters));
 
