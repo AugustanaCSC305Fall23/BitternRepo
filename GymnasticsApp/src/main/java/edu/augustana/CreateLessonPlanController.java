@@ -23,6 +23,7 @@ public class CreateLessonPlanController {
     @FXML private TextField titleField;
     @FXML private Button doneButton;
     @FXML private Label titleLabel = new Label();
+    @FXML private Button cancelButton;
     @FXML private ListView<?> lessonPlanListView = new ListView<>();
     private String title = App.getLessonPlan().getTitle();
 
@@ -45,6 +46,7 @@ public class CreateLessonPlanController {
         titleLabel.setText(title);
         titleField.setVisible(false);
         doneButton.setVisible(false);
+        cancelButton.setVisible(false);
 
     }
 
@@ -54,6 +56,7 @@ public class CreateLessonPlanController {
         titleField.setVisible(true);
         doneButton.setVisible(true);
         editTitleButton.setVisible(false);
+        cancelButton.setVisible(true);
     }
 
     @FXML void setTitle() {
@@ -67,6 +70,16 @@ public class CreateLessonPlanController {
         lessonPlanListView.setVisible(true);
         titleField.setVisible(false);
         doneButton.setVisible(false);
+        cancelButton.setVisible(false);
+    }
+
+    @FXML private void cancelSetTitle() {
+        editTitleButton.setVisible(true);
+        titleLabel.setVisible(true);
+        lessonPlanListView.setVisible(true);
+        titleField.setVisible(false);
+        doneButton.setVisible(false);
+        cancelButton.setVisible(false);
     }
 }
 
