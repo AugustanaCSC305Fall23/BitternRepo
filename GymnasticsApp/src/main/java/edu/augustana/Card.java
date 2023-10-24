@@ -3,6 +3,19 @@ package edu.augustana;
 import javafx.scene.image.Image;
 
 public class Card {
+
+    private String code;
+    private String event;
+    private String category;
+    private String title;
+    private String packFolder;
+    private String imageName;
+    private Image image;
+    private char gender;
+    private char modelSex;
+    private String level;
+    private String[] equipment;
+    private String[] keywords;
     public String getCode() {
         return code;
     }
@@ -47,18 +60,7 @@ public class Card {
         return keywords;
     }
 
-    private String code;
-    private String event;
-    private String category;
-    private String title;
-    private String packFolder;
-    private String imageName;
-    private Image image;
-    private char gender;
-    private char modelSex;
-    private String level;
-    private String[] equipment;
-    private String[] keywords;
+
 
     public Card(String[] cardDataArray) {
         //String[] cardDataArray = cardDataLine.split(",");
