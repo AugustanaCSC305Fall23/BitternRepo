@@ -7,175 +7,179 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
-   <children>
-      <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="814.0" promptText="Search">
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
+   <center>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+         <children>
+            <SplitPane centerShape="false" dividerPositions="0.11853158602150539" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+              <items>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <VBox focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="8.0">
+                           <children>
+                              <Label text="Difficulty">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="easyCheckBox" mnemonicParsing="false" text="Easy">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="mediumCheckBox" mnemonicParsing="false" text="Medium">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="hardCheckBox" mnemonicParsing="false" text="Hard">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <Label text="Gender">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="boyCheckBox" mnemonicParsing="false" text="Boy">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="girlCheckBox" mnemonicParsing="false" text="Girl">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="neutralCheckBox" mnemonicParsing="false" text="Neutral">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <Label text="Event">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="beamCheckBox" mnemonicParsing="false" text="Beam">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="unevenBarsCheckBox" mnemonicParsing="false" text="Uneven Bars">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="strengthCheckBox" mnemonicParsing="false" text="Strength/Muscle">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="floorCheckBox" mnemonicParsing="false" text="Floor">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="vaultCheckBox" mnemonicParsing="false" text="Vault">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="ringsCheckBox" mnemonicParsing="false" text="Rings">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="pommelHorseCheckBox" mnemonicParsing="false" text="Pommel Horse/Mushroom">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="parallelBarsCheckBox" mnemonicParsing="false" text="Parallel Bars">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="horizontalBarsCheckBox" mnemonicParsing="false" text="Horizontal Bars">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="trampolineCheckBox" mnemonicParsing="false" text="Trampoline">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </CheckBox>
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="25.0">
+                                 <children>
+                                    <Button fx:id="applyFiltersBtn" mnemonicParsing="false" onAction="#applyFiltersAction" text="Apply Filters">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" text="Clear Filters">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                           <children>
+                              <ScrollPane layoutX="60.0" layoutY="500.0" prefHeight="647.0" prefWidth="847.0">
+                                 <content>
+                                    <FlowPane fx:id="cardsFlowPane" prefWrapLength="1200.0" />
+                                 </content>
+                              </ScrollPane>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="800.0">
+                                 <children>
+                                    <Button fx:id="backToLessonPlanBtn" mnemonicParsing="false" onAction="#returnToLessonPlanHandler" text="Return to Lesson Plan" wrapText="true">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home">
+                                       <font>
+                                          <Font size="31.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+              </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="1265.0" promptText="Search" BorderPane.alignment="CENTER">
          <font>
             <Font size="32.0" />
          </font>
-         <VBox.margin>
-            <Insets left="35.0" right="35.0" top="5.0" />
-         </VBox.margin>
       </TextField>
-      <SplitPane centerShape="false" dividerPositions="0.11853158602150539" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-        <items>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-               <children>
-                  <VBox focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="8.0">
-                     <children>
-                        <Label text="Difficulty">
-                           <font>
-                              <Font size="21.0" />
-                           </font>
-                        </Label>
-                        <CheckBox fx:id="easyCheckBox" mnemonicParsing="false" text="Easy">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="mediumCheckBox" mnemonicParsing="false" text="Medium">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="hardCheckBox" mnemonicParsing="false" text="Hard">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <Label text="Gender">
-                           <font>
-                              <Font size="21.0" />
-                           </font>
-                        </Label>
-                        <CheckBox fx:id="boyCheckBox" mnemonicParsing="false" text="Boy">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="girlCheckBox" mnemonicParsing="false" text="Girl">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="neutralCheckBox" mnemonicParsing="false" text="Neutral">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <Label text="Event">
-                           <font>
-                              <Font size="21.0" />
-                           </font>
-                        </Label>
-                        <CheckBox fx:id="beamCheckBox" mnemonicParsing="false" text="Beam">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="unevenBarsCheckBox" mnemonicParsing="false" text="Uneven Bars">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="strengthCheckBox" mnemonicParsing="false" text="Strength/Muscle">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="floorCheckBox" mnemonicParsing="false" text="Floor">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="vaultCheckBox" mnemonicParsing="false" text="Vault">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="ringsCheckBox" mnemonicParsing="false" text="Rings">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="pommelHorseCheckBox" mnemonicParsing="false" text="Pommel Horse/Mushroom">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="parallelBarsCheckBox" mnemonicParsing="false" text="Parallel Bars">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="horizontalBarsCheckBox" mnemonicParsing="false" text="Horizontal Bars">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="trampolineCheckBox" mnemonicParsing="false" text="Trampoline">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </CheckBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="25.0">
-                           <children>
-                              <Button fx:id="applyFiltersBtn" mnemonicParsing="false" onAction="#applyFiltersAction" text="Apply Filters">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" text="Clear Filters">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </Pane>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-               <children>
-                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-                     <children>
-                        <ScrollPane layoutX="60.0" layoutY="500.0" prefHeight="647.0" prefWidth="847.0">
-                           <content>
-                              <FlowPane fx:id="cardsFlowPane" prefWrapLength="1000.0" />
-                           </content>
-                        </ScrollPane>
-                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="800.0">
-                           <children>
-                              <Button fx:id="backToLessonPlanBtn" mnemonicParsing="false" onAction="#returnToLessonPlanHandler" text="Return to Lesson Plan" wrapText="true">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home">
-                                 <font>
-                                    <Font size="31.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </Pane>
-        </items>
-      </SplitPane>
-   </children>
-</VBox>
+   </top>
+</BorderPane>
