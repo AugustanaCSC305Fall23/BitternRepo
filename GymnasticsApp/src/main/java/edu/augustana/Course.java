@@ -1,14 +1,15 @@
 package edu.augustana;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
     private String courseTitle;
     private List<LessonPlan> lessonPlanList;
 
-    public Course(String title, List<LessonPlan> lessonPlans) {
+    public Course(String title) {
         courseTitle = title;
-        lessonPlanList = lessonPlans;
+        lessonPlanList = new ArrayList<>();
     }
 
     public void addLessonPlan(LessonPlan lessonPlan) {

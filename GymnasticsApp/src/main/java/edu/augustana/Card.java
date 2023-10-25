@@ -1,7 +1,6 @@
 package edu.augustana;
 
 import javafx.scene.image.Image;
-
 import java.util.Arrays;
 
 public class Card {
@@ -18,16 +17,8 @@ public class Card {
     private String level;
     private String[] equipment;
     private String[] keywords;
-    public String getCode() {
-        return code;
-    }
-
-
-
-
 
     public Card(String[] cardDataArray) {
-        //String[] cardDataArray = cardDataLine.split(",");
         code = cardDataArray[0].strip();
         event = cardDataArray[1].strip();
         category = cardDataArray[2].strip();
@@ -37,13 +28,18 @@ public class Card {
         // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
         // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
         // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
-        image = new Image(getClass().getResource("images/" + imageName).toString(),400, 300, true, true);
+        image = new Image(getClass().getResource("images/" + imageName).toString(), 400, 300, true, true);
         gender = cardDataArray[6].strip().toCharArray()[0];
         modelSex = cardDataArray[7].strip().toCharArray()[0];
         level = cardDataArray[8].strip();
         equipment = cardDataArray[9].split(",");
         keywords = cardDataArray[10].split(",");
     }
+
+    public String getCode() {
+        return code;
+    }
+
     public String getEvent() {
         return event;
     }
@@ -62,6 +58,10 @@ public class Card {
 
     public String getImageName() {
         return imageName;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public char getGender() {
@@ -84,25 +84,22 @@ public class Card {
         return keywords;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
     @Override
     public String toString() {
         return "Card{" +
-                "code='" + code + '\'' +
-                ", event='" + event + '\'' +
-                ", category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", packFolder='" + packFolder + '\'' +
-                ", imageName='" + imageName + '\'' +
-                ", image=" + image +
-                ", gender=" + gender +
-                ", modelSex=" + modelSex +
-                ", level='" + level + '\'' +
-                ", equipment=" + Arrays.toString(equipment) +
-                ", keywords=" + Arrays.toString(keywords) +
-                '}';
-    }
+                "code=" + code +
+                "\nevent=" + event +
+                "\ncategory=" + category +
+                "\ntitle=" + title +
+                "\npackFolder=" + packFolder +
+                "\nimageName=" + imageName +
+                "\ngender=" + gender +
+                "\nmodelSex=" + modelSex +
+                "\nlevel=" + level +
+                "\nequipment=" + Arrays.toString(equipment) +
+                "\nkeywords=" + Arrays.toString(keywords) +
+                "}";
+        }
 }
+
+
