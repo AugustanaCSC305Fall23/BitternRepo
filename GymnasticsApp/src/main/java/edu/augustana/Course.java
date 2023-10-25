@@ -10,10 +10,17 @@ public class Course {
     public Course(String title) {
         courseTitle = title;
         lessonPlanList = new ArrayList<>();
+        lessonPlanList.add(new LessonPlan("My Lesson Plan"));
     }
 
     public void addLessonPlan(LessonPlan lessonPlan) {
+        lessonPlanList.add(lessonPlan);
+    }
 
+    public LessonPlan createNewLessonPlan() {
+        LessonPlan newLessonPlan = new LessonPlan("My Lesson Plan");
+        lessonPlanList.add(newLessonPlan);
+        return newLessonPlan;
     }
 
     public String getCourseTitle() {

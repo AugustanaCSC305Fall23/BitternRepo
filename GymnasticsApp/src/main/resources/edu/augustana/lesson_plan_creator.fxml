@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -14,8 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
-<!--<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">-->
+<!--<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">-->
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
@@ -26,7 +26,7 @@
                         <CheckComboBox fx:id="genderDropdown" showCheckedCount="true" title="Gender" />
                         <CheckComboBox fx:id="levelDropdown" showCheckedCount="true" title="Level" />
                         <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" title="Event" />
-                        <CheckComboBox showCheckedCount="true" title="Model Sex" />
+                        <CheckComboBox fx:id="modelSexDropdown" showCheckedCount="true" title="Model Sex" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="20.0">
@@ -64,38 +64,54 @@
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
+                  <ScrollPane prefViewportHeight="575.0">
                      <content>
-                        <FlowPane fx:id="cardsFlowPane" prefWrapLength="820.0" />
+                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="820.0" vgap="10.0" />
                      </content>
                   </ScrollPane>
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="271.0" layoutY="12.0" prefHeight="47.0" prefWidth="372.0" text="Title" textAlignment="CENTER" AnchorPane.leftAnchor="150.0">
+                  <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="271.0" layoutY="12.0" prefHeight="47.0" prefWidth="372.0" text="Title" textAlignment="CENTER" AnchorPane.leftAnchor="140.0">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Label>
-                  <Button layoutX="351.0" layoutY="343.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
-                  <Button fx:id="editTitleButton" layoutX="167.0" layoutY="60.0" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" />
+                  <!--<Button fx:id="editTitleButton" layoutX="167.0" layoutY="60.0" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" />
                   <Button fx:id="doneButton" layoutX="219.0" layoutY="62.0" mnemonicParsing="false" onAction="#setTitle" text="Done" />
-                  <TextField fx:id="titleField" layoutX="7.0" layoutY="11.0" prefHeight="51.0" prefWidth="403.0" promptText="Enter Title">
-                  <Button mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.leftAnchor="460.0" AnchorPane.topAnchor="550.0">
-                     <font>
-                        <Font size="19.0" />
-                     </font></Button>
-<!--                  <Button fx:id="editTitleButton" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="90.0">;
+                        <TextField fx:id="titleField" layoutX="7.0" layoutY="11.0" prefHeight="51.0" prefWidth="403.0" promptText="Enter Title">
+                        <Button mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.leftAnchor="460.0" AnchorPane.topAnchor="550.0">
+                           <font>
+                              <Font size="19.0" />
+                           </font></Button>-->
+                  <Button fx:id="editTitleButton" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" AnchorPane.leftAnchor="245.0" AnchorPane.topAnchor="100.0">;
                      <font>
                         <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <HBox alignment="TOP_CENTER" spacing="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="150.0">
+                     <children>
+                        <Button fx:id="doneButton" mnemonicParsing="false" onAction="#setTitle" text="Done">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelSetTitle" text="Cancel">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                     <font>
+                        <Font size="18.0" />
                      </font></Button>
-                  <Button fx:id="doneButton" mnemonicParsing="false" onAction="#setTitle" text="Done" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="35.0" />
-                  <TextField fx:id="titleField" promptText="Enter Title" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="20.0">-->
+                  <TextField fx:id="titleField" promptText="Enter Title" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="20.0">
                      <font>
                         <Font size="24.0" />
                      </font></TextField>
-                  <Button fx:id="cancelButton" layoutX="128.0" layoutY="62.0" mnemonicParsing="false" onAction="#cancelSetTitle" text="Cancel" />
                </children>
             </AnchorPane>
          </items>

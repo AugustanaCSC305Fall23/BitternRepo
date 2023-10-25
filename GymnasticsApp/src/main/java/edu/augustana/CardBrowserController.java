@@ -103,7 +103,7 @@ public class CardBrowserController {
 
     @FXML
     private void returnToLessonPlanHandler(ActionEvent event) throws IOException {
-        App.setRoot("create_lesson_plan");
+        App.setRoot("lesson_plan_creator");
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

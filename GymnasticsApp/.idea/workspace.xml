@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e244db6-09b0-4115-b467-31ab27e1f2ae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CourseCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardCollection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Course.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/create_lesson_plan.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/create_lesson_plan.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/edu/augustana/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/augustana/Card.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/edu/augustana/CardBrowserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/augustana/CardBrowserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/edu/augustana/CardCollection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/augustana/CardCollection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/edu/augustana/CreateLessonPlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/augustana/CreateLessonPlanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/edu/augustana/create_lesson_plan.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/augustana/create_lesson_plan.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/HomeScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/HomeScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/LessonPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/LessonPlan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/create_lesson_plan.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/augustana/create_lesson_plan.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +51,7 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_directory_selection": "C:/Users/jessa/Downloads/CSC305/git/BitternRepo/GymnasticsApp/src/main/java/edu/augustana",
     "last_opened_file_path": "C:/git/BitternRepo/GymnasticsApp",
     "project.structure.last.edited": "Modules",

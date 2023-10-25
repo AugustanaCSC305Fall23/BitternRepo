@@ -11,7 +11,8 @@ import java.util.ResourceBundle;
 
 public class HomeScreenController {
 
-
+    private static Course currentCourse;
+    private static LessonPlan currentLessonPlan;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -43,8 +44,10 @@ public class HomeScreenController {
 
     @FXML
     private void createLessonPlanHandler() throws IOException {
-        App.createNewLessonPlan();
-        App.setRoot("create_lesson_plan");
+        currentLessonPlan = currentCourse.createNewLessonPlan();
+        CreateLessonPlanController.setCurrentCourse(currentCourse);
+        CreateLessonPlanController.setCurrentLessonPlan(currentLessonPlan);
+        App.setRoot("lesson_plan_creator");
     }
 
     @FXML
@@ -63,6 +66,14 @@ public class HomeScreenController {
         assert newLessonBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'home.fxml'.";
         assert viewSavedPlansBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'home.fxml'.";
         assert viewSamplePlansBtn != null : "fx:id=\"viewSamplePlansBtn\" was not injected: check your FXML file 'home.fxml'.";
+    }
+
+    public static void setCurrentCourse(Course course) {
+        currentCourse = course;
+    }
+
+    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
+        currentLessonPlan = lessonPlan;
     }
 
 
