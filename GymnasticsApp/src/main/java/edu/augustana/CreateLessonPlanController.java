@@ -10,6 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
@@ -30,6 +31,7 @@ public class CreateLessonPlanController {
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
     @FXML private CheckComboBox<String> modelSexDropdown;
+
     @FXML private FlowPane cardsFlowPane;
     @FXML private TextField searchField;
     @FXML private Button applyFiltersButton;
@@ -76,11 +78,13 @@ public class CreateLessonPlanController {
         cardsFlowPane.getChildren().clear();
         fillLists();
         for (Card card : FileReader.getCardCollection().getCardList()) {
-            if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent())) {
+            if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent()) || card.getEvent().equals("ALL")) {
                 if ((checkedGenderFilters.isEmpty()) || checkedGenderFilters.contains(card.getGender())) {
-                    if ((checkedLevelFilters.isEmpty()) || checkedLevelFilters.contains(card.getLevel())) {
-                        ImageView cardImageView = new ImageView(card.getImage());
-                        cardsFlowPane.getChildren().add(cardImageView);
+                    if ((checkedLevelFilters.isEmpty()) || checkedLevelFilters.contains(card.getLevel()) || card.getLevel().equals("ALL")) {
+                        if(checkedModelSexFilters.isEmpty() || checkedModelSexFilters.contains(card.getModelSex())) {
+                            ImageView cardImageView = new ImageView(card.getImage());
+                            cardsFlowPane.getChildren().add(cardImageView);
+                        }
                     }
                 }
             }
@@ -109,12 +113,19 @@ public class CreateLessonPlanController {
                 eventDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
             }
         }
+        if(modelSexDropdown.getCheckModel().getCheckedItems() != null){
+            List<Integer> modelSexCheckIndex = modelSexDropdown.getCheckModel().getCheckedIndices();
+            for(int i = 0; i < modelSexDropdown.getCheckModel().getCheckedItems().size(); i++){
+                modelSexDropdown.getCheckModel().toggleCheckState(modelSexCheckIndex.get(i));
+            }
+        }
         cardsFlowPane.getChildren().clear();
         drawCardSet();
     }
 
     @FXML void searchAction(KeyEvent event) {
-
+        if(event.getCode() == KeyCode.ENTER){
+        }
     }
 
     private void drawCardSet(){
@@ -131,8 +142,9 @@ public class CreateLessonPlanController {
         //For checkbox where I can select multiple items
         genderDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl", "Neutral"}, genderFilters));
         levelDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"}, levelFilters));
-        eventDropdown.getItems().addAll(createListOfFilters(new String[]{"Beam", "Floor", "Horizontal Bars",
+        eventDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "Beam", "Floor", "Horizontal Bars",
                 "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"}, eventFilters));
+        modelSexDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl"}, modelSexFilters));
 
         titleLabel.setText(title);
         titleField.setVisible(false);
