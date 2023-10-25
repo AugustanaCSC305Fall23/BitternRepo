@@ -21,13 +21,15 @@ import java.util.List;
 
 public class CreateLessonPlanController {
 
+    private final ObservableList<String> eventFilters = FXCollections.observableArrayList();
     private final ObservableList<String> genderFilters = FXCollections.observableArrayList();
     private final ObservableList<String> levelFilters = FXCollections.observableArrayList();
-    private final ObservableList<String> eventFilters = FXCollections.observableArrayList();
+    private final ObservableList<String> modelSexFilters = FXCollections.observableArrayList();
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
+    @FXML private CheckComboBox<String> modelSexDropdown;
     @FXML private FlowPane cardsFlowPane;
     @FXML private TextField searchField;
     @FXML private Button applyFiltersButton;
@@ -41,6 +43,7 @@ public class CreateLessonPlanController {
     private List<String> checkedEventFilters = new ArrayList<>();
     private List<Character> checkedGenderFilters = new ArrayList<>();
     private List<String> checkedLevelFilters = new ArrayList<>();
+    private List<Character> checkedModelSexFilters = new ArrayList<>();
 
     private ObservableList<String> createListOfFilters(String[] categoryFilters, ObservableList<String> category) {
         category.addAll(categoryFilters);
@@ -52,19 +55,23 @@ public class CreateLessonPlanController {
 
     private void fillLists() {
         checkedEventFilters.addAll(eventDropdown.getCheckModel().getCheckedItems());
-
-        for (int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++) {
-            if (genderDropdown.getCheckModel().getCheckedItems().get(i).equals("Boy")) {
-                checkedGenderFilters.add('M');
-            } else if (genderDropdown.getCheckModel().getCheckedItems().get(i).equals("Girl")) {
-                checkedGenderFilters.add('F');
-            } else {
-                checkedGenderFilters.add('N');
-            }
-        }
-
+        switchToCharacters(genderDropdown, checkedGenderFilters);
+        switchToCharacters(modelSexDropdown, checkedModelSexFilters);
         checkedLevelFilters.addAll(levelDropdown.getCheckModel().getCheckedItems());
     }
+
+    private void switchToCharacters(CheckComboBox<String> dropdown, List<Character> checkedFilters) {
+        for (int i = 0; i < dropdown.getCheckModel().getCheckedItems().size(); i++) {
+            if (dropdown.getCheckModel().getCheckedItems().get(i).equals("Boy")) {
+                checkedFilters.add('M');
+            } else if (dropdown.getCheckModel().getCheckedItems().get(i).equals("Girl")) {
+                checkedFilters.add('F');
+            } else {
+                checkedFilters.add('N');
+            }
+        }
+    }
+
     @FXML void applyFilters(ActionEvent event) {
         cardsFlowPane.getChildren().clear();
         fillLists();
