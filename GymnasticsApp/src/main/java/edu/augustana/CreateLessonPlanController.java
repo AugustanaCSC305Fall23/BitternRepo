@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -168,17 +165,21 @@ public class CreateLessonPlanController {
     }
 
     @FXML void setTitle() {
-        editTitleButton.setVisible(true);
         String title = titleField.getText();
-        currentLessonPlan.changeTitle(title);
-        titleLabel.setText(title);
-        Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
-        titleLabel.setFont(titleFont);
-        titleLabel.setVisible(true);
-        lessonPlanListView.setVisible(true);
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
+        if (!title.isEmpty()) {
+            currentLessonPlan.changeTitle(title);
+            titleLabel.setText(title);
+            Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
+            titleLabel.setFont(titleFont);
+            titleLabel.setVisible(true);
+            lessonPlanListView.setVisible(true);
+            titleField.setVisible(false);
+            doneButton.setVisible(false);
+            cancelButton.setVisible(false);
+            editTitleButton.setVisible(true);
+        } else {
+            Warning("Cannot have empty title.");
+        }
     }
 
     @FXML private void cancelSetTitle() {
@@ -188,6 +189,13 @@ public class CreateLessonPlanController {
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
+    }
+
+    @FXML private void Warning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public static void setCurrentCourse(Course course) {
