@@ -152,7 +152,7 @@
                            <children>
                               <ScrollPane layoutX="60.0" layoutY="500.0" prefHeight="647.0" prefWidth="847.0">
                                  <content>
-                                    <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="1200.0" vgap="10.0" />
+                                    <FlowPane fx:id="cardsFlowPane" hgap="10.0" onMouseClicked="#getImageClicked" prefWrapLength="1200.0" vgap="10.0" />
                                  </content>
                               </ScrollPane>
                               <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="800.0">
