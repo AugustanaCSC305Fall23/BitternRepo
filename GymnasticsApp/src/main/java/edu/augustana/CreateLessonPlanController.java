@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
@@ -20,10 +21,11 @@ import java.util.List;
 public class CreateLessonPlanController {
 
     private URL location;
-    private static final ObservableList<String> eventFilters = FXCollections.observableArrayList();
-    private static final ObservableList<String> genderFilters = FXCollections.observableArrayList();
-    private static final ObservableList<String> levelFilters = FXCollections.observableArrayList();
-    private static final ObservableList<String> modelSexFilters = FXCollections.observableArrayList();
+    private static final ObservableList<String> eventFilters = FXCollections.observableArrayList(new String[]{"Beam", "Floor", "Horizontal Bars",
+            "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"});
+    private static final ObservableList<String> genderFilters = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
+    private static final ObservableList<String> levelFilters = FXCollections.observableArrayList(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
+    private static final ObservableList<String> modelSexFilters = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
@@ -46,17 +48,11 @@ public class CreateLessonPlanController {
     private static List<String> checkedLevelFilters = new ArrayList<>();
     private static List<Character> checkedModelSexFilters = new ArrayList<>();
 
-    private ObservableList<String> createListOfFilters(String[] categoryFilters, ObservableList<String> category) {
-        category.addAll(categoryFilters);
-        return category;
-    }
-
     private void createDropdowns() {
-        genderDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl", "Neutral"}, genderFilters));
-        levelDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"}, levelFilters));
-        eventDropdown.getItems().addAll(createListOfFilters(new String[]{"Beam", "Floor", "Horizontal Bars",
-                "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"}, eventFilters));
-        modelSexDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl"}, modelSexFilters));
+        genderDropdown.getItems().addAll(genderFilters);
+        levelDropdown.getItems().addAll(levelFilters);
+        eventDropdown.getItems().addAll(eventFilters);
+        modelSexDropdown.getItems().addAll(modelSexFilters);
     }
     @FXML void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
@@ -132,7 +128,9 @@ public class CreateLessonPlanController {
     }
 
     @FXML void searchAction(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER){
 
+        }
     }
 
     private void drawCardSet(){
@@ -151,7 +149,9 @@ public class CreateLessonPlanController {
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
-        createDropdowns();
+        if(eventDropdown.getItems().isEmpty()){
+            createDropdowns();
+        }
         drawCardSet();
     }
 
