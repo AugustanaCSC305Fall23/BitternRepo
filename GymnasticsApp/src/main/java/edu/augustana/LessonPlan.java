@@ -3,8 +3,8 @@ package edu.augustana;
 public class LessonPlan {
     private String title;
 
-    public LessonPlan() {
-        title = "My Lesson Plan";
+    public LessonPlan(String title) {
+        this.title = title;
     }
 
     public String getTitle() {

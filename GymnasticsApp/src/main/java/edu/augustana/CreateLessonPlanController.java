@@ -4,34 +4,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateLessonPlanController {
 
-    private final ObservableList<String> eventFilters = FXCollections.observableArrayList();
-    private final ObservableList<String> genderFilters = FXCollections.observableArrayList();
-    private final ObservableList<String> levelFilters = FXCollections.observableArrayList();
-    private final ObservableList<String> modelSexFilters = FXCollections.observableArrayList();
+    private URL location;
+    private static final ObservableList<String> eventFilters = FXCollections.observableArrayList();
+    private static final ObservableList<String> genderFilters = FXCollections.observableArrayList();
+    private static final ObservableList<String> levelFilters = FXCollections.observableArrayList();
+    private static final ObservableList<String> modelSexFilters = FXCollections.observableArrayList();
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
     @FXML private CheckComboBox<String> modelSexDropdown;
-
     @FXML private FlowPane cardsFlowPane;
     @FXML private TextField searchField;
     @FXML private Button applyFiltersButton;
@@ -40,16 +37,26 @@ public class CreateLessonPlanController {
     @FXML private TextField titleField;
     @FXML private Button doneButton;
     @FXML private Label titleLabel = new Label();
+    @FXML private Button cancelButton;
     @FXML private ListView<?> lessonPlanListView = new ListView<>();
-    private String title = App.getLessonPlan().getTitle();
-    private List<String> checkedEventFilters = new ArrayList<>();
-    private List<Character> checkedGenderFilters = new ArrayList<>();
-    private List<String> checkedLevelFilters = new ArrayList<>();
-    private List<Character> checkedModelSexFilters = new ArrayList<>();
+    private static Course currentCourse;
+    private static LessonPlan currentLessonPlan;
+    private static List<String> checkedEventFilters = new ArrayList<>();
+    private static List<Character> checkedGenderFilters = new ArrayList<>();
+    private static List<String> checkedLevelFilters = new ArrayList<>();
+    private static List<Character> checkedModelSexFilters = new ArrayList<>();
 
     private ObservableList<String> createListOfFilters(String[] categoryFilters, ObservableList<String> category) {
         category.addAll(categoryFilters);
         return category;
+    }
+
+    private void createDropdowns() {
+        genderDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl", "Neutral"}, genderFilters));
+        levelDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"}, levelFilters));
+        eventDropdown.getItems().addAll(createListOfFilters(new String[]{"Beam", "Floor", "Horizontal Bars",
+                "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"}, eventFilters));
+        modelSexDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl"}, modelSexFilters));
     }
     @FXML void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
@@ -78,10 +85,10 @@ public class CreateLessonPlanController {
         cardsFlowPane.getChildren().clear();
         fillLists();
         for (Card card : FileReader.getCardCollection().getCardList()) {
-            if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent()) || card.getEvent().equals("ALL")) {
+            if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent())) {
                 if ((checkedGenderFilters.isEmpty()) || checkedGenderFilters.contains(card.getGender())) {
-                    if ((checkedLevelFilters.isEmpty()) || checkedLevelFilters.contains(card.getLevel()) || card.getLevel().equals("ALL")) {
-                        if(checkedModelSexFilters.isEmpty() || checkedModelSexFilters.contains(card.getModelSex())) {
+                    if ((checkedLevelFilters.isEmpty()) || checkedLevelFilters.contains(card.getLevel())) {
+                        if ((checkedModelSexFilters.isEmpty()) || checkedModelSexFilters.contains(card.getModelSex())) {
                             ImageView cardImageView = new ImageView(card.getImage());
                             cardsFlowPane.getChildren().add(cardImageView);
                         }
@@ -89,34 +96,35 @@ public class CreateLessonPlanController {
                 }
             }
         }
+        checkedEventFilters.clear();
         checkedGenderFilters.clear();
         checkedLevelFilters.clear();
-        checkedEventFilters.clear();
+        checkedModelSexFilters.clear();
     }
 
     @FXML void clearFilters(ActionEvent event) {
-        if(genderDropdown.getCheckModel().getCheckedItems() != null){
+        if (genderDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> genderCheckIndex = genderDropdown.getCheckModel().getCheckedIndices();
-            for(int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++){
+            for (int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++){
                 genderDropdown.getCheckModel().toggleCheckState(genderCheckIndex.get(i));
             }
         }
-        if(levelDropdown.getCheckModel().getCheckedItems() != null){
+        if (levelDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> levelCheckIndex = levelDropdown.getCheckModel().getCheckedIndices();
-            for(int i = 0; i < levelDropdown.getCheckModel().getCheckedItems().size(); i++){
+            for (int i = 0; i < levelDropdown.getCheckModel().getCheckedItems().size(); i++){
                 levelDropdown.getCheckModel().toggleCheckState(levelCheckIndex.get(i));
             }
         }
-        if(eventDropdown.getCheckModel().getCheckedItems() != null){
+        if (eventDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> eventCheckIndex = eventDropdown.getCheckModel().getCheckedIndices();
-            for(int i = 0; i < eventDropdown.getCheckModel().getCheckedItems().size(); i++){
+            for (int i = 0; i < eventDropdown.getCheckModel().getCheckedItems().size(); i++){
                 eventDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
             }
         }
-        if(modelSexDropdown.getCheckModel().getCheckedItems() != null){
-            List<Integer> modelSexCheckIndex = modelSexDropdown.getCheckModel().getCheckedIndices();
-            for(int i = 0; i < modelSexDropdown.getCheckModel().getCheckedItems().size(); i++){
-                modelSexDropdown.getCheckModel().toggleCheckState(modelSexCheckIndex.get(i));
+        if (modelSexDropdown.getCheckModel().getCheckedItems() != null){
+            List<Integer> eventCheckIndex = modelSexDropdown.getCheckModel().getCheckedIndices();
+            for (int i = 0; i < modelSexDropdown.getCheckModel().getCheckedItems().size(); i++){
+                modelSexDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
             }
         }
         cardsFlowPane.getChildren().clear();
@@ -124,8 +132,7 @@ public class CreateLessonPlanController {
     }
 
     @FXML void searchAction(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER){
-        }
+
     }
 
     private void drawCardSet(){
@@ -140,16 +147,11 @@ public class CreateLessonPlanController {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         //For checkbox where I can select multiple items
-        genderDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl", "Neutral"}, genderFilters));
-        levelDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"}, levelFilters));
-        eventDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "Beam", "Floor", "Horizontal Bars",
-                "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"}, eventFilters));
-        modelSexDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl"}, modelSexFilters));
-
-        titleLabel.setText(title);
+        titleLabel.setText(currentLessonPlan.getTitle());
         titleField.setVisible(false);
         doneButton.setVisible(false);
-
+        cancelButton.setVisible(false);
+        createDropdowns();
         drawCardSet();
     }
 
@@ -159,19 +161,49 @@ public class CreateLessonPlanController {
         titleField.setVisible(true);
         doneButton.setVisible(true);
         editTitleButton.setVisible(false);
+        cancelButton.setVisible(true);
     }
 
     @FXML void setTitle() {
+        String title = titleField.getText();
+        if (!title.isEmpty()) {
+            currentLessonPlan.changeTitle(title);
+            titleLabel.setText(title);
+            Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
+            titleLabel.setFont(titleFont);
+            titleLabel.setVisible(true);
+            lessonPlanListView.setVisible(true);
+            titleField.setVisible(false);
+            doneButton.setVisible(false);
+            cancelButton.setVisible(false);
+            editTitleButton.setVisible(true);
+        } else {
+            Warning("Cannot have empty title.");
+        }
+    }
+
+    @FXML private void cancelSetTitle() {
         editTitleButton.setVisible(true);
-        title = titleField.getText();
-        App.getLessonPlan().changeTitle(title);
-        titleLabel.setText(title);
-        Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
-        titleLabel.setFont(titleFont);
         titleLabel.setVisible(true);
         lessonPlanListView.setVisible(true);
         titleField.setVisible(false);
         doneButton.setVisible(false);
+        cancelButton.setVisible(false);
+    }
+
+    @FXML private void Warning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public static void setCurrentCourse(Course course) {
+        currentCourse = course;
+    }
+
+    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
+        currentLessonPlan = lessonPlan;
     }
 }
 
