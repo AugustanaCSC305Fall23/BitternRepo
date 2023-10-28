@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e244db6-09b0-4115-b467-31ab27e1f2ae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CardFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CategoryFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CodeFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EquipmentFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EventFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/GenderFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/KeywordsFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/LevelFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/ModelSexFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/TitleFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/FileReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +28,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -69,7 +80,7 @@
       <module name="GymnasticsApp" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.augustana.*" />
+          <option name="PATTERN" value="edu.augustana.filters.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
