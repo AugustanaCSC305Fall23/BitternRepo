@@ -7,8 +7,14 @@
     <list default="true" id="8e244db6-09b0-4115-b467-31ab27e1f2ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/HomeScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/HomeScreenController.java" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/SavedLessonPlansController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/SavedLessonPlansController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/saved_lesson_plans.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/saved_lesson_plans.fxml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/SampleLessonPlansController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/sample_lesson_plans.fxml" beforeDir="false" />
+>>>>>>> 34d9bfc949136d0858838e8444a2954a105d4dad
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,10 +40,14 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2W8923XsmWIZWm51iR9ijfNrEVy" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Downloaded.Files.Path.Enabled": "false",
@@ -53,6 +63,11 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.21494253",
     "settings.editor.selected.configurable": "project.propCompiler"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+>>>>>>> 34d9bfc949136d0858838e8444a2954a105d4dad
   }
 }]]></component>
   <component name="RecentsManager">
@@ -87,13 +102,6 @@
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="8e244db6-09b0-4115-b467-31ab27e1f2ae" name="Changes" comment="" />
-      <created>1696103131405</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1696103131405</updated>
-    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -106,6 +114,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

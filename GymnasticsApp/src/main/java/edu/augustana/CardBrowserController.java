@@ -162,11 +162,8 @@ public class CardBrowserController {
                 prevImage = clickedImageView.getImage();
                 clickedImageView.setImage(checkImage);
             }
-
-
         }
     }
-
     @FXML
     void printSelectedCard(ActionEvent event) {
         // Used http://www.java2s.com/example/java/javafx/printing-with-javafx.html
