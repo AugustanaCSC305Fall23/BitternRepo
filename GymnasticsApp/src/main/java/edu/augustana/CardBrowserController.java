@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.print.*;
+
 public class CardBrowserController {
 
 
@@ -144,7 +146,7 @@ public class CardBrowserController {
     }
 
     @FXML
-    private ImageView getImageClicked(MouseEvent event) throws IOException {
+    private void getImageClicked(MouseEvent event) throws IOException {
         if (event.getTarget().getClass() == ImageView.class) {
             if (clickedImageView == null) {
                 clickedImageView = (ImageView) event.getTarget();
@@ -154,8 +156,7 @@ public class CardBrowserController {
                 clickedImageView.setImage(prevImage);
                 clickedImageView = null;
                 prevImage = null;
-            }
-            else {
+            } else {
                 clickedImageView.setImage(prevImage);
                 clickedImageView = (ImageView) event.getTarget();
                 prevImage = clickedImageView.getImage();
@@ -164,7 +165,23 @@ public class CardBrowserController {
 
 
         }
-        return null;
     }
 
+    @FXML
+    void printSelectedCard(ActionEvent event) {
+        // Used http://www.java2s.com/example/java/javafx/printing-with-javafx.html
+        // https://stackoverflow.com/questions/28847757/how-to-display-print-dialog-in-java-fx-and-print-node
+
+        ImageView cardImageView = new ImageView(prevImage);
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null && job.showPageSetupDialog(clickedImageView.getScene().getWindow()) && job.showPrintDialog(clickedImageView.getScene().getWindow())){
+            boolean success = job.printPage(cardImageView);
+            if (success) {
+                job.endJob();
+            }
+
+        }
+
+    }
 }
