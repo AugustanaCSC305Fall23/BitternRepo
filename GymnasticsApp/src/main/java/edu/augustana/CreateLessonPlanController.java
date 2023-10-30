@@ -1,15 +1,15 @@
 package edu.augustana;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import edu.augustana.filters.EventFilter;
+import edu.augustana.filters.GenderFilter;
+import edu.augustana.filters.LevelFilter;
+import edu.augustana.filters.ModelSexFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
@@ -23,10 +23,10 @@ import java.util.List;
 public class CreateLessonPlanController {
 
     private URL location;
-    private static final ObservableList<String> eventFilters = FXCollections.observableArrayList();
-    private static final ObservableList<String> genderFilters = FXCollections.observableArrayList();
-    private static final ObservableList<String> levelFilters = FXCollections.observableArrayList();
-    private static final ObservableList<String> modelSexFilters = FXCollections.observableArrayList();
+    private static final EventFilter eventFilter = new EventFilter();
+    private static final GenderFilter genderFilter = new GenderFilter();
+    private static final ModelSexFilter modelSexFilter = new ModelSexFilter();
+    private static final LevelFilter levelFilter = new LevelFilter();
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
@@ -44,35 +44,26 @@ public class CreateLessonPlanController {
     @FXML private ListView<?> lessonPlanListView = new ListView<>();
     private static Course currentCourse;
     private static LessonPlan currentLessonPlan;
-    private static List<String> checkedEventFilters = new ArrayList<>();
-    private static List<Character> checkedGenderFilters = new ArrayList<>();
-    private static List<String> checkedLevelFilters = new ArrayList<>();
-    private static List<Character> checkedModelSexFilters = new ArrayList<>();
-
-    private ObservableList<String> createListOfFilters(String[] categoryFilters, ObservableList<String> category) {
-        category.addAll(categoryFilters);
-        return category;
-    }
 
     private void createDropdowns() {
-        genderDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl", "Neutral"}, genderFilters));
-        levelDropdown.getItems().addAll(createListOfFilters(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"}, levelFilters));
-        eventDropdown.getItems().addAll(createListOfFilters(new String[]{"Beam", "Floor", "Horizontal Bars",
-                "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"}, eventFilters));
-        modelSexDropdown.getItems().addAll(createListOfFilters(new String[]{"Boy", "Girl"}, modelSexFilters));
+        genderDropdown.getItems().addAll(genderFilter.getFilter());
+        levelDropdown.getItems().addAll(levelFilter.getFilter());
+        eventDropdown.getItems().addAll(eventFilter.getFilter());
+        modelSexDropdown.getItems().addAll(modelSexFilter.getFilter());
     }
     @FXML void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
     }
 
     private void fillLists() {
-        checkedEventFilters.addAll(eventDropdown.getCheckModel().getCheckedItems());
-        switchToCharacters(genderDropdown, checkedGenderFilters);
-        switchToCharacters(modelSexDropdown, checkedModelSexFilters);
-        checkedLevelFilters.addAll(levelDropdown.getCheckModel().getCheckedItems());
+        eventFilter.setChecked(eventDropdown.getCheckModel().getCheckedItems());
+        genderFilter.setChecked(switchToCharacters(genderDropdown));
+        modelSexFilter.setChecked(switchToCharacters(modelSexDropdown));
+        levelFilter.setChecked(levelDropdown.getCheckModel().getCheckedItems());
     }
 
-    private void switchToCharacters(CheckComboBox<String> dropdown, List<Character> checkedFilters) {
+    private List<Character> switchToCharacters(CheckComboBox<String> dropdown) {
+        List<Character> checkedFilters = new ArrayList<>();
         for (int i = 0; i < dropdown.getCheckModel().getCheckedItems().size(); i++) {
             if (dropdown.getCheckModel().getCheckedItems().get(i).equals("Boy")) {
                 checkedFilters.add('M');
@@ -82,27 +73,22 @@ public class CreateLessonPlanController {
                 checkedFilters.add('N');
             }
         }
+        return checkedFilters;
     }
 
     @FXML void applyFilters(ActionEvent event) {
         cardsFlowPane.getChildren().clear();
         fillLists();
         for (Card card : FileReader.getCardCollection().getCardList()) {
-            if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent())) {
-                if ((checkedGenderFilters.isEmpty()) || checkedGenderFilters.contains(card.getGender())) {
-                    if ((checkedLevelFilters.isEmpty()) || checkedLevelFilters.contains(card.getLevel())) {
-                        if ((checkedModelSexFilters.isEmpty()) || checkedModelSexFilters.contains(card.getModelSex())) {
-                            ImageView cardImageView = new ImageView(card.getImage());
-                            cardsFlowPane.getChildren().add(cardImageView);
-                        }
-                    }
-                }
+            if (eventFilter.filter(card) && genderFilter.filter(card) && levelFilter.filter(card) && modelSexFilter.filter(card)){
+                ImageView cardImageView = new ImageView(card.getImage());
+                cardsFlowPane.getChildren().add(cardImageView);
             }
         }
-        checkedEventFilters.clear();
-        checkedGenderFilters.clear();
-        checkedLevelFilters.clear();
-        checkedModelSexFilters.clear();
+        eventFilter.resetFilter();
+        genderFilter.resetFilter();
+        levelFilter.resetFilter();
+        modelSexFilter.resetFilter();
     }
 
     @FXML void clearFilters(ActionEvent event) {
@@ -135,7 +121,9 @@ public class CreateLessonPlanController {
     }
 
     @FXML void searchAction(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER){
 
+        }
     }
 
     private void drawCardSet(){
@@ -154,7 +142,9 @@ public class CreateLessonPlanController {
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
-        createDropdowns();
+        if(eventDropdown.getItems().isEmpty()){
+            createDropdowns();
+        }
         drawCardSet();
     }
 
@@ -168,17 +158,21 @@ public class CreateLessonPlanController {
     }
 
     @FXML void setTitle() {
-        editTitleButton.setVisible(true);
         String title = titleField.getText();
-        currentLessonPlan.changeTitle(title);
-        titleLabel.setText(title);
-        Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
-        titleLabel.setFont(titleFont);
-        titleLabel.setVisible(true);
-        lessonPlanListView.setVisible(true);
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
+        if (!title.isEmpty()) {
+            currentLessonPlan.changeTitle(title);
+            titleLabel.setText(title);
+            Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
+            titleLabel.setFont(titleFont);
+            titleLabel.setVisible(true);
+            lessonPlanListView.setVisible(true);
+            titleField.setVisible(false);
+            doneButton.setVisible(false);
+            cancelButton.setVisible(false);
+            editTitleButton.setVisible(true);
+        } else {
+            Warning("Cannot have empty title.");
+        }
     }
 
     @FXML private void cancelSetTitle() {
@@ -190,6 +184,13 @@ public class CreateLessonPlanController {
         cancelButton.setVisible(false);
     }
 
+    @FXML private void Warning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     public static void setCurrentCourse(Course course) {
         currentCourse = course;
     }
@@ -198,4 +199,3 @@ public class CreateLessonPlanController {
         currentLessonPlan = lessonPlan;
     }
 }
-

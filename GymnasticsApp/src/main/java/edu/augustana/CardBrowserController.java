@@ -1,11 +1,13 @@
 package edu.augustana;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javafx.print.*;
 
 public class CardBrowserController {
 
@@ -89,6 +93,13 @@ public class CardBrowserController {
 
     private List<String> filters = new ArrayList<>();
 
+    private ImageView clickedImageView = new ImageView();
+
+    private Image prevImage;
+
+    private final Image checkImage = new Image(getClass().getResource("images/Checkmark.png").toString(), 400, 300, true, true);
+
+
     private List<CheckBox> createListOfFilters() {
         return Arrays.asList(easyCheckBox, mediumCheckBox, hardCheckBox, boyCheckBox, girlCheckBox,
                 neutralCheckBox, beamCheckBox, unevenBarsCheckBox, strengthCheckBox, floorCheckBox,
@@ -132,5 +143,45 @@ public class CardBrowserController {
                 cb.fire();
             }
         }
+    }
+
+    @FXML
+    private void getImageClicked(MouseEvent event) throws IOException {
+        if (event.getTarget().getClass() == ImageView.class) {
+            if (clickedImageView == null) {
+                clickedImageView = (ImageView) event.getTarget();
+                prevImage = clickedImageView.getImage();
+                clickedImageView.setImage(checkImage);
+            } else if (event.getTarget().equals(clickedImageView)) {
+                clickedImageView.setImage(prevImage);
+                clickedImageView = null;
+                prevImage = null;
+            } else {
+                clickedImageView.setImage(prevImage);
+                clickedImageView = (ImageView) event.getTarget();
+                prevImage = clickedImageView.getImage();
+                clickedImageView.setImage(checkImage);
+            }
+
+
+        }
+    }
+
+    @FXML
+    void printSelectedCard(ActionEvent event) {
+        // Used http://www.java2s.com/example/java/javafx/printing-with-javafx.html
+        // https://stackoverflow.com/questions/28847757/how-to-display-print-dialog-in-java-fx-and-print-node
+
+        ImageView cardImageView = new ImageView(prevImage);
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null && job.showPageSetupDialog(clickedImageView.getScene().getWindow()) && job.showPrintDialog(clickedImageView.getScene().getWindow())){
+            boolean success = job.printPage(cardImageView);
+            if (success) {
+                job.endJob();
+            }
+
+        }
+
     }
 }
