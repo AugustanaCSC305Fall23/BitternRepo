@@ -55,17 +55,11 @@ public class HomeScreenController {
         App.setRoot("saved_lesson_plans");
     }
 
-    @FXML
-    private void viewSamplePlansHandler() throws IOException {
-        App.setRoot("sample_lesson_plans");
-    }
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'home.fxml'.";
-        assert newLessonBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'home.fxml'.";
-        assert viewSavedPlansBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'home.fxml'.";
-        assert viewSamplePlansBtn != null : "fx:id=\"viewSamplePlansBtn\" was not injected: check your FXML file 'home.fxml'.";
+        assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
+        assert newLessonBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
+        assert viewSavedPlansBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
     }
 
     public static void setCurrentCourse(Course course) {
