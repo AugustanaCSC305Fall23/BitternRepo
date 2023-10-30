@@ -161,10 +161,7 @@ public class CardBrowserController {
                 prevImage = clickedImageView.getImage();
                 clickedImageView.setImage(checkImage);
             }
-
-
         }
         return null;
     }
-
 }

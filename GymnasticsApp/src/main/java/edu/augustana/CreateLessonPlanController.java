@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -18,6 +19,7 @@ import org.controlsfx.control.CheckComboBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CreateLessonPlanController {
@@ -34,17 +36,16 @@ public class CreateLessonPlanController {
     @FXML private CheckComboBox<String> modelSexDropdown;
     @FXML private FlowPane cardsFlowPane;
     @FXML private TextField searchField;
-    @FXML private Button applyFiltersButton;
-    @FXML private Button clearFiltersButton;
+    @FXML private Button addCardButton;
     @FXML private Button editTitleButton;
     @FXML private TextField titleField;
     @FXML private Button doneButton;
     @FXML private Label titleLabel = new Label();
     @FXML private Button cancelButton;
-    @FXML private ListView<?> lessonPlanListView = new ListView<>();
+    @FXML private ListView<String> lessonPlanListView = new ListView<>();
     private static Course currentCourse;
     private static LessonPlan currentLessonPlan;
-
+    private static Card selectedCard;
     private void createDropdowns() {
         genderDropdown.getItems().addAll(genderFilter.getFilter());
         levelDropdown.getItems().addAll(levelFilter.getFilter());
@@ -76,12 +77,13 @@ public class CreateLessonPlanController {
         return checkedFilters;
     }
 
-    @FXML void applyFilters(ActionEvent event) {
+    @FXML void applyFilters() {
         cardsFlowPane.getChildren().clear();
         fillLists();
         for (Card card : FileReader.getCardCollection().getCardList()) {
             if (eventFilter.filter(card) && genderFilter.filter(card) && levelFilter.filter(card) && modelSexFilter.filter(card)){
                 ImageView cardImageView = new ImageView(card.getImage());
+                cardImageView.setOnMouseClicked(this::selectedCard);
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
@@ -91,7 +93,7 @@ public class CreateLessonPlanController {
         modelSexFilter.resetFilter();
     }
 
-    @FXML void clearFilters(ActionEvent event) {
+    @FXML void clearFilters() {
         if (genderDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> genderCheckIndex = genderDropdown.getCheckModel().getCheckedIndices();
             for (int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++){
@@ -126,10 +128,23 @@ public class CreateLessonPlanController {
         }
     }
 
+    private void selectedCard(MouseEvent event){
+        if(event.getTarget().getClass() == ImageView.class){
+            ImageView cardView = (ImageView) event.getTarget();
+            Image selectedImage = cardView.getImage();
+            for(Card card : FileReader.getCardCollection().getCardList()){
+                if(card.getImage().equals(selectedImage)){
+                    selectedCard = card;
+                }
+            }
+        }
+    }
+
     private void drawCardSet(){
         List<Image> imageList = FileReader.getImageList();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
+            cardImageView.setOnMouseClicked(this::selectedCard);
             cardsFlowPane.getChildren().add(cardImageView);
         }
     }
@@ -138,6 +153,11 @@ public class CreateLessonPlanController {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         //For checkbox where I can select multiple items
+        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("images/plusSign.png").toString()));
+        buttonImageView.setFitHeight(20.0);
+        buttonImageView.setFitWidth(20.0);
+        addCardButton.setMaxSize(25.0, 25.0);
+        addCardButton.setGraphic(buttonImageView);
         titleLabel.setText(currentLessonPlan.getTitle());
         titleField.setVisible(false);
         doneButton.setVisible(false);
@@ -146,6 +166,10 @@ public class CreateLessonPlanController {
             createDropdowns();
         }
         drawCardSet();
+        //add all the cards from the lessonplan but have only code and title
+        for(Card card : currentLessonPlan.getLessonPlanList()){
+            lessonPlanListView.getItems().add(card.getCode() + ", " + card.getTitle());
+        }
     }
 
     @FXML void openTitleTextBox() {
@@ -197,5 +221,12 @@ public class CreateLessonPlanController {
 
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         currentLessonPlan = lessonPlan;
+    }
+
+    @FXML void addCardToLessonPlan() {
+        if(selectedCard != null){
+            currentLessonPlan.addCardToList(selectedCard);
+            lessonPlanListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
+        }
     }
 }
