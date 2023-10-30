@@ -4,7 +4,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -52,11 +54,14 @@ public class HomeScreenController {
 
     @FXML
     private void viewSavedPlansHandler() throws IOException {
-        App.setRoot("saved_lesson_plans");
+        //Used https://www.youtube.com/watch?v=hNz8Xf4tMI4
+        FileChooser fc = new FileChooser();
+        File selectedFile = fc.showOpenDialog(null);
     }
 
     @FXML
     private void viewSamplePlansHandler() throws IOException {
+
         App.setRoot("sample_lesson_plans");
     }
 
