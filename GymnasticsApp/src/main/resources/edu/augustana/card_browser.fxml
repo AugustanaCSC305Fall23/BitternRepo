@@ -157,7 +157,7 @@
                               </ScrollPane>
                               <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="800.0">
                                  <children>
-                                    <Button fx:id="backToLessonPlanBtn" mnemonicParsing="false" onAction="#returnToLessonPlanHandler" text="Return to Lesson Plan" wrapText="true">
+                                    <Button fx:id="printCardBtn" mnemonicParsing="false" onAction="#printSelectedCard" text="Print Selected Card" wrapText="true">
                                        <font>
                                           <Font size="25.0" />
                                        </font>

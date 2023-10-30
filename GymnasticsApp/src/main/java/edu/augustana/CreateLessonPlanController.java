@@ -96,26 +96,26 @@ public class CreateLessonPlanController {
     @FXML void clearFilters() {
         if (genderDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> genderCheckIndex = genderDropdown.getCheckModel().getCheckedIndices();
-            for (int i = 0; i < genderDropdown.getCheckModel().getCheckedItems().size(); i++){
+            for (int i = genderDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
                 genderDropdown.getCheckModel().toggleCheckState(genderCheckIndex.get(i));
             }
         }
         if (levelDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> levelCheckIndex = levelDropdown.getCheckModel().getCheckedIndices();
-            for (int i = 0; i < levelDropdown.getCheckModel().getCheckedItems().size(); i++){
+            for (int i = levelDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
                 levelDropdown.getCheckModel().toggleCheckState(levelCheckIndex.get(i));
             }
         }
         if (eventDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> eventCheckIndex = eventDropdown.getCheckModel().getCheckedIndices();
-            for (int i = 0; i < eventDropdown.getCheckModel().getCheckedItems().size(); i++){
+            for (int i = eventDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
                 eventDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
             }
         }
         if (modelSexDropdown.getCheckModel().getCheckedItems() != null){
-            List<Integer> eventCheckIndex = modelSexDropdown.getCheckModel().getCheckedIndices();
-            for (int i = 0; i < modelSexDropdown.getCheckModel().getCheckedItems().size(); i++){
-                modelSexDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
+            List<Integer> modelSexCheckIndex = modelSexDropdown.getCheckModel().getCheckedIndices();
+            for (int i = modelSexDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
+                modelSexDropdown.getCheckModel().toggleCheckState(modelSexCheckIndex.get(i));
             }
         }
         cardsFlowPane.getChildren().clear();
