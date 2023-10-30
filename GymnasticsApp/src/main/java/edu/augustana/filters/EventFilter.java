@@ -11,24 +11,32 @@ public class EventFilter implements CardFilter {
     public static final ObservableList<String> eventFilters = FXCollections.observableArrayList(new String[]{"Beam", "Floor", "Horizontal Bars",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"});
     private static List<String> checkedEventFilters = new ArrayList<>();
-    public EventFilter(){
-
-    }
-    public boolean filter(Card card){
+    private String filter;
+    public boolean matchCheckbox(Card card) {
         if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent()) || card.getEvent().equals("ALL")) {
             return true;
+        }
+        return false;
+    }
+    public boolean match(Card card){
+        if(filter != null){
+            if(card.getEvent().equalsIgnoreCase(filter) || card.getEvent().toLowerCase().contains(filter.toLowerCase())){
+                return true;
+            }
         }
         return false;
     }
     public ObservableList<String> getFilter(){
         return eventFilters;
     }
-
     public void setChecked(List<String> checkedFilters){
         checkedEventFilters.addAll(checkedFilters);
     }
-
+    public void setFilter(String filter){
+        this.filter = filter;
+    }
     public void resetFilter(){
         checkedEventFilters.clear();
+        filter = "";
     }
 }

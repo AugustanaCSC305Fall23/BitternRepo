@@ -1,9 +1,6 @@
 package edu.augustana;
 
-import edu.augustana.filters.EventFilter;
-import edu.augustana.filters.GenderFilter;
-import edu.augustana.filters.LevelFilter;
-import edu.augustana.filters.ModelSexFilter;
+import edu.augustana.filters.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,19 +13,24 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CreateLessonPlanController {
-
     private URL location;
     private static final EventFilter eventFilter = new EventFilter();
     private static final GenderFilter genderFilter = new GenderFilter();
     private static final ModelSexFilter modelSexFilter = new ModelSexFilter();
     private static final LevelFilter levelFilter = new LevelFilter();
+    private static final CategoryFilter categoryFilter = new CategoryFilter();
+    private static final CodeFilter codeFilter = new CodeFilter();
+    private static final EquipmentFilter equipmentFilter = new EquipmentFilter();
+    private static final KeywordsFilter keywordsFilter = new KeywordsFilter();
+    private static final TitleFilter titleFilter = new TitleFilter();
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
@@ -81,7 +83,7 @@ public class CreateLessonPlanController {
         cardsFlowPane.getChildren().clear();
         fillLists();
         for (Card card : FileReader.getCardCollection().getCardList()) {
-            if (eventFilter.filter(card) && genderFilter.filter(card) && levelFilter.filter(card) && modelSexFilter.filter(card)){
+            if (eventFilter.matchCheckbox(card) && genderFilter.matchCheckbox(card) && levelFilter.matchCheckbox(card) && modelSexFilter.matchCheckbox(card)){
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectedCard);
                 cardsFlowPane.getChildren().add(cardImageView);
@@ -121,10 +123,42 @@ public class CreateLessonPlanController {
         cardsFlowPane.getChildren().clear();
         drawCardSet();
     }
-
+    private void setFilters(){
+        categoryFilter.setFilter(searchField.getText());
+        codeFilter.setFilter(searchField.getText());
+        equipmentFilter.setFilter(searchField.getText());
+        eventFilter.setFilter(searchField.getText());
+        genderFilter.setFilter(searchField.getText());
+        keywordsFilter.setFilter(searchField.getText());
+        levelFilter.setFilter(searchField.getText());
+        modelSexFilter.setFilter(searchField.getText());
+        titleFilter.setFilter(searchField.getText());
+    }
+    private void resetFilters(){
+        categoryFilter.resetFilter();
+        codeFilter.resetFilter();
+        equipmentFilter.resetFilter();
+        eventFilter.resetFilter();
+        genderFilter.resetFilter();
+        keywordsFilter.resetFilter();
+        levelFilter.resetFilter();
+        modelSexFilter.resetFilter();
+        titleFilter.resetFilter();
+    }
     @FXML void searchAction(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
-
+            setFilters();
+            cardsFlowPane.getChildren().clear();
+            for(Card card : FileReader.getCardCollection().getCardList()){
+                if(categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
+                        eventFilter.match(card) || genderFilter.match(card) || keywordsFilter.match(card) || levelFilter.match(card) ||
+                        modelSexFilter.match(card) || titleFilter.match(card)){
+                    ImageView cardImageView = new ImageView(card.getImage());
+                    cardImageView.setOnMouseClicked(this::selectedCard);
+                    cardsFlowPane.getChildren().add(cardImageView);
+                }
+            }
+            resetFilters();
         }
     }
 
