@@ -4,7 +4,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -52,20 +54,17 @@ public class HomeScreenController {
 
     @FXML
     private void viewSavedPlansHandler() throws IOException {
-        App.setRoot("saved_lesson_plans");
+        //Used https://www.youtube.com/watch?v=hNz8Xf4tMI4
+        FileChooser fc = new FileChooser();
+        File selectedFile = fc.showOpenDialog(null);
     }
 
-    @FXML
-    private void viewSamplePlansHandler() throws IOException {
-        App.setRoot("sample_lesson_plans");
-    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'home.fxml'.";
-        assert newLessonBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'home.fxml'.";
-        assert viewSavedPlansBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'home.fxml'.";
-        assert viewSamplePlansBtn != null : "fx:id=\"viewSamplePlansBtn\" was not injected: check your FXML file 'home.fxml'.";
+        assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
+        assert newLessonBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
+        assert viewSavedPlansBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
     }
 
     public static void setCurrentCourse(Course course) {

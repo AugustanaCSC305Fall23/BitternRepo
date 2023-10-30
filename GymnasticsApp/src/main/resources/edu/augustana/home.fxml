@@ -35,14 +35,6 @@
                   <Insets right="75.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="viewSamplePlansBtn" mnemonicParsing="false" onAction="#viewSamplePlansHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="View Sample Lesson Plans" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
-               <font>
-                  <Font name="System Bold" size="21.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets right="75.0" />
-               </GridPane.margin>
-            </Button>
             <Button fx:id="viewSavedPlansBtn" mnemonicParsing="false" onAction="#viewSavedPlansHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="View Saved Lesson Plans" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="21.0" />
@@ -51,7 +43,15 @@
                   <Insets left="75.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="cardBrowserBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Browse All Cards" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="cardBrowserBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Browse All Cards" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="75.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Exit" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
@@ -61,14 +61,6 @@
             </Button>
          </children>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#exitApp" prefHeight="52.0" prefWidth="73.0" style="-fx-background-color: #98c1d9;" text="Exit">
-         <font>
-            <Font size="20.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="20.0" />
-         </VBox.margin>
-      </Button>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
