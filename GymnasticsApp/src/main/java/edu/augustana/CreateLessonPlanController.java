@@ -14,7 +14,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,9 +43,12 @@ public class CreateLessonPlanController {
     @FXML private Button doneButton;
     @FXML private Label titleLabel = new Label();
     @FXML private Button cancelButton;
-    @FXML private ListView<String> lessonPlanListView = new ListView<>();
-    private static Course currentCourse;
+    @FXML private Button saveButton;
+    @FXML private ListView<String> cardTitleListView = new ListView<>();
+
+    @FXML private Button returnToCourseBtn;
     private static LessonPlan currentLessonPlan;
+    private static Course currentCourse;
     private static Card selectedCard;
     private void createDropdowns() {
         genderDropdown.getItems().addAll(genderFilter.getFilter());
@@ -56,6 +58,10 @@ public class CreateLessonPlanController {
     }
     @FXML void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
+    }
+
+    @FXML void returnToCourseHandler() throws IOException {
+        App.setRoot("course_view");
     }
 
     private void fillLists() {
@@ -202,13 +208,13 @@ public class CreateLessonPlanController {
         drawCardSet();
         //add all the cards from the lessonplan but have only code and title
         for(Card card : currentLessonPlan.getLessonPlanList()){
-            lessonPlanListView.getItems().add(card.getCode() + ", " + card.getTitle());
+            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
     }
 
     @FXML void openTitleTextBox() {
         titleLabel.setVisible(false);
-        lessonPlanListView.setVisible(false);
+        cardTitleListView.setVisible(false);
         titleField.setVisible(true);
         doneButton.setVisible(true);
         editTitleButton.setVisible(false);
@@ -223,34 +229,30 @@ public class CreateLessonPlanController {
             Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
             titleLabel.setFont(titleFont);
             titleLabel.setVisible(true);
-            lessonPlanListView.setVisible(true);
+            cardTitleListView.setVisible(true);
             titleField.setVisible(false);
             doneButton.setVisible(false);
             cancelButton.setVisible(false);
             editTitleButton.setVisible(true);
         } else {
-            Warning("Cannot have empty title.");
+            giveWarning("Cannot have empty title.");
         }
     }
 
     @FXML private void cancelSetTitle() {
         editTitleButton.setVisible(true);
         titleLabel.setVisible(true);
-        lessonPlanListView.setVisible(true);
+        cardTitleListView.setVisible(true);
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
     }
 
-    @FXML private void Warning(String message) {
+    @FXML private void giveWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public static void setCurrentCourse(Course course) {
-        currentCourse = course;
     }
 
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
@@ -260,7 +262,11 @@ public class CreateLessonPlanController {
     @FXML void addCardToLessonPlan() {
         if(selectedCard != null){
             currentLessonPlan.addCardToList(selectedCard);
-            lessonPlanListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
+            cardTitleListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
         }
+    }
+
+    @FXML void saveLessonPlan() {
+        currentCourse.getLessonPlanList().add(currentLessonPlan);
     }
 }

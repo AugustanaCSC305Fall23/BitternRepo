@@ -13,8 +13,6 @@ import java.util.ResourceBundle;
 
 public class HomeScreenController {
 
-    private static Course currentCourse;
-    private static LessonPlan currentLessonPlan;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -24,15 +22,11 @@ public class HomeScreenController {
     @FXML // fx:id="cardBrowserBtn"
     private Button cardBrowserBtn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="newLessonBtn"
-    private Button newLessonBtn; // Value injected by FXMLLoader
-
     @FXML // fx:id="viewSavedPlansBtn"
-    private Button viewSavedPlansBtn; // Value injected by FXMLLoader
+    private Button openExistingCourseBtn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="viewSamplePlansBtn"
-    private Button viewSamplePlansBtn; // Value injected by FXMLLoader
-
+    @FXML // fx:id="createNewCourseBtn"
+    private Button createNewCourseBtn; // Value injected by FXMLLoader
 
     @FXML
     void exitApp(ActionEvent event) {
@@ -45,37 +39,25 @@ public class HomeScreenController {
     }
 
     @FXML
-    private void createLessonPlanHandler() throws IOException {
-        currentLessonPlan = currentCourse.createNewLessonPlan();
-        CreateLessonPlanController.setCurrentCourse(currentCourse);
-        CreateLessonPlanController.setCurrentLessonPlan(currentLessonPlan);
-        App.setRoot("lesson_plan_creator");
-    }
-
-    @FXML
-    private void viewSavedPlansHandler() throws IOException {
+    private void openExistingCourseHandler() throws IOException {
         //Used https://www.youtube.com/watch?v=hNz8Xf4tMI4
         FileChooser fc = new FileChooser();
         File selectedFile = fc.showOpenDialog(null);
+    }
+
+    @FXML
+    private void createNewCourseHandler() throws IOException {
+        CourseViewController.setCurrentCourse(new Course());
+        App.setRoot("course_view");
     }
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
-        assert newLessonBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
-        assert viewSavedPlansBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
+        assert createNewCourseBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
+        assert openExistingCourseBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
     }
-
-    public static void setCurrentCourse(Course course) {
-        currentCourse = course;
-    }
-
-    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
-        currentLessonPlan = lessonPlan;
-    }
-
-
 }
 
 

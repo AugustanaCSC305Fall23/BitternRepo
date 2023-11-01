@@ -27,7 +27,7 @@
           <RowConstraints maxHeight="127.99998779296877" minHeight="7.99996719360351" prefHeight="116.60000610351562" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="newLessonBtn" alignment="CENTER" mnemonicParsing="false" onAction="#createLessonPlanHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Create New Lesson Plan" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="createNewCourseBtn" alignment="CENTER" mnemonicParsing="false" onAction="#createNewCourseHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Create New Course" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Insets right="75.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="viewSavedPlansBtn" mnemonicParsing="false" onAction="#viewSavedPlansHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="View Saved Lesson Plans" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
+            <Button fx:id="openExistingCourseBtn" mnemonicParsing="false" onAction="#openExistingCourseHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Open Existing Course" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>

@@ -28,6 +28,6 @@ public class LessonPlan {
 
     @Override
     public String toString() {
-        return "Title of Lesson Plan: " + title;
+        return title;
     }
 }

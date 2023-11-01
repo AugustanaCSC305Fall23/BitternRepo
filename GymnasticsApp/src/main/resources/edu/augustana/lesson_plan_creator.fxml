@@ -14,8 +14,6 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<!--<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">-->
-
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -59,8 +57,16 @@
                   <Font size="21.0" />
                </font>
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets right="20.0" />
                </HBox.margin></TextField>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveLessonPlan" text="Save">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Button>
          </children>
          <opaqueInsets>
             <Insets />
@@ -79,46 +85,44 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
                <children>
-                  <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="271.0" layoutY="12.0" prefHeight="47.0" prefWidth="372.0" text="Title" textAlignment="CENTER" AnchorPane.leftAnchor="140.0">
+                  <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" text="Title" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="25.0">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Label>
-                  <!--<Button fx:id="editTitleButton" layoutX="167.0" layoutY="60.0" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" />
-                  <Button fx:id="doneButton" layoutX="219.0" layoutY="62.0" mnemonicParsing="false" onAction="#setTitle" text="Done" />
-                        <TextField fx:id="titleField" layoutX="7.0" layoutY="11.0" prefHeight="51.0" prefWidth="403.0" promptText="Enter Title">
-                        <Button mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.leftAnchor="460.0" AnchorPane.topAnchor="550.0">
-                           <font>
-                              <Font size="19.0" />
-                           </font></Button>-->
-                  <Button fx:id="editTitleButton" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" AnchorPane.leftAnchor="245.0" AnchorPane.topAnchor="100.0">;
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <HBox alignment="TOP_CENTER" spacing="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="150.0">
-                     <children>
-                        <Button fx:id="doneButton" mnemonicParsing="false" onAction="#setTitle" text="Done">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelSetTitle" text="Cancel">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
                   <Button mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
                         <Font size="18.0" />
                      </font></Button>
-                  <TextField fx:id="titleField" promptText="Enter Title" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="titleField" promptText="Enter Title" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="20.0">
                      <font>
                         <Font size="24.0" />
                      </font></TextField>
-                  <ListView fx:id="lessonPlanListView" layoutX="81.0" layoutY="191.0" prefHeight="325.0" prefWidth="398.0" />
+                  <ListView fx:id="cardTitleListView" layoutX="81.0" layoutY="191.0" prefHeight="325.0" prefWidth="398.0" />
+                  <Button fx:id="returnToCourseBtn" mnemonicParsing="false" onAction="#returnToCourseHandler" text="Return to Course Outline" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <HBox alignment="TOP_CENTER" spacing="100.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="140.0">
+                     <children>
+                        <Button fx:id="doneButton" mnemonicParsing="false" onAction="#setTitle" text="Done">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelSetTitle" text="Cancel">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button fx:id="editTitleButton" mnemonicParsing="false" onAction="#openTitleTextBox" text="Edit Title" AnchorPane.rightAnchor="245.0" AnchorPane.topAnchor="140.0">;
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </items>

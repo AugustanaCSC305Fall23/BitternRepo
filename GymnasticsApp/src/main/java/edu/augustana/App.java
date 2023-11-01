@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * JavaFX App
@@ -15,15 +14,11 @@ import java.util.List;
 public class App extends Application {
 
     private static Scene scene;
-    private static CourseCollection courseCollection = new CourseCollection();
 
     @Override
     public void start(Stage stage) throws IOException {
         FileReader.fillCardCollection();
         FileReader.createImageList();
-        Course newCourse = new Course("Course Title");
-        courseCollection.addCourse(newCourse);
-        HomeScreenController.setCurrentCourse(newCourse);
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
         double height = Screen.getPrimary().getBounds().getHeight();
