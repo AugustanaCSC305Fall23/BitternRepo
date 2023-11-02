@@ -118,7 +118,7 @@ public class CardBrowserController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        List<Image> imageList = CardDatabase.getImageList();
+        List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
             cardsFlowPane.getChildren().add(cardImageView);

@@ -181,7 +181,7 @@ public class CreateLessonPlanController {
     }
 
     private void drawCardSet(){
-        List<Image> imageList = CardDatabase.getImageList();
+        List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
             cardImageView.setOnMouseClicked(this::selectedCard);

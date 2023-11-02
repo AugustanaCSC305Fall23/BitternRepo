@@ -18,7 +18,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         CardDatabase.addCardsFromAllCSVFiles();
-        CardDatabase.createImageList();
+        CardDatabase.getListOfImages();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
         double height = Screen.getPrimary().getBounds().getHeight();

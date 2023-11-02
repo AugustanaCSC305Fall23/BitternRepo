@@ -14,7 +14,6 @@ import java.util.List;
 public class CardDatabase {
     //https://www.callicoder.com/java-read-write-csv-file-opencsv/
     private static CardCollection fullCardCollection;
-    private static List<Image> imageList;
 
     private static void addCardsFromCSVFile(String fileName) {
         try {
@@ -35,19 +34,17 @@ public class CardDatabase {
         addCardsFromCSVFile("DEMO1.csv");
     }
 
-    public static void createImageList() {
-        imageList = new ArrayList<Image>();
+    public static List<Image> getListOfImages() {
+        List<Image> imageList = new ArrayList<Image>();
         List<Card> cardList = fullCardCollection.getCardList();
         for (Card card : cardList) {
             imageList.add(card.getImage());
         }
+
+        return imageList;
     }
 
     public static CardCollection getFullCardCollection() {
         return fullCardCollection;
-    }
-
-    public static List<Image> getImageList() {
-        return imageList;
     }
 }
