@@ -88,7 +88,7 @@ public class CreateLessonPlanController {
     @FXML void applyFilters() {
         cardsFlowPane.getChildren().clear();
         fillLists();
-        for (Card card : FileReader.getCardCollection().getCardList()) {
+        for (Card card : CardDatabase.getFullCardCollection().getCardList()) {
             if (eventFilter.matchCheckbox(card) && genderFilter.matchCheckbox(card) && levelFilter.matchCheckbox(card) && modelSexFilter.matchCheckbox(card)){
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectedCard);
@@ -155,7 +155,7 @@ public class CreateLessonPlanController {
         if(event.getCode() == KeyCode.ENTER){
             setFilters();
             cardsFlowPane.getChildren().clear();
-            for(Card card : FileReader.getCardCollection().getCardList()){
+            for(Card card : CardDatabase.getFullCardCollection().getCardList()){
                 if(categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
                         eventFilter.match(card) || genderFilter.match(card) || keywordsFilter.match(card) || levelFilter.match(card) ||
                         modelSexFilter.match(card) || titleFilter.match(card)){
@@ -172,7 +172,7 @@ public class CreateLessonPlanController {
         if(event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
             Image selectedImage = cardView.getImage();
-            for(Card card : FileReader.getCardCollection().getCardList()){
+            for(Card card : CardDatabase.getFullCardCollection().getCardList()){
                 if(card.getImage().equals(selectedImage)){
                     selectedCard = card;
                 }
@@ -181,7 +181,7 @@ public class CreateLessonPlanController {
     }
 
     private void drawCardSet(){
-        List<Image> imageList = FileReader.getImageList();
+        List<Image> imageList = CardDatabase.getImageList();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
             cardImageView.setOnMouseClicked(this::selectedCard);

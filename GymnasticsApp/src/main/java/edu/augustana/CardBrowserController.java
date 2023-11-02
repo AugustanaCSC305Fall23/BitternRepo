@@ -1,7 +1,6 @@
 package edu.augustana;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -119,7 +118,7 @@ public class CardBrowserController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        List<Image> imageList = FileReader.getImageList();
+        List<Image> imageList = CardDatabase.getImageList();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
             cardsFlowPane.getChildren().add(cardImageView);
