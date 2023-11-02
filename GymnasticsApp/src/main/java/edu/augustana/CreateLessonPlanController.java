@@ -47,6 +47,7 @@ public class CreateLessonPlanController {
     @FXML private ListView<String> cardTitleListView = new ListView<>();
 
     @FXML private Button returnToCourseBtn;
+    CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private static LessonPlan currentLessonPlan;
     private static Course currentCourse;
     private static Card selectedCard;
@@ -56,7 +57,7 @@ public class CreateLessonPlanController {
         eventDropdown.getItems().addAll(eventFilter.getFilter());
         modelSexDropdown.getItems().addAll(modelSexFilter.getFilter());
     }
-    @FXML void goToHome(ActionEvent event) throws IOException {
+    @FXML void goToHome() throws IOException {
         App.setRoot("home");
     }
 
@@ -88,7 +89,8 @@ public class CreateLessonPlanController {
     @FXML void applyFilters() {
         cardsFlowPane.getChildren().clear();
         fillLists();
-        for (Card card : CardDatabase.getFullCardCollection().getCardList()) {
+        for (String cardId : fullCardCollection.getSetOfCardIds()) {
+            Card card = fullCardCollection.getCard(cardId);
             if (eventFilter.matchCheckbox(card) && genderFilter.matchCheckbox(card) && levelFilter.matchCheckbox(card) && modelSexFilter.matchCheckbox(card)){
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectedCard);
@@ -155,7 +157,8 @@ public class CreateLessonPlanController {
         if(event.getCode() == KeyCode.ENTER){
             setFilters();
             cardsFlowPane.getChildren().clear();
-            for(Card card : CardDatabase.getFullCardCollection().getCardList()){
+            for(String cardId : fullCardCollection.getSetOfCardIds()){
+                Card card = fullCardCollection.getCard(cardId);
                 if(categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
                         eventFilter.match(card) || genderFilter.match(card) || keywordsFilter.match(card) || levelFilter.match(card) ||
                         modelSexFilter.match(card) || titleFilter.match(card)){
@@ -172,8 +175,9 @@ public class CreateLessonPlanController {
         if(event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
             Image selectedImage = cardView.getImage();
-            for(Card card : CardDatabase.getFullCardCollection().getCardList()){
-                if(card.getImage().equals(selectedImage)){
+            for(String cardId : fullCardCollection.getSetOfCardIds()){
+                Card card = fullCardCollection.getCard(cardId);
+                if (card.getImage().equals(selectedImage)){
                     selectedCard = card;
                 }
             }
@@ -192,7 +196,6 @@ public class CreateLessonPlanController {
     private void initialize(){
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        //For checkbox where I can select multiple items
         ImageView buttonImageView = new ImageView(new Image(getClass().getResource("images/plusSign.png").toString()));
         buttonImageView.setFitHeight(20.0);
         buttonImageView.setFitWidth(20.0);
@@ -206,7 +209,7 @@ public class CreateLessonPlanController {
             createDropdowns();
         }
         drawCardSet();
-        //add all the cards from the lessonplan but have only code and title
+        //add all the cards from the lesson plan but have only code and title
         for(Card card : currentLessonPlan.getLessonPlanList()){
             cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }

@@ -10,16 +10,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CardDatabase {
-    //https://www.callicoder.com/java-read-write-csv-file-opencsv/
     private static CardCollection fullCardCollection;
 
+    //https://www.callicoder.com/java-read-write-csv-file-opencsv/
     private static void addCardsFromCSVFile(String fileName) {
         try {
             Reader reader = Files.newBufferedReader(Paths.get("src/main/resources/edu/augustana/Data/" + fileName));
             CSVReader csvReader = new CSVReader(reader);
-            String[] firstLine = csvReader.readNext();
+            csvReader.readNext();
             String[] nextRecord;
             while ((nextRecord = csvReader.readNext()) != null) {
                 fullCardCollection.addCard(new Card(nextRecord));
@@ -36,11 +37,9 @@ public class CardDatabase {
 
     public static List<Image> getListOfImages() {
         List<Image> imageList = new ArrayList<Image>();
-        List<Card> cardList = fullCardCollection.getCardList();
-        for (Card card : cardList) {
-            imageList.add(card.getImage());
+        for (String cardId : getFullCardCollection().getSetOfCardIds()) {
+            imageList.add(fullCardCollection.getCard(cardId).getImage());
         }
-
         return imageList;
     }
 
