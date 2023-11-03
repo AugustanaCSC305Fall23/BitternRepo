@@ -2,9 +2,23 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
-public interface CardFilter {
-    boolean match(Card card);
-    void setFilter(String filter);
-    void resetFilter();
+import java.util.ArrayList;
+import java.util.List;
 
+public class CardFilter {
+    String filter = "";
+    private List<String> checkedFilter = new ArrayList();
+    public boolean match(Card card){
+        return false;
+    }
+    public void setChecked(List<String> checkedFilters){
+        this.checkedFilter.addAll(checkedFilters);
+
+    }
+    public void setFilter(String filter){
+        this.filter = filter;
+    }
+    public void resetFilter(){
+        filter = "";
+    }
 }

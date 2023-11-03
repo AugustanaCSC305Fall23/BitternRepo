@@ -2,7 +2,7 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
-public class EquipmentFilter implements CardFilter{
+public class EquipmentFilter extends CardFilter{
     private String filter;
     public boolean match(Card card){
         for(String eq : card.getEquipment()){

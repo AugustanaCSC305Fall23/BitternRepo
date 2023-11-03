@@ -14,7 +14,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,11 +25,7 @@ public class CreateLessonPlanController {
     private static final GenderFilter genderFilter = new GenderFilter();
     private static final ModelSexFilter modelSexFilter = new ModelSexFilter();
     private static final LevelFilter levelFilter = new LevelFilter();
-    private static final CategoryFilter categoryFilter = new CategoryFilter();
-    private static final CodeFilter codeFilter = new CodeFilter();
-    private static final EquipmentFilter equipmentFilter = new EquipmentFilter();
-    private static final KeywordsFilter keywordsFilter = new KeywordsFilter();
-    private static final TitleFilter titleFilter = new TitleFilter();
+    private static final SearchFilter searchFilter = new SearchFilter();
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
@@ -57,14 +52,12 @@ public class CreateLessonPlanController {
     @FXML void goToHome(ActionEvent event) throws IOException {
         App.setRoot("home");
     }
-
     private void fillLists() {
         eventFilter.setChecked(eventDropdown.getCheckModel().getCheckedItems());
         genderFilter.setChecked(switchToCharacters(genderDropdown));
         modelSexFilter.setChecked(switchToCharacters(modelSexDropdown));
         levelFilter.setChecked(levelDropdown.getCheckModel().getCheckedItems());
     }
-
     private List<Character> switchToCharacters(CheckComboBox<String> dropdown) {
         List<Character> checkedFilters = new ArrayList<>();
         for (int i = 0; i < dropdown.getCheckModel().getCheckedItems().size(); i++) {
@@ -78,7 +71,6 @@ public class CreateLessonPlanController {
         }
         return checkedFilters;
     }
-
     @FXML void applyFilters() {
         cardsFlowPane.getChildren().clear();
         fillLists();
@@ -94,7 +86,6 @@ public class CreateLessonPlanController {
         levelFilter.resetFilter();
         modelSexFilter.resetFilter();
     }
-
     @FXML void clearFilters() {
         if (genderDropdown.getCheckModel().getCheckedItems() != null){
             List<Integer> genderCheckIndex = genderDropdown.getCheckModel().getCheckedIndices();
@@ -123,45 +114,20 @@ public class CreateLessonPlanController {
         cardsFlowPane.getChildren().clear();
         drawCardSet();
     }
-    private void setFilters(){
-        categoryFilter.setFilter(searchField.getText());
-        codeFilter.setFilter(searchField.getText());
-        equipmentFilter.setFilter(searchField.getText());
-        eventFilter.setFilter(searchField.getText());
-        genderFilter.setFilter(searchField.getText());
-        keywordsFilter.setFilter(searchField.getText());
-        levelFilter.setFilter(searchField.getText());
-        modelSexFilter.setFilter(searchField.getText());
-        titleFilter.setFilter(searchField.getText());
-    }
-    private void resetFilters(){
-        categoryFilter.resetFilter();
-        codeFilter.resetFilter();
-        equipmentFilter.resetFilter();
-        eventFilter.resetFilter();
-        genderFilter.resetFilter();
-        keywordsFilter.resetFilter();
-        levelFilter.resetFilter();
-        modelSexFilter.resetFilter();
-        titleFilter.resetFilter();
-    }
     @FXML void searchAction(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
-            setFilters();
+            searchFilter.setFilter(searchField.getText());
             cardsFlowPane.getChildren().clear();
             for(Card card : FileReader.getCardCollection().getCardList()){
-                if(categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
-                        eventFilter.match(card) || genderFilter.match(card) || keywordsFilter.match(card) || levelFilter.match(card) ||
-                        modelSexFilter.match(card) || titleFilter.match(card)){
+                if(searchFilter.match(card)){
                     ImageView cardImageView = new ImageView(card.getImage());
                     cardImageView.setOnMouseClicked(this::selectedCard);
                     cardsFlowPane.getChildren().add(cardImageView);
                 }
             }
-            resetFilters();
+            searchFilter.resetFilter();
         }
     }
-
     private void selectedCard(MouseEvent event){
         if(event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
@@ -173,7 +139,6 @@ public class CreateLessonPlanController {
             }
         }
     }
-
     private void drawCardSet(){
         List<Image> imageList = FileReader.getImageList();
         for (Image image : imageList) {
@@ -201,11 +166,10 @@ public class CreateLessonPlanController {
         }
         drawCardSet();
         //add all the cards from the lessonplan but have only code and title
-        for(Card card : currentLessonPlan.getLessonPlanList()){
+        /*for(Card card : currentLessonPlan.getLessonPlanList()){
             lessonPlanListView.getItems().add(card.getCode() + ", " + card.getTitle());
-        }
+        }*/
     }
-
     @FXML void openTitleTextBox() {
         titleLabel.setVisible(false);
         lessonPlanListView.setVisible(false);
@@ -214,7 +178,6 @@ public class CreateLessonPlanController {
         editTitleButton.setVisible(false);
         cancelButton.setVisible(true);
     }
-
     @FXML void setTitle() {
         String title = titleField.getText();
         if (!title.isEmpty()) {
@@ -232,7 +195,6 @@ public class CreateLessonPlanController {
             Warning("Cannot have empty title.");
         }
     }
-
     @FXML private void cancelSetTitle() {
         editTitleButton.setVisible(true);
         titleLabel.setVisible(true);
@@ -241,22 +203,18 @@ public class CreateLessonPlanController {
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
     }
-
     @FXML private void Warning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
         alert.setContentText(message);
         alert.showAndWait();
     }
-
     public static void setCurrentCourse(Course course) {
         currentCourse = course;
     }
-
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         currentLessonPlan = lessonPlan;
     }
-
     @FXML void addCardToLessonPlan() {
         if(selectedCard != null){
             currentLessonPlan.addCardToList(selectedCard);

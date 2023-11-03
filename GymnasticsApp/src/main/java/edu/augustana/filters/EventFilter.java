@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventFilter implements CardFilter {
+public class EventFilter extends CardFilter {
     public static final ObservableList<String> eventFilters = FXCollections.observableArrayList(new String[]{"Beam", "Floor", "Horizontal Bars",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"});
     private static List<String> checkedEventFilters = new ArrayList<>();
@@ -18,6 +18,7 @@ public class EventFilter implements CardFilter {
         }
         return false;
     }
+    @Override
     public boolean match(Card card){
         if(filter != null){
             if(card.getEvent().equalsIgnoreCase(filter) || card.getEvent().toLowerCase().contains(filter.toLowerCase())){
