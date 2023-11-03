@@ -27,7 +27,7 @@ public class LevelFilter implements CardFilter {
     public ObservableList<String> getFilter(){
         return levelFilters;
     }
-    public void setChecked(List<String> checkedList){
+    public void setCheckedFilters(List<String> checkedList){
         checkedLevelFilters.addAll(checkedList);
     }
     public void setFilter(String filter){

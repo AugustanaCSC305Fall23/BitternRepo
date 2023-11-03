@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenderFilter implements CardFilter {
+public class GenderFilter extends CardFilter {
     public static final ObservableList<String> genderFilters = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     private static List<Character> checkedGenderFilters = new ArrayList<>();
     private Character filter = 'z';
@@ -23,6 +23,8 @@ public class GenderFilter implements CardFilter {
         }
         return false;
     }
+
+    @Override;
     public ObservableList<String> getFilter(){
         return genderFilters;
     }
@@ -35,6 +37,8 @@ public class GenderFilter implements CardFilter {
             this.filter = 'N';
         }
     }
+
+    //@Override
     public void setChecked(List<Character> checkedFilters){
         checkedGenderFilters.addAll(checkedFilters);
     }

@@ -2,7 +2,7 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
-public class CodeFilter implements CardFilter {
+public class CodeFilter extends CardFilter {
     private String filter;
     public boolean match(Card card){
         if(card.getCode().equalsIgnoreCase(filter)){
