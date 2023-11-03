@@ -17,6 +17,8 @@ import org.controlsfx.control.CheckComboBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class CreateLessonPlanController {
@@ -30,11 +32,14 @@ public class CreateLessonPlanController {
     private static final EquipmentFilter equipmentFilter = new EquipmentFilter();
     private static final KeywordsFilter keywordsFilter = new KeywordsFilter();
     private static final TitleFilter titleFilter = new TitleFilter();
+    List<CardFilter> listOfFilters = Arrays.asList(eventFilter, genderFilter, modelSexFilter, levelFilter,
+            categoryFilter, codeFilter, equipmentFilter, keywordsFilter, titleFilter);
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
     @FXML private CheckComboBox<String> modelSexDropdown;
+    List<CheckComboBox<String>> listOfDropdowns;
     @FXML private FlowPane cardsFlowPane;
     @FXML private TextField searchField;
     @FXML private Button addCardButton;
@@ -45,17 +50,18 @@ public class CreateLessonPlanController {
     @FXML private Button cancelButton;
     @FXML private Button saveButton;
     @FXML private ListView<String> cardTitleListView = new ListView<>();
-
     @FXML private Button returnToCourseBtn;
     CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private static LessonPlan currentLessonPlan;
     private static Course currentCourse;
     private static Card selectedCard;
+
     private void createDropdowns() {
         genderDropdown.getItems().addAll(genderFilter.getFilter());
         levelDropdown.getItems().addAll(levelFilter.getFilter());
         eventDropdown.getItems().addAll(eventFilter.getFilter());
         modelSexDropdown.getItems().addAll(modelSexFilter.getFilter());
+        listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
     @FXML void goToHome() throws IOException {
         App.setRoot("home");
@@ -132,26 +138,15 @@ public class CreateLessonPlanController {
         drawCardSet();
     }
     private void setFilters(){
-        categoryFilter.setFilter(searchField.getText());
-        codeFilter.setFilter(searchField.getText());
-        equipmentFilter.setFilter(searchField.getText());
-        eventFilter.setFilter(searchField.getText());
-        genderFilter.setFilter(searchField.getText());
-        keywordsFilter.setFilter(searchField.getText());
-        levelFilter.setFilter(searchField.getText());
-        modelSexFilter.setFilter(searchField.getText());
-        titleFilter.setFilter(searchField.getText());
+        for (CardFilter filter : listOfFilters) {
+            filter.setFilter(searchField.getText());
+        }
     }
+
     private void resetFilters(){
-        categoryFilter.resetFilter();
-        codeFilter.resetFilter();
-        equipmentFilter.resetFilter();
-        eventFilter.resetFilter();
-        genderFilter.resetFilter();
-        keywordsFilter.resetFilter();
-        levelFilter.resetFilter();
-        modelSexFilter.resetFilter();
-        titleFilter.resetFilter();
+        for (CardFilter filter : listOfFilters) {
+            filter.resetFilter();
+        }
     }
     @FXML void searchAction(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
@@ -159,7 +154,7 @@ public class CreateLessonPlanController {
             cardsFlowPane.getChildren().clear();
             for(String cardId : fullCardCollection.getSetOfCardIds()){
                 Card card = fullCardCollection.getCard(cardId);
-                if(categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
+                if (categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
                         eventFilter.match(card) || genderFilter.match(card) || keywordsFilter.match(card) || levelFilter.match(card) ||
                         modelSexFilter.match(card) || titleFilter.match(card)){
                     ImageView cardImageView = new ImageView(card.getImage());

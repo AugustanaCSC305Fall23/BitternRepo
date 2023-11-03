@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8e244db6-09b0-4115-b467-31ab27e1f2ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardCollection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +41,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "courseIntegration",
+    "git-widget-placeholder": "main",
     "last_directory_selection": "C:/Users/jessa/CSC305/git/BitternRepo/GymnasticsApp/src/main/java/edu/augustana",
     "last_opened_file_path": "C:/Users/jessa/CSC305/git/StupidTextGamesRepo1025/StupidTextGames"
   }
