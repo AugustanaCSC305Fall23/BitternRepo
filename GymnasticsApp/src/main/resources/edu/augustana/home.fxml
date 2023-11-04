@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -12,10 +13,11 @@
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" style="-fx-background-color: caf0f8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.HomeScreenController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="247.0" prefWidth="992.0" text="Welcome To &#10;Gymnastics Planner Pro" textAlignment="CENTER" textFill="#03045e" textOverrun="CENTER_ELLIPSIS">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="158.0" prefWidth="992.0" text="Welcome To &#10;Gymnastics Planner Pro" textAlignment="CENTER" textFill="#03045e" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font name="DejaVu Sans Condensed Bold" size="59.0" />
          </font></Label>
+      <ImageView fx:id="logo" fitHeight="188.0" fitWidth="247.0" pickOnBounds="true" preserveRatio="true" />
       <Separator prefWidth="200.0" style="-fx-background-color: black;" />
       <GridPane prefHeight="287.0" prefWidth="1094.0">
         <columnConstraints>

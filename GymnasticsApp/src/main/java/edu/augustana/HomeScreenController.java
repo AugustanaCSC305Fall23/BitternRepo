@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -27,6 +29,9 @@ public class HomeScreenController {
 
     @FXML // fx:id="createNewCourseBtn"
     private Button createNewCourseBtn; // Value injected by FXMLLoader
+
+    @FXML private ImageView logo = new ImageView();
+
 
     @FXML
     void exitApp(ActionEvent event) {
@@ -57,6 +62,7 @@ public class HomeScreenController {
         assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
         assert createNewCourseBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
         assert openExistingCourseBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
+        logo.setImage(new Image(String.valueOf(getClass().getResource("images/LOGO.jpeg"))));
     }
 }
 
