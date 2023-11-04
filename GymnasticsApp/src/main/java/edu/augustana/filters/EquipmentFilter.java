@@ -3,7 +3,6 @@ package edu.augustana.filters;
 import edu.augustana.Card;
 
 public class EquipmentFilter extends CardFilter{
-    private String filter;
     public boolean match(Card card){
         for(String eq : card.getEquipment()){
             if(eq.equalsIgnoreCase(filter) || eq.toLowerCase().contains(filter.toLowerCase())){
@@ -11,11 +10,5 @@ public class EquipmentFilter extends CardFilter{
             }
         }
         return false;
-    }
-    public void setFilter(String filter){
-        this.filter = filter;
-    }
-    public void resetFilter(){
-        filter = "";
     }
 }

@@ -11,7 +11,6 @@ public class EventFilter extends CardFilter {
     public static final ObservableList<String> eventFilters = FXCollections.observableArrayList(new String[]{"Beam", "Floor", "Horizontal Bars",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"});
     private static List<String> checkedEventFilters = new ArrayList<>();
-    private String filter;
     public boolean matchCheckbox(Card card) {
         if ((checkedEventFilters.isEmpty()) || checkedEventFilters.contains(card.getEvent()) || card.getEvent().equals("ALL")) {
             return true;
@@ -32,9 +31,6 @@ public class EventFilter extends CardFilter {
     }
     public void setCheckedFilters(List<String> checkedFilters){
         checkedEventFilters.addAll(checkedFilters);
-    }
-    public void setFilter(String filter){
-        this.filter = filter;
     }
     public void resetFilter(){
         checkedEventFilters.clear();

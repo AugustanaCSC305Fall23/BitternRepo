@@ -5,7 +5,7 @@ import edu.augustana.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardFilter {
+public class CardFilter implements Filters{
     String filter = "";
     private List<String> checkedFilters = new ArrayList<>();
     public boolean match(Card card){

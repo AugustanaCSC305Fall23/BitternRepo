@@ -10,10 +10,4 @@ public class CategoryFilter extends CardFilter{
         }
         return false;
     }
-    public void setFilter(String filter){
-        this.filter = filter;
-    }
-    public void resetFilter(){
-        filter = "";
-    }
 }
