@@ -4,42 +4,26 @@ import edu.augustana.Card;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModelSexFilter extends CardFilter {
-    public static final ObservableList<String> modelSexFilters = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
-    private static List<Character> checkedModelSexFilters = new ArrayList<>();
-    private Character filter = 'z';
-    public boolean matchCheckbox(Card card) {
-        if ((checkedModelSexFilters.isEmpty()) || checkedModelSexFilters.contains(card.getModelSex())) {
-            return true;
-        }
-        return false;
+    public ModelSexFilter(List<String> listOfCheckedEventFilters) {
+        super(listOfCheckedEventFilters);
     }
-    public boolean match(Card card){
-        if(card.getModelSex() == filter) return true;
+    @Override
+    public boolean matchesFilters(Card card){
+        List<String> checkedModelSexFilters = super.getListOfDesiredFilters();
+        if (super.checkIfListEmpty(checkedModelSexFilters) || checkedModelSexFilters.contains(card.getModelSex())) {
+            return true;
+        };
         return false;
     }
 
-    public ObservableList<String> getFilter(){
-        return modelSexFilters;
-    }
-    public void setFilter(String filter){
+    /* public void setFilter(String filter){
         if(filter.equalsIgnoreCase("boy") || filter.equalsIgnoreCase("male") || filter.equalsIgnoreCase("man")){
             this.filter = 'M';
         }else if(filter.equalsIgnoreCase("girl") || filter.equalsIgnoreCase("woman") || filter.equalsIgnoreCase("female")){
             this.filter = 'F';
         }
-    }
-
-    public void setChecked(List<Character> checkedFilter){
-        checkedModelSexFilters.addAll(checkedFilter);
-    }
-
-    public void resetFilter(){
-        checkedModelSexFilters.clear();
-        filter = 'z';
-    }
-
+    } */
 }

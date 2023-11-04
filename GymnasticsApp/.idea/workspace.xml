@@ -5,18 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e244db6-09b0-4115-b467-31ab27e1f2ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/SearchFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
-<<<<<<< HEAD
-=======
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CardFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CardFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CodeFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CodeFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EquipmentFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EquipmentFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CategoryFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CodeFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EquipmentFilter.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EventFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EventFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/Filters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/Filters.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/GenderFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/GenderFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/KeywordsFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/LevelFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/LevelFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/ModelSexFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/ModelSexFilter.java" afterDir="false" />
->>>>>>> 262d90583dbae0079809333756ae4d0871570e2d
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/SearchFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/SearchFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/TitleFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +54,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "useFilterClasses",
     "last_directory_selection": "C:/Users/jessa/CSC305/git/BitternRepo/GymnasticsApp/src/main/java/edu/augustana",
     "last_opened_file_path": "C:/Users/jessa/CSC305/git/StupidTextGamesRepo1025/StupidTextGames"
   }
@@ -111,6 +114,12 @@
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java</url>
+          <line>46</line>
+          <properties field="genderFilterChoices" class="edu.augustana.CreateLessonPlanController" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

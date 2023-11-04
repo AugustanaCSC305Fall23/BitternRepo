@@ -2,8 +2,41 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
+import java.util.List;
+
 public class SearchFilter extends CardFilter{
-    private static final EventFilter eventFilter = new EventFilter();
+    public SearchFilter(List<String> searchTerms) {
+        super(searchTerms);
+    }
+
+    @Override
+    public boolean matchesFilters(Card card){
+        List<String> wordsToSearchFor = super.getListOfDesiredFilters();
+        if (super.checkIfListEmpty(wordsToSearchFor) ||
+                wordsToSearchFor.contains(card.getCategory().toLowerCase())||
+                wordsToSearchFor.contains(card.getCode().toLowerCase()) ||
+                wordsToSearchFor.contains(card.getEvent().toLowerCase()) ||
+                wordsToSearchFor.contains(String.valueOf(card.getGender()).toLowerCase()) ||
+                wordsToSearchFor.contains(String.valueOf(card.getModelSex()).toLowerCase()) ||
+                wordsToSearchFor.contains(card.getTitle())) {
+            return true;
+        }
+        String[] keywords = card.getKeywords();
+        for (int index = 0; index < keywords.length; index++) {
+            if (wordsToSearchFor.contains(keywords[index])) {
+                return true;
+            }
+        }
+        String[] equipment = card.getEquipment();
+        for (int index = 0; index < equipment.length; index++) {
+            if (wordsToSearchFor.contains(equipment[index])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /* private static final EventFilter eventFilter = new EventFilter();
     private static final GenderFilter genderFilter = new GenderFilter();
     private static final ModelSexFilter modelSexFilter = new ModelSexFilter();
     private static final LevelFilter levelFilter = new LevelFilter();
@@ -42,5 +75,5 @@ public class SearchFilter extends CardFilter{
         levelFilter.resetFilter();
         modelSexFilter.resetFilter();
         titleFilter.resetFilter();
-    }
+    } */
 }
