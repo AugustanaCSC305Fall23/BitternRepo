@@ -3,7 +3,7 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
-public class KeywordsFilter implements CardFilter{
+public class KeywordsFilter extends CardFilter{
     private String filter;
     public boolean match(Card card){
         for(String keyword : card.getKeywords()){

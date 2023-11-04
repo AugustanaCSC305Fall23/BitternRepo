@@ -2,7 +2,7 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
-public class SearchFilter implements CardFilter{
+public class SearchFilter extends CardFilter{
     private static final EventFilter eventFilter = new EventFilter();
     private static final GenderFilter genderFilter = new GenderFilter();
     private static final ModelSexFilter modelSexFilter = new ModelSexFilter();

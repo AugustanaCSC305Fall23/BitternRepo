@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelFilter implements CardFilter {
+public class LevelFilter extends CardFilter {
     public static final ObservableList<String> levelFilters = FXCollections.observableArrayList(new String[]{"ALL", "A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
     private static List<String> checkedLevelFilters = new ArrayList<>();
     private String filter;

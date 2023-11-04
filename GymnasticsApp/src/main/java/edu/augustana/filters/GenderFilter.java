@@ -24,7 +24,7 @@ public class GenderFilter extends CardFilter {
         return false;
     }
 
-    @Override;
+    //@Override
     public ObservableList<String> getFilter(){
         return genderFilters;
     }
