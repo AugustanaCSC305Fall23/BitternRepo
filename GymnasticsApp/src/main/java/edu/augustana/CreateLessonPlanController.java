@@ -30,7 +30,7 @@ public class CreateLessonPlanController {
     private static final EquipmentFilter equipmentFilter = new EquipmentFilter();
     private static final KeywordsFilter keywordsFilter = new KeywordsFilter();
     private static final TitleFilter titleFilter = new TitleFilter();
-    List<CardFilter> listOfFilters = Arrays.asList(eventFilter, genderFilter, modelSexFilter, levelFilter,
+    List<CardFilter> listOfFilters = Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter,
             categoryFilter, codeFilter, equipmentFilter, keywordsFilter, titleFilter);
     private static final SearchFilter searchFilter = new SearchFilter();
 
@@ -48,7 +48,7 @@ public class CreateLessonPlanController {
     @FXML private Label titleLabel = new Label();
     @FXML private Button cancelButton;
     @FXML private Button saveButton;
-    @FXML private ListView<String> cardTitleListView = new ListView<>();
+    @FXML private ListView<String> cardsListView = new ListView<>();
     @FXML private Button returnToCourseBtn;
     CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private static LessonPlan currentLessonPlan;
@@ -56,9 +56,9 @@ public class CreateLessonPlanController {
     private static Card selectedCard;
 
     private void createDropdowns() {
+        eventDropdown.getItems().addAll(eventFilter.getFilter());
         genderDropdown.getItems().addAll(genderFilter.getFilter());
         levelDropdown.getItems().addAll(levelFilter.getFilter());
-        eventDropdown.getItems().addAll(eventFilter.getFilter());
         modelSexDropdown.getItems().addAll(modelSexFilter.getFilter());
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
@@ -100,34 +100,17 @@ public class CreateLessonPlanController {
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
-        eventFilter.resetFilter();
-        genderFilter.resetFilter();
-        levelFilter.resetFilter();
-        modelSexFilter.resetFilter();
+        for (int i = 0; i < 4; i++) {
+            listOfFilters.get(i).resetFilter();
+        }
     }
     @FXML void clearFilters() {
-        if (genderDropdown.getCheckModel().getCheckedItems() != null){
-            List<Integer> genderCheckIndex = genderDropdown.getCheckModel().getCheckedIndices();
-            for (int i = genderDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
-                genderDropdown.getCheckModel().toggleCheckState(genderCheckIndex.get(i));
-            }
-        }
-        if (levelDropdown.getCheckModel().getCheckedItems() != null){
-            List<Integer> levelCheckIndex = levelDropdown.getCheckModel().getCheckedIndices();
-            for (int i = levelDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
-                levelDropdown.getCheckModel().toggleCheckState(levelCheckIndex.get(i));
-            }
-        }
-        if (eventDropdown.getCheckModel().getCheckedItems() != null){
-            List<Integer> eventCheckIndex = eventDropdown.getCheckModel().getCheckedIndices();
-            for (int i = eventDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
-                eventDropdown.getCheckModel().toggleCheckState(eventCheckIndex.get(i));
-            }
-        }
-        if (modelSexDropdown.getCheckModel().getCheckedItems() != null){
-            List<Integer> modelSexCheckIndex = modelSexDropdown.getCheckModel().getCheckedIndices();
-            for (int i = modelSexDropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
-                modelSexDropdown.getCheckModel().toggleCheckState(modelSexCheckIndex.get(i));
+        for (CheckComboBox<String> dropdown : listOfDropdowns) {
+            if (dropdown.getCheckModel().getCheckedItems() != null){
+                List<Integer> checkIndex = dropdown.getCheckModel().getCheckedIndices();
+                for (int i = dropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
+                    dropdown.getCheckModel().toggleCheckState(checkIndex.get(i));
+                }
             }
         }
         cardsFlowPane.getChildren().clear();
@@ -145,24 +128,27 @@ public class CreateLessonPlanController {
         }
     }
     @FXML void searchAction(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER){
+        if (event.getCode() == KeyCode.ENTER) {
             searchFilter.setFilter(searchField.getText());
             cardsFlowPane.getChildren().clear();
-            for(String cardId : fullCardCollection.getSetOfCardIds()){
+            for (String cardId : fullCardCollection.getSetOfCardIds()) {
                 Card card = fullCardCollection.getCard(cardId);
                 if (categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
                         eventFilter.match(card) || genderFilter.match(card) || keywordsFilter.match(card) || levelFilter.match(card) ||
-                        modelSexFilter.match(card) || titleFilter.match(card)){
-            for(Card card : FileReader.getCardCollection().getCardList()){
-                if(searchFilter.match(card)){
-                    ImageView cardImageView = new ImageView(card.getImage());
-                    cardImageView.setOnMouseClicked(this::selectedCard);
-                    cardsFlowPane.getChildren().add(cardImageView);
+                        modelSexFilter.match(card) || titleFilter.match(card)) {
+                    for (Card card : FileReader.getCardCollection().getCardList()) {
+                        if (searchFilter.match(card)) {
+                            ImageView cardImageView = new ImageView(card.getImage());
+                            cardImageView.setOnMouseClicked(this::selectedCard);
+                            cardsFlowPane.getChildren().add(cardImageView);
+                        }
+                    }
+                    searchFilter.resetFilter();
                 }
             }
-            searchFilter.resetFilter();
         }
     }
+    
     private void selectedCard(MouseEvent event){
         if(event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
@@ -202,16 +188,12 @@ public class CreateLessonPlanController {
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
         for(Card card : currentLessonPlan.getLessonPlanList()){
-            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+            cardsListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
-        //add all the cards from the lessonplan but have only code and title
-        /*for(Card card : currentLessonPlan.getLessonPlanList()){
-            lessonPlanListView.getItems().add(card.getCode() + ", " + card.getTitle());
-        }*/
     }
     @FXML void openTitleTextBox() {
         titleLabel.setVisible(false);
-        cardTitleListView.setVisible(false);
+        cardsListView.setVisible(false);
         titleField.setVisible(true);
         doneButton.setVisible(true);
         editTitleButton.setVisible(false);
@@ -225,7 +207,7 @@ public class CreateLessonPlanController {
             Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
             titleLabel.setFont(titleFont);
             titleLabel.setVisible(true);
-            cardTitleListView.setVisible(true);
+            cardsListView.setVisible(true);
             titleField.setVisible(false);
             doneButton.setVisible(false);
             cancelButton.setVisible(false);
@@ -237,7 +219,7 @@ public class CreateLessonPlanController {
     @FXML private void cancelSetTitle() {
         editTitleButton.setVisible(true);
         titleLabel.setVisible(true);
-        cardTitleListView.setVisible(true);
+        cardsListView.setVisible(true);
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
@@ -258,7 +240,7 @@ public class CreateLessonPlanController {
     @FXML void addCardToLessonPlan() {
         if(selectedCard != null){
             currentLessonPlan.addCardToList(selectedCard);
-            cardTitleListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
+            cardsListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
         }
     }
 
