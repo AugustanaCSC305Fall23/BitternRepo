@@ -4,6 +4,7 @@ module edu.augustana {
     requires javafx.graphics;
     requires org.controlsfx.controls;
     requires com.opencsv;
+    requires com.google.gson;
     opens edu.augustana to javafx.fxml;
     exports edu.augustana;
     exports edu.augustana.filters;

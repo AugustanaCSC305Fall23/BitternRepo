@@ -3,10 +3,12 @@ package edu.augustana;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,8 +54,26 @@ public class HomeScreenController {
 
     @FXML
     private void createNewCourseHandler() throws IOException {
-        CourseViewController.setCurrentCourse(new Course());
-        App.setRoot("course_view");
+        Course newCourse = new Course();
+       FileChooser fileChooser = new FileChooser();
+       fileChooser.setTitle("Save New Course File");
+       FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse", "*.gymnasticscourse");
+       fileChooser.getExtensionFilters().add(filter);
+       Window mainWindow = createNewCourseBtn.getScene().getWindow();
+       File chosenFile = fileChooser.showSaveDialog(mainWindow);
+       saveCurrentCourseToFile(chosenFile, newCourse);
+       CourseViewController.setCurrentCourse(newCourse);
+       App.setRoot("course_view");
+    }
+
+    private void saveCurrentCourseToFile(File chosenFile,  Course currentCourse) throws IOException {
+        if (chosenFile != null) {
+            try {
+                currentCourse.saveToFile(chosenFile);
+            } catch (IOException e) {
+                new Alert(Alert.AlertType.ERROR, "Error saving Course file: " + chosenFile).show();
+            }
+        }
     }
 
 
