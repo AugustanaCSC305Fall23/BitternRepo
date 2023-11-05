@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e244db6-09b0-4115-b467-31ab27e1f2ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/FilterControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CardFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/CardFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EventFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/EventFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/GenderFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/GenderFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/LevelFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/LevelFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/ModelSexFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/ModelSexFilter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
