@@ -12,8 +12,8 @@ public class GenderFilter extends CardFilter {
     }
     @Override
     public boolean matchesFilters(Card card){
-        List<String> checkedGenderFilters = super.getListOfDesiredFilters();
-        if (super.checkIfListEmpty(checkedGenderFilters) || checkedGenderFilters.contains(card.getGender()) || card.getGender() == 'N') {
+        List<String> checkedGenderFilters = getListOfDesiredFilters();
+        if (checkIfListEmpty(checkedGenderFilters) || checkedGenderFilters.contains(card.getGender()) || card.getGender() == 'N') {
             return true;
         };
         return false;

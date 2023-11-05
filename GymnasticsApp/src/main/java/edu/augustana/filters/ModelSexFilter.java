@@ -12,8 +12,8 @@ public class ModelSexFilter extends CardFilter {
     }
     @Override
     public boolean matchesFilters(Card card){
-        List<String> checkedModelSexFilters = super.getListOfDesiredFilters();
-        if (super.checkIfListEmpty(checkedModelSexFilters) || checkedModelSexFilters.contains(card.getModelSex())) {
+        List<String> checkedModelSexFilters = getListOfDesiredFilters();
+        if (checkIfListEmpty(checkedModelSexFilters) || checkedModelSexFilters.contains(card.getModelSex())) {
             return true;
         };
         return false;

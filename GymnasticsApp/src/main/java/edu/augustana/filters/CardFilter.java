@@ -5,19 +5,16 @@ import edu.augustana.Card;
 import java.util.List;
 
 public abstract class CardFilter implements Filters {
-    private static List<String> listOfDesiredFilters;
+    private List<String> listOfDesiredFilters;
     public CardFilter(List<String> listOfDesiredFilters) {
         this.listOfDesiredFilters = listOfDesiredFilters;
     }
-    public boolean matchesFilters(Card card){
-        return false;
-    }
+    public abstract boolean matchesFilters(Card card);
 
     public boolean checkIfListEmpty(List<String> listOfCheckedFilters) {
         if (listOfCheckedFilters.isEmpty()) {
             return true;
         }
-
         return false;
     }
     public void updateListOfDesiredFilters(List<String> newListOfDesiredFilters){

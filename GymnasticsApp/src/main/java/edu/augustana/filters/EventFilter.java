@@ -13,8 +13,8 @@ public class EventFilter extends CardFilter {
 
     @Override
     public boolean matchesFilters(Card card){
-        List<String> checkedEventFilters = super.getListOfDesiredFilters();
-        if (super.checkIfListEmpty(checkedEventFilters) || checkedEventFilters.contains(card.getEvent()) || card.getEvent().equals("ALL")) {
+        List<String> checkedEventFilters = getListOfDesiredFilters();
+        if (checkIfListEmpty(checkedEventFilters) || checkedEventFilters.contains(card.getEvent()) || card.getEvent().equals("ALL")) {
             return true;
         }
         return false;

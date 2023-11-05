@@ -37,11 +37,7 @@ public class CreateLessonPlanController {
     @FXML private Label titleLabel = new Label();
     @FXML private Button cancelButton;
     @FXML private Button saveButton;
-    private static List<CardFilter> listOfFilters = new ArrayList<>();
-    private static final CardFilter eventFilter = new EventFilter(new ArrayList<>());
-    private static final CardFilter genderFilter = new GenderFilter(new ArrayList<>());
-    private static final CardFilter levelFilter = new LevelFilter(new ArrayList<>());
-    private static final CardFilter modelSexFilter = new ModelSexFilter(new ArrayList<>());
+
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor", "Horizontal Bars",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Vault"});
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
@@ -69,48 +65,23 @@ public class CreateLessonPlanController {
         App.setRoot("course_view");
     }
 
-    // Used to change "Male", "Female", and "Neutral" to "M", "F", and "N" so it matches the data in the csv file
-    private List<String> convertListToCharacters(List<String> checkedFilters) {
-        List<String> shorterFilterList = new ArrayList<>();
-        for (int i = 0; i < checkedFilters.size(); i++) {
-            if (checkedFilters.get(i).equals("Boy")) {
-                shorterFilterList.add("M");
-            } else if (checkedFilters.get(i).equals("Girl")) {
-                shorterFilterList.add("F");
-            } else {
-                shorterFilterList.add("N");
-            }
-        }
-        return checkedFilters;
+    private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
+        return dropdown.getCheckModel().getCheckedItems();
     }
+
     @FXML void applyFilters() {
         cardsFlowPane.getChildren().clear();
-        eventFilter.updateListOfDesiredFilters(eventDropdown.getCheckModel().getCheckedItems());
-        genderFilter.updateListOfDesiredFilters(convertListToCharacters(genderDropdown.getCheckModel().getCheckedItems()));
-        levelFilter.updateListOfDesiredFilters(levelDropdown.getCheckModel().getCheckedItems());
-        modelSexFilter.updateListOfDesiredFilters(convertListToCharacters(modelSexDropdown.getCheckModel().getCheckedItems()));
-        listOfFilters = Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter);
+        FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
 
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
             Card card = fullCardCollection.getCard(cardId);
-            if (checkIfAllFiltersMatch(listOfFilters, card)) {
+            if (FilterControl.checkIfAllFiltersMatch(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectedCard);
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
-        for (CardFilter filter : listOfFilters) {
-            filter.resetDesiredFiltersList();
-        }
-    }
-
-    private boolean checkIfAllFiltersMatch(List<CardFilter> cardFilterTypes, Card cardToCheck) {
-        for (int i = 0; i < cardFilterTypes.size(); i++) {
-            if (!(cardFilterTypes.get(i).matchesFilters(cardToCheck))) {
-                return false;
-            }
-        }
-        return true;
+        FilterControl.resetDesiredFiltersLists();
     }
 
     @FXML void resetDropdownsAndCards() {
@@ -122,9 +93,7 @@ public class CreateLessonPlanController {
                 }
             }
         }
-        for (CardFilter filter : listOfFilters) {
-            filter.resetDesiredFiltersList();
-        }
+        FilterControl.resetDesiredFiltersLists();
         cardsFlowPane.getChildren().clear();
         drawCardSet();
     }
