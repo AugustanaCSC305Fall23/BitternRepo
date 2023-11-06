@@ -21,7 +21,7 @@ public abstract class CardFilter implements Filters {
         this.listOfDesiredFilters = newListOfDesiredFilters;
     }
     public void resetDesiredFiltersList(){
-        this.listOfDesiredFilters.clear();
+        listOfDesiredFilters.clear();
     }
 
     public List<String> getListOfDesiredFilters() {

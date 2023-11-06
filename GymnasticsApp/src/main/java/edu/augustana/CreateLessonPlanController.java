@@ -43,7 +43,7 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
-    @FXML private ListView<String> cardsListView = new ListView<>();
+    @FXML private ListView<String> cardTitleListView = new ListView<>();
     @FXML private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private static LessonPlan currentLessonPlan;
@@ -156,12 +156,12 @@ public class CreateLessonPlanController {
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
         for(Card card : currentLessonPlan.getLessonPlanList()){
-            cardsListView.getItems().add(card.getCode() + ", " + card.getTitle());
+            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
     }
     @FXML void switchToEditTitleView() {
         titleLabel.setVisible(false);
-        cardsListView.setVisible(false);
+        cardTitleListView.setVisible(false);
         titleField.setVisible(true);
         doneButton.setVisible(true);
         editTitleButton.setVisible(false);
@@ -181,7 +181,7 @@ public class CreateLessonPlanController {
     }
     @FXML private void switchToLessonOutlineView() {
         titleLabel.setVisible(true);
-        cardsListView.setVisible(true);
+        cardTitleListView.setVisible(true);
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
@@ -203,7 +203,7 @@ public class CreateLessonPlanController {
     @FXML void addCardToLessonPlan() {
         if (selectedCard != null){
             currentLessonPlan.addCardToList(selectedCard);
-            cardsListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
+            cardTitleListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
         }
     }
 
