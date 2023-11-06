@@ -57,6 +57,7 @@ public class CourseViewController {
     }
 
     @FXML private void menuActionOpenCourse(ActionEvent event) {
+        //Used https://www.youtube.com/watch?v=hNz8Xf4tMI
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Gymnastics Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
@@ -68,6 +69,7 @@ public class CourseViewController {
                 courseListView.getItems().clear();
                 currentCourse = Course.loadFromFile(chosenFile);
                 currentCourseFile = chosenFile;
+                courseListView.getItems().addAll(currentCourse.getLessonPlanList().toString());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -75,7 +77,6 @@ public class CourseViewController {
     }
 
     @FXML private void menuActionSaveAs(ActionEvent event) throws IOException {
-        Course newCourse = new Course();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save New Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
@@ -85,13 +86,18 @@ public class CourseViewController {
         currentCourse.saveToFile(chosenFile);
 
     }
-    //Used https://www.youtube.com/watch?v=hNz8Xf4tMI
+
+    @FXML private void menuActionCreateNewCourse(ActionEvent event) {
+        currentCourse = new Course();
+        courseListView.getItems().addAll(currentCourse.getLessonPlanList().toString());
+    }
+
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
         assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
-        addLessonsToCourseList();
+        //addLessonsToCourseList();
     }
 
     public static void setCurrentCourse(Course course) {

@@ -47,28 +47,12 @@ public class HomeScreenController {
 
     @FXML
     private void openCourseEditorAndCreator() throws IOException {
-        Course newCourse = new Course();
-        CourseViewController.setCurrentCourse(newCourse);
+//        Course newCourse = new Course();
+//        CourseViewController.setCurrentCourse(newCourse);
         App.setRoot("course_view");
 
     }
 
-
-    @FXML
-    private void createNewCourseHandler() throws IOException {
-        Course newCourse = new Course();
-       FileChooser fileChooser = new FileChooser();
-       fileChooser.setTitle("Save New Course File");
-       FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
-       fileChooser.getExtensionFilters().add(filter);
-       Window mainWindow = createNewCourseBtn.getScene().getWindow();
-       File chosenFile = fileChooser.showSaveDialog(mainWindow);
-       saveCurrentCourseToFile(chosenFile, newCourse);
-        if (chosenFile.exists()) {
-            CourseViewController.setCurrentCourse(newCourse);
-            App.setRoot("course_view");
-        }
-    }
 
     private void saveCurrentCourseToFile(File chosenFile,  Course currentCourse) throws IOException {
         if (chosenFile != null) {

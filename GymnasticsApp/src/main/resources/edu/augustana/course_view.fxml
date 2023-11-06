@@ -43,6 +43,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#menuActionOpenCourse" text="Open Course" />
                   <MenuItem mnemonicParsing="false" text="Save Course" />
                   <MenuItem mnemonicParsing="false" onAction="#menuActionSaveAs" text="Save Course as..." />
+                  <MenuItem mnemonicParsing="false" onAction="#menuActionCreateNewCourse" text="Create New Course" />
               <MenuItem mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>

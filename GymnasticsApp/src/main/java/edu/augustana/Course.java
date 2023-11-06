@@ -11,7 +11,6 @@ public class Course {
     private String courseTitle;
     private List<LessonPlan> lessonPlanList;
 
-    //private File currentFile;
 
     public Course() {
         courseTitle = "Course Title";
