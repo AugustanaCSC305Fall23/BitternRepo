@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.print.*;
+import org.controlsfx.control.CheckComboBox;
 
 public class CardBrowserController {
 
@@ -89,6 +90,11 @@ public class CardBrowserController {
 
     @FXML
     private FlowPane cardsFlowPane;
+
+
+    @FXML private CheckComboBox<String> eventDropdown;
+    @FXML private CheckComboBox<String> genderDropdown;
+    @FXML private CheckComboBox<String> levelDropdown;
 
     private List<String> filters = new ArrayList<>();
 
