@@ -13,10 +13,7 @@ public class LevelFilter extends CardFilter {
     @Override
     public boolean matchesFilters(Card card){
         List<String> checkedLevelFilters = getListOfDesiredFilters();
-        if (checkIfListEmpty(checkedLevelFilters) || checkedLevelFilters.contains(card.getLevel()) || card.getLevel().equals("ALL")) {
-            return true;
-        }
-        return false;
+        return checkIfListEmpty(checkedLevelFilters) || checkedLevelFilters.contains(card.getLevel()) || card.getLevel().equals("ALL");
     }
 
     /*public boolean match(Card card){

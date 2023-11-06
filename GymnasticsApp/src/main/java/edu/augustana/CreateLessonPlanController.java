@@ -69,7 +69,7 @@ public class CreateLessonPlanController {
         return dropdown.getCheckModel().getCheckedItems();
     }
 
-    @FXML void applyFilters() {
+    @FXML void applyFiltersAction() {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
 
@@ -84,18 +84,18 @@ public class CreateLessonPlanController {
         FilterControl.resetDesiredFiltersLists();
     }
 
-    @FXML void resetDropdownsAndCards() {
-        for (CheckComboBox<String> dropdown : listOfDropdowns) {
-            if (dropdown.getCheckModel().getCheckedItems() != null){
-                List<Integer> checkIndex = dropdown.getCheckModel().getCheckedIndices();
-                for (int i = dropdown.getCheckModel().getCheckedItems().size() - 1; i >= 0; i--){
-                    dropdown.getCheckModel().toggleCheckState(checkIndex.get(i));
-                }
-            }
-        }
+    @FXML void clearFiltersAction() {
         FilterControl.resetDesiredFiltersLists();
         cardsFlowPane.getChildren().clear();
         drawCardSet();
+        for (CheckComboBox<String> dropdown : listOfDropdowns) {
+            if (dropdown.getCheckModel().getCheckedItems() != null){
+                List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
+                for (int i = 0; i < checkedIndices.size(); i++) {
+                    dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
+                }
+            }
+        }
     }
 
     @FXML void searchAction(KeyEvent event) {

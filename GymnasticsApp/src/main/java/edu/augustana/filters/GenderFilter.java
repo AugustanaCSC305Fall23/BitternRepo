@@ -13,10 +13,7 @@ public class GenderFilter extends CardFilter {
     @Override
     public boolean matchesFilters(Card card){
         List<String> checkedGenderFilters = getListOfDesiredFilters();
-        if (checkIfListEmpty(checkedGenderFilters) || checkedGenderFilters.contains(card.getGender()) || card.getGender() == 'N') {
-            return true;
-        };
-        return false;
+        return (checkIfListEmpty(checkedGenderFilters) || checkedGenderFilters.contains(card.getGender()) || card.getGender().equals("N"));
     }
 
     /* public void setFilter(String filter){

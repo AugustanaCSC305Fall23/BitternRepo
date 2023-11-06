@@ -2,6 +2,7 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CardFilter implements Filters {
@@ -21,7 +22,7 @@ public abstract class CardFilter implements Filters {
         this.listOfDesiredFilters = newListOfDesiredFilters;
     }
     public void resetDesiredFiltersList(){
-        listOfDesiredFilters.clear();
+        updateListOfDesiredFilters(new ArrayList<>());
     }
 
     public List<String> getListOfDesiredFilters() {

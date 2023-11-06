@@ -35,7 +35,7 @@ public class FilterControl {
                 shorterFilterList.add("N");
             }
         }
-        return checkedFilters;
+        return shorterFilterList;
     }
 
     public static boolean checkIfAllFiltersMatch(Card cardToCheck) {
