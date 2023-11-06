@@ -15,6 +15,8 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/LevelFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/LevelFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/ModelSexFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/ModelSexFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/card_browser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/card_browser.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,13 +49,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;git-widget-placeholder&quot;: &quot;useFilterClasses&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/jessa/CSC305/git/BitternRepo/GymnasticsApp/src/main/java/edu/augustana&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/jessa/CSC305/git/StupidTextGamesRepo1025/StupidTextGames&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "cardBrowserFiltering",
+    "last_directory_selection": "C:/Users/jessa/CSC305/git/BitternRepo/GymnasticsApp/src/main/java/edu/augustana",
+    "last_opened_file_path": "C:/Users/jessa/CSC305/git/StupidTextGamesRepo1025/StupidTextGames"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="edu.augustana" />

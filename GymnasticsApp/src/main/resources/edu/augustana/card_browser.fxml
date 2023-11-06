@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
    <center>
@@ -29,6 +30,7 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
+                              <CheckComboBox fx:id="levelDropdown" showCheckedCount="true" />
                               <CheckBox fx:id="easyCheckBox" mnemonicParsing="false" text="Easy">
                                  <font>
                                     <Font size="16.0" />
@@ -49,6 +51,7 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
+                              <CheckComboBox fx:id="genderDropdown" showCheckedCount="true" />
                               <CheckBox fx:id="boyCheckBox" mnemonicParsing="false" text="Boy">
                                  <font>
                                     <Font size="16.0" />
@@ -69,6 +72,7 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
+                              <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" />
                               <CheckBox fx:id="beamCheckBox" mnemonicParsing="false" text="Beam">
                                  <font>
                                     <Font size="16.0" />
@@ -105,11 +109,6 @@
                                  </font>
                               </CheckBox>
                               <CheckBox fx:id="parallelBarsCheckBox" mnemonicParsing="false" text="Parallel Bars">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="horizontalBarsCheckBox" mnemonicParsing="false" text="Horizontal Bars">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
