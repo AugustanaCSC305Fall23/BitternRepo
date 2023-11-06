@@ -27,7 +27,7 @@ public class HomeScreenController {
     private Button cardBrowserBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="viewSavedPlansBtn"
-    private Button openExistingCourseBtn; // Value injected by FXMLLoader
+    private Button courseEditorAndCreatorBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="createNewCourseBtn"
     private Button createNewCourseBtn; // Value injected by FXMLLoader
@@ -46,24 +46,28 @@ public class HomeScreenController {
     }
 
     @FXML
-    private void openExistingCourseHandler() throws IOException {
-        //Used https://www.youtube.com/watch?v=hNz8Xf4tMI4
-        FileChooser fc = new FileChooser();
-        File selectedFile = fc.showOpenDialog(null);
+    private void openCourseEditorAndCreator() throws IOException {
+        Course newCourse = new Course();
+        CourseViewController.setCurrentCourse(newCourse);
+        App.setRoot("course_view");
+
     }
+
 
     @FXML
     private void createNewCourseHandler() throws IOException {
         Course newCourse = new Course();
        FileChooser fileChooser = new FileChooser();
        fileChooser.setTitle("Save New Course File");
-       FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse", "*.gymnasticscourse");
+       FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
        fileChooser.getExtensionFilters().add(filter);
        Window mainWindow = createNewCourseBtn.getScene().getWindow();
        File chosenFile = fileChooser.showSaveDialog(mainWindow);
        saveCurrentCourseToFile(chosenFile, newCourse);
-       CourseViewController.setCurrentCourse(newCourse);
-       App.setRoot("course_view");
+        if (chosenFile.exists()) {
+            CourseViewController.setCurrentCourse(newCourse);
+            App.setRoot("course_view");
+        }
     }
 
     private void saveCurrentCourseToFile(File chosenFile,  Course currentCourse) throws IOException {
@@ -81,10 +85,7 @@ public class HomeScreenController {
     void initialize() {
         assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
         assert createNewCourseBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
-        assert openExistingCourseBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
+        assert courseEditorAndCreatorBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
         logo.setImage(new Image(String.valueOf(getClass().getResource("images/LOGO.jpeg"))));
     }
 }
-
-
-

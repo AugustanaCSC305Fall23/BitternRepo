@@ -1,12 +1,17 @@
 package edu.augustana;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 public class CourseViewController {
 
@@ -23,6 +28,7 @@ public class CourseViewController {
     private ListView<String> courseListView = new ListView<>(); // Value injected by FXMLLoader
 
     private static Course currentCourse;
+    private static File currentCourseFile = null;
 
     @FXML
     private Button createNewLessonPlanBtn;
@@ -49,6 +55,38 @@ public class CourseViewController {
             }
         }
     }
+
+    @FXML private void menuActionOpenCourse(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Gymnastics Course File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
+        Window mainWindow = courseListView.getScene().getWindow();
+        File chosenFile = fileChooser.showOpenDialog(mainWindow);
+        if (chosenFile != null) {
+            try {
+                Course.loadFromFile(chosenFile);
+                courseListView.getItems().clear();
+                currentCourse = Course.loadFromFile(chosenFile);
+                currentCourseFile = chosenFile;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @FXML private void menuActionSaveAs(ActionEvent event) throws IOException {
+        Course newCourse = new Course();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save New Course File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
+        fileChooser.getExtensionFilters().add(filter);
+        Window mainWindow = courseListView.getScene().getWindow();
+        File chosenFile = fileChooser.showSaveDialog(mainWindow);
+        currentCourse.saveToFile(chosenFile);
+
+    }
+    //Used https://www.youtube.com/watch?v=hNz8Xf4tMI
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";

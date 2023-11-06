@@ -16,6 +16,8 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static Course currentCourse;
+    private static File currentCourseFile;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -39,6 +41,7 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
+    public Course getCurrentCourse() { return currentCourse; }
 
 
     public static void main(String[] args) {
