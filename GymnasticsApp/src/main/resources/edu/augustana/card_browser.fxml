@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
@@ -13,6 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
    <center>
@@ -29,96 +29,25 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <CheckBox fx:id="easyCheckBox" mnemonicParsing="false" text="Easy">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="mediumCheckBox" mnemonicParsing="false" text="Medium">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="hardCheckBox" mnemonicParsing="false" text="Hard">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
+                              <CheckComboBox fx:id="levelDropdown" showCheckedCount="true" />
                               <Label text="Gender">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <CheckBox fx:id="boyCheckBox" mnemonicParsing="false" text="Boy">
+                              <CheckComboBox fx:id="genderDropdown" showCheckedCount="true" />
+                              <Label text="Model Sex">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="21.0" />
                                  </font>
-                              </CheckBox>
-                              <CheckBox fx:id="girlCheckBox" mnemonicParsing="false" text="Girl">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="neutralCheckBox" mnemonicParsing="false" text="Neutral">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
+                              </Label>
+                              <CheckComboBox fx:id="modelSexDropdown" />
                               <Label text="Event">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <CheckBox fx:id="beamCheckBox" mnemonicParsing="false" text="Beam">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="unevenBarsCheckBox" mnemonicParsing="false" text="Uneven Bars">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="strengthCheckBox" mnemonicParsing="false" text="Strength/Muscle">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="floorCheckBox" mnemonicParsing="false" text="Floor">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="vaultCheckBox" mnemonicParsing="false" text="Vault">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="ringsCheckBox" mnemonicParsing="false" text="Rings">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="pommelHorseCheckBox" mnemonicParsing="false" text="Pommel Horse/Mushroom">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="parallelBarsCheckBox" mnemonicParsing="false" text="Parallel Bars">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="horizontalBarsCheckBox" mnemonicParsing="false" text="Horizontal Bars">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="trampolineCheckBox" mnemonicParsing="false" text="Trampoline">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
+                              <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" />
                               <HBox spacing="20.0">
                                  <children>
                                     <Button fx:id="applyFiltersBtn" mnemonicParsing="false" onAction="#applyFiltersAction" text="Apply Filters">
@@ -179,7 +108,7 @@
       </VBox>
    </center>
    <top>
-      <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="1265.0" promptText="Search" BorderPane.alignment="CENTER">
+      <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchAction" prefHeight="68.0" prefWidth="1265.0" promptText="Search" BorderPane.alignment="CENTER">
          <font>
             <Font size="32.0" />
          </font>

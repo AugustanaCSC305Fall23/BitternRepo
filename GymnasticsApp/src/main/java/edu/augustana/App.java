@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -14,6 +16,8 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static Course currentCourse = new Course();
+    private static File currentCourseFile;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -36,6 +40,17 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
+
+    public static Course getCurrentCourse() { return currentCourse; }
+
+    public static void changeCurrentCourse(Course course) {
+        currentCourse = course;
+    }
+
+    public static void changeCurrentCourseFile(File file) {
+        currentCourseFile = file;
+    }
+
 
     public static void main(String[] args) {
         launch();

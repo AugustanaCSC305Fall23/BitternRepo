@@ -1,12 +1,18 @@
 package edu.augustana;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 public class CourseViewController {
 
@@ -22,8 +28,6 @@ public class CourseViewController {
     @FXML // fx:id="courseListView"
     private ListView<String> courseListView = new ListView<>(); // Value injected by FXMLLoader
 
-    private static Course currentCourse;
-
     @FXML
     private Button createNewLessonPlanBtn;
 
@@ -36,19 +40,64 @@ public class CourseViewController {
     }
     @FXML
     private void createLessonPlanHandler() throws IOException {
-        LessonPlan lessonPlan = currentCourse.createNewLessonPlan();
+        LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
         CreateLessonPlanController.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
     }
 
     @FXML
     private void addLessonsToCourseList() {
-        if (!(currentCourse.getLessonPlanList().isEmpty())) {
-            for (LessonPlan lesson: currentCourse.getLessonPlanList()) {
+        if (!(App.getCurrentCourse().getLessonPlanList().isEmpty())) {
+            for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {
                 courseListView.getItems().add(lesson.getTitle());
             }
         }
     }
+
+    @FXML private void menuActionOpenCourse(ActionEvent event) {
+        //Used https://www.youtube.com/watch?v=hNz8Xf4tMI
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Gymnastics Course File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
+        Window mainWindow = courseListView.getScene().getWindow();
+        File chosenFile = fileChooser.showOpenDialog(mainWindow);
+        if (chosenFile != null) {
+            try {
+                Course.loadFromFile(chosenFile);
+                courseListView.getItems().clear();
+                App.changeCurrentCourse(Course.loadFromFile(chosenFile));
+                App.changeCurrentCourseFile(chosenFile);
+                for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+                    courseListView.getItems().add(lessonPlan.getTitle());
+                }
+            } catch (IOException e) {
+                new Alert(Alert.AlertType.ERROR, "Error loading Course: " + chosenFile).show();
+            }
+        }
+    }
+
+    @FXML private void menuActionSaveAs(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save New Course File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
+        fileChooser.getExtensionFilters().add(filter);
+        Window mainWindow = courseListView.getScene().getWindow();
+        File chosenFile = fileChooser.showSaveDialog(mainWindow);
+        App.getCurrentCourse().saveToFile(chosenFile);
+
+    }
+
+    @FXML private void menuActionCreateNewCourse(ActionEvent event) {
+        courseListView.getItems().clear();
+        App.changeCurrentCourse(new Course());
+        App.changeCurrentCourseFile(null);
+        App.getCurrentCourse().getLessonPlanList().add(new LessonPlan("My Lesson Plan"));
+        for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+            courseListView.getItems().add(lessonPlan.getTitle());
+        }
+    }
+
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
@@ -57,7 +106,7 @@ public class CourseViewController {
     }
 
     public static void setCurrentCourse(Course course) {
-        currentCourse = course;
+        App.changeCurrentCourse(course);
     }
 
 

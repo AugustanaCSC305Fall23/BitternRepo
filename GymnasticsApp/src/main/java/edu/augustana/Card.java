@@ -12,8 +12,8 @@ public class Card {
     private String packFolder;
     private String imageName;
     private Image image;
-    private char gender;
-    private char modelSex;
+    private String gender;
+    private String modelSex;
     private String level;
     private String[] equipment;
     private String[] keywords;
@@ -29,8 +29,8 @@ public class Card {
         // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
         // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
         image = new Image(getClass().getResource("images/" + imageName).toString(), 400, 300, true, true);
-        gender = cardDataArray[6].strip().toCharArray()[0];
-        modelSex = cardDataArray[7].strip().toCharArray()[0];
+        gender = cardDataArray[6].strip();
+        modelSex = cardDataArray[7].strip();
         level = cardDataArray[8].strip();
         equipment = cardDataArray[9].split(",");
         keywords = cardDataArray[10].split(",");
@@ -64,11 +64,11 @@ public class Card {
         return image;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public char getModelSex() {
+    public String getModelSex() {
         return modelSex;
     }
 

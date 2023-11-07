@@ -3,10 +3,12 @@ package edu.augustana;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +27,7 @@ public class HomeScreenController {
     private Button cardBrowserBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="viewSavedPlansBtn"
-    private Button openExistingCourseBtn; // Value injected by FXMLLoader
+    private Button courseEditorAndCreatorBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="createNewCourseBtn"
     private Button createNewCourseBtn; // Value injected by FXMLLoader
@@ -44,16 +46,22 @@ public class HomeScreenController {
     }
 
     @FXML
-    private void openExistingCourseHandler() throws IOException {
-        //Used https://www.youtube.com/watch?v=hNz8Xf4tMI4
-        FileChooser fc = new FileChooser();
-        File selectedFile = fc.showOpenDialog(null);
+    private void openCourseEditorAndCreator() throws IOException {
+//        Course newCourse = new Course();
+//        CourseViewController.setCurrentCourse(newCourse);
+        App.setRoot("course_view");
+
     }
 
-    @FXML
-    private void createNewCourseHandler() throws IOException {
-        CourseViewController.setCurrentCourse(new Course());
-        App.setRoot("course_view");
+
+    private void saveCurrentCourseToFile(File chosenFile,  Course currentCourse) throws IOException {
+        if (chosenFile != null) {
+            try {
+                currentCourse.saveToFile(chosenFile);
+            } catch (IOException e) {
+                new Alert(Alert.AlertType.ERROR, "Error saving Course file: " + chosenFile).show();
+            }
+        }
     }
 
 
@@ -61,10 +69,7 @@ public class HomeScreenController {
     void initialize() {
         assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
         assert createNewCourseBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
-        assert openExistingCourseBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
+        assert courseEditorAndCreatorBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
         logo.setImage(new Image(String.valueOf(getClass().getResource("images/LOGO.jpeg"))));
     }
 }
-
-
-
