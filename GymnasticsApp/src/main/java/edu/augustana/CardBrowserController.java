@@ -164,20 +164,8 @@ public class CardBrowserController {
         }
     }
     @FXML
-    void printSelectedCard(ActionEvent event) {
-        // Used http://www.java2s.com/example/java/javafx/printing-with-javafx.html
-        // https://stackoverflow.com/questions/28847757/how-to-display-print-dialog-in-java-fx-and-print-node
-
-        ImageView cardImageView = new ImageView(prevImage);
-
-        PrinterJob job = PrinterJob.createPrinterJob();
-        if (job != null && job.showPageSetupDialog(clickedImageView.getScene().getWindow()) && job.showPrintDialog(clickedImageView.getScene().getWindow())){
-            boolean success = job.printPage(cardImageView);
-            if (success) {
-                job.endJob();
-            }
-
-        }
-
+    void printSelectedCard(ActionEvent event) throws IOException {
+        PrintStaging printCard = new PrintStaging(prevImage, "card_browser");
+        App.setRoot("print_preview");
     }
 }
