@@ -193,9 +193,6 @@ public class CreateLessonPlanController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    public static void setCurrentCourse(Course course) {
-        currentCourse = course;
-    }
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         currentLessonPlan = lessonPlan;
     }
