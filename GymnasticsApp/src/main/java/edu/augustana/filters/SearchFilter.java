@@ -2,6 +2,7 @@ package edu.augustana.filters;
 
 import edu.augustana.Card;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SearchFilter extends CardFilter{
@@ -11,27 +12,44 @@ public class SearchFilter extends CardFilter{
 
     @Override
     public boolean matchesFilters(Card card){
+        boolean keywordsMatch = false;
+        boolean equipmentMatch = false;
         List<String> wordsToSearchFor = super.getListOfDesiredFilters();
+
+        //I think the problem is in these two methods
+        String[] keywords = card.getKeywords();
+/*        for (int index = 0; index < keywords.length; index++) {
+            if (wordsToSearchFor.contains(keywords[index])) {
+                keywordsMatch = true;
+            }
+        }*/
+        String[] equipment = card.getEquipment();
+/*        for (int index = 0; index < equipment.length; index++) {
+            if (wordsToSearchFor.contains(equipment[index])) {
+                equipmentMatch = true;
+            }
+        }*/
+        //Arrays.stream(equipment).toArray();
+        for(int i = 0; i < wordsToSearchFor.size(); i++){
+            for (int index = 0; index < keywords.length; index++) {
+                if (keywords[index].toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(keywords[index].toLowerCase())) {
+                    keywordsMatch = true;
+                }
+            }
+            for (int index = 0; index < equipment.length; index++) {
+                if (equipment[index].toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(equipment[index].toLowerCase())) {
+                    equipmentMatch = true;
+                }
+            }
+        }
         if (super.checkIfListEmpty(wordsToSearchFor) ||
                 wordsToSearchFor.contains(card.getCategory().toLowerCase())||
                 wordsToSearchFor.contains(card.getCode().toLowerCase()) ||
                 wordsToSearchFor.contains(card.getEvent().toLowerCase()) ||
                 wordsToSearchFor.contains(String.valueOf(card.getGender()).toLowerCase()) ||
                 wordsToSearchFor.contains(String.valueOf(card.getModelSex()).toLowerCase()) ||
-                wordsToSearchFor.contains(card.getTitle())) {
+                wordsToSearchFor.contains(card.getTitle()) || keywordsMatch ||equipmentMatch) {
             return true;
-        }
-        String[] keywords = card.getKeywords();
-        for (int index = 0; index < keywords.length; index++) {
-            if (wordsToSearchFor.contains(keywords[index])) {
-                return true;
-            }
-        }
-        String[] equipment = card.getEquipment();
-        for (int index = 0; index < equipment.length; index++) {
-            if (wordsToSearchFor.contains(equipment[index])) {
-                return true;
-            }
         }
         return false;
     }
