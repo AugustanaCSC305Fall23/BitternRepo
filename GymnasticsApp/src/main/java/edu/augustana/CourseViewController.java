@@ -27,9 +27,6 @@ public class CourseViewController {
     @FXML // fx:id="courseListView"
     private ListView<String> courseListView = new ListView<>(); // Value injected by FXMLLoader
 
-    //private static Course currentCourse;
-    private static File currentCourseFile = null;
-
     @FXML
     private Button createNewLessonPlanBtn;
 
@@ -68,8 +65,10 @@ public class CourseViewController {
                 Course.loadFromFile(chosenFile);
                 courseListView.getItems().clear();
                 App.changeCurrentCourse(Course.loadFromFile(chosenFile));
-                currentCourseFile = chosenFile;
-                courseListView.getItems().addAll(App.getCurrentCourse().toString());
+                App.changeCurrentCourseFile(chosenFile);
+                for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+                    courseListView.getItems().add(lessonPlan.getTitle());
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

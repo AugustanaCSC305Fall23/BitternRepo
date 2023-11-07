@@ -44,7 +44,11 @@ public class App extends Application {
     public static Course getCurrentCourse() { return currentCourse; }
 
     public static void changeCurrentCourse(Course course) {
+        currentCourse = course;
+    }
 
+    public static void changeCurrentCourseFile(File file) {
+        currentCourseFile = file;
     }
 
 

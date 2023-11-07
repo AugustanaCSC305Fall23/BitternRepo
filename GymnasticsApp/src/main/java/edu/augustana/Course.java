@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Course {
     private String courseTitle;
-    private List<LessonPlan> lessonPlanList;
+    private ArrayList<LessonPlan> lessonPlanList;
 
     public Course() {
         courseTitle = "Course Title";
