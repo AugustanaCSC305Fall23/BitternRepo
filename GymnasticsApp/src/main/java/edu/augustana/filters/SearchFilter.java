@@ -12,8 +12,6 @@ public class SearchFilter extends CardFilter{
 
     @Override
     public boolean matchesFilters(Card card){
-        boolean keywordsMatch = false;
-        boolean equipmentMatch = false;
         List<String> wordsToSearchFor = super.getListOfDesiredFilters();
 
         //I think the problem is in these two methods
@@ -33,12 +31,12 @@ public class SearchFilter extends CardFilter{
         for(int i = 0; i < wordsToSearchFor.size(); i++){
             for (int index = 0; index < keywords.length; index++) {
                 if (keywords[index].toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(keywords[index].toLowerCase())) {
-                    keywordsMatch = true;
+                    return true;
                 }
             }
             for (int index = 0; index < equipment.length; index++) {
                 if (equipment[index].toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(equipment[index].toLowerCase())) {
-                    equipmentMatch = true;
+                    return true;
                 }
             }
         }
@@ -48,7 +46,7 @@ public class SearchFilter extends CardFilter{
                 wordsToSearchFor.contains(card.getEvent().toLowerCase()) ||
                 wordsToSearchFor.contains(String.valueOf(card.getGender()).toLowerCase()) ||
                 wordsToSearchFor.contains(String.valueOf(card.getModelSex()).toLowerCase()) ||
-                wordsToSearchFor.contains(card.getTitle()) || keywordsMatch ||equipmentMatch) {
+                wordsToSearchFor.contains(card.getTitle())) {
             return true;
         }
         return false;
