@@ -16,7 +16,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    private static Course currentCourse;
+    private static Course currentCourse = new Course();
     private static File currentCourseFile;
 
     @Override
@@ -41,7 +41,11 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public Course getCurrentCourse() { return currentCourse; }
+    public static Course getCurrentCourse() { return currentCourse; }
+
+    public static void changeCurrentCourse(Course course) {
+
+    }
 
 
     public static void main(String[] args) {

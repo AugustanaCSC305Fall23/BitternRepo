@@ -11,11 +11,10 @@ public class Course {
     private String courseTitle;
     private List<LessonPlan> lessonPlanList;
 
-
     public Course() {
         courseTitle = "Course Title";
         lessonPlanList = new ArrayList<>();
-        lessonPlanList.add(new LessonPlan("My Lesson Plan"));
+        //lessonPlanList.add(new LessonPlan("My Lesson Plan"));
     }
 
     public LessonPlan createNewLessonPlan() {
@@ -30,7 +29,6 @@ public class Course {
     }
 
     public void saveToFile(File courseFile) throws IOException {
-        //currentFile = courseFile;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String serializedMovieLogText = gson.toJson(this);
         PrintWriter writer = new PrintWriter(new FileWriter(courseFile));

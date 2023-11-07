@@ -49,7 +49,6 @@ public class CreateLessonPlanController {
     @FXML private Button returnToCourseBtn;
     CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private static LessonPlan currentLessonPlan;
-    private static Course currentCourse;
     private static Card selectedCard;
     private void createDropdowns() {
         genderDropdown.getItems().addAll(genderFilter.getFilter());
@@ -269,7 +268,7 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void saveLessonPlan() {
-        currentCourse.getLessonPlanList().add(currentLessonPlan);
+    @FXML public void saveLessonPlan() {
+        App.getCurrentCourse().getLessonPlanList().add(currentLessonPlan);
     }
 }

@@ -27,7 +27,7 @@ public class CourseViewController {
     @FXML // fx:id="courseListView"
     private ListView<String> courseListView = new ListView<>(); // Value injected by FXMLLoader
 
-    private static Course currentCourse;
+    //private static Course currentCourse;
     private static File currentCourseFile = null;
 
     @FXML
@@ -42,15 +42,15 @@ public class CourseViewController {
     }
     @FXML
     private void createLessonPlanHandler() throws IOException {
-        LessonPlan lessonPlan = currentCourse.createNewLessonPlan();
+        LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
         CreateLessonPlanController.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
     }
 
     @FXML
     private void addLessonsToCourseList() {
-        if (!(currentCourse.getLessonPlanList().isEmpty())) {
-            for (LessonPlan lesson: currentCourse.getLessonPlanList()) {
+        if (!(App.getCurrentCourse().getLessonPlanList().isEmpty())) {
+            for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {
                 courseListView.getItems().add(lesson.getTitle());
             }
         }
@@ -67,9 +67,9 @@ public class CourseViewController {
             try {
                 Course.loadFromFile(chosenFile);
                 courseListView.getItems().clear();
-                currentCourse = Course.loadFromFile(chosenFile);
+                App.changeCurrentCourse(Course.loadFromFile(chosenFile));
                 currentCourseFile = chosenFile;
-                courseListView.getItems().addAll(currentCourse.getLessonPlanList().toString());
+                courseListView.getItems().addAll(App.getCurrentCourse().toString());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -83,13 +83,13 @@ public class CourseViewController {
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = courseListView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
-        currentCourse.saveToFile(chosenFile);
+        App.getCurrentCourse().saveToFile(chosenFile);
 
     }
 
     @FXML private void menuActionCreateNewCourse(ActionEvent event) {
-        currentCourse = new Course();
-        courseListView.getItems().addAll(currentCourse.getLessonPlanList().toString());
+        App.changeCurrentCourse(new Course());
+        courseListView.getItems().addAll(App.getCurrentCourse().getLessonPlanList().toString());
     }
 
 
@@ -97,11 +97,11 @@ public class CourseViewController {
     void initialize() {
         assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
         assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
-        //addLessonsToCourseList();
+        addLessonsToCourseList();
     }
 
     public static void setCurrentCourse(Course course) {
-        currentCourse = course;
+        App.changeCurrentCourse(course);
     }
 
 
