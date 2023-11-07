@@ -18,6 +18,7 @@ public class App extends Application {
     private static Scene scene;
     private static Course currentCourse = new Course();
     private static File currentCourseFile;
+    private static LessonPlan currentLessonPlan;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -43,12 +44,18 @@ public class App extends Application {
 
     public static Course getCurrentCourse() { return currentCourse; }
 
+    public static LessonPlan getCurrentLessonPlan() { return currentLessonPlan; }
+
     public static void changeCurrentCourse(Course course) {
         currentCourse = course;
     }
 
     public static void changeCurrentCourseFile(File file) {
         currentCourseFile = file;
+    }
+
+    public static void changeCurrentLessonPlan(LessonPlan lessonPlan) {
+        currentLessonPlan = lessonPlan;
     }
 
 

@@ -46,7 +46,7 @@ public class CreateLessonPlanController {
     @FXML private ListView<String> cardTitleListView = new ListView<>();
     @FXML private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
-    private static LessonPlan currentLessonPlan;
+    //private static LessonPlan currentLessonPlan;
     private static Card selectedCard;
 
     private void createDropdowns() {
@@ -145,7 +145,7 @@ public class CreateLessonPlanController {
         buttonImageView.setFitWidth(20.0);
         addCardButton.setMaxSize(25.0, 25.0);
         addCardButton.setGraphic(buttonImageView);
-        titleLabel.setText(currentLessonPlan.getTitle());
+        titleLabel.setText(App.getCurrentLessonPlan().getTitle());
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
@@ -154,7 +154,7 @@ public class CreateLessonPlanController {
         }
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
-        for(Card card : currentLessonPlan.getLessonPlanList()){
+        for(Card card : App.getCurrentLessonPlan().getLessonPlanList()){
             cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
     }
@@ -169,7 +169,7 @@ public class CreateLessonPlanController {
     @FXML void setTitle() {
         String title = titleField.getText();
         if (!title.isEmpty()) {
-            currentLessonPlan.changeTitle(title);
+            App.getCurrentLessonPlan().changeTitle(title);
             titleLabel.setText(title);
             Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
             titleLabel.setFont(titleFont);
@@ -194,16 +194,16 @@ public class CreateLessonPlanController {
         alert.showAndWait();
     }
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
-        currentLessonPlan = lessonPlan;
+        App.changeCurrentLessonPlan(lessonPlan);
     }
     @FXML void addCardToLessonPlan() {
         if (selectedCard != null){
-            currentLessonPlan.addCardToList(selectedCard);
+            App.getCurrentLessonPlan().addCardToList(selectedCard);
             cardTitleListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
         }
     }
 
     @FXML public void saveLessonPlan() {
-        App.getCurrentCourse().getLessonPlanList().add(currentLessonPlan);
+        App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
     }
 }
