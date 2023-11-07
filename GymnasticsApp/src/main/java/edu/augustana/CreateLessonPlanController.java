@@ -57,11 +57,19 @@ public class CreateLessonPlanController {
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
     @FXML void goToHome() throws IOException {
-        App.setRoot("home");
+        if (App.getCurrentLessonPlan().getIsSaved()) {
+            App.setRoot("home");
+        } else {
+            giveWarning("Unsaved changes will be lost!");
+        }
     }
 
     @FXML void returnToCourseHandler() throws IOException {
-        App.setRoot("course_view");
+        if (App.getCurrentLessonPlan().getIsSaved()) {
+            App.setRoot("course_view");
+        } else {
+            giveWarning("Unsaved changes will be lost!");
+        }
     }
 
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
@@ -179,12 +187,12 @@ public class CreateLessonPlanController {
         }
     }
     @FXML private void switchToLessonOutlineView() {
-        titleLabel.setVisible(true);
-        cardTitleListView.setVisible(true);
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
-        editTitleButton.setVisible(true);
+            titleLabel.setVisible(true);
+            cardTitleListView.setVisible(true);
+            titleField.setVisible(false);
+            doneButton.setVisible(false);
+            cancelButton.setVisible(false);
+            editTitleButton.setVisible(true);
     }
 
     @FXML private void giveWarning(String message) {
@@ -204,6 +212,7 @@ public class CreateLessonPlanController {
     }
 
     @FXML public void saveLessonPlan() {
+        App.getCurrentLessonPlan().changeIsSaved(true);
         App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
     }
 }
