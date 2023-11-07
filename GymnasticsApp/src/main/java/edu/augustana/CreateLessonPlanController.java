@@ -218,6 +218,8 @@ public class CreateLessonPlanController {
         if (selectedCard != null){
             App.getCurrentLessonPlan().addCardToList(selectedCard);
             cardTitleListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
+        } else {
+            giveAlert(Alert.AlertType.WARNING, "No card selected.", "Warning");
         }
     }
 
