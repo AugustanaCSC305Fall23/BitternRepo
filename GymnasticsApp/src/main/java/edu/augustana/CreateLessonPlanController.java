@@ -154,7 +154,7 @@ public class CreateLessonPlanController {
         }
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
-        for(Card card : App.getCurrentLessonPlan().getLessonPlanList()){
+        for(Card card : App.getCurrentLessonPlan().getLessonPlanCardList()){
             cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
     }
