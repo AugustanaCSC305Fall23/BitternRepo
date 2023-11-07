@@ -1,11 +1,17 @@
 package edu.augustana;
 
+import edu.augustana.filters.SearchFilter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 
@@ -37,7 +43,7 @@ public class CardBrowserController {
     @FXML // fx:id="backToLessonPlanBtn"
     private Button backToLessonPlanBtn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="beamCheckBox"
+/*    @FXML // fx:id="beamCheckBox"
     private CheckBox beamCheckBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="boyCheckBox"
@@ -54,9 +60,6 @@ public class CardBrowserController {
 
     @FXML // fx:id="hardCheckBox"
     private CheckBox hardCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="homeButton"
-    private Button homeButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="horizontalBarsCheckBox"
     private CheckBox horizontalBarsCheckBox; // Value injected by FXMLLoader
@@ -86,17 +89,30 @@ public class CardBrowserController {
     private CheckBox vaultCheckBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="trampolineCheckBox"
-    private CheckBox trampolineCheckBox;
+    private CheckBox trampolineCheckBox;*/
+
+    @FXML // fx:id="homeButton"
+    private Button homeButton; // Value injected by FXMLLoader
 
     @FXML
     private FlowPane cardsFlowPane;
 
+    public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
+            "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
+    public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
+    public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
+    public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
+
+    List<CheckComboBox<String>> listOfDropdowns;
 
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
+    @FXML private CheckComboBox<String> modelSexDropdown;
+    private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
 
     private List<String> filters = new ArrayList<>();
+    @FXML private TextField searchField;
 
     private ImageView clickedImageView = new ImageView();
 
@@ -105,11 +121,18 @@ public class CardBrowserController {
     private final Image checkImage = new Image(getClass().getResource("images/Checkmark.png").toString(), 400, 300, true, true);
 
 
-    private List<CheckBox> createListOfFilters() {
+/*    private List<CheckBox> createListOfFilters() {
         return Arrays.asList(easyCheckBox, mediumCheckBox, hardCheckBox, boyCheckBox, girlCheckBox,
                 neutralCheckBox, beamCheckBox, unevenBarsCheckBox, strengthCheckBox, floorCheckBox,
                 vaultCheckBox, ringsCheckBox, pommelHorseCheckBox, parallelBarsCheckBox, horizontalBarsCheckBox,
                 trampolineCheckBox);
+    }*/
+    private void createDropdowns() {
+        eventDropdown.getItems().addAll(eventFilterChoices);
+        genderDropdown.getItems().addAll(genderFilterChoices);
+        levelDropdown.getItems().addAll(levelFilterChoices);
+        modelSexDropdown.getItems().addAll(modelSexFilterChoices);
+        listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
 
     @FXML
@@ -121,31 +144,68 @@ public class CardBrowserController {
     private void returnToLessonPlanHandler(ActionEvent event) throws IOException {
         App.setRoot("lesson_plan_creator");
     }
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    private void drawCardSet(){
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
+            //cardImageView.setOnMouseClicked(this::selectedCard);
             cardsFlowPane.getChildren().add(cardImageView);
         }
+    }
+
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        createDropdowns();
+        drawCardSet();
         assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";
     }
-    @FXML
-    private void applyFiltersAction(ActionEvent event) throws IOException {
-        for (CheckBox cb : createListOfFilters()) {
-            if (cb.isSelected()) {
-                filters.add(cb.getText());
+    private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
+        return dropdown.getCheckModel().getCheckedItems();
+    }
+    @FXML private void applyFiltersAction(ActionEvent event) throws IOException {
+        cardsFlowPane.getChildren().clear();
+        FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
+
+        for (String cardId : fullCardCollection.getSetOfCardIds()) {
+            Card card = fullCardCollection.getCard(cardId);
+            if (FilterControl.checkIfAllFiltersMatch(card)) {
+                ImageView cardImageView = new ImageView(card.getImage());
+                //cardImageView.setOnMouseClicked(this::selectedCard);
+                cardsFlowPane.getChildren().add(cardImageView);
             }
         }
+        FilterControl.resetDesiredFiltersLists();
     }
 
     @FXML
     private void clearFiltersAction(ActionEvent event) throws IOException {
-        filters.clear();
-        for (CheckBox cb : createListOfFilters()) {
-            if (cb.isSelected()) {
-                cb.fire();
+        FilterControl.resetDesiredFiltersLists();
+        cardsFlowPane.getChildren().clear();
+        drawCardSet();
+        for (CheckComboBox<String> dropdown : listOfDropdowns) {
+            if (dropdown.getCheckModel().getCheckedItems() != null){
+                List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
+                for (int i = 0; i < checkedIndices.size(); i++) {
+                    dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
+                }
+            }
+        }
+    }
+    @FXML void searchAction(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            List<String> searchWordList = new ArrayList<>();
+            for (String word: searchField.getText().split("\\s+")) {
+                searchWordList.add(word.toLowerCase());
+            }
+            SearchFilter searchFilter = new SearchFilter(searchWordList);
+            cardsFlowPane.getChildren().clear();
+            for (String cardId : fullCardCollection.getSetOfCardIds()) {
+                Card card = fullCardCollection.getCard(cardId);
+                if (searchFilter.matchesFilters(card)) {
+                    ImageView cardImageView = new ImageView(card.getImage());
+                    //cardImageView.setOnMouseClicked(this::selectedCard);
+                    cardsFlowPane.getChildren().add(cardImageView);
+                }
             }
         }
     }
