@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
@@ -70,7 +71,7 @@ public class CourseViewController {
                     courseListView.getItems().add(lessonPlan.getTitle());
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                new Alert(Alert.AlertType.ERROR, "Error loading Course: " + chosenFile).show();
             }
         }
     }
@@ -87,8 +88,13 @@ public class CourseViewController {
     }
 
     @FXML private void menuActionCreateNewCourse(ActionEvent event) {
+        courseListView.getItems().clear();
         App.changeCurrentCourse(new Course());
-        courseListView.getItems().addAll(App.getCurrentCourse().getLessonPlanList().toString());
+        App.changeCurrentCourseFile(null);
+        App.getCurrentCourse().getLessonPlanList().add(new LessonPlan("My Lesson Plan"));
+        for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+            courseListView.getItems().add(lessonPlan.getTitle());
+        }
     }
 
 
