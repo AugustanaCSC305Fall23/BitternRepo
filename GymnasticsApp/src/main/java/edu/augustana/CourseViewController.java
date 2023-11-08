@@ -84,7 +84,16 @@ public class CourseViewController {
         Window mainWindow = courseListView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
         App.getCurrentCourse().saveToFile(chosenFile);
+        App.changeCurrentCourseFile(chosenFile);
 
+    }
+
+    @FXML private void menuActionSave(ActionEvent event) throws IOException{
+        if (App.getCurrentCourseFile() != null) {
+            App.getCurrentCourse().saveToFile(App.getCurrentCourseFile());
+        } else {
+            System.out.println("error");
+        }
     }
 
     @FXML private void menuActionCreateNewCourse(ActionEvent event) {

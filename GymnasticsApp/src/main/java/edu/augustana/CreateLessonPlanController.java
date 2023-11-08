@@ -215,6 +215,7 @@ public class CreateLessonPlanController {
     }
 
     @FXML public void saveLessonPlan() {
+        App.getCurrentLessonPlan().changeSavedState(true);
         App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
     }
 }
