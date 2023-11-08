@@ -60,24 +60,15 @@ public class CreateLessonPlanController {
         if (App.getCurrentLessonPlan().getIsSaved()) {
             App.setRoot("home");
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Unsaved changes will be lost. Continue?");
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                App.setRoot("home");
-            }        }
+            giveWarning("Unsaved changes will be lost!");
+        }
     }
 
     @FXML void returnToCourseHandler() throws IOException {
         if (App.getCurrentLessonPlan().getIsSaved()) {
             App.setRoot("course_view");
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Unsaved changes will be lost. Continue?");
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                App.setRoot("course_view");
-            }
+            giveWarning("Unsaved changes will be lost!");
         }
     }
 
@@ -192,7 +183,7 @@ public class CreateLessonPlanController {
             titleLabel.setFont(titleFont);
             switchToLessonOutlineView();
         } else {
-            giveAlert(Alert.AlertType.WARNING, "Cannot have empty title.", "Warning");
+            giveWarning("Cannot have empty title.");
         }
     }
     @FXML private void switchToLessonOutlineView() {
@@ -204,10 +195,9 @@ public class CreateLessonPlanController {
             editTitleButton.setVisible(true);
     }
 
-    @FXML private void giveAlert(Alert.AlertType type, String message, String title) {
-        //Used https://www.tabnine.com/code/java/classes/javafx.scene.control.Alert
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
+    @FXML private void giveWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
         alert.setContentText(message);
         alert.showAndWait();
     }
