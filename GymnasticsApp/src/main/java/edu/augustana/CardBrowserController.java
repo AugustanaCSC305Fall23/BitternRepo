@@ -179,7 +179,7 @@ public class CardBrowserController {
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             if (dropdown.getCheckModel().getCheckedItems() != null){
                 List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
-                for (int i = 0; i < checkedIndices.size(); i++) {
+                for (int i = checkedIndices.size() - 1; i >= 0; i--) {
                     dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
                 }
             }
