@@ -40,7 +40,8 @@ public class CourseViewController {
     }
     @FXML
     private void createLessonPlanHandler() throws IOException {
-        App.changeCurrentLessonPlan(new LessonPlan("New Lesson Plan"));
+        LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
+        CreateLessonPlanController.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
     }
 

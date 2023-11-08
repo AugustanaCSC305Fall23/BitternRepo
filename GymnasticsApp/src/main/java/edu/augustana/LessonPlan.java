@@ -5,7 +5,7 @@ import java.util.List;
 
 public class LessonPlan {
     private String title;
-    private List<Card> lessonPlanCardList = new ArrayList<>();
+    private static List<Card> lessonPlanList = new ArrayList<>();
 
     public LessonPlan(String title) {
         this.title = title;
@@ -18,12 +18,12 @@ public class LessonPlan {
     public void changeTitle(String newTitle) {
         title = newTitle;
     }
-    public List<Card> getLessonPlanCardList(){
-        return lessonPlanCardList;
+    public List<Card> getLessonPlanList(){
+        return lessonPlanList;
     }
 
     public void addCardToList(Card card){
-        lessonPlanCardList.add(card);
+        lessonPlanList.add(card);
     }
 
     @Override
