@@ -20,7 +20,10 @@
          <children>
             <HBox alignment="BOTTOM_LEFT" prefHeight="96.0" prefWidth="83.0">
                <children>
-                  <Button fx:id="addCardButton" mnemonicParsing="false" onAction="#addCardToLessonPlan" />
+                  <Button fx:id="addCardButton" mnemonicParsing="false" onAction="#addCardsToLessonPlan" prefHeight="30.0" prefWidth="30.0">
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin></Button>
                </children>
             </HBox>
             <VBox alignment="CENTER">
@@ -78,7 +81,8 @@
                <children>
                   <ScrollPane prefViewportHeight="575.0">
                      <content>
-                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="820.0" vgap="10.0" />
+                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="820.0" vgap="10.0">
+                        </FlowPane>
                      </content>
                   </ScrollPane>
                </children>

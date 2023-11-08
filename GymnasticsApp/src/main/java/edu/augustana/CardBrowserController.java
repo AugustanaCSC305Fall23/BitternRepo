@@ -6,8 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -17,12 +17,9 @@ import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import javafx.print.*;
+import javafx.scene.paint.Color;
 import org.controlsfx.control.CheckComboBox;
 
 public class CardBrowserController {
@@ -111,14 +108,15 @@ public class CardBrowserController {
     @FXML private CheckComboBox<String> modelSexDropdown;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
 
-    private List<String> filters = new ArrayList<>();
     @FXML private TextField searchField;
 
-    private ImageView clickedImageView = new ImageView();
+    private static Map<Card, ImageView> selectedCards = new HashMap<>();
 
-    private Image prevImage;
+    //private ImageView clickedImageView = new ImageView();
 
-    private final Image checkImage = new Image(getClass().getResource("images/Checkmark.png").toString(), 400, 300, true, true);
+    //private Image prevImage;
+
+    //private final Image checkImage = new Image(getClass().getResource("images/Checkmark.png").toString(), 400, 300, true, true);
 
 
 /*    private List<CheckBox> createListOfFilters() {
@@ -140,15 +138,11 @@ public class CardBrowserController {
         App.setRoot("home");
     }
 
-    @FXML
-    private void returnToLessonPlanHandler(ActionEvent event) throws IOException {
-        App.setRoot("lesson_plan_creator");
-    }
     private void drawCardSet(){
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
-            //cardImageView.setOnMouseClicked(this::selectedCard);
+            cardImageView.setOnMouseClicked(this::selectCardAction);
             cardsFlowPane.getChildren().add(cardImageView);
         }
     }
@@ -162,7 +156,7 @@ public class CardBrowserController {
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
         return dropdown.getCheckModel().getCheckedItems();
     }
-    @FXML private void applyFiltersAction(ActionEvent event) throws IOException {
+    @FXML private void applyFiltersAction() throws IOException {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
 
@@ -170,7 +164,7 @@ public class CardBrowserController {
             Card card = fullCardCollection.getCard(cardId);
             if (FilterControl.checkIfAllFiltersMatch(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
-                //cardImageView.setOnMouseClicked(this::selectedCard);
+                cardImageView.setOnMouseClicked(this::selectCardAction);
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
@@ -185,7 +179,7 @@ public class CardBrowserController {
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             if (dropdown.getCheckModel().getCheckedItems() != null){
                 List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
-                for (int i = 0; i < checkedIndices.size(); i++) {
+                for (int i = checkedIndices.size() - 1; i >= 0; i--) {
                     dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
                 }
             }
@@ -203,14 +197,14 @@ public class CardBrowserController {
                 Card card = fullCardCollection.getCard(cardId);
                 if (searchFilter.matchesFilters(card)) {
                     ImageView cardImageView = new ImageView(card.getImage());
-                    //cardImageView.setOnMouseClicked(this::selectedCard);
+                    cardImageView.setOnMouseClicked(this::selectCardAction);
                     cardsFlowPane.getChildren().add(cardImageView);
                 }
             }
         }
     }
 
-    @FXML
+    /* @FXML
     private void getImageClicked(MouseEvent event) throws IOException {
         if (event.getTarget().getClass() == ImageView.class) {
             if (clickedImageView == null) {
@@ -228,10 +222,37 @@ public class CardBrowserController {
                 clickedImageView.setImage(checkImage);
             }
         }
+    } */
+
+
+    private void selectCardAction(MouseEvent event){
+        if (event.getTarget().getClass() == ImageView.class){
+            ImageView cardView = (ImageView) event.getTarget();
+            for (String cardId : fullCardCollection.getSetOfCardIds()){
+                Card card = fullCardCollection.getCard(cardId);
+                if (card.getImage().equals(cardView.getImage())){
+                    if (!selectedCards.containsKey(card)) {
+                        cardView.setEffect(new DropShadow(7, Color.BLACK));
+                        selectedCards.put(card, cardView);
+                    } else {
+                        cardView.setEffect(null);
+                        selectedCards.remove(card);
+                    }
+                }
+            }
+        }
     }
+
     @FXML
-    void printSelectedCard(ActionEvent event) throws IOException {
-        PrintStaging printCard = new PrintStaging(prevImage, "card_browser");
-        App.setRoot("print_preview");
+    void printSelectedCards() throws IOException {
+        //PrintStaging printCard = new PrintStaging(prevImage, "card_browser");
+        if (selectedCards != null){
+            for (Card card : selectedCards.keySet()) {
+                PrintStaging printCard = new PrintStaging(card.getImage(), "card_browser");
+                selectedCards.get(card).setEffect(null);
+            }
+            selectedCards.clear();
+            App.setRoot("print_preview");
+        }
     }
 }

@@ -5,21 +5,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CreateLessonPlanController {
     private URL location;
@@ -47,7 +47,7 @@ public class CreateLessonPlanController {
     @FXML private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     //private static LessonPlan currentLessonPlan;
-    private static Card selectedCard;
+    private static Map<Card, ImageView> selectedCards = new HashMap<>();
 
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
@@ -76,7 +76,7 @@ public class CreateLessonPlanController {
             Card card = fullCardCollection.getCard(cardId);
             if (FilterControl.checkIfAllFiltersMatch(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
-                cardImageView.setOnMouseClicked(this::selectedCard);
+                cardImageView.setOnMouseClicked(this::selectCardAction);
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
@@ -90,7 +90,7 @@ public class CreateLessonPlanController {
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             if (dropdown.getCheckModel().getCheckedItems() != null){
                 List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
-                for (int i = 0; i < checkedIndices.size(); i++) {
+                for (int i = checkedIndices.size() - 1; i >= 0; i--) {
                     dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
                 }
             }
@@ -109,30 +109,36 @@ public class CreateLessonPlanController {
                 Card card = fullCardCollection.getCard(cardId);
                 if (searchFilter.matchesFilters(card)) {
                     ImageView cardImageView = new ImageView(card.getImage());
-                    cardImageView.setOnMouseClicked(this::selectedCard);
+                    cardImageView.setOnMouseClicked(this::selectCardAction);
                     cardsFlowPane.getChildren().add(cardImageView);
                 }
             }
         }
     }
     
-    private void selectedCard(MouseEvent event){
-        if(event.getTarget().getClass() == ImageView.class){
+    private void selectCardAction(MouseEvent event){
+        if (event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
-            Image selectedImage = cardView.getImage();
-            for(String cardId : fullCardCollection.getSetOfCardIds()){
+            for (String cardId : fullCardCollection.getSetOfCardIds()){
                 Card card = fullCardCollection.getCard(cardId);
-                if (card.getImage().equals(selectedImage)){
-                    selectedCard = card;
+                if (card.getImage().equals(cardView.getImage())){
+                    if (!selectedCards.containsKey(card)) {
+                        cardView.setEffect(new DropShadow(7, Color.BLACK));
+                        selectedCards.put(card, cardView);
+                    } else {
+                        cardView.setEffect(null);
+                        selectedCards.remove(card);
+                    }
                 }
             }
         }
     }
+
     private void drawCardSet(){
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
-            cardImageView.setOnMouseClicked(this::selectedCard);
+            cardImageView.setOnMouseClicked(this::selectCardAction);
             cardsFlowPane.getChildren().add(cardImageView);
         }
     }
@@ -196,10 +202,15 @@ public class CreateLessonPlanController {
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         App.changeCurrentLessonPlan(lessonPlan);
     }
-    @FXML void addCardToLessonPlan() {
-        if (selectedCard != null){
-            App.getCurrentLessonPlan().addCardToList(selectedCard);
-            cardTitleListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
+
+    @FXML void addCardsToLessonPlan() {
+        if (selectedCards != null){
+            for (Card card : selectedCards.keySet()) {
+                App.getCurrentLessonPlan().addCardToList(card);
+                cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+                selectedCards.get(card).setEffect(null);
+            }
+            selectedCards.clear();
         }
     }
 
