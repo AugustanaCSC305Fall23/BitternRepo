@@ -224,7 +224,8 @@ public class CardBrowserController {
         }
     } */
 
-
+    //still adds everything to the selected cards, but no dropshadow
+    //and still is only showing one card in print preview
     private void selectCardAction(MouseEvent event){
         if (event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();

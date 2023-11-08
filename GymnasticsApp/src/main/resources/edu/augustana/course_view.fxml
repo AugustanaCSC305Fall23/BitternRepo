@@ -8,33 +8,40 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="courseTitleLabel" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CourseViewController">
+<AnchorPane fx:id="courseTitleLabel" prefWidth="800.0" style="-fx-background-color: CornFlowerBlue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CourseViewController">
    <children>
-      <Label alignment="CENTER" text="Course Title" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+      <Label alignment="CENTER" text="Course Title" textAlignment="CENTER" textFill="#e9e9e9" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
          <font>
-            <Font name="Britannic Bold" size="40.0" />
+            <Font name="Times New Roman Bold" size="48.0" />
          </font>
       </Label>
-      <ScrollPane AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="120.0">
+      <ScrollPane layoutX="97.0" layoutY="118.0" prefHeight="449.0" prefWidth="653.0" style="-fx-background-color: AntiqueWhite; -fx-background-insets: AntiqueWhite;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="118.0">
          <padding>
             <Insets bottom="10.0" left="50.0" right="50.0" top="20.0" />
          </padding>
          <content>
-            <ListView fx:id="courseListView" prefHeight="400.0" prefWidth="608.0" />
+            <ListView fx:id="courseListView" prefHeight="407.0" prefWidth="606.0" scaleX="100.0" scaleY="100.0" scaleZ="100.0" style="-fx-background-color: AntiqueWhite;" />
          </content>
       </ScrollPane>
       <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
-            <Font size="23.0" />
+            <Font name="Georgia" size="23.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
       <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" text="Create New Lesson Plan" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
          <font>
-            <Font size="23.0" />
+            <Font name="Georgia" size="23.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
       <MenuBar layoutX="61.0" layoutY="31.0">
         <menus>
