@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="221d49bd-49fe-4c9d-826b-91fd22c58615" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="221d49bd-49fe-4c9d-826b-91fd22c58615" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +15,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "Merging uiImprovements"
+    "git-widget-placeholder": "uiImprovements"
   }
 }]]></component>
   <component name="TaskManager">
