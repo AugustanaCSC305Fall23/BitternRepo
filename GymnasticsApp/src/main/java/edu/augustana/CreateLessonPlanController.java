@@ -49,6 +49,8 @@ public class CreateLessonPlanController {
     private static LessonPlan currentLessonPlan;
     private static Card selectedCard;
 
+
+
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
         genderDropdown.getItems().addAll(genderFilterChoices);
