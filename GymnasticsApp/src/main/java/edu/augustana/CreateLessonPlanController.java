@@ -57,11 +57,29 @@ public class CreateLessonPlanController {
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
     @FXML void goToHome() throws IOException {
-        App.setRoot("home");
+        if (App.getCurrentLessonPlan().getIsSaved()) {
+            App.setRoot("home");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Unsaved changes will be lost. Continue?");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                App.setRoot("home");
+            }
+        }
     }
 
     @FXML void returnToCourseHandler() throws IOException {
-        App.setRoot("course_view");
+        if (App.getCurrentLessonPlan().getIsSaved()) {
+            App.setRoot("course_view");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Unsaved changes will be lost. Continue?");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                App.setRoot("course_view");
+            }
+        }
     }
 
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
@@ -204,13 +222,15 @@ public class CreateLessonPlanController {
     }
 
     @FXML void addCardsToLessonPlan() {
-        if (selectedCards != null){
+        if (!selectedCards.isEmpty()){
             for (Card card : selectedCards.keySet()) {
                 App.getCurrentLessonPlan().addCardToList(card);
                 cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
                 selectedCards.get(card).setEffect(null);
             }
             selectedCards.clear();
+        } else {
+            giveWarning("No card selected.");
         }
     }
 

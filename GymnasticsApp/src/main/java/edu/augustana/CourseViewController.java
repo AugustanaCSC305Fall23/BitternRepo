@@ -26,7 +26,7 @@ public class CourseViewController {
     private AnchorPane courseTitleLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="courseListView"
-    private ListView<String> courseListView = new ListView<>(); // Value injected by FXMLLoader
+    private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
 
     @FXML
     private Button createNewLessonPlanBtn;
@@ -49,7 +49,7 @@ public class CourseViewController {
     private void addLessonsToCourseList() {
         if (!(App.getCurrentCourse().getLessonPlanList().isEmpty())) {
             for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {
-                courseListView.getItems().add(lesson.getTitle());
+                courseListView.getItems().add(lesson);
             }
         }
     }
@@ -68,7 +68,7 @@ public class CourseViewController {
                 App.changeCurrentCourse(Course.loadFromFile(chosenFile));
                 App.changeCurrentCourseFile(chosenFile);
                 for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-                    courseListView.getItems().add(lessonPlan.getTitle());
+                    courseListView.getItems().add(lessonPlan);
                 }
             } catch (IOException e) {
                 new Alert(Alert.AlertType.ERROR, "Error loading Course: " + chosenFile).show();
@@ -102,7 +102,7 @@ public class CourseViewController {
         App.changeCurrentCourseFile(null);
         App.getCurrentCourse().getLessonPlanList().add(new LessonPlan("My Lesson Plan"));
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-            courseListView.getItems().add(lessonPlan.getTitle());
+            courseListView.getItems().add(lessonPlan);
         }
     }
 

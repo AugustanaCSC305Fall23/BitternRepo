@@ -25,6 +25,8 @@ public class LessonPlan {
         return lessonPlanList;
     }
 
+    public boolean getIsSaved() { return isSaved; }
+
     public void addCardToList(Card card){
         lessonPlanList.add(card);
         isSaved = false;
