@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CardDatabase {
     private static CardCollection fullCardCollection;
@@ -38,7 +37,7 @@ public class CardDatabase {
     public static List<Image> getListOfImages() {
         List<Image> imageList = new ArrayList<Image>();
         for (String cardId : getFullCardCollection().getSetOfCardIds()) {
-            imageList.add(fullCardCollection.getCard(cardId).getImage());
+            imageList.add(fullCardCollection.getCardByID(cardId).getImage());
         }
         return imageList;
     }

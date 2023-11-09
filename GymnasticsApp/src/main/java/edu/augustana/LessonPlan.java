@@ -5,7 +5,7 @@ import java.util.List;
 
 public class LessonPlan {
     private String title;
-    private static List<Card> lessonPlanList = new ArrayList<>();
+    private List<String> cardIDList = new ArrayList<>();
     private boolean isSaved;
 
     public LessonPlan(String title) {
@@ -21,14 +21,18 @@ public class LessonPlan {
         title = newTitle;
         isSaved = false;
     }
-    public List<Card> getLessonPlanList(){
-        return lessonPlanList;
+    public List<Card> getCardList(){
+        List<Card> cardsInLesson = new ArrayList<>();
+        for (String id : cardIDList) {
+            cardsInLesson.add(CardDatabase.getFullCardCollection().getCardByID(id));
+        }
+        return cardsInLesson;
     }
 
     public boolean getIsSaved() { return isSaved; }
 
     public void addCardToList(Card card){
-        lessonPlanList.add(card);
+        cardIDList.add(card.getUniqueID());
         isSaved = false;
     }
 
@@ -36,9 +40,6 @@ public class LessonPlan {
         isSaved = state;
     }
 
-    public void editListOfCards(List<Card> newList) {
-        lessonPlanList = newList;
-    }
 
     @Override
     public String toString() {

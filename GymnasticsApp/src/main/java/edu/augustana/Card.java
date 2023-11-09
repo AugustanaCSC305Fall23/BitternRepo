@@ -84,6 +84,10 @@ public class Card {
         return keywords;
     }
 
+    public String getUniqueID() {
+        return packFolder + "/" + imageName;
+    }
+
     @Override
     public String toString() {
         return "Card{" +
@@ -100,6 +104,7 @@ public class Card {
                 "\nkeywords=" + Arrays.toString(keywords) +
                 "}";
         }
+
 }
 
 

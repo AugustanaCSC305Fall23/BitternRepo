@@ -161,7 +161,7 @@ public class CardBrowserController {
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
 
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
-            Card card = fullCardCollection.getCard(cardId);
+            Card card = fullCardCollection.getCardByID(cardId);
             if (FilterControl.checkIfAllFiltersMatch(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectCardAction);
@@ -194,7 +194,7 @@ public class CardBrowserController {
             SearchFilter searchFilter = new SearchFilter(searchWordList);
             cardsFlowPane.getChildren().clear();
             for (String cardId : fullCardCollection.getSetOfCardIds()) {
-                Card card = fullCardCollection.getCard(cardId);
+                Card card = fullCardCollection.getCardByID(cardId);
                 if (searchFilter.matchesFilters(card)) {
                     ImageView cardImageView = new ImageView(card.getImage());
                     cardImageView.setOnMouseClicked(this::selectCardAction);
@@ -230,7 +230,7 @@ public class CardBrowserController {
         if (event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
             for (String cardId : fullCardCollection.getSetOfCardIds()){
-                Card card = fullCardCollection.getCard(cardId);
+                Card card = fullCardCollection.getCardByID(cardId);
                 if (card.getImage().equals(cardView.getImage())){
                     if (!selectedCards.containsKey(card)) {
                         cardView.setEffect(new DropShadow(10, Color.BLACK));

@@ -93,7 +93,7 @@ public class CreateLessonPlanController {
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
 
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
-            Card card = fullCardCollection.getCard(cardId);
+            Card card = fullCardCollection.getCardByID(cardId);
             if (FilterControl.checkIfAllFiltersMatch(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectCardAction);
@@ -126,7 +126,7 @@ public class CreateLessonPlanController {
             SearchFilter searchFilter = new SearchFilter(searchWordList);
             cardsFlowPane.getChildren().clear();
             for (String cardId : fullCardCollection.getSetOfCardIds()) {
-                Card card = fullCardCollection.getCard(cardId);
+                Card card = fullCardCollection.getCardByID(cardId);
                 if (searchFilter.matchesFilters(card)) {
                     ImageView cardImageView = new ImageView(card.getImage());
                     cardImageView.setOnMouseClicked(this::selectCardAction);
@@ -140,7 +140,7 @@ public class CreateLessonPlanController {
         if (event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
             for (String cardId : fullCardCollection.getSetOfCardIds()){
-                Card card = fullCardCollection.getCard(cardId);
+                Card card = fullCardCollection.getCardByID(cardId);
                 if (card.getImage().equals(cardView.getImage())){
                     if (!selectedCards.containsKey(card)) {
                         cardView.setEffect(new DropShadow(10, Color.BLACK));
@@ -180,7 +180,7 @@ public class CreateLessonPlanController {
         }
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
-        for(Card card : App.getCurrentLessonPlan().getLessonPlanList()){
+        for(Card card : App.getCurrentLessonPlan().getCardList()){
             cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
     }
