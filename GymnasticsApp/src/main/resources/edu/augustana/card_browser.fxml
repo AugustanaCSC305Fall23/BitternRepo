@@ -23,7 +23,7 @@
               <items>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="719.0" prefWidth="244.0" style="-fx-background-color: cornflowerblue;">
                      <children>
-                        <VBox focusTraversable="true" layoutX="-3.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="256.0" spacing="8.0" style="-fx-background-color: cornflowerblue;">
+                        <VBox focusTraversable="true" layoutX="-3.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="252.0" spacing="8.0" style="-fx-background-color: cornflowerblue;">
                            <children>
                               <Label text="Difficulty" textFill="#e9e9e9">
                                  <font>
@@ -61,7 +61,7 @@
                                  </VBox.margin>
                               </Label>
                               <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" />
-                              <HBox alignment="BOTTOM_CENTER" prefHeight="274.0" prefWidth="249.0" spacing="20.0">
+                              <HBox alignment="BOTTOM_CENTER" prefHeight="274.0" prefWidth="231.0" spacing="20.0">
                                  <children>
                                     <Button fx:id="applyFiltersBtn" mnemonicParsing="false" onAction="#applyFiltersAction" style="-fx-background-color: silver; -fx-border-color: black;" text="Apply Filters" wrapText="true">
                                        <font>
@@ -106,7 +106,7 @@
                                     <Insets />
                                  </VBox.margin>
                               </ScrollPane>
-                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="700.0">
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="750.0">
                                  <children>
                                     <Button fx:id="printCardBtn" mnemonicParsing="false" onAction="#printSelectedCards" style="-fx-background-color: silver; -fx-border-color: black;" text="Print Selected Card" wrapText="true">
                                        <font>
