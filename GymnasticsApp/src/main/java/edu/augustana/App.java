@@ -59,7 +59,6 @@ public class App extends Application {
         currentLessonPlan = lessonPlan;
     }
 
-
     public static void main(String[] args) {
         launch();
     }

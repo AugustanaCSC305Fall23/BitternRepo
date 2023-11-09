@@ -7,10 +7,10 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -33,6 +33,27 @@ public class CourseViewController {
 
     @FXML
     private Button homeButton;
+
+    //Title UI Components
+
+    @FXML
+    private Button doneBtn;
+
+    @FXML
+    private Button editTitleBtn;
+
+    @FXML
+    private Button cancelBtn;
+
+    @FXML
+    private TextField titleField;
+
+    @FXML
+    private Label titleLabel;
+
+    // Non FXML
+    private static Course currentCourse;
+
 
     @FXML
     private void goToHome() throws IOException {
@@ -124,6 +145,54 @@ public class CourseViewController {
         assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
         assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
         addLessonsToCourseList();
+
+        titleField.setVisible(false);
+        doneBtn.setVisible(false);
+        cancelBtn.setVisible(false);
+
+        if (currentCourse == null) {
+            currentCourse = new Course();
+            currentCourse.changeTitle(titleLabel.toString());
+        }
+    }
+
+    @FXML
+    void setTitle(ActionEvent event) {
+        String title = titleField.getText();
+        if (!title.isEmpty()) {
+            currentCourse.changeTitle(title);
+            titleLabel.setText(title);
+            Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
+            titleLabel.setFont(titleFont);
+            switchToCourseOutlineView();
+        } else {
+            giveWarning("Cannot have empty title.");
+        }
+    }
+
+    @FXML
+    void switchToCourseOutlineView() {
+        titleLabel.setVisible(true);
+        titleField.setVisible(false);
+        doneBtn.setVisible(false);
+        cancelBtn.setVisible(false);
+        editTitleBtn.setVisible(true);
+    }
+
+    @FXML
+    void switchToEditTitleView(ActionEvent event) {
+        titleLabel.setVisible(false);
+        titleField.setVisible(true);
+        doneBtn.setVisible(true);
+        editTitleBtn.setVisible(false);
+        cancelBtn.setVisible(true);
+    }
+
+    @FXML private void giveWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public static void setCurrentCourse(Course course) {
