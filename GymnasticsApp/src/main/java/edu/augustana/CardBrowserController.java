@@ -37,57 +37,6 @@ public class CardBrowserController {
     @FXML // fx:id="clearFiltersBtn"
     private Button clearFiltersBtn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="backToLessonPlanBtn"
-    private Button backToLessonPlanBtn; // Value injected by FXMLLoader
-
-/*    @FXML // fx:id="beamCheckBox"
-    private CheckBox beamCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="boyCheckBox"
-    private CheckBox boyCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="easyCheckBox"
-    private CheckBox easyCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="floorCheckBox"
-    private CheckBox floorCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="girlCheckBox"
-    private CheckBox girlCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="hardCheckBox"
-    private CheckBox hardCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="horizontalBarsCheckBox"
-    private CheckBox horizontalBarsCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="mediumCheckBox"
-    private CheckBox mediumCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="neutralCheckBox"
-    private CheckBox neutralCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="parallelBarsCheckBox"
-    private CheckBox parallelBarsCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="pommelHorseCheckBox"
-    private CheckBox pommelHorseCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="ringsCheckBox"
-    private CheckBox ringsCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="strengthCheckBox"
-    private CheckBox strengthCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="unevenBarsCheckBox"
-    private CheckBox unevenBarsCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="vaultCheckBox"
-    private CheckBox vaultCheckBox; // Value injected by FXMLLoader
-
-    @FXML // fx:id="trampolineCheckBox"
-    private CheckBox trampolineCheckBox;*/
-
     @FXML // fx:id="homeButton"
     private Button homeButton; // Value injected by FXMLLoader
 
@@ -248,11 +197,16 @@ public class CardBrowserController {
     void printSelectedCards() throws IOException {
         //PrintStaging printCard = new PrintStaging(prevImage, "card_browser");
         if (selectedCards != null){
+            List<Card> cardsToPrint = new ArrayList<>();
             for (Card card : selectedCards.keySet()) {
-                PrintStaging printCard = new PrintStaging(card.getImage(), "card_browser");
+                cardsToPrint.add(card);
+                //PrintStaging printCard = new PrintStaging(card.getImage(), "card_browser");
+                //PrintStaging printList = new PrintStaging(cardsToPrint);
                 selectedCards.get(card).setEffect(null);
             }
             selectedCards.clear();
+            PrintStaging.setPrintCardList(cardsToPrint);
+            PrintStaging.setFXML("card_browser");
             App.setRoot("print_preview");
         }
     }

@@ -8,19 +8,19 @@ import java.util.List;
 public class PrintStaging {
     private static String past_fxml;
 
-    private static Image printCard;
-    private static List<Image> printCardList;
+    private static Card printCard;
+    private static List<Card> printCardList;
     private static Node printLessonPlan;
     private static Node printCoursePlan;
 
-    PrintStaging(Image card, String fxml) {
+    /*PrintStaging(Image card, String fxml) {
         printCard = card;
         past_fxml = fxml;
-    }
+    } */
 
-    PrintStaging(List<Image> cardList) {
+    /*PrintStaging(List<Card> cardList) {
         printCardList = cardList;
-    }
+    } */
 
     //PrintPreview(Node lessonPlan) {
     //    printLessonPlan = lessonPlan;
@@ -30,8 +30,20 @@ public class PrintStaging {
     //    printCoursePlan = coursePlan;
     //}
 
-    public static Image getPrintCard() {
+    /*public static Card getPrintCard() {
         return printCard;
+    } */
+
+    public static void setPrintCardList(List<Card> cardList) {
+        printCardList = cardList;
+    }
+
+    public static List<Card> getPrintCardList() {
+        return printCardList;
+    }
+
+    public static void setFXML(String fxml) {
+        past_fxml = fxml;
     }
 
     public static String getFXML() {

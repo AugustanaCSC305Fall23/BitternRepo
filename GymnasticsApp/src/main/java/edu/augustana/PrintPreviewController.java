@@ -2,6 +2,8 @@ package edu.augustana;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +38,9 @@ public class PrintPreviewController {
     @FXML
     private Pane mainPane;
 
+    @FXML
+    private FlowPane printPreviewFlowPane;
+
     private static PrinterJob printerJob = PrinterJob.createPrinterJob();
 
     @FXML
@@ -63,7 +68,11 @@ public class PrintPreviewController {
     @FXML
     void initialize() {
         if (PrintStaging.getFXML().equals("card_browser")) {
-            ImageView card = new ImageView(PrintStaging.getPrintCard());
+            List<ImageView> listOfImageViews = new ArrayList<>();
+            for (Card card : PrintStaging.getPrintCardList()) {
+                ImageView cardView = new ImageView(card.getImage());
+                listOfImageViews.add(cardView);
+            }
             int numPages = 1;
             Pagination pagination = new Pagination(numPages);
             pagination.setStyle("-fx-border-color:white;");
@@ -71,7 +80,7 @@ public class PrintPreviewController {
                 if (pageIndex >= numPages) {
                     return null;
                 } else {
-                    return createPage(pageIndex, card, printerJob);
+                    return createPage(pageIndex, listOfImageViews, printerJob);
                 }
 
             });
@@ -88,19 +97,23 @@ public class PrintPreviewController {
     public int itemsPerPage() {
         return 1;
     }
-    public VBox createPage(int pageIndex, ImageView card, PrinterJob pj) {
+    public VBox createPage(int pageIndex, List<ImageView> listOfImageViews, PrinterJob pj) {
         PageLayout pg = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
         int page = pageIndex * itemsPerPage();
 
         for (int p = page; p < page + itemsPerPage(); p++) {
 
-            Pane whitePaperPane = new Pane();
-            whitePaperPane.setStyle("-fx-background-color:white;");
-            whitePaperPane.setPrefHeight(pg.getPrintableHeight());
-            whitePaperPane.setPrefWidth(pg.getPrintableWidth());
-            whitePaperPane.getChildren().add(card);
-            box.getChildren().add(whitePaperPane);
+            //Pane whitePaperPane = new Pane();
+            //whitePaperPane.setStyle("-fx-background-color:white;");
+            //whitePaperPane.setPrefHeight(pg.getPrintableHeight());
+            //whitePaperPane.setPrefWidth(pg.getPrintableWidth());
+            //printPreviewFlowPane.setPrefHeight(pg.getPrintableHeight());
+            //printPreviewFlowPane.setPrefWidth(pg.getPrintableWidth());
+            for (ImageView cardView : listOfImageViews) {
+                printPreviewFlowPane.getChildren().add(cardView);
+            }
+            //box.getChildren().add(whitePaperPane);
         }
         return box;
     }
