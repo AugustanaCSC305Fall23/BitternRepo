@@ -56,13 +56,13 @@
           </Menu>
         </menus>
       </MenuBar>
-<<<<<<< HEAD
+
       <Button fx:id="editLessonPlanBtn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="350.0">
          <font>
             <Font size="23.0" />
          </font>
       </Button>
-=======
+
       <HBox alignment="CENTER" focusTraversable="true" spacing="125.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
          <children>
             <Button fx:id="doneBtn" mnemonicParsing="false" onAction="#setTitle" text="Done" />
@@ -74,6 +74,6 @@
          <font>
             <Font name="Britannic Bold" size="40.0" />
          </font></TextField>
->>>>>>> 2f60cf93a9318ecaa49ee008e9d66b4a0bf7cf3c
+
    </children>
 </AnchorPane>
