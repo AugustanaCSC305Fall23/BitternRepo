@@ -234,8 +234,12 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML public void saveLessonPlan() {
+    @FXML public void saveNewLessonPlan() {
+        if (!App.getCurrentCourse().getLessonPlanList().contains(App.getCurrentLessonPlan())) {
+            App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
+        } //else {
+//            App.getCurrentLessonPlan().editListOfCards(App.);
+//        }
         App.getCurrentLessonPlan().changeSavedState(true);
-        App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
     }
 }

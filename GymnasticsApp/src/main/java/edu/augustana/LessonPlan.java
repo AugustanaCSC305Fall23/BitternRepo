@@ -36,6 +36,10 @@ public class LessonPlan {
         isSaved = state;
     }
 
+    public void editListOfCards(List<Card> newList) {
+        lessonPlanList = newList;
+    }
+
     @Override
     public String toString() {
         return title;

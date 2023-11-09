@@ -46,6 +46,18 @@ public class CourseViewController {
     }
 
     @FXML
+    private void editLessonPlanHandler() throws  IOException {
+        LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
+        if (lessonPlanToEdit != null) {
+            App.changeCurrentLessonPlan(lessonPlanToEdit);
+            CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
+            App.setRoot("lesson_plan_creator");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Must select a Lesson Plan first.");
+        }
+    }
+
+    @FXML
     private void addLessonsToCourseList() {
         if (!(App.getCurrentCourse().getLessonPlanList().isEmpty())) {
             for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {

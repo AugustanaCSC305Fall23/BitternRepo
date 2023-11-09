@@ -62,7 +62,7 @@
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin></TextField>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveLessonPlan" text="Save">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveNewLessonPlan" text="Save">
                <font>
                   <Font size="24.0" />
                </font>
