@@ -143,7 +143,7 @@ public class CreateLessonPlanController {
                 Card card = fullCardCollection.getCard(cardId);
                 if (card.getImage().equals(cardView.getImage())){
                     if (!selectedCards.containsKey(card)) {
-                        cardView.setEffect(new DropShadow(7, Color.BLACK));
+                        cardView.setEffect(new DropShadow(10, Color.BLACK));
                         selectedCards.put(card, cardView);
                     } else {
                         cardView.setEffect(null);
