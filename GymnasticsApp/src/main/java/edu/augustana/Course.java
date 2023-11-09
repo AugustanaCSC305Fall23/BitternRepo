@@ -44,6 +44,14 @@ public class Course {
         return lessonPlanList;
     }
 
+    public void changeTitle(String newTitle) {
+        courseTitle = newTitle;
+    }
+
+    public String getTitle() {
+        return courseTitle;
+    }
+
     @Override
     public String toString() {
         return "Course{" +

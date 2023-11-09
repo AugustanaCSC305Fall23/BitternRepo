@@ -49,6 +49,8 @@ public class CreateLessonPlanController {
     //private static LessonPlan currentLessonPlan;
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
 
+
+
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
         genderDropdown.getItems().addAll(genderFilterChoices);
