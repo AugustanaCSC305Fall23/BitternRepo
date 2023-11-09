@@ -54,5 +54,10 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Button fx:id="editLessonPlanBtn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="350.0">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
