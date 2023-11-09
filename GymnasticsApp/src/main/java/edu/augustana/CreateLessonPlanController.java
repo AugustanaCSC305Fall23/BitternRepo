@@ -5,21 +5,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CreateLessonPlanController {
     private URL location;
@@ -46,8 +46,8 @@ public class CreateLessonPlanController {
     @FXML private ListView<String> cardTitleListView = new ListView<>();
     @FXML private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
-    private static LessonPlan currentLessonPlan;
-    private static Card selectedCard;
+    //private static LessonPlan currentLessonPlan;
+    private static Map<Card, ImageView> selectedCards = new HashMap<>();
 
 
 
@@ -59,11 +59,29 @@ public class CreateLessonPlanController {
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
     @FXML void goToHome() throws IOException {
-        App.setRoot("home");
+        if (App.getCurrentLessonPlan().getIsSaved()) {
+            App.setRoot("home");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Unsaved changes will be lost. Continue?");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                App.setRoot("home");
+            }
+        }
     }
 
     @FXML void returnToCourseHandler() throws IOException {
-        App.setRoot("course_view");
+        if (App.getCurrentLessonPlan().getIsSaved()) {
+            App.setRoot("course_view");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Unsaved changes will be lost. Continue?");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                App.setRoot("course_view");
+            }
+        }
     }
 
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
@@ -78,7 +96,7 @@ public class CreateLessonPlanController {
             Card card = fullCardCollection.getCard(cardId);
             if (FilterControl.checkIfAllFiltersMatch(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
-                cardImageView.setOnMouseClicked(this::selectedCard);
+                cardImageView.setOnMouseClicked(this::selectCardAction);
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
@@ -92,7 +110,7 @@ public class CreateLessonPlanController {
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             if (dropdown.getCheckModel().getCheckedItems() != null){
                 List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
-                for (int i = 0; i < checkedIndices.size(); i++) {
+                for (int i = checkedIndices.size() - 1; i >= 0; i--) {
                     dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
                 }
             }
@@ -111,30 +129,36 @@ public class CreateLessonPlanController {
                 Card card = fullCardCollection.getCard(cardId);
                 if (searchFilter.matchesFilters(card)) {
                     ImageView cardImageView = new ImageView(card.getImage());
-                    cardImageView.setOnMouseClicked(this::selectedCard);
+                    cardImageView.setOnMouseClicked(this::selectCardAction);
                     cardsFlowPane.getChildren().add(cardImageView);
                 }
             }
         }
     }
     
-    private void selectedCard(MouseEvent event){
-        if(event.getTarget().getClass() == ImageView.class){
+    private void selectCardAction(MouseEvent event){
+        if (event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
-            Image selectedImage = cardView.getImage();
-            for(String cardId : fullCardCollection.getSetOfCardIds()){
+            for (String cardId : fullCardCollection.getSetOfCardIds()){
                 Card card = fullCardCollection.getCard(cardId);
-                if (card.getImage().equals(selectedImage)){
-                    selectedCard = card;
+                if (card.getImage().equals(cardView.getImage())){
+                    if (!selectedCards.containsKey(card)) {
+                        cardView.setEffect(new DropShadow(7, Color.BLACK));
+                        selectedCards.put(card, cardView);
+                    } else {
+                        cardView.setEffect(null);
+                        selectedCards.remove(card);
+                    }
                 }
             }
         }
     }
+
     private void drawCardSet(){
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
-            cardImageView.setOnMouseClicked(this::selectedCard);
+            cardImageView.setOnMouseClicked(this::selectCardAction);
             cardsFlowPane.getChildren().add(cardImageView);
         }
     }
@@ -147,7 +171,7 @@ public class CreateLessonPlanController {
         buttonImageView.setFitWidth(20.0);
         addCardButton.setMaxSize(25.0, 25.0);
         addCardButton.setGraphic(buttonImageView);
-        titleLabel.setText(currentLessonPlan.getTitle());
+        titleLabel.setText(App.getCurrentLessonPlan().getTitle());
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
@@ -156,7 +180,7 @@ public class CreateLessonPlanController {
         }
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
-        for(Card card : currentLessonPlan.getLessonPlanList()){
+        for(Card card : App.getCurrentLessonPlan().getLessonPlanList()){
             cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
     }
@@ -171,7 +195,7 @@ public class CreateLessonPlanController {
     @FXML void setTitle() {
         String title = titleField.getText();
         if (!title.isEmpty()) {
-            currentLessonPlan.changeTitle(title);
+            App.getCurrentLessonPlan().changeTitle(title);
             titleLabel.setText(title);
             Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
             titleLabel.setFont(titleFont);
@@ -196,16 +220,24 @@ public class CreateLessonPlanController {
         alert.showAndWait();
     }
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
-        currentLessonPlan = lessonPlan;
+        App.changeCurrentLessonPlan(lessonPlan);
     }
-    @FXML void addCardToLessonPlan() {
-        if (selectedCard != null){
-            currentLessonPlan.addCardToList(selectedCard);
-            cardTitleListView.getItems().add(selectedCard.getCode() + ", " + selectedCard.getTitle());
+
+    @FXML void addCardsToLessonPlan() {
+        if (!selectedCards.isEmpty()){
+            for (Card card : selectedCards.keySet()) {
+                App.getCurrentLessonPlan().addCardToList(card);
+                cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+                selectedCards.get(card).setEffect(null);
+            }
+            selectedCards.clear();
+        } else {
+            giveWarning("No card selected.");
         }
     }
 
     @FXML public void saveLessonPlan() {
-        App.getCurrentCourse().getLessonPlanList().add(currentLessonPlan);
+        App.getCurrentLessonPlan().changeSavedState(true);
+        App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
     }
 }
