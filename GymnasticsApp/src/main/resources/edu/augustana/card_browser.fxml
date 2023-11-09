@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,87 +14,54 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<BorderPane style="-fx-background-color: CornFlowerBlue; -fx-border-color: CornFlowerBlue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
+<BorderPane style="-fx-background-color: cornflowerblue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CardBrowserController">
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: cornflowerblue;">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
-            <SplitPane centerShape="false" dividerPositions="0.11853158602150539" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: CornFlowerBlue; -fx-background-color: CornFlowerBlue;">
+            <SplitPane centerShape="false" dividerPositions="0.11853158602150539" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: cornflowerblue;">
               <items>
-                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="244.0" style="-fx-background-color: CornFlowerBlue;">
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="719.0" prefWidth="244.0" style="-fx-background-color: cornflowerblue;">
                      <children>
-                        <VBox focusTraversable="true" layoutY="21.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="244.0" spacing="15.0" style="-fx-background-color: CornFlowerBlue; -fx-border-color: CornFlowerBlue;">
+                        <VBox focusTraversable="true" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="244.0" spacing="30.0" style="-fx-background-color: cornflowerblue;">
                            <children>
-                              <Label text="Difficulty" textFill="#e4e4e4">
+                              <Label text="Difficulty">
                                  <font>
-                                    <Font name="Georgia Bold" size="30.0" />
+                                    <Font size="21.0" />
                                  </font>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
                               </Label>
-                              <CheckComboBox fx:id="levelDropdown" showCheckedCount="true" style="-fx-background-color: silver;">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect></CheckComboBox>
-                              <Label text="Gender" textFill="#e4e4e4">
+                              <CheckComboBox fx:id="levelDropdown" showCheckedCount="true" />
+                              <Label text="Gender">
                                  <font>
-                                    <Font name="Georgia Bold" size="30.0" />
+                                    <Font size="21.0" />
                                  </font>
-                                 <VBox.margin>
-                                    <Insets top="30.0" />
-                                 </VBox.margin>
                               </Label>
-                              <CheckComboBox fx:id="genderDropdown" showCheckedCount="true" style="-fx-background-color: silver;">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect></CheckComboBox>
-                              <Label text="Model Sex" textFill="#e4e4e4">
+                              <CheckComboBox fx:id="genderDropdown" showCheckedCount="true" />
+                              <Label text="Model Sex">
                                  <font>
-                                    <Font name="Georgia Bold" size="30.0" />
+                                    <Font size="21.0" />
                                  </font>
-                                 <VBox.margin>
-                                    <Insets top="30.0" />
-                                 </VBox.margin>
                               </Label>
-                              <CheckComboBox fx:id="modelSexDropdown">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect></CheckComboBox>
-                              <Label text="Event" textFill="#e4e4e4">
+                              <CheckComboBox fx:id="modelSexDropdown" />
+                              <Label text="Event">
                                  <font>
-                                    <Font name="Georgia Bold" size="30.0" />
+                                    <Font size="21.0" />
                                  </font>
-                                 <VBox.margin>
-                                    <Insets top="30.0" />
-                                 </VBox.margin>
                               </Label>
-                              <CheckComboBox fx:id="eventDropdown" showCheckedCount="true">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect></CheckComboBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="389.0" prefWidth="234.0" spacing="20.0">
+                              <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" />
+                              <HBox spacing="20.0">
                                  <children>
-                                    <Button fx:id="applyFiltersBtn" mnemonicParsing="false" onAction="#applyFiltersAction" style="-fx-background-color: Silver; -fx-border-color: black;" text="Apply Filters" wrapText="true">
+                                    <Button fx:id="applyFiltersBtn" mnemonicParsing="false" onAction="#applyFiltersAction" text="Apply Filters">
                                        <font>
-                                          <Font name="Georgia Bold Italic" size="16.0" />
+                                          <Font size="16.0" />
                                        </font>
-                                       <HBox.margin>
-                                          <Insets bottom="20.0" />
-                                       </HBox.margin>
-                                       <effect>
-                                          <DropShadow />
-                                       </effect>
                                     </Button>
-                                    <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Silver; -fx-border-color: black;" text="Clear Filters" wrapText="true">
+                                    <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" text="Clear Filters">
                                        <font>
-                                          <Font name="Georgia Bold Italic" size="16.0" />
+                                          <Font size="16.0" />
                                        </font>
                                        <HBox.margin>
-                                          <Insets bottom="20.0" right="10.0" />
+                                          <Insets right="10.0" />
                                        </HBox.margin>
-                                       <effect>
-                                          <DropShadow />
-                                       </effect>
                                     </Button>
                                  </children>
                                  <VBox.margin>
@@ -111,9 +77,9 @@
                   </Pane>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                      <children>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: CornFlowerBlue;">
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                            <children>
-                              <ScrollPane layoutX="60.0" layoutY="500.0" prefHeight="647.0" prefWidth="847.0" style="-fx-background-color: CornFlowerBlue;">
+                              <ScrollPane layoutX="60.0" layoutY="500.0" prefHeight="647.0" prefWidth="847.0">
                                  <content>
                                     <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefHeight="648.0" prefWidth="1222.0" prefWrapLength="1200.0" style="-fx-background-color: CornFlowerBlue;" vgap="10.0" />
                                  </content>
@@ -121,29 +87,17 @@
                                     <Insets />
                                  </VBox.margin>
                               </ScrollPane>
-                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="800.0" style="-fx-background-color: CornFlowerBlue;">
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="800.0">
                                  <children>
                                     <Button fx:id="printCardBtn" mnemonicParsing="false" onAction="#printSelectedCards" style="-fx-background-color: silver; -fx-border-color: black;" text="Print Selected Card" wrapText="true">
                                        <font>
-                                          <Font name="Georgia" size="25.0" />
+                                          <Font size="25.0" />
                                        </font>
-                                       <HBox.margin>
-                                          <Insets left="25.0" />
-                                       </HBox.margin>
-                                       <effect>
-                                          <DropShadow />
-                                       </effect>
                                     </Button>
-                                    <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: silver; -fx-border-color: black;" text="Home">
+                                    <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home">
                                        <font>
-                                          <Font name="Georgia" size="31.0" />
+                                          <Font size="31.0" />
                                        </font>
-                                       <HBox.margin>
-                                          <Insets right="25.0" />
-                                       </HBox.margin>
-                                       <effect>
-                                          <DropShadow />
-                                       </effect>
                                     </Button>
                                  </children>
                               </HBox>
@@ -157,7 +111,7 @@
       </VBox>
    </center>
    <top>
-      <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchAction" prefHeight="68.0" prefWidth="1091.0" promptText="Search" style="-fx-background-color: 9de7ff;" BorderPane.alignment="CENTER">
+      <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchAction" prefHeight="68.0" prefWidth="1265.0" promptText="Search" BorderPane.alignment="CENTER">
          <font>
             <Font size="32.0" />
          </font>
