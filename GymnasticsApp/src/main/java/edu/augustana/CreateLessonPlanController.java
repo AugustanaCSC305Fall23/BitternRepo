@@ -154,6 +154,9 @@ public class CreateLessonPlanController {
         }
     }
 
+    private void selectCardInListView(MouseEvent event) {
+
+    }
     private void drawCardSet(){
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
@@ -220,7 +223,7 @@ public class CreateLessonPlanController {
         alert.showAndWait();
     }
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
-        App.changeCurrentLessonPlan(lessonPlan);
+        App.setCurrentLessonPlan(lessonPlan);
     }
 
     @FXML void addCardsToLessonPlan() {
@@ -236,12 +239,15 @@ public class CreateLessonPlanController {
         }
     }
 
+    @FXML public void removeCardFromLessonPlan() {
+
+
+    }
+
     @FXML public void saveNewLessonPlan() {
         if (!App.getCurrentCourse().getLessonPlanList().contains(App.getCurrentLessonPlan())) {
             App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
-        } //else {
-//            App.getCurrentLessonPlan().editListOfCards(App.);
-//        }
+        }
         App.getCurrentLessonPlan().changeSavedState(true);
     }
 }

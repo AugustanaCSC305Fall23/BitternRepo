@@ -47,15 +47,15 @@ public class App extends Application {
     public static LessonPlan getCurrentLessonPlan() { return currentLessonPlan; }
     public static File getCurrentCourseFile() { return currentCourseFile;}
 
-    public static void changeCurrentCourse(Course course) {
+    public static void setCurrentCourse(Course course) {
         currentCourse = course;
     }
 
-    public static void changeCurrentCourseFile(File file) {
+    public static void setCurrentCourseFile(File file) {
         currentCourseFile = file;
     }
 
-    public static void changeCurrentLessonPlan(LessonPlan lessonPlan) {
+    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         currentLessonPlan = lessonPlan;
     }
 

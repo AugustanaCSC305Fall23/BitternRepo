@@ -70,7 +70,7 @@ public class CourseViewController {
     private void editLessonPlanHandler() throws  IOException {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToEdit != null) {
-            App.changeCurrentLessonPlan(lessonPlanToEdit);
+            App.setCurrentLessonPlan(lessonPlanToEdit);
             CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
             App.setRoot("lesson_plan_creator");
         } else {
@@ -98,8 +98,8 @@ public class CourseViewController {
             try {
                 Course.loadFromFile(chosenFile);
                 courseListView.getItems().clear();
-                App.changeCurrentCourse(Course.loadFromFile(chosenFile));
-                App.changeCurrentCourseFile(chosenFile);
+                App.setCurrentCourse(Course.loadFromFile(chosenFile));
+                App.setCurrentCourseFile(chosenFile);
                 for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
                     courseListView.getItems().add(lessonPlan);
                 }
@@ -117,7 +117,7 @@ public class CourseViewController {
         Window mainWindow = courseListView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
         App.getCurrentCourse().saveToFile(chosenFile);
-        App.changeCurrentCourseFile(chosenFile);
+        App.setCurrentCourseFile(chosenFile);
 
     }
 
@@ -131,8 +131,8 @@ public class CourseViewController {
 
     @FXML private void menuActionCreateNewCourse(ActionEvent event) {
         courseListView.getItems().clear();
-        App.changeCurrentCourse(new Course());
-        App.changeCurrentCourseFile(null);
+        App.setCurrentCourse(new Course());
+        App.setCurrentCourseFile(null);
         App.getCurrentCourse().getLessonPlanList().add(new LessonPlan("My Lesson Plan"));
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             courseListView.getItems().add(lessonPlan);
@@ -196,7 +196,7 @@ public class CourseViewController {
     }
 
     public static void setCurrentCourse(Course course) {
-        App.changeCurrentCourse(course);
+        App.setCurrentCourse(course);
     }
 
 
