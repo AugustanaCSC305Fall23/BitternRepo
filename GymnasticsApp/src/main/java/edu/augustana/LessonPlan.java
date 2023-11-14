@@ -10,6 +10,7 @@ public class LessonPlan {
     private static List<Card> lessonPlanList = new ArrayList<>();
     private boolean isSaved;
     private Map<String, List<String>> eventInPlanList = new TreeMap<>();
+    private List<String> eventIndexes = new ArrayList<>();
 
     public LessonPlan(String title) {
         this.title = title;
@@ -47,6 +48,7 @@ public class LessonPlan {
         List<String> cardDisplay = new ArrayList<>();
         cardDisplay.add(card.getCode() + ", " + card.getTitle());
         eventInPlanList.put(card.getEvent(), cardDisplay);
+        eventIndexes.add(card.getEvent());
     }
     //rename this method
     public void addCardToEvent(Card card){
@@ -57,6 +59,10 @@ public class LessonPlan {
             return true;
         }
         return false;
+    }
+
+    public List<String> getEventIndexes() {
+        return eventIndexes;
     }
 
     @Override

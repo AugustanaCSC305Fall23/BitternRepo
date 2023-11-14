@@ -248,7 +248,8 @@ public class CreateLessonPlanController {
             root.getChildren().add(newEvent);
         }else{
             App.getCurrentLessonPlan().addCardToEvent(card);
-            
+            int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
+            root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
         }
     }
 
