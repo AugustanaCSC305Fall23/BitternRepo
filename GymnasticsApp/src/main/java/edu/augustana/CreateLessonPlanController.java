@@ -23,32 +23,44 @@ import java.util.*;
 
 public class CreateLessonPlanController {
     private URL location;
-    @FXML private CheckComboBox<String> eventDropdown;
-    @FXML private CheckComboBox<String> genderDropdown;
-    @FXML private CheckComboBox<String> levelDropdown;
-    @FXML private CheckComboBox<String> modelSexDropdown;
+    @FXML
+    private CheckComboBox<String> eventDropdown;
+    @FXML
+    private CheckComboBox<String> genderDropdown;
+    @FXML
+    private CheckComboBox<String> levelDropdown;
+    @FXML
+    private CheckComboBox<String> modelSexDropdown;
     List<CheckComboBox<String>> listOfDropdowns;
-    @FXML private FlowPane cardsFlowPane;
-    @FXML private TextField searchField;
-    @FXML private Button addCardButton;
-    @FXML private Button editTitleButton;
-    @FXML private TextField titleField;
-    @FXML private Button doneButton;
-    @FXML private Label titleLabel = new Label();
-    @FXML private Button cancelButton;
-    @FXML private Button saveButton;
+    @FXML
+    private FlowPane cardsFlowPane;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button addCardButton;
+    @FXML
+    private Button editTitleButton;
+    @FXML
+    private TextField titleField;
+    @FXML
+    private Button doneButton;
+    @FXML
+    private Label titleLabel = new Label();
+    @FXML
+    private Button cancelButton;
 
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
-    @FXML private ListView<String> cardTitleListView = new ListView<>();
-    @FXML private Button returnToCourseBtn;
+    @FXML
+    private ListView<String> cardTitleListView = new ListView<>();
+    @FXML
+    private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     //private static LessonPlan currentLessonPlan;
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
-
 
 
     private void createDropdowns() {
@@ -58,37 +70,23 @@ public class CreateLessonPlanController {
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
-    @FXML void goToHome() throws IOException {
-        if (App.getCurrentLessonPlan().getIsSaved()) {
-            App.setRoot("home");
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Unsaved changes will be lost. Continue?");
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                App.setRoot("home");
-            }
-        }
+
+    @FXML
+    void goToHome() throws IOException {
+        App.setRoot("home");
     }
 
-    @FXML void returnToCourseHandler() throws IOException {
-        if (App.getCurrentLessonPlan().getIsSaved()) {
-            App.setRoot("course_view");
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Unsaved changes will be lost. Continue?");
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                App.setRoot("course_view");
-            }
-        }
+    @FXML
+    void returnToCourseHandler() throws IOException {
+        App.setRoot("course_view");
     }
 
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
         return dropdown.getCheckModel().getCheckedItems();
     }
 
-    @FXML void applyFiltersAction() {
+    @FXML
+    void applyFiltersAction() {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
 
@@ -103,12 +101,13 @@ public class CreateLessonPlanController {
         FilterControl.resetDesiredFiltersLists();
     }
 
-    @FXML void clearFiltersAction() {
+    @FXML
+    void clearFiltersAction() {
         FilterControl.resetDesiredFiltersLists();
         cardsFlowPane.getChildren().clear();
         drawCardSet();
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
-            if (dropdown.getCheckModel().getCheckedItems() != null){
+            if (dropdown.getCheckModel().getCheckedItems() != null) {
                 List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
                 for (int i = checkedIndices.size() - 1; i >= 0; i--) {
                     dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
@@ -117,10 +116,11 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void searchAction(KeyEvent event) {
+    @FXML
+    void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             List<String> searchWordList = new ArrayList<>();
-            for (String word: searchField.getText().split("\\s+")) {
+            for (String word : searchField.getText().split("\\s+")) {
                 searchWordList.add(word.toLowerCase());
             }
             SearchFilter searchFilter = new SearchFilter(searchWordList);
@@ -135,13 +135,13 @@ public class CreateLessonPlanController {
             }
         }
     }
-    
-    private void selectCardAction(MouseEvent event){
-        if (event.getTarget().getClass() == ImageView.class){
+
+    private void selectCardAction(MouseEvent event) {
+        if (event.getTarget().getClass() == ImageView.class) {
             ImageView cardView = (ImageView) event.getTarget();
-            for (String cardId : fullCardCollection.getSetOfCardIds()){
+            for (String cardId : fullCardCollection.getSetOfCardIds()) {
                 Card card = fullCardCollection.getCardByID(cardId);
-                if (card.getImage().equals(cardView.getImage())){
+                if (card.getImage().equals(cardView.getImage())) {
                     if (!selectedCards.containsKey(card)) {
                         cardView.setEffect(new DropShadow(10, Color.BLACK));
                         selectedCards.put(card, cardView);
@@ -157,7 +157,8 @@ public class CreateLessonPlanController {
     private void selectCardInListView(MouseEvent event) {
 
     }
-    private void drawCardSet(){
+
+    private void drawCardSet() {
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
@@ -165,8 +166,9 @@ public class CreateLessonPlanController {
             cardsFlowPane.getChildren().add(cardImageView);
         }
     }
+
     @FXML
-    private void initialize(){
+    private void initialize() {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         ImageView buttonImageView = new ImageView(new Image(getClass().getResource("images/plusSign.png").toString()));
@@ -178,16 +180,18 @@ public class CreateLessonPlanController {
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
-        if (eventDropdown.getItems().isEmpty()){
+        if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
-        for(Card card : App.getCurrentLessonPlan().getCardList()){
+        for (Card card : App.getCurrentLessonPlan().getCardList()) {
             cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
     }
-    @FXML void switchToEditTitleView() {
+
+    @FXML
+    void switchToEditTitleView() {
         titleLabel.setVisible(false);
         cardTitleListView.setVisible(false);
         titleField.setVisible(true);
@@ -195,7 +199,9 @@ public class CreateLessonPlanController {
         editTitleButton.setVisible(false);
         cancelButton.setVisible(true);
     }
-    @FXML void setTitle() {
+
+    @FXML
+    void setTitle() {
         String title = titleField.getText();
         if (!title.isEmpty()) {
             App.getCurrentLessonPlan().changeTitle(title);
@@ -207,7 +213,9 @@ public class CreateLessonPlanController {
             giveWarning("Cannot have empty title.");
         }
     }
-    @FXML private void switchToLessonOutlineView() {
+
+    @FXML
+    private void switchToLessonOutlineView() {
         titleLabel.setVisible(true);
         cardTitleListView.setVisible(true);
         titleField.setVisible(false);
@@ -216,18 +224,21 @@ public class CreateLessonPlanController {
         editTitleButton.setVisible(true);
     }
 
-    @FXML private void giveWarning(String message) {
+    @FXML
+    private void giveWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         App.setCurrentLessonPlan(lessonPlan);
     }
 
-    @FXML void addCardsToLessonPlan() {
-        if (!selectedCards.isEmpty()){
+    @FXML
+    void addCardsToLessonPlan() {
+        if (!selectedCards.isEmpty()) {
             for (Card card : selectedCards.keySet()) {
                 App.getCurrentLessonPlan().addCardToList(card);
                 cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
@@ -239,15 +250,8 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML public void removeCardFromLessonPlan() {
-
-
+    @FXML
+    public void removeCardFromLessonPlan() {
     }
 
-    @FXML public void saveNewLessonPlan() {
-        if (!App.getCurrentCourse().getLessonPlanList().contains(App.getCurrentLessonPlan())) {
-            App.getCurrentCourse().getLessonPlanList().add(App.getCurrentLessonPlan());
-        }
-        App.getCurrentLessonPlan().changeSavedState(true);
-    }
 }
