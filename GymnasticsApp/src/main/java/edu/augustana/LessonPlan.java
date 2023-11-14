@@ -8,7 +8,7 @@ import java.util.TreeMap;
 public class LessonPlan {
     private String title;
     private static List<Card> lessonPlanList = new ArrayList<>();
-    private boolean isSaved;
+    //private boolean isSaved;
     private Map<String, List<String>> eventInPlanList = new TreeMap<>();
     private List<String> eventIndexes = new ArrayList<>();
     private List<String> cardIDList = new ArrayList<>();
