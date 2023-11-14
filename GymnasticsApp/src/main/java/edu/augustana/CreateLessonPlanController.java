@@ -46,10 +46,32 @@ public class CreateLessonPlanController {
     @FXML private ListView<String> cardTitleListView = new ListView<>();
     @FXML private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
-    //private static LessonPlan currentLessonPlan;
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
 
-
+    @FXML
+    private void initialize(){
+        //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
+        //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
+        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("images/plusSign.png").toString()));
+        buttonImageView.setFitHeight(20.0);
+        buttonImageView.setFitWidth(20.0);
+        addCardButton.setMaxSize(25.0, 25.0);
+        addCardButton.setGraphic(buttonImageView);
+        Font titleFont = Font.font("Georgia", FontWeight.BOLD, 36);
+        titleField.setFont(titleFont);
+        titleField.setText(App.getCurrentLessonPlan().getTitle());
+        titleField.textProperty().addListener((observable, oldTitle, newTitle) -> {setTitle(newTitle);});
+        //doneButton.setVisible(false);
+        //cancelButton.setVisible(false);
+        if (eventDropdown.getItems().isEmpty()){
+            createDropdowns();
+        }
+        drawCardSet();
+        //add all the cards from the lesson plan but have only code and title
+        for(Card card : App.getCurrentLessonPlan().getCardList()){
+            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+        }
+    }
 
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
@@ -58,6 +80,28 @@ public class CreateLessonPlanController {
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
+
+    private void drawCardSet(){
+        List<Image> imageList = CardDatabase.getListOfImages();
+        for (Image image : imageList) {
+            ImageView cardImageView = new ImageView(image);
+            cardImageView.setOnMouseClicked(this::selectCardAction);
+            cardsFlowPane.getChildren().add(cardImageView);
+        }
+    }
+
+    @FXML void setTitle(String newTitle) {
+        if (!newTitle.isEmpty()) {
+            App.getCurrentLessonPlan().setTitle(newTitle);
+        } else {
+            giveWarning("Cannot have empty title.");
+        }
+    }
+
+    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
+        App.changeCurrentLessonPlan(lessonPlan);
+    }
+
     @FXML void goToHome() throws IOException {
         if (App.getCurrentLessonPlan().getIsSaved()) {
             App.setRoot("home");
@@ -84,10 +128,6 @@ public class CreateLessonPlanController {
         }
     }
 
-    private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
-        return dropdown.getCheckModel().getCheckedItems();
-    }
-
     @FXML void applyFiltersAction() {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
@@ -108,13 +148,21 @@ public class CreateLessonPlanController {
         cardsFlowPane.getChildren().clear();
         drawCardSet();
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
-            if (dropdown.getCheckModel().getCheckedItems() != null){
-                List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
-                for (int i = checkedIndices.size() - 1; i >= 0; i--) {
-                    dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
+            List<String> checkedItems = getCheckedItems(dropdown);
+            if (checkedItems != null) {
+                for (int i = checkedItems.size(); i >= 0; i--) {
+                    dropdown.getCheckModel().toggleCheckState(checkedItems.get(i));
                 }
+                //List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
+                //for (int i = checkedIndices.size() - 1; i >= 0; i--) {
+                    //dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
+                //}
             }
         }
+    }
+
+    private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
+        return dropdown.getCheckModel().getCheckedItems();
     }
 
     @FXML void searchAction(KeyEvent event) {
@@ -135,8 +183,8 @@ public class CreateLessonPlanController {
             }
         }
     }
-    
-    private void selectCardAction(MouseEvent event){
+
+    @FXML private void selectCardAction(MouseEvent event){
         if (event.getTarget().getClass() == ImageView.class){
             ImageView cardView = (ImageView) event.getTarget();
             for (String cardId : fullCardCollection.getSetOfCardIds()){
@@ -152,75 +200,6 @@ public class CreateLessonPlanController {
                 }
             }
         }
-    }
-
-    private void drawCardSet(){
-        List<Image> imageList = CardDatabase.getListOfImages();
-        for (Image image : imageList) {
-            ImageView cardImageView = new ImageView(image);
-            cardImageView.setOnMouseClicked(this::selectCardAction);
-            cardsFlowPane.getChildren().add(cardImageView);
-        }
-    }
-    @FXML
-    private void initialize(){
-        //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
-        //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("images/plusSign.png").toString()));
-        buttonImageView.setFitHeight(20.0);
-        buttonImageView.setFitWidth(20.0);
-        addCardButton.setMaxSize(25.0, 25.0);
-        addCardButton.setGraphic(buttonImageView);
-        titleLabel.setText(App.getCurrentLessonPlan().getTitle());
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
-        if (eventDropdown.getItems().isEmpty()){
-            createDropdowns();
-        }
-        drawCardSet();
-        //add all the cards from the lesson plan but have only code and title
-        for(Card card : App.getCurrentLessonPlan().getCardList()){
-            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
-        }
-    }
-    @FXML void switchToEditTitleView() {
-        titleLabel.setVisible(false);
-        cardTitleListView.setVisible(false);
-        titleField.setVisible(true);
-        doneButton.setVisible(true);
-        editTitleButton.setVisible(false);
-        cancelButton.setVisible(true);
-    }
-    @FXML void setTitle() {
-        String title = titleField.getText();
-        if (!title.isEmpty()) {
-            App.getCurrentLessonPlan().changeTitle(title);
-            titleLabel.setText(title);
-            Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
-            titleLabel.setFont(titleFont);
-            switchToLessonOutlineView();
-        } else {
-            giveWarning("Cannot have empty title.");
-        }
-    }
-    @FXML private void switchToLessonOutlineView() {
-        titleLabel.setVisible(true);
-        cardTitleListView.setVisible(true);
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
-        editTitleButton.setVisible(true);
-    }
-
-    @FXML private void giveWarning(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
-        App.changeCurrentLessonPlan(lessonPlan);
     }
 
     @FXML void addCardsToLessonPlan() {
@@ -244,4 +223,33 @@ public class CreateLessonPlanController {
 //        }
         App.getCurrentLessonPlan().changeSavedState(true);
     }
+
+    @FXML private void giveWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /* @FXML void switchToEditTitleView() {
+        cardTitleListView.setVisible(false);
+        doneButton.setVisible(true);
+        editTitleButton.setVisible(false);
+        cancelButton.setVisible(true);
+    } */
+
+
+    /* @FXML private void switchToLessonOutlineView() {
+        cardTitleListView.setVisible(true);
+        doneButton.setVisible(false);
+        cancelButton.setVisible(false);
+        editTitleButton.setVisible(true);
+    } */
+
+
+    /* @FXML public void titleLabelClicked(MouseEvent event) {
+        if ((event.getClickCount() == 2) && (event.getTarget() == titleLabel)) {
+
+        }
+    } */
 }

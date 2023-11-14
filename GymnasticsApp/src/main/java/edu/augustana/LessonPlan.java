@@ -17,7 +17,7 @@ public class LessonPlan {
         return title;
     }
 
-    public void changeTitle(String newTitle) {
+    public void setTitle(String newTitle) {
         title = newTitle;
         isSaved = false;
     }
