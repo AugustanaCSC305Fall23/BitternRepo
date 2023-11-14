@@ -12,15 +12,11 @@ public class CardCollection {
     }
 
     public void addCard(Card newCard) {
-        mapFromIdToCard.put("Card" + count, newCard);
-        count++;
+        mapFromIdToCard.put(newCard.getUniqueID(), newCard);
     }
 
-    public String getUniqueCardID() {
-        return "Card" + count;
-    }
 
-    public Card getCard(String cardId) {
+    public Card getCardByID(String cardId) {
         return mapFromIdToCard.get(cardId);
     }
 

@@ -11,10 +11,10 @@ public class LessonPlan {
     private boolean isSaved;
     private Map<String, List<String>> eventInPlanList = new TreeMap<>();
     private List<String> eventIndexes = new ArrayList<>();
+    private List<String> cardIDList = new ArrayList<>();
 
     public LessonPlan(String title) {
         this.title = title;
-        isSaved = false;
     }
 
     public String getTitle() {
@@ -23,25 +23,17 @@ public class LessonPlan {
 
     public void changeTitle(String newTitle) {
         title = newTitle;
-        isSaved = false;
     }
-    public List<Card> getLessonPlanList(){
-        return lessonPlanList;
+    public List<Card> getCardList(){
+        List<Card> cardsInLesson = new ArrayList<>();
+        for (String id : cardIDList) {
+            cardsInLesson.add(CardDatabase.getFullCardCollection().getCardByID(id));
+        }
+        return cardsInLesson;
     }
-
-    public boolean getIsSaved() { return isSaved; }
 
     public void addCardToList(Card card){
-        lessonPlanList.add(card);
-        isSaved = false;
-    }
-
-    public void changeSavedState(boolean state) {
-        isSaved = state;
-    }
-
-    public void editListOfCards(List<Card> newList) {
-        lessonPlanList = newList;
+        cardIDList.add(card.getUniqueID());
     }
 
     public void addEventToPlanList(Card card){

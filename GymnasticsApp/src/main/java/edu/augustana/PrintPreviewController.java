@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Window;
 
 public class PrintPreviewController {
 
@@ -36,15 +37,34 @@ public class PrintPreviewController {
     @FXML
     private Pane mainPane;
 
-    private static PrinterJob printerJob = PrinterJob.createPrinterJob();
+    private PrinterJob printerJob;
+
+    @FXML
+    void initialize() {
+        printerJob = PrinterJob.createPrinterJob();
+        if (PrintStaging.getFXML().equals("card_browser")) {
+            ImageView card = new ImageView(PrintStaging.getPrintCard());
+            int numPages = 1;
+            Pagination pagination = new Pagination(numPages);
+            pagination.setStyle("-fx-border-color:white;");
+            pagination.setPageFactory((Integer pageIndex) -> {
+                if (pageIndex >= numPages) {
+                    return null;
+                } else {
+                    return createPage(pageIndex, card, printerJob);
+                }
+            });
+            mainPane.getChildren().addAll(pagination);
+        }
+    }
 
     @FXML
     void printScreen(ActionEvent event) {
         // Used http://www.java2s.com/example/java/javafx/printing-with-javafx.html
         // https://stackoverflow.com/questions/28847757/how-to-display-print-dialog-in-java-fx-and-print-node
 
-
-        if (printerJob != null && printerJob.showPageSetupDialog(null) && printerJob.showPrintDialog(null)){
+        Window window = mainPane.getScene().getWindow();
+        if (printerJob != null && printerJob.showPageSetupDialog(window) && printerJob.showPrintDialog(window)){
             System.out.println(mainPane);
             boolean success = printerJob.printPage(mainPane);
             if (success) {
@@ -60,28 +80,7 @@ public class PrintPreviewController {
         App.setRoot(PrintStaging.getFXML());
     }
 
-    @FXML
-    void initialize() {
-        if (PrintStaging.getFXML().equals("card_browser")) {
-            ImageView card = new ImageView(PrintStaging.getPrintCard());
-            int numPages = 1;
-            Pagination pagination = new Pagination(numPages);
-            pagination.setStyle("-fx-border-color:white;");
-            pagination.setPageFactory((Integer pageIndex) -> {
-                if (pageIndex >= numPages) {
-                    return null;
-                } else {
-                    return createPage(pageIndex, card, printerJob);
-                }
 
-            });
-
-
-
-        mainPane.getChildren().addAll(pagination);
-
-        }
-    }
 
 
     // Number of items per page (represents 1 page)
