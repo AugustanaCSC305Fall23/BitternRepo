@@ -57,7 +57,7 @@
         </menus>
       </MenuBar>
 
-      <Button fx:id="editLessonPlanBtn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="350.0">
+      <Button fx:id="editLessonPlanBtn" layoutX="303.0" layoutY="585.0" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="303.0">
          <font>
             <Font size="23.0" />
          </font>
@@ -74,6 +74,11 @@
          <font>
             <Font name="Britannic Bold" size="40.0" />
          </font></TextField>
+      <Button layoutX="506.0" layoutY="585.0" mnemonicParsing="false" onAction="#removeLessonPlanHandler" text="Remove Lesson Plan">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
 
    </children>
 </AnchorPane>
