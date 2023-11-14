@@ -6,13 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="761ef496-851e-4b51-933f-7ed13466be8c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/LessonPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/LessonPlan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -23,7 +31,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "Merging main"
+    "git-widget-placeholder": "treeView"
   }
 }]]></component>
   <component name="RecentsManager">

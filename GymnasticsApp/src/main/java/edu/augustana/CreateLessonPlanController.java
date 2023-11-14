@@ -43,13 +43,15 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
-    @FXML private ListView<String> cardTitleListView = new ListView<>();
+    @FXML private TreeView<String> lessonPlanTreeView;
     @FXML private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     //private static LessonPlan currentLessonPlan;
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
+    TreeItem<String> root = new TreeItem<>();
 
-
+    //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+    //To help with tree view
 
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
@@ -181,12 +183,15 @@ public class CreateLessonPlanController {
         drawCardSet();
         //add all the cards from the lesson plan but have only code and title
         for(Card card : App.getCurrentLessonPlan().getLessonPlanList()){
-            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+            //lessonPlanTreeView.getItems().add(card.getCode() + ", " + card.getTitle());
         }
+        root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
+        lessonPlanTreeView.setRoot(root);
+        lessonPlanTreeView.setShowRoot(false);
     }
     @FXML void switchToEditTitleView() {
         titleLabel.setVisible(false);
-        cardTitleListView.setVisible(false);
+        lessonPlanTreeView.setVisible(false);
         titleField.setVisible(true);
         doneButton.setVisible(true);
         editTitleButton.setVisible(false);
@@ -206,7 +211,7 @@ public class CreateLessonPlanController {
     }
     @FXML private void switchToLessonOutlineView() {
         titleLabel.setVisible(true);
-        cardTitleListView.setVisible(true);
+        lessonPlanTreeView.setVisible(true);
         titleField.setVisible(false);
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
@@ -227,12 +232,23 @@ public class CreateLessonPlanController {
         if (!selectedCards.isEmpty()){
             for (Card card : selectedCards.keySet()) {
                 App.getCurrentLessonPlan().addCardToList(card);
-                cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+                addToTreeView(card);
                 selectedCards.get(card).setEffect(null);
             }
             selectedCards.clear();
         } else {
             giveWarning("No card selected.");
+        }
+    }
+    private void addToTreeView(Card card){
+        if(!App.getCurrentLessonPlan().eventInPlanList(card)){
+            App.getCurrentLessonPlan().addEventToPlanList(card);
+            TreeItem<String> newEvent = new TreeItem<>(card.getEvent());
+            newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            root.getChildren().add(newEvent);
+        }else{
+            App.getCurrentLessonPlan().addCardToEvent(card);
+            
         }
     }
 
