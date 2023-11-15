@@ -19,6 +19,7 @@ public class Course {
 
     public LessonPlan createNewLessonPlan() {
         LessonPlan newLessonPlan = new LessonPlan("My Lesson Plan");
+        this.getLessonPlanList().add(newLessonPlan);
         return newLessonPlan;
     }
 

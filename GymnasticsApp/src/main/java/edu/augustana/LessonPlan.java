@@ -2,15 +2,19 @@ package edu.augustana;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class LessonPlan {
     private String title;
+    private static List<Card> lessonPlanList = new ArrayList<>();
+    //private boolean isSaved;
+    private Map<String, List<String>> eventInPlanList = new TreeMap<>();
+    private List<String> eventIndexes = new ArrayList<>();
     private List<String> cardIDList = new ArrayList<>();
-    private boolean isSaved;
 
     public LessonPlan(String title) {
         this.title = title;
-        isSaved = false;
     }
 
     public String getTitle() {
@@ -19,7 +23,6 @@ public class LessonPlan {
 
     public void changeTitle(String newTitle) {
         title = newTitle;
-        isSaved = false;
     }
     public List<Card> getCardList(){
         List<Card> cardsInLesson = new ArrayList<>();
@@ -29,17 +32,30 @@ public class LessonPlan {
         return cardsInLesson;
     }
 
-    public boolean getIsSaved() { return isSaved; }
-
     public void addCardToList(Card card){
         cardIDList.add(card.getUniqueID());
-        isSaved = false;
     }
 
-    public void changeSavedState(boolean state) {
-        isSaved = state;
+    public void addEventToPlanList(Card card){
+        List<String> cardDisplay = new ArrayList<>();
+        cardDisplay.add(card.getCode() + ", " + card.getTitle());
+        eventInPlanList.put(card.getEvent(), cardDisplay);
+        eventIndexes.add(card.getEvent());
+    }
+    //rename this method
+    public void addCardToEvent(Card card){
+        eventInPlanList.get(card.getEvent()).add(card.getCode() + ", " + card.getTitle());
+    }
+    public boolean eventInPlanList(Card card){
+        if(eventInPlanList.containsKey(card.getEvent())){
+            return true;
+        }
+        return false;
     }
 
+    public List<String> getEventIndexes() {
+        return eventIndexes;
+    }
 
     @Override
     public String toString() {

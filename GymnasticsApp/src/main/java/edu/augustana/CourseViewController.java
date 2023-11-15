@@ -74,7 +74,16 @@ public class CourseViewController {
             CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
             App.setRoot("lesson_plan_creator");
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Must select a Lesson Plan first.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a Lesson Plan first.");
+        }
+    }
+
+    @FXML private void removeLessonPlanHandler() {
+        LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
+        if (lessonPlanToDelete != null) {
+            courseListView.getItems().remove(lessonPlanToDelete);
+            App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
+            App.setCurrentLessonPlan(null);
         }
     }
 
@@ -195,9 +204,6 @@ public class CourseViewController {
         alert.showAndWait();
     }
 
-    public static void setCurrentCourse(Course course) {
-        App.setCurrentCourse(course);
-    }
 
 
 
