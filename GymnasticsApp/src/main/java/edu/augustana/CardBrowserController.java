@@ -248,10 +248,13 @@ public class CardBrowserController {
     void printSelectedCards() throws IOException {
         //PrintStaging printCard = new PrintStaging(prevImage, "card_browser");
         if (selectedCards != null){
-            for (Card card : selectedCards.keySet()) {
+            /* for (Card card : selectedCards.keySet()) {
                 PrintStaging printCard = new PrintStaging(card.getImage(), "card_browser");
                 selectedCards.get(card).setEffect(null);
-            }
+            } */
+            ArrayList<Card> cardsForPrinting = new ArrayList<>(selectedCards.keySet());
+            PrintStaging printCardList = new PrintStaging(cardsForPrinting, "card_browser");
+            //System.out.println(printCardList.getPrintCardList());
             selectedCards.clear();
             App.setRoot("print_preview");
         }

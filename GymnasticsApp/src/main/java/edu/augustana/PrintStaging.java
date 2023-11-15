@@ -3,13 +3,14 @@ package edu.augustana;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PrintStaging {
     private static String past_fxml;
 
     private static Image printCard;
-    private static List<Image> printCardList;
+    private static List<Card> printCardList;
     private static Node printLessonPlan;
     private static Node printCoursePlan;
 
@@ -18,7 +19,8 @@ public class PrintStaging {
         past_fxml = fxml;
     }
 
-    PrintStaging(List<Image> cardList) {
+    PrintStaging(List<Card> cardList, String fxml) {
+        past_fxml = fxml;
         printCardList = cardList;
     }
 
@@ -36,6 +38,10 @@ public class PrintStaging {
 
     public static String getFXML() {
         return past_fxml;
+    }
+
+    public static List<Card> getPrintCardList() {
+        return printCardList;
     }
 
 

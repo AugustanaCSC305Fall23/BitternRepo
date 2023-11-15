@@ -10,19 +10,24 @@
 
 <BorderPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.PrintPreviewController">
    <top>
-      <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Your Print Preview" BorderPane.alignment="CENTER">
+      <Label fx:id="titleLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Your Print Preview" BorderPane.alignment="CENTER">
          <font>
             <Font name="Times New Roman" size="30.0" />
          </font>
       </Label>
    </top>
    <center>
-      <Pane fx:id="mainPane" />
+      <Pane fx:id="mainPane" BorderPane.alignment="CENTER" />
    </center>
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="printButton" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#printScreen" text="Print">
+            <Button fx:id="printPageButton" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#printScreen" text="Print Page">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="printAllButton" mnemonicParsing="false" onAction="#printAllCards" prefHeight="44.0" prefWidth="102.0" text="Print All">
                <font>
                   <Font size="20.0" />
                </font>
