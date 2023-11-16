@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -102,7 +103,7 @@ public class CreateLessonPlanController {
     }
 
     @FXML
-    void clearFiltersAction() {
+    void clearFiltersAction() throws MalformedURLException {
         FilterControl.resetDesiredFiltersLists();
         cardsFlowPane.getChildren().clear();
         drawCardSet();
@@ -158,7 +159,7 @@ public class CreateLessonPlanController {
 
     }
 
-    private void drawCardSet() {
+    private void drawCardSet() throws MalformedURLException {
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
@@ -168,10 +169,10 @@ public class CreateLessonPlanController {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("images/plusSign.png").toString()));
+        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("plusSign.png").toString()));
         buttonImageView.setFitHeight(20.0);
         buttonImageView.setFitWidth(20.0);
         addCardButton.setMaxSize(25.0, 25.0);

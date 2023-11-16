@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -138,7 +139,7 @@ public class CardBrowserController {
         App.setRoot("home");
     }
 
-    private void drawCardSet(){
+    private void drawCardSet() throws MalformedURLException {
         List<Image> imageList = CardDatabase.getListOfImages();
         for (Image image : imageList) {
             ImageView cardImageView = new ImageView(image);
@@ -148,7 +149,7 @@ public class CardBrowserController {
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize() throws MalformedURLException {
         createDropdowns();
         drawCardSet();
         assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";
