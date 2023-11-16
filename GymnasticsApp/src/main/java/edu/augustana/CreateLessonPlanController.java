@@ -47,12 +47,14 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
+    @FXML private TreeView<String> lessonPlanTreeView;
     @FXML
     private ListView<String> cardTitleListView = new ListView<>();
     @FXML
     private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
+    TreeItem<String> root = new TreeItem<>();
 
     @FXML
     private void initialize() throws MalformedURLException {
@@ -70,6 +72,20 @@ public class CreateLessonPlanController {
         //add all the cards from the lesson plan but have only code and title
         for (Card card : App.getCurrentLessonPlan().getCardList()) {
             cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+        }
+        //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+        //To help with tree view
+        root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
+        lessonPlanTreeView.setRoot(root);
+        lessonPlanTreeView.setShowRoot(false);
+        if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
+            for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
+                TreeItem<String> newEvent = new TreeItem<>(event);
+                for(Card card : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                    newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                }
+                root.getChildren().add(newEvent);
+            }
         }
     }
 
@@ -193,12 +209,27 @@ public class CreateLessonPlanController {
         if (!selectedCards.isEmpty()) {
             for (Card card : selectedCards.keySet()) {
                 App.getCurrentLessonPlan().addCardToList(card);
-                cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+                addToTreeView(card);
                 selectedCards.get(card).setEffect(null);
             }
             selectedCards.clear();
         } else {
             giveWarning("No card selected.");
+        }
+    }
+
+    private void addToTreeView(Card card){
+        if(!App.getCurrentLessonPlan().eventInPlanList(card)){
+            App.getCurrentLessonPlan().addEventToPlanList(card);
+            TreeItem<String> newEvent = new TreeItem<>(card.getEvent());
+            newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            root.getChildren().add(newEvent);
+        }else{
+            if(!App.getCurrentLessonPlan().cardInPlanList(card)){
+                App.getCurrentLessonPlan().addCardToEvent(card);
+                int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
+                root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            }
         }
     }
 
