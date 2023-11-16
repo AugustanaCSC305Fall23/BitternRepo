@@ -151,7 +151,7 @@ public class CreateLessonPlanController {
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             List<String> checkedItems = getCheckedItems(dropdown);
             if (checkedItems != null) {
-                for (int i = checkedItems.size(); i >= 0; i--) {
+                for (int i = checkedItems.size() - 1; i >= 0; i--) {
                     dropdown.getCheckModel().toggleCheckState(checkedItems.get(i));
                 }
             }
