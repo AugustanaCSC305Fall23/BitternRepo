@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class App extends Application {
     private static LessonPlan currentLessonPlan;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
         CardDatabase.getListOfImages();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
@@ -47,15 +48,15 @@ public class App extends Application {
     public static LessonPlan getCurrentLessonPlan() { return currentLessonPlan; }
     public static File getCurrentCourseFile() { return currentCourseFile;}
 
-    public static void changeCurrentCourse(Course course) {
+    public static void setCurrentCourse(Course course) {
         currentCourse = course;
     }
 
-    public static void changeCurrentCourseFile(File file) {
+    public static void setCurrentCourseFile(File file) {
         currentCourseFile = file;
     }
 
-    public static void changeCurrentLessonPlan(LessonPlan lessonPlan) {
+    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         currentLessonPlan = lessonPlan;
     }
 

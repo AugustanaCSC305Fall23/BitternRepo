@@ -6,11 +6,9 @@ import java.util.List;
 public class LessonPlan {
     private String title;
     private List<String> cardIDList = new ArrayList<>();
-    private boolean isSaved;
 
     public LessonPlan(String title) {
         this.title = title;
-        isSaved = false;
     }
 
     public String getTitle() {
@@ -19,7 +17,6 @@ public class LessonPlan {
 
     public void setTitle(String newTitle) {
         title = newTitle;
-        isSaved = false;
     }
     public List<Card> getCardList(){
         List<Card> cardsInLesson = new ArrayList<>();
@@ -29,17 +26,9 @@ public class LessonPlan {
         return cardsInLesson;
     }
 
-    public boolean getIsSaved() { return isSaved; }
-
     public void addCardToList(Card card){
         cardIDList.add(card.getUniqueID());
-        isSaved = false;
     }
-
-    public void changeSavedState(boolean state) {
-        isSaved = state;
-    }
-
 
     @Override
     public String toString() {
