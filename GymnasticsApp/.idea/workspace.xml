@@ -7,7 +7,7 @@
     <list default="true" id="761ef496-851e-4b51-933f-7ed13466be8c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/FilterControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/FilterControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +21,13 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2YFG4cyklcg7HeBFVomly6NjGzf" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -30,7 +37,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "jessicaBranch"
+    "git-widget-placeholder": "filters"
   }
 }]]></component>
   <component name="RecentsManager">

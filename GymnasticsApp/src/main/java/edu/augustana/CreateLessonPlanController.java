@@ -140,7 +140,7 @@ public class CreateLessonPlanController {
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
-        FilterControl.resetDesiredFiltersLists();
+        //FilterControl.resetDesiredFiltersLists();
     }
 
     @FXML
@@ -218,8 +218,11 @@ public class CreateLessonPlanController {
         }
     }
 
-    //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
-    //To help with tree view
+    /*
+    I used https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm and
+    https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm to help with the tree view
+    thoughout this class
+     */
     private void addToTreeView(Card card){
         if (!App.getCurrentLessonPlan().eventInPlanList(card)){
             App.getCurrentLessonPlan().addEventToPlanList(card);
