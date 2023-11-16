@@ -3,6 +3,7 @@ package edu.augustana;
 import edu.augustana.filters.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -48,6 +49,8 @@ public class CreateLessonPlanController {
     private Label titleLabel = new Label();
     @FXML
     private Button cancelButton;
+    @FXML
+    private Button printBtn;
 
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
@@ -280,6 +283,15 @@ public class CreateLessonPlanController {
 
     @FXML
     public void removeCardFromLessonPlan() {
+    }
+
+    @FXML
+    void printLessonPlan(ActionEvent event) throws IOException {
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getEventInPlanList();
+        String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
+        App.setRoot("print_preview");
+
     }
 
 }
