@@ -134,7 +134,7 @@ public class CreateLessonPlanController {
 
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
             Card card = fullCardCollection.getCardByID(cardId);
-            if (FilterControl.checkIfAllFiltersMatch(card)) {
+            if (FilterControl.checkIfAllFiltersMatch(card) && searchFromSearchBar().matchesFilters(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectCardAction);
                 cardsFlowPane.getChildren().add(cardImageView);
@@ -157,19 +157,21 @@ public class CreateLessonPlanController {
             }
         }
     }
-
+    private SearchFilter searchFromSearchBar(){
+        List<String> searchWordList = new ArrayList<>();
+        for (String word : searchField.getText().split("\\s+")) {
+            searchWordList.add(word.toLowerCase());
+        }
+        return new SearchFilter(searchWordList);
+    }
     @FXML
     void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            List<String> searchWordList = new ArrayList<>();
-            for (String word : searchField.getText().split("\\s+")) {
-                searchWordList.add(word.toLowerCase());
-            }
-            SearchFilter searchFilter = new SearchFilter(searchWordList);
+            SearchFilter searchFilter = searchFromSearchBar();
             cardsFlowPane.getChildren().clear();
             for (String cardId : fullCardCollection.getSetOfCardIds()) {
                 Card card = fullCardCollection.getCardByID(cardId);
-                if (searchFilter.matchesFilters(card)) {
+                if (FilterControl.checkIfAllFiltersMatch(card) && searchFilter.matchesFilters(card)) {
                     ImageView cardImageView = new ImageView(card.getImage());
                     cardImageView.setOnMouseClicked(this::selectCardAction);
                     cardsFlowPane.getChildren().add(cardImageView);
@@ -227,7 +229,7 @@ public class CreateLessonPlanController {
         if (!App.getCurrentLessonPlan().eventInPlanList(card)){
             App.getCurrentLessonPlan().addEventToPlanList(card);
             TreeItem<String> newEvent = new TreeItem<>(card.getEvent());
-            newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            newEvent.getChildren().add(new TreeItem<>(card.getCode() + ", " + card.getTitle()));
             root.getChildren().add(newEvent);
         } else{
             if (!App.getCurrentLessonPlan().cardInPlanList(card)){

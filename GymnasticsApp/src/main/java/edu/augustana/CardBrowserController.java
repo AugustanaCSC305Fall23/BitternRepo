@@ -163,13 +163,12 @@ public class CardBrowserController {
 
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
             Card card = fullCardCollection.getCardByID(cardId);
-            if (FilterControl.checkIfAllFiltersMatch(card)) {
+            if (FilterControl.checkIfAllFiltersMatch(card) && searchFromSearchBar().matchesFilters(card)) {
                 ImageView cardImageView = new ImageView(card.getImage());
                 cardImageView.setOnMouseClicked(this::selectCardAction);
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
-        FilterControl.resetDesiredFiltersLists();
     }
 
     @FXML
@@ -186,13 +185,16 @@ public class CardBrowserController {
             }
         }
     }
+    private SearchFilter searchFromSearchBar(){
+        List<String> searchWordList = new ArrayList<>();
+        for (String word : searchField.getText().split("\\s+")) {
+            searchWordList.add(word.toLowerCase());
+        }
+        return new SearchFilter(searchWordList);
+    }
     @FXML void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            List<String> searchWordList = new ArrayList<>();
-            for (String word: searchField.getText().split("\\s+")) {
-                searchWordList.add(word.toLowerCase());
-            }
-            SearchFilter searchFilter = new SearchFilter(searchWordList);
+            SearchFilter searchFilter = searchFromSearchBar();
             cardsFlowPane.getChildren().clear();
             for (String cardId : fullCardCollection.getSetOfCardIds()) {
                 Card card = fullCardCollection.getCardByID(cardId);
