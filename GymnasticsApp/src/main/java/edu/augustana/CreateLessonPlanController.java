@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
@@ -24,23 +23,16 @@ import java.util.*;
 
 public class CreateLessonPlanController {
     private URL location;
-    @FXML
-    private CheckComboBox<String> eventDropdown;
-    @FXML
-    private CheckComboBox<String> genderDropdown;
-    @FXML
-    private CheckComboBox<String> levelDropdown;
-    @FXML
-    private CheckComboBox<String> modelSexDropdown;
+    @FXML private CheckComboBox<String> eventDropdown;
+    @FXML private CheckComboBox<String> genderDropdown;
+    @FXML private CheckComboBox<String> levelDropdown;
+    @FXML private CheckComboBox<String> modelSexDropdown;
     List<CheckComboBox<String>> listOfDropdowns;
-    @FXML
-    private FlowPane cardsFlowPane;
-    @FXML
-    private TextField searchField;
-    @FXML
-    private Button addCardButton;
-    @FXML
-    private TextField titleField;
+    @FXML private FlowPane cardsFlowPane;
+    @FXML private TextField searchField;
+    @FXML private Button addCardButton;
+    @FXML private Button favoriteBtn;
+    @FXML private TextField titleField;
 
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
@@ -48,33 +40,29 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
     @FXML private TreeView<String> lessonPlanTreeView;
-    @FXML
-    private ListView<String> cardTitleListView = new ListView<>();
-    @FXML
-    private Button returnToCourseBtn;
+    @FXML private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
     TreeItem<String> root = new TreeItem<>();
 
-    @FXML
-    private void initialize() throws MalformedURLException {
+    @FXML private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("plusSign.png").toString()));
-        buttonImageView.setFitHeight(20.0);
-        buttonImageView.setFitWidth(20.0);
-        addCardButton.setMaxSize(25.0, 25.0);
-        addCardButton.setGraphic(buttonImageView);
+        addImageToButtons(new ImageView(new Image(getClass().getResource("plusSign.png").toString())), addCardButton);
+        addImageToButtons(new ImageView(new Image(getClass().getResource("heart.png").toString())), favoriteBtn);
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
         drawCardSet();
-        //add all the cards from the lesson plan but have only code and title
-        for (Card card : App.getCurrentLessonPlan().getCardList()) {
-            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
-        }
-        //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
-        //To help with tree view
+        setUpTreeView();
+    }
+    private void addImageToButtons(ImageView btnImage, Button btnToAddImageTo){
+        btnImage.setFitHeight(20.0);
+        btnImage.setFitWidth(20.0);
+        btnToAddImageTo.setMaxSize(25.0, 25.0);
+        btnToAddImageTo.setGraphic(btnImage);
+    }
+    private void setUpTreeView(){
         root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
@@ -118,8 +106,7 @@ public class CreateLessonPlanController {
         App.setRoot("home");
     }
 
-    @FXML
-    void returnToCourseHandler() throws IOException {
+    @FXML void returnToCourseHandler() throws IOException {
         App.setRoot("course_view");
     }
 
@@ -127,8 +114,7 @@ public class CreateLessonPlanController {
         return dropdown.getCheckModel().getCheckedItems();
     }
 
-    @FXML
-    void applyFiltersAction() {
+    @FXML void applyFiltersAction() {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
 
@@ -143,8 +129,7 @@ public class CreateLessonPlanController {
         //FilterControl.resetDesiredFiltersLists();
     }
 
-    @FXML
-    void clearFiltersAction() throws MalformedURLException {
+    @FXML void clearFiltersAction() throws MalformedURLException {
         FilterControl.resetDesiredFiltersLists();
         cardsFlowPane.getChildren().clear();
         drawCardSet();
@@ -164,8 +149,7 @@ public class CreateLessonPlanController {
         }
         return new SearchFilter(searchWordList);
     }
-    @FXML
-    void searchAction(KeyEvent event) {
+    @FXML void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             SearchFilter searchFilter = searchFromSearchBar();
             cardsFlowPane.getChildren().clear();
@@ -206,8 +190,7 @@ public class CreateLessonPlanController {
         App.setCurrentLessonPlan(lessonPlan);
     }
 
-    @FXML
-    void addCardsToLessonPlan() {
+    @FXML void addCardsToLessonPlan() {
         if (!selectedCards.isEmpty()) {
             for (Card card : selectedCards.keySet()) {
                 App.getCurrentLessonPlan().addCardToList(card);
@@ -253,8 +236,7 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML
-    public void removeCardFromLessonPlan() {
+    @FXML public void removeCardFromLessonPlan() {
     }
 
     @FXML private void giveWarning(String message) {
@@ -262,6 +244,10 @@ public class CreateLessonPlanController {
         alert.setTitle("Warning");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML void addCardsToFavorites() {
+        //maybe have a file that I write and read to, to store the cards
+
     }
 
     /* @FXML void switchToEditTitleView() {

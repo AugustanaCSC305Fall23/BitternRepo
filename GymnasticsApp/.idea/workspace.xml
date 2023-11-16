@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="761ef496-851e-4b51-933f-7ed13466be8c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/heart.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/FilterControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/FilterControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/plusSign.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/plusSign.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +39,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "filters"
+    "git-widget-placeholder": "favoritingCards"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -46,11 +47,11 @@
       <recent name="edu.augustana" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/edu/augustana" />
       <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana\images" />
       <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources" />
       <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana" />
       <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana" />
     </key>
   </component>
   <component name="RunManager">

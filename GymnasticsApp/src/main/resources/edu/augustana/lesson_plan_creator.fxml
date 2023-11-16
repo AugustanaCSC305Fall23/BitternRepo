@@ -18,12 +18,17 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <HBox alignment="BOTTOM_LEFT" prefHeight="96.0" prefWidth="83.0">
+            <HBox alignment="BOTTOM_LEFT" prefHeight="96.0" prefWidth="83.0" spacing="10.0">
                <children>
                   <Button fx:id="addCardButton" mnemonicParsing="false" onAction="#addCardsToLessonPlan" prefHeight="30.0" prefWidth="30.0">
                      <HBox.margin>
                         <Insets bottom="10.0" />
                      </HBox.margin></Button>
+                  <Button fx:id="favoriteBtn" mnemonicParsing="false" onAction="#addCardsToFavorites">
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <VBox alignment="CENTER">
