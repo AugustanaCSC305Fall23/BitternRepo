@@ -112,6 +112,7 @@ public class CardBrowserController {
     @FXML private TextField searchField;
 
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
+    private static List<ImageView> cardViewList = App.getCardViewList();
 
     //private ImageView clickedImageView = new ImageView();
 
@@ -140,9 +141,7 @@ public class CardBrowserController {
     }
 
     private void drawCardSet() throws MalformedURLException {
-        List<Image> imageList = CardDatabase.getListOfImages();
-        for (Image image : imageList) {
-            ImageView cardImageView = new ImageView(image);
+        for (ImageView cardImageView : cardViewList) {
             cardImageView.setOnMouseClicked(this::selectCardAction);
             cardsFlowPane.getChildren().add(cardImageView);
         }
