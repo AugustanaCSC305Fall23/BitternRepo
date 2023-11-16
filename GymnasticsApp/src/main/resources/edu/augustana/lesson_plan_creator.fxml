@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: CornFlowerBlue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
@@ -67,7 +67,7 @@
             <Insets />
          </opaqueInsets>
       </HBox>
-      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1400.0">
+      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1400.0" style="-fx-background-color: CornFlowerBlue;">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
                <children>
@@ -85,7 +85,7 @@
                      <font>
                         <Font size="18.0" />
                      </font></Button>
-                  <TextField fx:id="titleField" alignment="CENTER" promptText="Enter Title" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="titleField" alignment="CENTER" onKeyPressed="#lockInTitle" onMouseClicked="#editTitle" promptText="Enter Title" style="-fx-background-color: CornFlowerBlue;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
                      <font>
                         <Font name="Georgia Bold" size="36.0" />
                      </font></TextField>

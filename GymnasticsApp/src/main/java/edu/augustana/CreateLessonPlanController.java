@@ -218,18 +218,33 @@ public class CreateLessonPlanController {
         }
     }
 
+    //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+    //To help with tree view
     private void addToTreeView(Card card){
-        if(!App.getCurrentLessonPlan().eventInPlanList(card)){
+        if (!App.getCurrentLessonPlan().eventInPlanList(card)){
             App.getCurrentLessonPlan().addEventToPlanList(card);
             TreeItem<String> newEvent = new TreeItem<>(card.getEvent());
             newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             root.getChildren().add(newEvent);
-        }else{
-            if(!App.getCurrentLessonPlan().cardInPlanList(card)){
+        } else{
+            if (!App.getCurrentLessonPlan().cardInPlanList(card)){
                 App.getCurrentLessonPlan().addCardToEvent(card);
                 int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
                 root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
+        }
+    }
+
+    @FXML public void editTitle(MouseEvent event) {
+        titleField.setFont(new Font("Georgia", 40.0));
+        titleField.setEditable(true);
+    }
+
+    @FXML public void lockInTitle(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            titleField.setFont(new Font("Georgia Bold", 36.0));
+            titleField.setEditable(false);
+            setTitle(titleField.getText());
         }
     }
 
@@ -257,12 +272,5 @@ public class CreateLessonPlanController {
         doneButton.setVisible(false);
         cancelButton.setVisible(false);
         editTitleButton.setVisible(true);
-    } */
-
-
-    /* @FXML public void titleLabelClicked(MouseEvent event) {
-        if ((event.getClickCount() == 2) && (event.getTarget() == titleLabel)) {
-
-        }
     } */
 }
