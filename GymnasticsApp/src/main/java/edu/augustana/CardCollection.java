@@ -7,7 +7,7 @@ public class CardCollection {
     //private List<Card> cardList;
     private Map<String, Card> mapFromIdToCard;
     public CardCollection() {
-        mapFromIdToCard = new HashMap<String, Card>();
+        mapFromIdToCard = new TreeMap<String, Card>();
         //cardList = new ArrayList<>();
     }
 
