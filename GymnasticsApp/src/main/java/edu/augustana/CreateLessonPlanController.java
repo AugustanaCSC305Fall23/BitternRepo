@@ -196,7 +196,13 @@ public class CreateLessonPlanController {
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
-            
+            for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
+                TreeItem<String> newEvent = new TreeItem<>(event);
+                for(Card card : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                    newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                }
+                root.getChildren().add(newEvent);
+            }
         }
     }
 

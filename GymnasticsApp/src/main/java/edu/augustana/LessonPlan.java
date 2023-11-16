@@ -9,7 +9,7 @@ public class LessonPlan {
     private String title;
     private static List<Card> lessonPlanList = new ArrayList<>();
     //private boolean isSaved;
-    private Map<String, List<String>> eventInPlanList = new TreeMap<>();
+    private Map<String, List<Card>> eventInPlanList = new TreeMap<>();
     private List<String> eventIndexes = new ArrayList<>();
     private List<String> cardIDList = new ArrayList<>(); //card ID's that are in the lesson plan
 
@@ -37,14 +37,14 @@ public class LessonPlan {
     }
 
     public void addEventToPlanList(Card card){
-        List<String> cardDisplay = new ArrayList<>();
-        cardDisplay.add(card.getCode() + ", " + card.getTitle());
+        List<Card> cardDisplay = new ArrayList<>();
+        cardDisplay.add(card);
         eventInPlanList.put(card.getEvent(), cardDisplay);
         eventIndexes.add(card.getEvent());
     }
     //rename this method
     public void addCardToEvent(Card card){
-        eventInPlanList.get(card.getEvent()).add(card.getCode() + ", " + card.getTitle());
+        eventInPlanList.get(card.getEvent()).add(card);
     }
     public boolean eventInPlanList(Card card){
         if(eventInPlanList.containsKey(card.getEvent())){
@@ -59,6 +59,9 @@ public class LessonPlan {
 
     public List<String> getEventIndexes() {
         return eventIndexes;
+    }
+    public Map<String, List<Card>> getEventInPlanList(){
+        return eventInPlanList;
     }
 
     @Override
