@@ -53,6 +53,7 @@ public class CreateLessonPlanController {
     @FXML
     private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
+    private static List<ImageView> cardViewList = App.getCardViewList();
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
     TreeItem<String> root = new TreeItem<>();
 
@@ -69,10 +70,6 @@ public class CreateLessonPlanController {
             createDropdowns();
         }
         drawCardSet();
-        //add all the cards from the lesson plan but have only code and title
-        for (Card card : App.getCurrentLessonPlan().getCardList()) {
-            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
-        }
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
         //To help with tree view
         root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
@@ -97,10 +94,8 @@ public class CreateLessonPlanController {
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
 
-    private void drawCardSet() throws MalformedURLException {
-        List<Image> imageList = CardDatabase.getListOfImages();
-        for (Image image : imageList) {
-            ImageView cardImageView = new ImageView(image);
+    private void drawCardSet() {
+        for (ImageView cardImageView : cardViewList) {
             cardImageView.setOnMouseClicked(this::selectCardAction);
             cardsFlowPane.getChildren().add(cardImageView);
         }
