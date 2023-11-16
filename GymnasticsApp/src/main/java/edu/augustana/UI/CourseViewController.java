@@ -1,10 +1,13 @@
-package edu.augustana;
+package edu.augustana.UI;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import edu.augustana.App;
+import edu.augustana.Model.Course;
+import edu.augustana.Model.LessonPlan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

@@ -1,6 +1,6 @@
 package edu.augustana.filters;
 
-import edu.augustana.Card;
+import edu.augustana.Model.Card;
 
 public interface Filters {
     public boolean matchesFilters(Card card);

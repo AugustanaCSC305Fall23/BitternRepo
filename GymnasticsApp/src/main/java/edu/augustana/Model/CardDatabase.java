@@ -1,16 +1,16 @@
-package edu.augustana;
+package edu.augustana.Model;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+import edu.augustana.Model.Card;
+import edu.augustana.Model.CardCollection;
 import javafx.scene.image.Image;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +32,7 @@ public class CardDatabase {
     // Used https://stackoverflow.com/questions/1844688/how-to-read-all-files-in-a-folder-from-java/26215931#26215931
     public static void addCardsFromAllCSVFiles() throws IOException, CsvValidationException {
         fullCardCollection = new CardCollection();
-        File folder = new File("Data");
+        File folder = new File("CardPacks");
         List<File> csvFileList = new ArrayList<>();
         csvFileList = listCSVFilesFromFolder(folder, csvFileList);
         for (File csvFile : csvFileList) {
@@ -60,7 +60,7 @@ public class CardDatabase {
         for (String cardId : getFullCardCollection().getSetOfCardIds()) {
             Card card = getFullCardCollection().getCardByID(cardId);
             // Used https://stackoverflow.com/questions/6098472/pass-a-local-file-in-to-url-in-java
-            String url = new File("Data/" + card.getPackFolder().toUpperCase() + "Pack/" + card.getImageName()).toURI().toURL().toString();
+            String url = new File("CardPacks/" + card.getPackFolder().toUpperCase() + "Pack/" + card.getImageName()).toURI().toURL().toString();
             // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
             // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
             // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
