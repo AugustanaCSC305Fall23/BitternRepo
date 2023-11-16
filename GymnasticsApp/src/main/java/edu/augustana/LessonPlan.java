@@ -64,6 +64,13 @@ public class LessonPlan {
         return eventInPlanList;
     }
 
+    public boolean cardInPlanList(Card card){
+        if(eventInPlanList.get(card.getEvent()).contains(card)){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return title;

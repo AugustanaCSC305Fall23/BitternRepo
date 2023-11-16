@@ -272,9 +272,11 @@ public class CreateLessonPlanController {
             newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             root.getChildren().add(newEvent);
         }else{
-            App.getCurrentLessonPlan().addCardToEvent(card);
-            int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
-            root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            if(!App.getCurrentLessonPlan().cardInPlanList(card)){
+                App.getCurrentLessonPlan().addCardToEvent(card);
+                int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
+                root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            }
         }
     }
 
