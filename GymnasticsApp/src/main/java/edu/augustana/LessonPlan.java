@@ -21,7 +21,7 @@ public class LessonPlan {
         return title;
     }
 
-    public void changeTitle(String newTitle) {
+    public void setTitle(String newTitle) {
         title = newTitle;
     }
     public List<Card> getCardList(){
@@ -62,6 +62,13 @@ public class LessonPlan {
     }
     public Map<String, List<Card>> getEventInPlanList(){
         return eventInPlanList;
+    }
+
+    public boolean cardInPlanList(Card card){
+        if(eventInPlanList.get(card.getEvent()).contains(card)){
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -19,6 +19,7 @@ import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -40,8 +41,6 @@ public class CreateLessonPlanController {
     @FXML
     private Button addCardButton;
     @FXML
-    private Button editTitleButton;
-    @FXML
     private TextField titleField;
     @FXML
     private Button doneButton;
@@ -55,7 +54,7 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
-    public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"A", "AB", "AB I", "B AB", "B AB I", "B I", "I", "I A"});
+    public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
     @FXML private TreeView<String> lessonPlanTreeView;
     @FXML
@@ -63,12 +62,41 @@ public class CreateLessonPlanController {
     @FXML
     private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
-    //private static LessonPlan currentLessonPlan;
     private static Map<Card, ImageView> selectedCards = new HashMap<>();
     TreeItem<String> root = new TreeItem<>();
 
-    //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
-    //To help with tree view
+    @FXML
+    private void initialize() throws MalformedURLException {
+        //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
+        //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
+        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("plusSign.png").toString()));
+        buttonImageView.setFitHeight(20.0);
+        buttonImageView.setFitWidth(20.0);
+        addCardButton.setMaxSize(25.0, 25.0);
+        addCardButton.setGraphic(buttonImageView);
+        if (eventDropdown.getItems().isEmpty()) {
+            createDropdowns();
+        }
+        drawCardSet();
+        //add all the cards from the lesson plan but have only code and title
+        for (Card card : App.getCurrentLessonPlan().getCardList()) {
+            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
+        }
+        //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+        //To help with tree view
+        root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
+        lessonPlanTreeView.setRoot(root);
+        lessonPlanTreeView.setShowRoot(false);
+        if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
+            for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
+                TreeItem<String> newEvent = new TreeItem<>(event);
+                for(Card card : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                    newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                }
+                root.getChildren().add(newEvent);
+            }
+        }
+    }
 
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
@@ -78,8 +106,24 @@ public class CreateLessonPlanController {
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
 
-    @FXML
-    void goToHome() throws IOException {
+    private void drawCardSet() throws MalformedURLException {
+        List<Image> imageList = CardDatabase.getListOfImages();
+        for (Image image : imageList) {
+            ImageView cardImageView = new ImageView(image);
+            cardImageView.setOnMouseClicked(this::selectCardAction);
+            cardsFlowPane.getChildren().add(cardImageView);
+        }
+    }
+
+    @FXML void setTitle(String newTitle) {
+        if (!newTitle.isEmpty()) {
+            App.getCurrentLessonPlan().setTitle(newTitle);
+        } else {
+            giveWarning("Cannot have empty title.");
+        }
+    }
+
+    @FXML void goToHome() throws IOException {
         App.setRoot("home");
     }
 
@@ -105,19 +149,19 @@ public class CreateLessonPlanController {
                 cardsFlowPane.getChildren().add(cardImageView);
             }
         }
-        FilterControl.resetDesiredFiltersLists();
+        //FilterControl.resetDesiredFiltersLists();
     }
 
     @FXML
-    void clearFiltersAction() {
+    void clearFiltersAction() throws MalformedURLException {
         FilterControl.resetDesiredFiltersLists();
         cardsFlowPane.getChildren().clear();
         drawCardSet();
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
-            if (dropdown.getCheckModel().getCheckedItems() != null) {
-                List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
-                for (int i = checkedIndices.size() - 1; i >= 0; i--) {
-                    dropdown.getCheckModel().toggleCheckState(checkedIndices.get(i));
+            List<String> checkedItems = getCheckedItems(dropdown);
+            if (checkedItems != null) {
+                for (int i = checkedItems.size() - 1; i >= 0; i--) {
+                    dropdown.getCheckModel().toggleCheckState(checkedItems.get(i));
                 }
             }
         }
@@ -165,92 +209,6 @@ public class CreateLessonPlanController {
 
     }
 
-    private void drawCardSet() {
-        List<Image> imageList = CardDatabase.getListOfImages();
-        for (Image image : imageList) {
-            ImageView cardImageView = new ImageView(image);
-            cardImageView.setOnMouseClicked(this::selectCardAction);
-            cardsFlowPane.getChildren().add(cardImageView);
-        }
-    }
-
-    @FXML
-    private void initialize() {
-        //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
-        //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("images/plusSign.png").toString()));
-        buttonImageView.setFitHeight(20.0);
-        buttonImageView.setFitWidth(20.0);
-        addCardButton.setMaxSize(25.0, 25.0);
-        addCardButton.setGraphic(buttonImageView);
-        titleLabel.setText(App.getCurrentLessonPlan().getTitle());
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
-        if (eventDropdown.getItems().isEmpty()) {
-            createDropdowns();
-        }
-        drawCardSet();
-        //add all the cards from the lesson plan but have only code and title
-        for (Card card : App.getCurrentLessonPlan().getCardList()) {
-            cardTitleListView.getItems().add(card.getCode() + ", " + card.getTitle());
-        }
-        root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
-        lessonPlanTreeView.setRoot(root);
-        lessonPlanTreeView.setShowRoot(false);
-        if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
-            for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
-                TreeItem<String> newEvent = new TreeItem<>(event);
-                for(Card card : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
-                    newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
-                }
-                root.getChildren().add(newEvent);
-            }
-        }
-    }
-
-    @FXML
-    void switchToEditTitleView() {
-        titleLabel.setVisible(false);
-        lessonPlanTreeView.setVisible(false);
-        titleField.setVisible(true);
-        doneButton.setVisible(true);
-        editTitleButton.setVisible(false);
-        cancelButton.setVisible(true);
-    }
-
-    @FXML
-    void setTitle() {
-        String title = titleField.getText();
-        if (!title.isEmpty()) {
-            App.getCurrentLessonPlan().changeTitle(title);
-            titleLabel.setText(title);
-            Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
-            titleLabel.setFont(titleFont);
-            switchToLessonOutlineView();
-        } else {
-            giveWarning("Cannot have empty title.");
-        }
-    }
-
-    @FXML
-    private void switchToLessonOutlineView() {
-        titleLabel.setVisible(true);
-        lessonPlanTreeView.setVisible(true);
-        titleField.setVisible(false);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
-        editTitleButton.setVisible(true);
-    }
-
-    @FXML
-    private void giveWarning(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         App.setCurrentLessonPlan(lessonPlan);
     }
@@ -268,22 +226,44 @@ public class CreateLessonPlanController {
             giveWarning("No card selected.");
         }
     }
+
+    /*
+    I used https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm and
+    https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm to help with the tree view
+    thoughout this class
+     */
     private void addToTreeView(Card card){
-        if(!App.getCurrentLessonPlan().eventInPlanList(card)){
+        if (!App.getCurrentLessonPlan().eventInPlanList(card)){
             App.getCurrentLessonPlan().addEventToPlanList(card);
             TreeItem<String> newEvent = new TreeItem<>(card.getEvent());
             newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             root.getChildren().add(newEvent);
-        }else{
-            App.getCurrentLessonPlan().addCardToEvent(card);
-            int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
-            root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+        } else{
+            if (!App.getCurrentLessonPlan().cardInPlanList(card)){
+                App.getCurrentLessonPlan().addCardToEvent(card);
+                int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
+                root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            }
+        }
+    }
+
+    @FXML public void editTitle(MouseEvent event) {
+        titleField.setFont(new Font("Georgia", 40.0));
+        titleField.setEditable(true);
+    }
+
+    @FXML public void lockInTitle(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            titleField.setFont(new Font("Georgia Bold", 36.0));
+            titleField.setEditable(false);
+            setTitle(titleField.getText());
         }
     }
 
     @FXML
     public void removeCardFromLessonPlan() {
     }
+
 
     @FXML
     void printLessonPlan(ActionEvent event) throws IOException {
@@ -293,5 +273,28 @@ public class CreateLessonPlanController {
         App.setRoot("print_preview");
 
     }
+
+
+    @FXML private void giveWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /* @FXML void switchToEditTitleView() {
+        cardTitleListView.setVisible(false);
+        doneButton.setVisible(true);
+        editTitleButton.setVisible(false);
+        cancelButton.setVisible(true);
+    } */
+
+
+    /* @FXML private void switchToLessonOutlineView() {
+        cardTitleListView.setVisible(true);
+        doneButton.setVisible(false);
+        cancelButton.setVisible(false);
+        editTitleButton.setVisible(true);
+    } */
 
 }

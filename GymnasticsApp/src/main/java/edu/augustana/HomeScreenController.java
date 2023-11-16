@@ -70,6 +70,6 @@ public class HomeScreenController {
         assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
         assert createNewCourseBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
         assert courseEditorAndCreatorBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
-        logo.setImage(new Image(String.valueOf(getClass().getResource("images/LOGO.jpeg"))));
+        logo.setImage(new Image(String.valueOf(getClass().getResource("LOGO.jpeg"))));
     }
 }

@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class App extends Application {
     private static LessonPlan currentLessonPlan;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
         CardDatabase.getListOfImages();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/

@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class FilterControl {
@@ -16,11 +17,35 @@ public class FilterControl {
     //private static List<CardFilter> listOfFilters = Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter);
 
     public static List<CardFilter> updateFilterLists(List<String> eventCheckList, List<String> genderCheckList, List<String> levelCheckList, List<String> modelSexCheckList) {
-        eventFilter.updateListOfDesiredFilters(eventCheckList);
+        eventFilter.updateListOfDesiredFilters(checkForTramp(eventCheckList));
         genderFilter.updateListOfDesiredFilters(convertListToCharacters(genderCheckList));
-        levelFilter.updateListOfDesiredFilters(levelCheckList);
+        levelFilter.updateListOfDesiredFilters(changeToLevelKey(levelCheckList));
         modelSexFilter.updateListOfDesiredFilters(convertListToCharacters(modelSexCheckList));
         return Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter);
+    }
+    public static List<String> checkForTramp(List<String> checkedEventFilters){
+        List<String> matchingCSVEvents = new ArrayList<>();
+        for(int i = 0; i < checkedEventFilters.size(); i++){
+            if(checkedEventFilters.get(i).equals("Trampoline")){
+                matchingCSVEvents.add("Tramp");
+            }else matchingCSVEvents.add(checkedEventFilters.get(i));
+        }
+        return matchingCSVEvents;
+    }
+    public static List<String> changeToLevelKey(List<String> checkedLevelFilters){
+        List<String> matchingLevelKey = new ArrayList<>();
+        for(int i = 0; i < checkedLevelFilters.size(); i++){
+            if(checkedLevelFilters.get(i).equals("Beginner")){
+                matchingLevelKey.add("B");
+            }else if(checkedLevelFilters.get(i).equals("Advanced Beginner")){
+                matchingLevelKey.add("AB");
+            }else if(checkedLevelFilters.get(i).equals("Intermediate")){
+                matchingLevelKey.add("I");
+            }else{
+                matchingLevelKey.add("A");
+            }
+        }
+        return matchingLevelKey;
     }
 
     // Used to change "Male", "Female", and "Neutral" to "M", "F", and "N" so it matches the data in the csv file
