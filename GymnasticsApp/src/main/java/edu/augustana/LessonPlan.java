@@ -11,7 +11,7 @@ public class LessonPlan {
     //private boolean isSaved;
     private Map<String, List<String>> eventInPlanList = new TreeMap<>();
     private List<String> eventIndexes = new ArrayList<>();
-    private List<String> cardIDList = new ArrayList<>();
+    private List<String> cardIDList = new ArrayList<>(); //card ID's that are in the lesson plan
 
     public LessonPlan(String title) {
         this.title = title;
@@ -50,6 +50,10 @@ public class LessonPlan {
         if(eventInPlanList.containsKey(card.getEvent())){
             return true;
         }
+        return false;
+    }
+    public boolean isLessonPlanEmpty(){
+        if(eventInPlanList.isEmpty()) return true;
         return false;
     }
 

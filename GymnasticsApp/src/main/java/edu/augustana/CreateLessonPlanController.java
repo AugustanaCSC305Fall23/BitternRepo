@@ -195,6 +195,9 @@ public class CreateLessonPlanController {
         root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
+        if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
+            
+        }
     }
 
     @FXML
