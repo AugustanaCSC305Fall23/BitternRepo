@@ -4,6 +4,7 @@ import edu.augustana.Card;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class LevelFilter extends CardFilter {
@@ -13,7 +14,12 @@ public class LevelFilter extends CardFilter {
     @Override
     public boolean matchesFilters(Card card){
         List<String> checkedLevelFilters = getListOfDesiredFilters();
-        return checkIfListEmpty(checkedLevelFilters) || checkedLevelFilters.contains(card.getLevel()) || card.getLevel().equals("ALL");
+        if(checkIfListEmpty(checkedLevelFilters) || card.getLevel().equals("ALL")) return true;
+        String[] levelOfCard = card.getLevel().split("\\s+");
+        for (String string : levelOfCard) {
+            if (checkedLevelFilters.contains(string)) return true;
+        }
+        return false;
     }
 
     /*public boolean match(Card card){
