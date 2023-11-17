@@ -1,10 +1,7 @@
 package edu.augustana.filters;
 
-import edu.augustana.Card;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import edu.augustana.Model.Card;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class LevelFilter extends CardFilter {

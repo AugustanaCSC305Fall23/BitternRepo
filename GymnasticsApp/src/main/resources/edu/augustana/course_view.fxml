@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="courseTitleLabel" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CourseViewController">
+<AnchorPane fx:id="courseTitleLabel" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.CourseViewController">
    <children>
       <Label fx:id="titleLabel" alignment="CENTER" layoutY="14.0" prefHeight="50.0" prefWidth="600.0" text="Course Title" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="14.0">
          <font>

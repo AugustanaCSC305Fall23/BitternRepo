@@ -10,4 +10,8 @@ module edu.augustana {
     exports edu.augustana;
     exports edu.augustana.filters;
     opens edu.augustana.filters to javafx.fxml;
+    exports edu.augustana.Model;
+    opens edu.augustana.Model to com.google.gson, javafx.fxml;
+    exports edu.augustana.UI;
+    opens edu.augustana.UI to com.google.gson, javafx.fxml;
 }

@@ -1,5 +1,9 @@
-package edu.augustana;
+package edu.augustana.Model;
 
+
+
+import edu.augustana.Model.Card;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 
 import java.util.List;
@@ -13,12 +17,12 @@ public class PrintStaging {
     private static Image printCard;
     private static List<Card> printCardList;
 
-    PrintStaging(Image card, String fxml) {
+    public PrintStaging(Image card, String fxml) {
         printCard = card;
         past_fxml = fxml;
     }
 
-    PrintStaging(List<Card> cardList, String fxml) {
+    public PrintStaging(List<Card> cardList, String fxml) {
         past_fxml = fxml;
         printCardList = cardList;
     }

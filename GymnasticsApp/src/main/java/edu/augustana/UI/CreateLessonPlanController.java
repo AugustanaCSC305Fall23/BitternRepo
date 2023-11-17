@@ -1,5 +1,8 @@
-package edu.augustana;
 
+package edu.augustana.UI;
+
+import edu.augustana.App;
+import edu.augustana.Model.*;
 import edu.augustana.filters.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,9 +18,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import org.controlsfx.control.CheckComboBox;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,12 +45,7 @@ public class CreateLessonPlanController {
     private Button addCardButton;
     @FXML
     private TextField titleField;
-    @FXML
-    private Button doneButton;
-    @FXML
-    private Label titleLabel = new Label();
-    @FXML
-    private Button cancelButton;
+
     @FXML
     private Button printBtn;
 
@@ -70,7 +68,8 @@ public class CreateLessonPlanController {
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        ImageView buttonImageView = new ImageView(new Image(getClass().getResource("plusSign.png").toString()));
+        String plusSignURL = new File("Symbols/plusSign.png").toURI().toURL().toString();
+        ImageView buttonImageView = new ImageView(new Image(plusSignURL));
         buttonImageView.setFitHeight(20.0);
         buttonImageView.setFitWidth(20.0);
         addCardButton.setMaxSize(25.0, 25.0);
@@ -161,6 +160,7 @@ public class CreateLessonPlanController {
             }
         }
     }
+
     private SearchFilter searchFromSearchBar(){
         List<String> searchWordList = new ArrayList<>();
         for (String word : searchField.getText().split("\\s+")) {
@@ -168,6 +168,7 @@ public class CreateLessonPlanController {
         }
         return new SearchFilter(searchWordList);
     }
+
     @FXML
     void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -261,7 +262,6 @@ public class CreateLessonPlanController {
     public void removeCardFromLessonPlan() {
     }
 
-
     @FXML
     void printLessonPlan(ActionEvent event) throws IOException {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getEventInPlanList();
@@ -270,7 +270,6 @@ public class CreateLessonPlanController {
         App.setRoot("print_preview");
 
     }
-
 
     @FXML private void giveWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -293,5 +292,4 @@ public class CreateLessonPlanController {
         cancelButton.setVisible(false);
         editTitleButton.setVisible(true);
     } */
-
 }
