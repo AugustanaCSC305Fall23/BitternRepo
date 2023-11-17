@@ -1,12 +1,9 @@
 package edu.augustana;
 
 import edu.augustana.filters.*;
-import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class FilterControl {
@@ -79,4 +76,5 @@ public class FilterControl {
             filter.resetDesiredFiltersList();
         }
     }
+
 }

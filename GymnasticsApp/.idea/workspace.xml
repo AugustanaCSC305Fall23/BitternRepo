@@ -4,80 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ba7fa-be5a-4244-a301-b102e5e47cc9" name="Changes" comment="" />
+    <list default="true" id="4be8e33e-7cba-489d-b723-9ad0b1b15947" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CardBrowserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/CreateLessonPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/FilterControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/FilterControl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="2YFG4cyklcg7HeBFVomly6NjGzf" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 2
+}]]></component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;git-widget-placeholder&quot;: &quot;PrintPreviewLessonPlans&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/git/lab-7-unit-testing-lucasclayton22/SimpleUnitTesting&quot;
-    &quot;git-widget-placeholder&quot;: &quot;filters&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging main"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="edu.augustana" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana\images" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.augustana.App" />
-      <module name="GymnasticsApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.augustana.filters.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.App" />
-      </list>
-    </recent_temporary>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3fa4f084-43ac-441e-9eee-fbad96b62b52" name="Changes" comment="" />
-      <created>1699978989841</created>
+      <changelist id="4be8e33e-7cba-489d-b723-9ad0b1b15947" name="Changes" comment="" />
+      <created>1700239537527</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1699978989841</updated>
+      <updated>1700239537527</updated>
     </task>
     <servers />
   </component>
