@@ -1,6 +1,6 @@
 package edu.augustana.Model;
 
-import edu.augustana.Model.Card;
+import edu.augustana.UI.CardView;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
@@ -14,10 +14,10 @@ public class PrintStaging {
     private static Node printLessonPlan;
     private static Node printCoursePlan;
 
-    public PrintStaging(Image card, String fxml) {
+    /* public PrintStaging(Image card, String fxml) {
         printCard = card;
         past_fxml = fxml;
-    }
+    } */
 
     public PrintStaging(List<Card> cardList, String fxml) {
         past_fxml = fxml;

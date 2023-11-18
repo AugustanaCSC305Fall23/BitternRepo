@@ -7,6 +7,8 @@ import edu.augustana.Model.LessonPlan;
 import edu.augustana.Model.Card;
 import edu.augustana.Model.CardCollection;
 import edu.augustana.filters.*;
+import javafx.animation.Animation;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
@@ -55,12 +58,10 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
     @FXML private TreeView<String> lessonPlanTreeView;
     @FXML
-    private ListView<String> cardTitleListView = new ListView<>();
-    @FXML
     private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
-    private static List<ImageView> cardViewList = App.getCardViewList();
-    private static Map<Card, ImageView> selectedCards = new HashMap<>();
+    private List<CardView> selectedCards = new ArrayList<>();
+    private List<CardView> cardViewList = new ArrayList<>();
     TreeItem<String> root = new TreeItem<>();
 
     @FXML
@@ -75,6 +76,12 @@ public class CreateLessonPlanController {
         addCardButton.setGraphic(buttonImageView);
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
+        }
+        // loop through all cards, making a CardView for each card
+        // and adding it to the cardViewList
+        for (String cardId : fullCardCollection.getSetOfCardIds()) {
+            CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
+            cardViewList.add(newCardView);
         }
         drawCardSet();
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
@@ -102,10 +109,28 @@ public class CreateLessonPlanController {
     }
 
     private void drawCardSet() {
-        for (ImageView cardImageView : cardViewList) {
-            cardImageView.setOnMouseClicked(this::selectCardAction);
-            cardsFlowPane.getChildren().add(cardImageView);
+        for (CardView cardView : cardViewList) {
+            cardView.setFitWidth(400.0);
+            cardView.setFitHeight(308.0);
+            cardsFlowPane.getChildren().add(cardView);
+            cardView.setOnMouseClicked(this::selectCardAction);
+            Animation delayAnim = new PauseTransition(Duration.seconds(2));
+            delayAnim.setOnFinished(e -> zoomInOnImage());
+
+            cardView.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> delayAnim.playFromStart());
+
+            cardView.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+                delayAnim.stop();
+                exitZoomedView();
+            });
         }
+    }
+
+    @FXML void zoomInOnImage() {
+
+    }
+
+    @FXML void exitZoomedView() {
     }
 
     @FXML void setTitle(String newTitle) {
@@ -133,16 +158,12 @@ public class CreateLessonPlanController {
     void applyFiltersAction() {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
-
-        for (String cardId : fullCardCollection.getSetOfCardIds()) {
-            Card card = fullCardCollection.getCardByID(cardId);
-            if (FilterControl.checkIfAllFiltersMatch(card) && searchFromSearchBar().matchesFilters(card)) {
-                ImageView cardImageView = new ImageView(card.getImage());
-                cardImageView.setOnMouseClicked(this::selectCardAction);
-                cardsFlowPane.getChildren().add(cardImageView);
+        for (CardView cardView : cardViewList) {
+            if (FilterControl.checkIfAllFiltersMatch(cardView.getCard()) && searchFromSearchBar().matchesFilters(cardView.getCard())) {
+                cardsFlowPane.getChildren().add(cardView);
+                cardView.setOnMouseClicked(this::selectCardAction);
             }
         }
-        //FilterControl.resetDesiredFiltersLists();
     }
 
     @FXML
@@ -173,31 +194,24 @@ public class CreateLessonPlanController {
         if (event.getCode() == KeyCode.ENTER) {
             SearchFilter searchFilter = searchFromSearchBar();
             cardsFlowPane.getChildren().clear();
-            for (String cardId : fullCardCollection.getSetOfCardIds()) {
-                Card card = fullCardCollection.getCardByID(cardId);
-                if (FilterControl.checkIfAllFiltersMatch(card) && searchFilter.matchesFilters(card)) {
-                    ImageView cardImageView = new ImageView(card.getImage());
-                    cardImageView.setOnMouseClicked(this::selectCardAction);
-                    cardsFlowPane.getChildren().add(cardImageView);
+            for (CardView cardView : cardViewList) {
+                if (FilterControl.checkIfAllFiltersMatch(cardView.getCard()) && searchFilter.matchesFilters(cardView.getCard())) {
+                    cardsFlowPane.getChildren().add(cardView);
+                    cardView.setOnMouseClicked(this::selectCardAction);
                 }
             }
         }
     }
 
     private void selectCardAction(MouseEvent event) {
-        if (event.getTarget().getClass() == ImageView.class) {
-            ImageView cardView = (ImageView) event.getTarget();
-            for (String cardId : fullCardCollection.getSetOfCardIds()) {
-                Card card = fullCardCollection.getCardByID(cardId);
-                if (card.getImage().equals(cardView.getImage())) {
-                    if (!selectedCards.containsKey(card)) {
-                        cardView.setEffect(new DropShadow(10, Color.BLACK));
-                        selectedCards.put(card, cardView);
-                    } else {
-                        cardView.setEffect(null);
-                        selectedCards.remove(card);
-                    }
-                }
+        if (event.getTarget() instanceof CardView) {
+            CardView cardViewSelected = (CardView) event.getTarget();
+            if (!selectedCards.contains(cardViewSelected)) {
+                cardViewSelected.setEffect(new DropShadow(10, Color.BLACK));
+                selectedCards.add(cardViewSelected);
+            } else {
+                cardViewSelected.setEffect(null);
+                selectedCards.remove(cardViewSelected);
             }
         }
     }
@@ -213,10 +227,10 @@ public class CreateLessonPlanController {
     @FXML
     void addCardsToLessonPlan() {
         if (!selectedCards.isEmpty()) {
-            for (Card card : selectedCards.keySet()) {
-                App.getCurrentLessonPlan().addCardToList(card);
-                addToTreeView(card);
-                selectedCards.get(card).setEffect(null);
+            for (CardView cardView : selectedCards) {
+                App.getCurrentLessonPlan().addCardToList(cardView.getCard());
+                addToTreeView(cardView.getCard());
+                cardView.setEffect(null);
             }
             selectedCards.clear();
         } else {
@@ -267,19 +281,4 @@ public class CreateLessonPlanController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    /* @FXML void switchToEditTitleView() {
-        cardTitleListView.setVisible(false);
-        doneButton.setVisible(true);
-        editTitleButton.setVisible(false);
-        cancelButton.setVisible(true);
-    } */
-
-
-    /* @FXML private void switchToLessonOutlineView() {
-        cardTitleListView.setVisible(true);
-        doneButton.setVisible(false);
-        cancelButton.setVisible(false);
-        editTitleButton.setVisible(true);
-    } */
 }

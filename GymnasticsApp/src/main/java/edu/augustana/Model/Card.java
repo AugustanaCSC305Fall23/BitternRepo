@@ -2,8 +2,7 @@ package edu.augustana.Model;
 
 import javafx.scene.image.Image;
 
-import java.net.URL;
-import java.nio.file.Paths;
+import java.net.MalformedURLException;
 import java.util.Arrays;
 
 public class Card {
@@ -19,9 +18,10 @@ public class Card {
     private String level;
     private String[] equipment;
     private String[] keywords;
+    private String uniqueID;
     private Image image;
 
-    public Card(String[] cardDataArray) {
+    public Card(String[] cardDataArray) throws MalformedURLException {
         code = cardDataArray[0].strip();
         event = cardDataArray[1].strip();
         category = cardDataArray[2].strip();
@@ -33,6 +33,8 @@ public class Card {
         level = cardDataArray[8].strip();
         equipment = cardDataArray[9].split(",");
         keywords = cardDataArray[10].split(",");
+        uniqueID = packFolder + "/" + imageName;
+        image = CardDatabase.getImageFromPack(packFolder, imageName);
     }
 
     public String getCode() {
@@ -80,11 +82,7 @@ public class Card {
     }
 
     public String getUniqueID() {
-        return packFolder + "/" + imageName;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
+        return uniqueID;
     }
 
     public Image getImage() {

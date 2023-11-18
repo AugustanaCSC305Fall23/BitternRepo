@@ -1,8 +1,5 @@
 package edu.augustana.Model;
 
-import edu.augustana.Model.Card;
-import edu.augustana.Model.CardCollection;
-
 public class GymnasticsEvent {
     private CardCollection cardsInEvent;
     private String eventTitle;

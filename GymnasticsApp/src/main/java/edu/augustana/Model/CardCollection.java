@@ -1,7 +1,5 @@
 package edu.augustana.Model;
 
-import edu.augustana.Model.Card;
-
 import java.util.*;
 
 public class CardCollection {

@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import edu.augustana.Model.CardDatabase;
 import edu.augustana.Model.Course;
 import edu.augustana.Model.LessonPlan;
+import edu.augustana.UI.CardView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,14 +29,14 @@ public class App extends Application {
     private static Course currentCourse = new Course();
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
-    private static List<ImageView> cardViewList = new ArrayList<>();
+    //private static List<CardView> cardViewList = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
-        setCardViewList();
+        //createCardViewList();
         double height = Screen.getPrimary().getBounds().getHeight();
         double width = Screen.getPrimary().getBounds().getWidth();
         scene = new Scene(loadFXML("home"), width - 25, height - 80);
@@ -50,18 +51,6 @@ public class App extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
-    }
-
-    private void setCardViewList() throws MalformedURLException {
-        List<Image> imageList = CardDatabase.getListOfImages();
-        for (Image image : imageList) {
-            ImageView cardImageView = new ImageView(image);
-            cardViewList.add(cardImageView);
-        }
-    }
-
-    public static List<ImageView> getCardViewList() {
-        return cardViewList;
     }
 
     public static Course getCurrentCourse() { return currentCourse; }

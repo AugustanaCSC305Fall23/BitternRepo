@@ -3,8 +3,6 @@ package edu.augustana.Model;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
-import edu.augustana.Model.Card;
-import edu.augustana.Model.CardCollection;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -55,20 +53,13 @@ public class CardDatabase {
         return csvFileList;
     }
 
-    public static List<Image> getListOfImages() throws MalformedURLException {
-        List<Image> imageList = new ArrayList<>();
-        for (String cardId : getFullCardCollection().getSetOfCardIds()) {
-            Card card = getFullCardCollection().getCardByID(cardId);
-            // Used https://stackoverflow.com/questions/6098472/pass-a-local-file-in-to-url-in-java
-            String url = new File("CardPacks/" + card.getPackFolder().toUpperCase() + "Pack/" + card.getImageName()).toURI().toURL().toString();
-            // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
-            // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
-            // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
-            Image image = new Image(url, 400, 300, true, true);
-            card.setImage(image);
-            imageList.add(image);
-        }
-        return imageList;
+    // Used https://lovelace.augustana.edu/q2a/index.php/7241/image-in-javafx
+    // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
+    // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
+    public static Image getImageFromPack(String cardPack, String imageFilename) throws MalformedURLException {
+        String url = new File("CardPacks/" + cardPack.toUpperCase() + "Pack/" + imageFilename).toURI().toURL().toString();
+        //Image image = new Image(url, 402.45, 310.97, true, true);
+        return new Image(url);
     }
 
     public static CardCollection getFullCardCollection() {
