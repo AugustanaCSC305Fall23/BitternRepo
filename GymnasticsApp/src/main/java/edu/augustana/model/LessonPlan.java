@@ -1,4 +1,4 @@
-package edu.augustana.Model;
+package edu.augustana.model;
 
 import java.util.ArrayList;
 import java.util.List;

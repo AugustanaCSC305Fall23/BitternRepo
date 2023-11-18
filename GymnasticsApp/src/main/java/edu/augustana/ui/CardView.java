@@ -1,6 +1,6 @@
-package edu.augustana.UI;
+package edu.augustana.ui;
 
-import edu.augustana.Model.Card;
+import edu.augustana.model.Card;
 import javafx.scene.image.ImageView;
 
 public class CardView extends ImageView {

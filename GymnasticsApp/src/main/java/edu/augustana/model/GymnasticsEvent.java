@@ -1,4 +1,4 @@
-package edu.augustana.Model;
+package edu.augustana.model;
 
 public class GymnasticsEvent {
     private CardCollection cardsInEvent;

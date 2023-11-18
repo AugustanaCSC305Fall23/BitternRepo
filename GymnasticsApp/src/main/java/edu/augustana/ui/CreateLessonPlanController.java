@@ -1,7 +1,7 @@
-package edu.augustana.UI;
+package edu.augustana.ui;
 
 import edu.augustana.App;
-import edu.augustana.Model.*;
+import edu.augustana.model.*;
 import edu.augustana.filters.*;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;

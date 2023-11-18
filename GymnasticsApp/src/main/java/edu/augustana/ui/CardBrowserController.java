@@ -1,7 +1,7 @@
-package edu.augustana.UI;
+package edu.augustana.ui;
 
 import edu.augustana.*;
-import edu.augustana.Model.*;
+import edu.augustana.model.*;
 import edu.augustana.filters.SearchFilter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

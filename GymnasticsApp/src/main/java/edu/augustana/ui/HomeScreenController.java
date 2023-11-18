@@ -1,7 +1,7 @@
-package edu.augustana.UI;
+package edu.augustana.ui;
 
 import edu.augustana.App;
-import edu.augustana.Model.Course;
+import edu.augustana.model.Course;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,6 +1,6 @@
 package edu.augustana.filters;
 
-import edu.augustana.Model.Card;
+import edu.augustana.model.Card;
 
 import java.util.ArrayList;
 import java.util.List;

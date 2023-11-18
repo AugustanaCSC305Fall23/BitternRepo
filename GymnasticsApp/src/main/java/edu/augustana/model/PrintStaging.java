@@ -1,7 +1,4 @@
-package edu.augustana.Model;
-import edu.augustana.UI.CardView;
-import edu.augustana.Model.Card;
-import javafx.scene.Node;
+package edu.augustana.model;
 import javafx.scene.image.Image;
 
 import java.util.List;

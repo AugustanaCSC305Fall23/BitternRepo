@@ -1,4 +1,4 @@
-package edu.augustana.Model;
+package edu.augustana.model;
 
 import javafx.scene.image.Image;
 

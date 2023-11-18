@@ -1,4 +1,4 @@
-package edu.augustana.UI;
+package edu.augustana.ui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import edu.augustana.App;
-import edu.augustana.Model.Card;
-import edu.augustana.Model.PrintStaging;
+import edu.augustana.model.Card;
+import edu.augustana.model.PrintStaging;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.JobSettings;
@@ -18,7 +18,6 @@ import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
