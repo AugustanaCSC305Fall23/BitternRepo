@@ -1,18 +1,19 @@
 package edu.augustana.Model;
-
 import edu.augustana.UI.CardView;
+import edu.augustana.Model.Card;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
 import java.util.List;
+import java.util.Map;
 
 public class PrintStaging {
     private static String past_fxml;
 
+    private static String lessonPlanTitle;
+    private static Map<String, List<Card>> eventToCardMap;
     private static Image printCard;
     private static List<Card> printCardList;
-    private static Node printLessonPlan;
-    private static Node printCoursePlan;
 
     /* public PrintStaging(Image card, String fxml) {
         printCard = card;
@@ -24,9 +25,11 @@ public class PrintStaging {
         printCardList = cardList;
     }
 
-    //PrintPreview(Node lessonPlan) {
-    //    printLessonPlan = lessonPlan;
-    //}
+    public PrintStaging(String title, Map<String, List<Card>> map, String fxml) {
+        lessonPlanTitle = title;
+        eventToCardMap = map;
+        past_fxml = fxml;
+    }
 
     //PrintPreview(Node coursePlan) {
     //    printCoursePlan = coursePlan;

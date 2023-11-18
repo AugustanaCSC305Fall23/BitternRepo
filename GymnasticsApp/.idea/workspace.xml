@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9de628be-038d-41e0-bdec-9663c916a959" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/UI/CardView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/CardCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/CardCollection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/CardDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/CardDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/FilterControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/FilterControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/GymnasticsEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/GymnasticsEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/LessonPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/LessonPlan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/PrintStaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/Model/PrintStaging.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/UI/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/UI/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/UI/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/UI/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/UI/PrintPreviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/UI/PrintPreviewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,20 +15,10 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2YGVT3ChTY5Qgiwrd0NgVsPgMuj" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -48,7 +28,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -86,11 +66,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9de628be-038d-41e0-bdec-9663c916a959" name="Changes" comment="" />
-      <created>1699978989841</created>
+      <changelist id="4be8e33e-7cba-489d-b723-9ad0b1b15947" name="Changes" comment="" />
+      <created>1700239537527</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1699978989841</updated>
+      <updated>1700239537527</updated>
     </task>
     <servers />
   </component>

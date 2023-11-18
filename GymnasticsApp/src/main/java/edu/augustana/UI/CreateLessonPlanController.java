@@ -1,11 +1,7 @@
 package edu.augustana.UI;
 
 import edu.augustana.App;
-import edu.augustana.Model.CardDatabase;
-import edu.augustana.Model.FilterControl;
-import edu.augustana.Model.LessonPlan;
-import edu.augustana.Model.Card;
-import edu.augustana.Model.CardCollection;
+import edu.augustana.Model.*;
 import edu.augustana.filters.*;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
@@ -216,10 +212,6 @@ public class CreateLessonPlanController {
         }
     }
 
-    private void selectCardInListView(MouseEvent event) {
-
-    }
-
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         App.setCurrentLessonPlan(lessonPlan);
     }
@@ -280,5 +272,13 @@ public class CreateLessonPlanController {
         alert.setTitle("Warning");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    void printLessonPlan() throws IOException {
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getEventInPlanList();
+        String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
+        App.setRoot("print_preview");
     }
 }
