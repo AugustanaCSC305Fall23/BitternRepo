@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" style="-fx-background-color: caf0f8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.HomeScreenController">
@@ -16,32 +17,44 @@
          <font>
             <Font name="Georgia" size="79.0" />
          </font></Label>
-      <ImageView fx:id="logo" fitHeight="252.0" fitWidth="302.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="logoView" fitHeight="252.0" fitWidth="302.0" pickOnBounds="true" preserveRatio="true" />
       <Separator prefWidth="200.0" style="-fx-background-color: black;" />
       <HBox alignment="CENTER" prefHeight="259.0" prefWidth="1094.0" spacing="50.0">
          <children>
-            <Button fx:id="openExistingCourseBtn" mnemonicParsing="false" onAction="#openCourseEditorAndCreator" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="openExistingCourseBtn" mnemonicParsing="false" onAction="#openCourseEditorAndCreator" onMouseEntered="#enlargeButton" onMouseExited="#resetButton" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: black;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Serif Bold" size="21.0" />
                </font>
                <effect>
-                  <DropShadow />
+                  <DropShadow>
+                     <color>
+                        <Color red="0.017370371147990227" green="0.013918128795921803" blue="0.2210526317358017" />
+                     </color>
+                  </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="cardBrowserBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="cardBrowserBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" onMouseEntered="#enlargeButton" onMouseExited="#resetButton" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Serif Bold" size="21.0" />
                </font>
                <effect>
-                  <DropShadow />
+                  <DropShadow>
+                     <color>
+                        <Color red="0.01568627543747425" green="0.01568627543747425" blue="0.21960784494876862" />
+                     </color>
+                  </DropShadow>
                </effect>
             </Button>
-            <Button mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9;" text="Exit">
+            <Button mnemonicParsing="false" onAction="#exitApp" onMouseEntered="#enlargeButton" onMouseExited="#resetButton" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: black;" text="Exit">
                <font>
                   <Font name="Serif Bold" size="21.0" />
                </font>
                <effect>
-                  <DropShadow />
+                  <DropShadow>
+                     <color>
+                        <Color red="0.01568627543747425" green="0.01568627543747425" blue="0.21960784494876862" />
+                     </color>
+                  </DropShadow>
                </effect>
             </Button>
          </children>
