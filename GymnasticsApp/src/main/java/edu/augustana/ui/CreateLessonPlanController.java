@@ -82,7 +82,7 @@ public class CreateLessonPlanController {
         drawCardSet();
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
         //To help with tree view
-        root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
+        root = new TreeItem<>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
