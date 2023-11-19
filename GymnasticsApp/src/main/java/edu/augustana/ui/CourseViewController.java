@@ -97,13 +97,14 @@ public class CourseViewController {
 
     @FXML
     private void addLessonsToCourseList() {
+        System.out.println(App.getCurrentCourse().getLessonPlanList().toString());
         if (!(App.getCurrentCourse().getLessonPlanList().isEmpty())) {
-            TreeItem<LessonPlan> lessonPlan = new TreeItem<>();
-            for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {
+            TreeItem<LessonPlan> lessonPlan = new TreeItem<>(App.getCurrentCourse().getLessonPlanList().get(App.getCurrentCourse().getLessonPlanList().size() - 1));
+            //for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {
                 //courseListView.getItems().add(lesson);
-                lessonPlan.setValue(lesson);
+                //lessonPlan.setValue(lesson);
                 root.getChildren().add(lessonPlan);
-            }
+           // }
         }
     }
 
