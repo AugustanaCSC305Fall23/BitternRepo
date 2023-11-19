@@ -245,9 +245,16 @@ public class CreateLessonPlanController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    @FXML void addCardsToFavorites() {
-        //maybe have a file that I write and read to, to store the cards
-
+    @FXML void addCardsToFavorites() throws IOException {
+        if (!selectedCards.isEmpty()) {
+            for (Card card : selectedCards.keySet()) {
+                App.getFavoriteCards().addFavorite(card);
+                selectedCards.get(card).setEffect(new DropShadow(20, Color.CORAL));
+            }
+            selectedCards.clear();
+        } else {
+            giveWarning("No card selected.");
+        }
     }
 
     /* @FXML void switchToEditTitleView() {

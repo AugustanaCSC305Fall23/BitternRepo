@@ -20,11 +20,14 @@ public class App extends Application {
     private static Course currentCourse = new Course();
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
+    private static FavoriteCards favoriteCards;
 
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
         CardDatabase.getListOfImages();
+
+        favoriteCards = new FavoriteCards();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
         double height = Screen.getPrimary().getBounds().getHeight();
@@ -59,6 +62,7 @@ public class App extends Application {
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         currentLessonPlan = lessonPlan;
     }
+    public static FavoriteCards getFavoriteCards(){return favoriteCards;}
 
     public static void main(String[] args) {
         launch();
