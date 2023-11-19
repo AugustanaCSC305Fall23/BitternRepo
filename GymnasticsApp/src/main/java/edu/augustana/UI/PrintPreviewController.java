@@ -19,8 +19,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Window;
 
 public class PrintPreviewController {
@@ -29,6 +31,7 @@ public class PrintPreviewController {
     // and https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/pagination.htm
     // which heavily influenced the creation of this class.
 
+    // ---------- FXML Data Fields ----------
     @FXML
     private ResourceBundle resources;
 
@@ -50,9 +53,15 @@ public class PrintPreviewController {
     @FXML
     private Label titleLabel;
 
+    // ---------- Non-FXML Data Fields ----------
     private PrinterJob printerJob;
 
     private ArrayList<ImageView> imageList = new ArrayList<ImageView>();
+
+
+    // ---------- Experimental Data Fields ----------
+
+
 
     @FXML
     void initialize() {
@@ -75,6 +84,8 @@ public class PrintPreviewController {
                 }
             });
             mainPane.getChildren().addAll(pagination);
+        } else {
+
         }
     }
 
@@ -150,7 +161,16 @@ public class PrintPreviewController {
             whitePaperPane.setStyle("-fx-background-color:white;");
             whitePaperPane.setPrefHeight(pg.getPrintableHeight());
             whitePaperPane.setPrefWidth(pg.getPrintableWidth());
-            whitePaperPane.getChildren().add(imageList.get(p));
+
+            // Adding the given print objects to the screen
+            if (PrintStaging.getFXML().equals("card_browser")) {
+                whitePaperPane.getChildren().add(imageList.get(p));
+            } else {
+
+
+
+            }
+
             box.getChildren().add(whitePaperPane);
         }
         return box;
