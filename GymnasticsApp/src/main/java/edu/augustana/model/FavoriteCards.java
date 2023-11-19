@@ -12,7 +12,6 @@ public class FavoriteCards {
     List<Card> favoriteCards = new ArrayList<>();
 
     public FavoriteCards() throws IOException {
-        System.out.println(favCardsFile.toPath().toAbsolutePath().toString());
         /**
          * code from
          * //https://howtodoinjava.com/java/io/java-filereader/
@@ -21,7 +20,6 @@ public class FavoriteCards {
             String line;
             while ((line = fileReader.readLine()) != null) {
                 Card card = CardDatabase.getFullCardCollection().getCardByID(line);
-                System.out.println(card.toString());
                 favoriteCards.add(card);
             }
         } finally {
@@ -42,7 +40,7 @@ public class FavoriteCards {
     public void closeFileWriter() throws IOException {
         fileWriter.close();
     }
-    public List<Card> getFavoriteCards(){
+    public List<Card> getFavoriteCardsList(){
         return favoriteCards;
     }
 }
