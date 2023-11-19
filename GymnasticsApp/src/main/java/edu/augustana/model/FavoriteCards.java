@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana.model;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 //https://howtodoinjava.com/java/io/java-filereader/
 //https://howtodoinjava.com/java/io/java-filewriter/
 public class FavoriteCards {
-    File favCardsFile = new File("Data/favoriteCards");
+    File favCardsFile = new File("cardpacks/favoriteCards");
     BufferedReader fileReader = new BufferedReader(new FileReader(favCardsFile));
     FileWriter fileWriter = new FileWriter(favCardsFile, true);
     List<Card> favoriteCards = new ArrayList<>();
@@ -38,6 +38,9 @@ public class FavoriteCards {
         //delete card from file (unique id)
         //delete card from list
 
+    }
+    public void closeFileWriter() throws IOException {
+        fileWriter.close();
     }
     public List<Card> getFavoriteCards(){
         return favoriteCards;

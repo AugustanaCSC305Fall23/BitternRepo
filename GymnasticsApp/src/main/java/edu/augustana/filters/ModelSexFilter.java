@@ -1,8 +1,6 @@
 package edu.augustana.filters;
 
-import edu.augustana.Card;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import edu.augustana.model.Card;
 
 import java.util.List;
 

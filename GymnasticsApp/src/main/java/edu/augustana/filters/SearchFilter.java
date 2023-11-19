@@ -1,8 +1,7 @@
 package edu.augustana.filters;
 
-import edu.augustana.Card;
+import edu.augustana.model.Card;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class SearchFilter extends CardFilter{

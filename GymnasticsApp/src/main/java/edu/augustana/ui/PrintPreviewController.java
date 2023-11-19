@@ -1,10 +1,14 @@
-package edu.augustana;
+package edu.augustana.ui;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import edu.augustana.App;
+import edu.augustana.model.Card;
+import edu.augustana.model.PrintStaging;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.JobSettings;
@@ -14,9 +18,6 @@ import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
@@ -50,26 +51,25 @@ public class PrintPreviewController {
 
     private PrinterJob printerJob;
 
-    private ArrayList<ImageView> imageList = new ArrayList<ImageView>();
+    private List<CardView> cardsToPrint;
 
     @FXML
     void initialize() {
         printerJob = PrinterJob.createPrinterJob();
         if (PrintStaging.getFXML().equals("card_browser")) {
-            ArrayList<Card> printCards = (ArrayList<Card>) PrintStaging.getPrintCardList();
-
-            for (int i = 0; i < printCards.size(); i++) {
-                ImageView cardImage = new ImageView(printCards.get(i).getImage());
-                imageList.add(cardImage);
+            cardsToPrint = new ArrayList<>();
+            for (Card card : PrintStaging.getPrintCardList()) {
+                CardView printCardView = new CardView(card);
+                cardsToPrint.add(printCardView);
             }
-            int numPages = imageList.size();
+            int numPages = cardsToPrint.size();
             Pagination pagination = new Pagination(numPages);
             pagination.setStyle("-fx-border-color:white;");
             pagination.setPageFactory((Integer pageIndex) -> {
                 if (pageIndex >= numPages) {
                     return null;
                 } else {
-                    return createPage(pageIndex, imageList, printerJob);
+                    return createPage(pageIndex, cardsToPrint, printerJob);
                 }
             });
             mainPane.getChildren().addAll(pagination);
@@ -97,7 +97,7 @@ public class PrintPreviewController {
     void printAllCards(ActionEvent event) {
         Window window = mainPane.getScene().getWindow();
         if (printerJob != null && printerJob.showPrintDialog(window)) {
-            PageRange pgRange = new PageRange(1, imageList.size());
+            PageRange pgRange = new PageRange(1, cardsToPrint.size());
             printerJob.getJobSettings().setPageRanges(pgRange);
             PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
             JobSettings js = printerJob.getJobSettings();
@@ -105,12 +105,13 @@ public class PrintPreviewController {
             boolean printed = false;
             for (PageRange pr : js.getPageRanges()) {
                 for(int p = pr.getStartPage(); p <= pr.getEndPage(); p++){        // This loops through the selected page range
-                    ArrayList<ImageView> imageListClone = (ArrayList<ImageView>) imageList.clone();
-                    ImageView image = imageListClone.get(p - 1);
+                    //List<CardView> cardsToPrintClone = new ArrayList<>(cardsToPrint);
+                    //CardView cardView = cardsToPrintClone.get(p - 1);
                     Pane printNode = new Pane();
                     printNode.setPrefHeight(pgLayout.getPrintableHeight());
                     printNode.setPrefWidth(pgLayout.getPrintableWidth());
-                    printNode.getChildren().addAll(image);
+                    CardView cardView = cardsToPrint.get(p-1);
+                    printNode.getChildren().add(cardView);
                     printed = printerJob.printPage(pgLayout, printNode);
                     if (!printed) {
                         System.out.println("Printing failed."); // for testing
@@ -137,7 +138,8 @@ public class PrintPreviewController {
     public int itemsPerPage() {
         return 1;
     }
-    public VBox createPage(int pageIndex, List<ImageView> imageList, PrinterJob pj) {
+
+    public VBox createPage(int pageIndex, List<CardView> cardsToPrint, PrinterJob pj) {
         PageLayout pg = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
         int page = pageIndex * itemsPerPage();
@@ -148,7 +150,10 @@ public class PrintPreviewController {
             whitePaperPane.setStyle("-fx-background-color:white;");
             whitePaperPane.setPrefHeight(pg.getPrintableHeight());
             whitePaperPane.setPrefWidth(pg.getPrintableWidth());
-            whitePaperPane.getChildren().add(imageList.get(p));
+            CardView cardView = cardsToPrint.get(p);
+            cardView.setFitWidth(pg.getPrintableWidth() - 10);
+            cardView.setFitHeight(pg.getPrintableWidth() * .75);
+            whitePaperPane.getChildren().add(cardsToPrint.get(p));
             box.getChildren().add(whitePaperPane);
         }
         return box;

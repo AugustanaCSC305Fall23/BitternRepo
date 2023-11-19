@@ -7,14 +7,17 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: CornFlowerBlue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.CreateLessonPlanController">
+<?import javafx.scene.control.ColorPicker?>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: CornFlowerBlue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CreateLessonPlanController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
@@ -76,9 +79,9 @@
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
                <children>
-                  <ScrollPane prefViewportHeight="575.0">
+                  <ScrollPane hbarPolicy="NEVER" prefViewportHeight="575.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <content>
-                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="820.0" vgap="10.0">
+                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: CornFlowerBlue;" vgap="10.0">
                         </FlowPane>
                      </content>
                   </ScrollPane>
@@ -101,9 +104,17 @@
                   </Button>
                   <TreeView fx:id="lessonPlanTreeView" layoutX="47.0" layoutY="199.0" prefHeight="314.0" prefWidth="461.0" />
                   <Button fx:id="deleteBtn" layoutX="61.0" layoutY="146.0" mnemonicParsing="false" text="Delete" />
+                  <Button fx:id="printBtn" layoutX="427.0" layoutY="146.0" mnemonicParsing="false" onAction="#printLessonPlan" text="Print" />
                </children>
             </AnchorPane>
          </items>
       </SplitPane>
    </children>
+   <effect>
+      <InnerShadow height="25.0" radius="13.25" width="30.0">
+         <color>
+            <Color red="0.45635664463043213" green="0.20239999890327454" blue="0.8799999952316284" />
+         </color>
+      </InnerShadow>
+   </effect>
 </VBox>

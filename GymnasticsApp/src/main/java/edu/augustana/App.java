@@ -1,6 +1,10 @@
 package edu.augustana;
 
 import com.opencsv.exceptions.CsvValidationException;
+import edu.augustana.model.CardDatabase;
+import edu.augustana.model.Course;
+import edu.augustana.model.FavoriteCards;
+import edu.augustana.model.LessonPlan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,11 +29,10 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
-        CardDatabase.getListOfImages();
-
         favoriteCards = new FavoriteCards();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
+        //createCardViewList();
         double height = Screen.getPrimary().getBounds().getHeight();
         double width = Screen.getPrimary().getBounds().getWidth();
         scene = new Scene(loadFXML("home"), width - 25, height - 80);
@@ -37,7 +40,7 @@ public class App extends Application {
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 

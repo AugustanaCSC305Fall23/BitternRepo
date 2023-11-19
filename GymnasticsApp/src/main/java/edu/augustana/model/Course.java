@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
