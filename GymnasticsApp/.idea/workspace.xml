@@ -4,77 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4b0092b-5880-401e-8cb9-71308fe8150e" name="Changes" comment="" />
+    <list default="true" id="d3fa044e-a913-403c-9df8-d2ce7a4283d5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 2
-}</component>
-  <component name="ProjectId" id="2YOrw5Pp9BwkyAanzGo532HNjOb" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;
-  }
-}</component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="edu.augustana" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp\Symbols" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana\images" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.augustana.App" />
-      <module name="GymnasticsApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.augustana.filters.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.App" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="a4b0092b-5880-401e-8cb9-71308fe8150e" name="Changes" comment="" />
-      <created>1700239537527</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1700239537527</updated>
-    </task>
     <servers />
   </component>
 </project>

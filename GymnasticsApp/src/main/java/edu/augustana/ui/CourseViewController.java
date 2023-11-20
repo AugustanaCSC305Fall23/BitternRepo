@@ -28,8 +28,9 @@ public class CourseViewController {
     @FXML // fx:id="courseTitleLabel"
     private AnchorPane courseTitleLabel; // Value injected by FXMLLoader
 
-    @FXML // fx:id="courseListView"
-    private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
+    //@FXML // fx:id="courseListView"
+    //private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
+    @FXML private TreeView<LessonPlan> courseTreeView = new TreeView<>();
 
     @FXML
     private Button createNewLessonPlanBtn;
@@ -56,6 +57,7 @@ public class CourseViewController {
 
     // Non FXML
     private static Course currentCourse;
+    private TreeItem<LessonPlan> root = new TreeItem<>(new LessonPlan("root"));
 
 
     @FXML
@@ -67,11 +69,13 @@ public class CourseViewController {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
         CreateLessonPlanController.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
+        //might need to move parts of method
     }
 
     @FXML
     private void editLessonPlanHandler() throws  IOException {
-        LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
+        //LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
+        LessonPlan lessonPlanToEdit = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
             CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
@@ -82,9 +86,11 @@ public class CourseViewController {
     }
 
     @FXML private void removeLessonPlanHandler() {
-        LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
+        //LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
+        LessonPlan lessonPlanToDelete = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         if (lessonPlanToDelete != null) {
-            courseListView.getItems().remove(lessonPlanToDelete);
+            //courseListView.getItems().remove(lessonPlanToDelete);
+            courseTreeView.getSelectionModel().getSelectedItem().setValue(null);
             App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
             App.setCurrentLessonPlan(null);
         }
@@ -92,9 +98,13 @@ public class CourseViewController {
 
     @FXML
     private void addLessonsToCourseList() {
+        System.out.println(App.getCurrentCourse().getLessonPlanList().toString());
         if (!(App.getCurrentCourse().getLessonPlanList().isEmpty())) {
+            TreeItem<LessonPlan> lessonPlan = new TreeItem<>(App.getCurrentCourse().getLessonPlanList().get(App.getCurrentCourse().getLessonPlanList().size() - 1));
             for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {
-                courseListView.getItems().add(lesson);
+                //courseListView.getItems().add(lesson);
+                lessonPlan.setValue(lesson);
+                root.getChildren().add(lessonPlan);
             }
         }
     }
@@ -104,16 +114,19 @@ public class CourseViewController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Gymnastics Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
-        Window mainWindow = courseListView.getScene().getWindow();
+        Window mainWindow = courseTreeView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
         if (chosenFile != null) {
             try {
                 Course.loadFromFile(chosenFile);
-                courseListView.getItems().clear();
+                courseTreeView.getRoot().getChildren().clear();
                 App.setCurrentCourse(Course.loadFromFile(chosenFile));
                 App.setCurrentCourseFile(chosenFile);
                 for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-                    courseListView.getItems().add(lessonPlan);
+                    TreeItem<LessonPlan> lessonInCourse = new TreeItem<>();
+                    lessonInCourse.setValue(lessonPlan);
+                    root.getChildren().add(lessonInCourse);
+                    //courseTreeView.getRoot().(lessonPlan);
                 }
             } catch (IOException e) {
                 new Alert(Alert.AlertType.ERROR, "Error loading Course: " + chosenFile).show();
@@ -126,7 +139,7 @@ public class CourseViewController {
         fileChooser.setTitle("Save New Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
         fileChooser.getExtensionFilters().add(filter);
-        Window mainWindow = courseListView.getScene().getWindow();
+        Window mainWindow = courseTreeView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
         App.getCurrentCourse().saveToFile(chosenFile);
         App.setCurrentCourseFile(chosenFile);
@@ -142,12 +155,14 @@ public class CourseViewController {
     }
 
     @FXML private void menuActionCreateNewCourse(ActionEvent event) {
-        courseListView.getItems().clear();
+        courseTreeView.getRoot().getChildren().clear();
         App.setCurrentCourse(new Course());
         App.setCurrentCourseFile(null);
         App.getCurrentCourse().getLessonPlanList().add(new LessonPlan("My Lesson Plan"));
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-            courseListView.getItems().add(lessonPlan);
+            TreeItem<LessonPlan> lessonInCourse = new TreeItem<>();
+            lessonInCourse.setValue(lessonPlan);
+            root.getChildren().add(lessonInCourse);
         }
     }
 
@@ -155,7 +170,9 @@ public class CourseViewController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
-        assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
+        //assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
+        courseTreeView.setRoot(root);
+        courseTreeView.setShowRoot(false);
         addLessonsToCourseList();
 
         titleField.setVisible(false);
@@ -206,8 +223,4 @@ public class CourseViewController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
-
-
 }
