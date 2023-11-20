@@ -5,6 +5,7 @@ package edu.augustana.model;
 
 import edu.augustana.ui.CardView;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
@@ -63,9 +64,6 @@ public class ParseLessonPlanPrinting {
     }
 
     private void parseLessonPlan() {
-
-        Stage falseWindow = new Stage();
-
         labelToFlowPaneMap = new HashMap<Label, FlowPane>();
 
         // LessonPlan Title
@@ -86,6 +84,7 @@ public class ParseLessonPlanPrinting {
             Label eventLabel = new Label();
             eventLabel.setFont(eventTitleTemplate);
             eventLabel.setText(event.getKey());
+            eventLabel.setPadding(new Insets(10,0, 10, 0));
             FlowPane eventCardsPane = new FlowPane();
             eventCardsPane.setMaxWidth(pageWidth + 5);
             eventCardsPane.setPrefWrapLength(pageWidth + 5);
@@ -140,8 +139,6 @@ public class ParseLessonPlanPrinting {
             dummyBox.getChildren().add(cardFlowPane);
             dummyRoot.applyCss();
             dummyRoot.layout();
-
-            System.out.println("Height : " + dummyBox.getHeight());
 
             if (runningPageHeight + event.getKey().getHeight() + event.getValue().getHeight() < pageHeight) {
                 pageContents.getChildren().add(eventLabel);
