@@ -222,7 +222,6 @@ public class CreateLessonPlanController {
     void addCardsToLessonPlan() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
-                App.getCurrentLessonPlan().addCardToList(cardView.getCard());
                 addToTreeView(cardView.getCard());
                 cardView.setEffect(null);
             }
