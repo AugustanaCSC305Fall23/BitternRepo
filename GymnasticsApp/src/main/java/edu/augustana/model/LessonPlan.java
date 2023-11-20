@@ -1,7 +1,4 @@
-package edu.augustana.Model;
-
-import edu.augustana.Model.Card;
-import edu.augustana.Model.CardDatabase;
+package edu.augustana.model;
 
 import java.util.ArrayList;
 import java.util.List;

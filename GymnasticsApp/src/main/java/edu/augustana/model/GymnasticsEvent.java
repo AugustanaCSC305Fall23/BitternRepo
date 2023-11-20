@@ -1,7 +1,4 @@
-package edu.augustana.Model;
-
-import edu.augustana.Model.Card;
-import edu.augustana.Model.CardCollection;
+package edu.augustana.model;
 
 public class GymnasticsEvent {
     private CardCollection cardsInEvent;

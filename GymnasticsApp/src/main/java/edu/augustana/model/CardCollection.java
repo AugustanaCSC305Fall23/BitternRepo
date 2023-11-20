@@ -1,6 +1,4 @@
-package edu.augustana.Model;
-
-import edu.augustana.Model.Card;
+package edu.augustana.model;
 
 import java.util.*;
 
