@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import edu.augustana.App;
 import edu.augustana.model.Card;
+import edu.augustana.model.ParseLessonPlanPrinting;
 import edu.augustana.model.PrintStaging;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,11 +16,16 @@ import javafx.print.JobSettings;
 import javafx.print.PageLayout;
 import javafx.print.PageRange;
 import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Window;
 
 public class PrintPreviewController {
@@ -28,6 +34,7 @@ public class PrintPreviewController {
     // and https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/pagination.htm
     // which heavily influenced the creation of this class.
 
+    // ---------- FXML Data Fields ----------
     @FXML
     private ResourceBundle resources;
 
@@ -49,9 +56,15 @@ public class PrintPreviewController {
     @FXML
     private Label titleLabel;
 
+    // ---------- Non-FXML Data Fields ----------
     private PrinterJob printerJob;
 
     private List<CardView> cardsToPrint;
+
+
+    // ---------- Experimental Data Fields ----------
+
+
 
     @FXML
     void initialize() {
@@ -70,6 +83,19 @@ public class PrintPreviewController {
                     return null;
                 } else {
                     return createPage(pageIndex, cardsToPrint, printerJob);
+                }
+            });
+            mainPane.getChildren().addAll(pagination);
+        } else {
+            ParseLessonPlanPrinting lessonPlan = new ParseLessonPlanPrinting();
+            int numPages = ParseLessonPlanPrinting.getPages().size();
+            Pagination pagination = new Pagination(numPages);
+            pagination.setStyle("-fx-border-color:white;");
+            pagination.setPageFactory((Integer pageIndex) -> {
+                if (pageIndex >= numPages) {
+                    return null;
+                } else {
+                    return createPage(pageIndex, ParseLessonPlanPrinting.getPages(), printerJob);
                 }
             });
             mainPane.getChildren().addAll(pagination);
@@ -97,7 +123,11 @@ public class PrintPreviewController {
     void printAllCards(ActionEvent event) {
         Window window = mainPane.getScene().getWindow();
         if (printerJob != null && printerJob.showPrintDialog(window)) {
-            PageRange pgRange = new PageRange(1, cardsToPrint.size());
+            PageRange pgRange = new PageRange(1, ParseLessonPlanPrinting.getPages().size());
+            if (PrintStaging.getFXML().equals("card_browser")) {
+                pgRange = new PageRange(1, cardsToPrint.size());
+            } else
+
             printerJob.getJobSettings().setPageRanges(pgRange);
             PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
             JobSettings js = printerJob.getJobSettings();
@@ -110,8 +140,13 @@ public class PrintPreviewController {
                     Pane printNode = new Pane();
                     printNode.setPrefHeight(pgLayout.getPrintableHeight());
                     printNode.setPrefWidth(pgLayout.getPrintableWidth());
-                    CardView cardView = cardsToPrint.get(p-1);
-                    printNode.getChildren().add(cardView);
+                    if (PrintStaging.getFXML().equals("card_browser")) {
+                        CardView cardView = cardsToPrint.get(p - 1);
+                        printNode.getChildren().add(cardView);
+                    } else {
+                        printNode.getChildren().add(ParseLessonPlanPrinting.getPages().get(p - 1));
+                    }
+
                     printed = printerJob.printPage(pgLayout, printNode);
                     if (!printed) {
                         System.out.println("Printing failed."); // for testing
@@ -150,11 +185,32 @@ public class PrintPreviewController {
             whitePaperPane.setStyle("-fx-background-color:white;");
             whitePaperPane.setPrefHeight(pg.getPrintableHeight());
             whitePaperPane.setPrefWidth(pg.getPrintableWidth());
+
             CardView cardView = cardsToPrint.get(p);
             cardView.setFitWidth(pg.getPrintableWidth() - 10);
             cardView.setFitHeight(pg.getPrintableWidth() * .75);
-            whitePaperPane.getChildren().add(cardsToPrint.get(p));
-            box.getChildren().add(whitePaperPane);
+
+            // Adding the given print objects to the screen
+            if (PrintStaging.getFXML().equals("card_browser")) {
+                whitePaperPane.getChildren().add(cardsToPrint.get(p));
+                box.getChildren().add(whitePaperPane);
+            }
+
+        }
+        return box;
+    }
+
+    public VBox createPage(int pageIndex, ArrayList<Pane> pages, PrinterJob pj) {
+        PageLayout pg = pj.getJobSettings().getPageLayout();
+        VBox box = new VBox();
+        int page = pageIndex * itemsPerPage();
+
+        for (int p = page; p < page + itemsPerPage(); p++) {
+            Pane pagePane = new Pane(pages.get(p));
+            pagePane.setStyle("-fx-background-color: white");
+            pagePane.setPrefHeight(pg.getPrintableHeight());
+            pagePane.setPrefWidth(pg.getPrintableWidth());
+            box.getChildren().add(pagePane);
         }
         return box;
     }

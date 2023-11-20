@@ -66,6 +66,7 @@ public class LessonPlan {
             for(String cardID : mapOfIDs.get(event)) {
                 cardsFromID.add(CardDatabase.getFullCardCollection().getCardByID(cardID));
             }
+            mapOfCardsFromID.put(event, cardsFromID);
         }
         return  mapOfCardsFromID;
     }

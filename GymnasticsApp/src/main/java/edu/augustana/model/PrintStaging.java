@@ -28,9 +28,13 @@ public class PrintStaging {
         past_fxml = fxml;
     }
 
-    //PrintPreview(Node coursePlan) {
-    //    printCoursePlan = coursePlan;
-    //}
+    public static Map<String, List<Card>> getEventToCardMap() {
+        return eventToCardMap;
+    }
+
+    public static String getLessonPlanTitle() {
+        return lessonPlanTitle;
+    }
 
     public static Image getPrintCard() {
         return printCard;

@@ -71,6 +71,17 @@ public class CardBrowserController {
 
     //private final Image checkImage = new Image(getClass().getResource("images/Checkmark.png").toString(), 400, 300, true, true);
 
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() throws MalformedURLException {
+        createDropdowns();
+        for (String cardId : fullCardCollection.getSetOfCardIds()) {
+            CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
+            cardViewList.add(newCardView);
+        }
+        drawCardSet();
+        assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";
+    }
+    
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
         genderDropdown.getItems().addAll(genderFilterChoices);
@@ -93,16 +104,6 @@ public class CardBrowserController {
         }
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() throws MalformedURLException {
-        createDropdowns();
-        for (String cardId : fullCardCollection.getSetOfCardIds()) {
-            CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
-            cardViewList.add(newCardView);
-        }
-        drawCardSet();
-        assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";
-    }
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
         return dropdown.getCheckModel().getCheckedItems();
     }
