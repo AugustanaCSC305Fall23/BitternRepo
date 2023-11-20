@@ -93,13 +93,15 @@ public class CreateLessonPlanController {
         drawCardSet();
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
         //To help with tree view
-        root = new TreeItem<String>(App.getCurrentLessonPlan().getTitle());
+        root = new TreeItem<>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
+            Card card;
             for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
                 TreeItem<String> newEvent = new TreeItem<>(event);
-                for(Card card : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                for(String cardID : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                    card = CardDatabase.getFullCardCollection().getCardByID(cardID);
                     newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
                 }
                 root.getChildren().add(newEvent);
@@ -254,7 +256,6 @@ public class CreateLessonPlanController {
     void addCardsToLessonPlan() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
-                App.getCurrentLessonPlan().addCardToList(cardView.getCard());
                 addToTreeView(cardView.getCard());
                 cardView.setEffect(null);
             }
@@ -310,8 +311,9 @@ public class CreateLessonPlanController {
 
     @FXML
     void printLessonPlan() throws IOException {
-        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getEventInPlanList();
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getEventInPlanList());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
+
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
         App.setRoot("print_preview");
     }
