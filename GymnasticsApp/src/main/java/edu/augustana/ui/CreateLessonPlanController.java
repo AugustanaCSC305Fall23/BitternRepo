@@ -86,9 +86,11 @@ public class CreateLessonPlanController {
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
+            Card card;
             for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
                 TreeItem<String> newEvent = new TreeItem<>(event);
-                for(Card card : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                for(String cardID : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                    card = CardDatabase.getFullCardCollection().getCardByID(cardID);
                     newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
                 }
                 root.getChildren().add(newEvent);
@@ -276,8 +278,9 @@ public class CreateLessonPlanController {
 
     @FXML
     void printLessonPlan() throws IOException {
-        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getEventInPlanList();
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getEventInPlanList());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
+
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
         App.setRoot("print_preview");
     }

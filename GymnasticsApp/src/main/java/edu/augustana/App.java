@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import com.opencsv.exceptions.CsvValidationException;
+import edu.augustana.model.CardCollection;
 import edu.augustana.model.CardDatabase;
 import edu.augustana.model.Course;
 import edu.augustana.model.LessonPlan;
@@ -23,7 +24,7 @@ public class App extends Application {
     private static Course currentCourse = new Course();
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
-    //private static List<CardView> cardViewList = new ArrayList<>();
+
 
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {
@@ -51,7 +52,6 @@ public class App extends Application {
 
     public static LessonPlan getCurrentLessonPlan() { return currentLessonPlan; }
     public static File getCurrentCourseFile() { return currentCourseFile;}
-
     public static void setCurrentCourse(Course course) {
         currentCourse = course;
     }

@@ -3,6 +3,7 @@ package edu.augustana.model;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+import edu.augustana.App;
 import javafx.scene.image.Image;
 
 import java.io.File;
