@@ -7,15 +7,20 @@ import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -46,6 +51,12 @@ public class CreateLessonPlanController {
     private Button addCardButton;
     @FXML
     private TextField titleField;
+
+    @FXML private VBox zoomedInCardVBox;
+    @FXML private Label eventLabel;
+    @FXML private ImageView zoomedInCard;
+    @FXML private Label equipmentLabel;
+    @FXML private AnchorPane lessonOutlinePane;
 
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
@@ -106,27 +117,49 @@ public class CreateLessonPlanController {
 
     private void drawCardSet() {
         for (CardView cardView : cardViewList) {
-            cardView.setFitWidth(400.0);
-            cardView.setFitHeight(308.0);
+            cardView.setFitWidth(260.0);
+            cardView.setFitHeight(195.0);
             cardsFlowPane.getChildren().add(cardView);
             cardView.setOnMouseClicked(this::selectCardAction);
-            Animation delayAnim = new PauseTransition(Duration.seconds(2));
-            delayAnim.setOnFinished(e -> zoomInOnImage());
+            Animation delayAnim = new PauseTransition(Duration.seconds(1));
 
-            cardView.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> delayAnim.playFromStart());
+            cardView.setOnMouseEntered(e -> {
+                delayAnim.playFromStart();
+                delayAnim.setOnFinished(event -> zoomInOnImage(cardView));
+            });
 
-            cardView.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+            cardView.setOnMouseExited(e -> {
                 delayAnim.stop();
                 exitZoomedView();
             });
         }
     }
 
-    @FXML void zoomInOnImage() {
-
+    @FXML void zoomInOnImage(CardView cardView) {
+        eventLabel.setText(cardView.getCard().getEvent());
+        zoomedInCard.setImage(cardView.getImage());
+            String equipment = "Equipment: ";
+            for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
+                if (i != 0) {
+                    equipment = equipment + ", ";
+                }
+                equipment = equipment + cardView.getCard().getEquipment()[i];
+            }
+            equipmentLabel.setText(equipment);
+            zoomedInCardVBox.setVisible(true);
+            GaussianBlur blur = new GaussianBlur();
+            for (Node child : lessonOutlinePane.getChildren()) {
+                if (child != zoomedInCardVBox) {
+                    child.setEffect(blur);
+                }
+            }
     }
 
     @FXML void exitZoomedView() {
+        zoomedInCardVBox.setVisible(false);
+        for (Node child : lessonOutlinePane.getChildren()) {
+            child.setEffect(null);
+        }
     }
 
     @FXML void setTitle(String newTitle) {
@@ -209,6 +242,7 @@ public class CreateLessonPlanController {
                 cardViewSelected.setEffect(null);
                 selectedCards.remove(cardViewSelected);
             }
+            exitZoomedView();
         }
     }
 
