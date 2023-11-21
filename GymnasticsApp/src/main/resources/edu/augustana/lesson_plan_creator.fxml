@@ -80,19 +80,19 @@
             <Insets top="20.0" />
          </VBox.margin>
       </HBox>
-      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: Teal;">
+      <SplitPane centerShape="false" dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: transparent;">
          <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: Teal;" SplitPane.resizableWithParent="false">
+            <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: transparent;" SplitPane.resizableWithParent="false">
                <children>
-                  <TabPane fx:id="cardsTabPane" prefHeight="672.0" prefWidth="836.0" style="-fx-background-color: Teal;">
+                  <TabPane fx:id="cardsTabPane" prefHeight="672.0" prefWidth="836.0" style="-fx-background-color: transparent;">
                     <tabs>
                       <Tab fx:id="allCardsTab" closable="false" onSelectionChanged="#switchToAllCards" text="All Cards">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="262.0" style="-fx-background-color: Teal;">
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="262.0" style="-fx-background-color: teal;">
                                  <children>
-                                    <ScrollPane hbarPolicy="NEVER" prefViewportHeight="550.0" style="-fx-background-color: teal;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="607.0" prefViewportHeight="550.0" prefWidth="826.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                        <content>
-                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal;" vgap="10.0">
+                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: teal;" vgap="10.0">
                         </FlowPane>
                                        </content>
                                     </ScrollPane>
@@ -102,13 +102,14 @@
                       </Tab>
                       <Tab fx:id="favoriteCardsTab" closable="false" onSelectionChanged="#switchToFavoriteCards" text="Favorite Cards">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: Teal;">
                                  <children>
-                                    <ScrollPane hbarPolicy="NEVER" layoutX="17.0" layoutY="82.0" prefViewportHeight="550.0">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="8.0" layoutY="93.0" prefHeight="549.0" prefViewportHeight="550.0" prefWidth="827.0" style="-fx-background-color: transparent;">
                                        <content>
-                                          <FlowPane fx:id="favoriteCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal;" vgap="10.0" />
+                                          <FlowPane fx:id="favoriteCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal; -fx-border-color: Teal;" vgap="10.0" />
                                        </content>
                                     </ScrollPane>
+                                    <Button fx:id="removeFavoriteBtn" layoutX="43.0" layoutY="38.0" mnemonicParsing="false" onAction="#removeFavoriteAction" text="Remove Favorite" />
                                  </children>
                               </AnchorPane>
                         </content>

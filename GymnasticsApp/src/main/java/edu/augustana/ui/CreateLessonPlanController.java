@@ -64,6 +64,8 @@ public class CreateLessonPlanController {
     @FXML
     private Button favoriteBtn;
     @FXML
+    private Button removeFavoriteBtn;
+    @FXML
     private TextField titleField;
 
     @FXML private VBox zoomedInCardVBox;
@@ -101,6 +103,7 @@ public class CreateLessonPlanController {
             cardViewList.add(newCardView);
         }
         cardsTabPane.getSelectionModel().select(allCardsTab);
+        //cardsTabPane.
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
     }
@@ -294,12 +297,16 @@ public class CreateLessonPlanController {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
                 App.getFavoriteCards().addFavorite(card);
-                cardView.setEffect(new DropShadow(20, Color.CORAL));
             }
             selectedCards.clear();
         } else {
             giveWarning("No card selected.");
         }
+    }
+
+    @FXML
+    void removeFavoriteAction(ActionEvent event) {
+
     }
 
     /*
@@ -355,13 +362,27 @@ public class CreateLessonPlanController {
         App.setRoot("print_preview");
     }
     @FXML
-    void switchToAllCards(ActionEvent event) {
-        cardsTabPane.getSelectionModel().select(allCardsTab);
+    void switchToAllCards() {
+        if(!(favoriteCardsTab == null)){
+            favoriteCardsTab.getContent().setVisible(false);
+        }
+        allCardsTab.getContent().setVisible(true);
     }
 
     @FXML
-    void switchToFavoriteCards(ActionEvent event) {
-        cardsTabPane.getSelectionModel().select(favoriteCardsTab);
+    void switchToFavoriteCards() {
+        //System.out.println(cardsTabPane.getSelectionModel().isSelected(0));
+        allCardsTab.getContent().setVisible(false);
+        favoriteCardsTab.getContent().setVisible(true);
+        //System.out.println(cardsTabPane);
+        //cardsTabPane.getSelectionModel().isSelected(0);
+        //cardsTabPane.getSelectionModel().select(favoriteCardsTab);
+        if(favoriteCardsFlowPane.getChildren().isEmpty()){
+            drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
+        }else if(favoriteCardsFlowPane.getChildren().size() < App.getFavoriteCards().getFavoriteCardsList().size()){
+            favoriteCardsFlowPane.getChildren().clear();
+            drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
+        }
         //drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
     }
     private FlowPane findAndSetFlowPane(){
