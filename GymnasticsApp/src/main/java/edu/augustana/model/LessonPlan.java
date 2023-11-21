@@ -48,6 +48,7 @@ public class LessonPlan {
     public List<String> getEventIndexes() {
         return eventIndexes;
     }
+
     public Map<String, List<String>> getEventInPlanList(){
         return eventInPlanList;
     }

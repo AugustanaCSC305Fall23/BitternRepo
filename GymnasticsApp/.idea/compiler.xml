@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="GymnasticsApp" options="--add-exports javafx.graphics/com.sun.javafx.tk=edu.augustana" />
+      <module name="GymnasticsApp" options="" />
     </option>
   </component>
 </project>
