@@ -28,6 +28,7 @@
             <TreeView fx:id="courseTreeView" prefHeight="361.0" prefWidth="596.0" />
          </content>
       </ScrollPane>
+      <Button mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" text="Duplicate Lesson Plan" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="500.0" />
       <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="23.0" />
@@ -57,12 +58,6 @@
         </menus>
       </MenuBar>
 
-      <Button fx:id="editLessonPlanBtn" layoutX="303.0" layoutY="585.0" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="303.0">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Button>
-
       <HBox alignment="CENTER" focusTraversable="true" spacing="125.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
          <children>
             <Button fx:id="doneBtn" mnemonicParsing="false" onAction="#setTitle" text="Done" />
@@ -74,6 +69,12 @@
          <font>
             <Font name="Britannic Bold" size="40.0" />
          </font></TextField>
+
+      <Button fx:id="editLessonPlanBtn" layoutX="303.0" layoutY="585.0" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="400.0">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
       <Button layoutX="506.0" layoutY="585.0" mnemonicParsing="false" onAction="#removeLessonPlanHandler" text="Remove Lesson Plan">
          <font>
             <Font size="23.0" />

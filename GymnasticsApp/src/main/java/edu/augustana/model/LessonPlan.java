@@ -48,6 +48,11 @@ public class LessonPlan {
     public List<String> getEventIndexes() {
         return eventIndexes;
     }
+
+    public void setEventInPlanList(Map<String, List<String>> eventList) {
+        eventInPlanList = eventList;
+    }
+
     public Map<String, List<String>> getEventInPlanList(){
         return eventInPlanList;
     }
