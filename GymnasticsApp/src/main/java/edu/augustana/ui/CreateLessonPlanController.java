@@ -18,9 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -131,6 +129,8 @@ public class CreateLessonPlanController {
                 }
                 root.getChildren().add(newEvent);
             }
+            titleField.setFont(new Font("Georgia Bold", 36.0));
+            titleField.setEditable(false);
             titleField.setText(App.getCurrentLessonPlan().getTitle());
         }
     }
@@ -266,7 +266,7 @@ public class CreateLessonPlanController {
         if (event.getTarget() instanceof CardView) {
             CardView cardViewSelected = (CardView) event.getTarget();
             if (!selectedCards.contains(cardViewSelected)) {
-                cardViewSelected.setEffect(new DropShadow(10, Color.BLACK));
+                cardViewSelected.setEffect(new DropShadow(15, Color.BLACK));
                 selectedCards.add(cardViewSelected);
             } else {
                 cardViewSelected.setEffect(null);

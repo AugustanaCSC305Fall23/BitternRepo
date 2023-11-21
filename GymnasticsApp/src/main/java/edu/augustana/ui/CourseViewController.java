@@ -11,6 +11,7 @@ import edu.augustana.model.LessonPlan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -59,6 +60,23 @@ public class CourseViewController {
     private static Course currentCourse;
     private TreeItem<LessonPlan> root = new TreeItem<>(new LessonPlan("root"));
 
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
+        //assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
+        courseTreeView.setRoot(root);
+        courseTreeView.setShowRoot(false);
+        addLessonsToCourseList();
+
+        titleField.setVisible(false);
+        doneBtn.setVisible(false);
+        cancelBtn.setVisible(false);
+
+        if (currentCourse == null) {
+            currentCourse = new Course();
+            currentCourse.changeTitle(titleLabel.toString());
+        }
+    }
 
     @FXML
     private void goToHome() throws IOException {
@@ -105,6 +123,18 @@ public class CourseViewController {
                 lessonPlan.setValue(lesson);
                 root.getChildren().add(lessonPlan);
             }
+        }
+    }
+
+    @FXML private void duplicateLessonPlanHandler() {
+        LessonPlan lessonPlanToDuplicate = courseTreeView.getSelectionModel().getSelectedItem().getValue();
+        if (lessonPlanToDuplicate != null) {
+            LessonPlan copyOfLessonPlan = new LessonPlan(lessonPlanToDuplicate.getTitle());
+            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getEventInPlanList());
+            App.getCurrentCourse().getLessonPlanList().add(lessonPlanToDuplicate);
+            TreeItem<LessonPlan> newLesson = new TreeItem<>();
+            newLesson.setValue(lessonPlanToDuplicate);
+            root.getChildren().add(newLesson);
         }
     }
 
@@ -162,25 +192,6 @@ public class CourseViewController {
             TreeItem<LessonPlan> lessonInCourse = new TreeItem<>();
             lessonInCourse.setValue(lessonPlan);
             root.getChildren().add(lessonInCourse);
-        }
-    }
-
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
-        //assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
-        courseTreeView.setRoot(root);
-        courseTreeView.setShowRoot(false);
-        addLessonsToCourseList();
-
-        titleField.setVisible(false);
-        doneBtn.setVisible(false);
-        cancelBtn.setVisible(false);
-
-        if (currentCourse == null) {
-            currentCourse = new Course();
-            currentCourse.changeTitle(titleLabel.toString());
         }
     }
 
