@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,8 +34,16 @@ public class HomeScreenController {
     @FXML // fx:id="createNewCourseBtn"
     private Button createNewCourseBtn; // Value injected by FXMLLoader
 
-    @FXML private ImageView logo = new ImageView();
+    @FXML private ImageView logoView = new ImageView();
 
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() throws MalformedURLException {
+        assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
+        assert createNewCourseBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
+        assert courseEditorAndCreatorBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
+        String logoURL = new File("Symbols/LOGO.jpeg").toURI().toURL().toString();
+        logoView.setImage(new Image(logoURL));
+    }
 
     @FXML
     void exitApp(ActionEvent event) throws IOException {
@@ -55,24 +64,19 @@ public class HomeScreenController {
 
     }
 
-
-    private void saveCurrentCourseToFile(File chosenFile,  Course currentCourse) throws IOException {
-        if (chosenFile != null) {
-            try {
-                currentCourse.saveToFile(chosenFile);
-            } catch (IOException e) {
-                new Alert(Alert.AlertType.ERROR, "Error saving Course file: " + chosenFile).show();
-            }
+    @FXML
+    private void enlargeButton(MouseEvent event) {
+        if (event.getTarget() instanceof Button) {
+            Button btn = (Button) event.getTarget();
+            btn.setPrefSize(btn.getWidth() + 10, btn.getHeight() + 10);
         }
     }
 
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() throws MalformedURLException {
-        assert cardBrowserBtn != null : "fx:id=\"cardBrowserBtn\" was not injected: check your FXML file 'card_browser.fxml'.";
-        assert createNewCourseBtn != null : "fx:id=\"newLessonBtn\" was not injected: check your FXML file 'lesson_plan_creator.fxml'.";
-        assert courseEditorAndCreatorBtn != null : "fx:id=\"viewSavedPlansBtn\" was not injected: check your FXML file 'saved_lesson_plans.fxml'.";
-        String logoURL = new File("Symbols/LOGO.jpeg").toURI().toURL().toString();
-        logo.setImage(new Image(logoURL));
+    @FXML
+    private void resetButton(MouseEvent event) {
+        if (event.getTarget() instanceof Button) {
+            Button btn = (Button) event.getTarget();
+            btn.setPrefSize(btn.getWidth() - 10, btn.getHeight() - 10);
+        }
     }
 }

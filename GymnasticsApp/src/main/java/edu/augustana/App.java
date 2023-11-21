@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import com.opencsv.exceptions.CsvValidationException;
+import edu.augustana.model.CardCollection;
 import edu.augustana.model.CardDatabase;
 import edu.augustana.model.Course;
 import edu.augustana.model.FavoriteCards;
@@ -53,7 +54,6 @@ public class App extends Application {
 
     public static LessonPlan getCurrentLessonPlan() { return currentLessonPlan; }
     public static File getCurrentCourseFile() { return currentCourseFile;}
-
     public static void setCurrentCourse(Course course) {
         currentCourse = course;
     }

@@ -1,6 +1,12 @@
 package edu.augustana.model;
+import edu.augustana.ui.CardView;
+import javafx.print.PageLayout;
+import javafx.print.PrinterJob;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,14 +15,9 @@ public class PrintStaging {
 
     private static String lessonPlanTitle;
     private static Map<String, List<Card>> eventToCardMap;
-    private static Image printCard;
     private static List<Card> printCardList;
 
-    /* public PrintStaging(Image card, String fxml) {
-        printCard = card;
-        past_fxml = fxml;
-    } */
-
+ // Constructors
     public PrintStaging(List<Card> cardList, String fxml) {
         past_fxml = fxml;
         printCardList = cardList;
@@ -28,12 +29,13 @@ public class PrintStaging {
         past_fxml = fxml;
     }
 
-    //PrintPreview(Node coursePlan) {
-    //    printCoursePlan = coursePlan;
-    //}
+// Getters
+    public static Map<String, List<Card>> getEventToCardMap() {
+        return eventToCardMap;
+    }
 
-    public static Image getPrintCard() {
-        return printCard;
+    public static String getLessonPlanTitle() {
+        return lessonPlanTitle;
     }
 
     public static String getFXML() {
@@ -44,7 +46,59 @@ public class PrintStaging {
         return printCardList;
     }
 
+// Creates Pages for PrintPreviewController
+    // Used https://coderanch.com/t/709329/java/JavaFX-approach-dividing-text-blob
+    // and https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/pagination.htm
+    // which heavily influenced the creation of the methods below.
 
+    // Creates pages for individual cards (from Card Browser)
+    public static VBox createPage(int pageIndex, List<CardView> cardsToPrint, PrinterJob pj) {
+        PageLayout pg = pj.getJobSettings().getPageLayout();
+        VBox box = new VBox();
+        int page = pageIndex * itemsPerPage();
+
+        for (int p = page; p < page + itemsPerPage(); p++) {
+
+            Pane whitePaperPane = new Pane();
+            whitePaperPane.setStyle("-fx-background-color:white;");
+            whitePaperPane.setPrefHeight(pg.getPrintableHeight());
+            whitePaperPane.setPrefWidth(pg.getPrintableWidth());
+
+            CardView cardView = cardsToPrint.get(p);
+            cardView.setFitWidth(pg.getPrintableWidth() - 10);
+            cardView.setFitHeight(pg.getPrintableWidth() * .75);
+
+            // Adding the given print objects to the screen
+            if (PrintStaging.getFXML().equals("card_browser")) {
+                whitePaperPane.getChildren().add(cardsToPrint.get(p));
+                box.getChildren().add(whitePaperPane);
+            }
+
+        }
+        return box;
+    }
+
+    // Creates pages for a lesson plan
+    public static VBox createPage(int pageIndex, PrinterJob pj) {
+        ArrayList<Pane> pages = ParseLessonPlanPrinting.getPages();
+        PageLayout pg = pj.getJobSettings().getPageLayout();
+        VBox box = new VBox();
+        int page = pageIndex * itemsPerPage();
+
+        for (int p = page; p < page + itemsPerPage(); p++) {
+            Pane pagePane = new Pane(pages.get(p));
+            pagePane.setStyle("-fx-background-color: white");
+            pagePane.setPrefHeight(pg.getPrintableHeight());
+            pagePane.setPrefWidth(pg.getPrintableWidth());
+            box.getChildren().add(pagePane);
+        }
+        return box;
+    }
+
+    // Number of items per page (represents 1 page)
+    private static int itemsPerPage() {
+        return 1;
+    }
 
 
 }
