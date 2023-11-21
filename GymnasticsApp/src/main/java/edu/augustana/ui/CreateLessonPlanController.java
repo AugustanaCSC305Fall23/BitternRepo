@@ -25,6 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +45,18 @@ public class CreateLessonPlanController {
     @FXML
     private CheckComboBox<String> modelSexDropdown;
     List<CheckComboBox<String>> listOfDropdowns;
+    //@FXML
+    //private FlowPane cardsFlowPane;
     @FXML
-    private FlowPane cardsFlowPane;
+    private FlowPane allCardsFlowPane;
+    @FXML
+    private Tab allCardsTab;
+    @FXML
+    private FlowPane favoriteCardsFlowPane;
+    @FXML
+    private TabPane cardsTabPane;
+    @FXML
+    private Tab favoriteCardsTab;
     @FXML
     private TextField searchField;
     @FXML
@@ -88,7 +100,8 @@ public class CreateLessonPlanController {
             CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
             cardViewList.add(newCardView);
         }
-        drawCardSet();
+        cardsTabPane.getSelectionModel().select(allCardsTab);
+        drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
     }
     private void addImagesToButton(String path, Button toAddImageTo) throws MalformedURLException {
@@ -127,7 +140,7 @@ public class CreateLessonPlanController {
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
 
-    private void drawCardSet() {
+    private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
             cardView.setFitWidth(260.0);
             cardView.setFitHeight(195.0);
@@ -197,6 +210,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void applyFiltersAction() {
+        FlowPane cardsFlowPane = findAndSetFlowPane();
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
         for (CardView cardView : cardViewList) {
@@ -210,8 +224,8 @@ public class CreateLessonPlanController {
     @FXML
     void clearFiltersAction() throws MalformedURLException {
         FilterControl.resetDesiredFiltersLists();
-        cardsFlowPane.getChildren().clear();
-        drawCardSet();
+        findAndSetFlowPane().getChildren().clear();
+        drawCardSet(findAndSetFlowPane(), cardViewList);
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             List<String> checkedItems = getCheckedItems(dropdown);
             if (checkedItems != null) {
@@ -232,6 +246,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void searchAction(KeyEvent event) {
+        FlowPane cardsFlowPane = findAndSetFlowPane();
         if (event.getCode() == KeyCode.ENTER) {
             SearchFilter searchFilter = searchFromSearchBar();
             cardsFlowPane.getChildren().clear();
@@ -338,5 +353,22 @@ public class CreateLessonPlanController {
 
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
         App.setRoot("print_preview");
+    }
+    @FXML
+    void switchToAllCards(ActionEvent event) {
+        cardsTabPane.getSelectionModel().select(allCardsTab);
+    }
+
+    @FXML
+    void switchToFavoriteCards(ActionEvent event) {
+        cardsTabPane.getSelectionModel().select(favoriteCardsTab);
+        //drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
+    }
+    private FlowPane findAndSetFlowPane(){
+        if(favoriteCardsTab.isSelected()){
+            return favoriteCardsFlowPane;
+        }else {
+            return allCardsFlowPane;
+        }
     }
 }

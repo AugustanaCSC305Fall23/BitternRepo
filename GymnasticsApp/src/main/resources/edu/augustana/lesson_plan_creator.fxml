@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -80,14 +82,39 @@
       </HBox>
       <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: Teal;">
          <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
+            <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: Teal;" SplitPane.resizableWithParent="false">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" prefViewportHeight="550.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
-                     <content>
-                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal;" vgap="10.0">
+                  <TabPane fx:id="cardsTabPane" prefHeight="672.0" prefWidth="836.0" style="-fx-background-color: Teal;">
+                    <tabs>
+                      <Tab fx:id="allCardsTab" closable="false" onSelectionChanged="#switchToAllCards" text="All Cards">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="262.0" style="-fx-background-color: Teal;">
+                                 <children>
+                                    <ScrollPane hbarPolicy="NEVER" prefViewportHeight="550.0" style="-fx-background-color: teal;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+                                       <content>
+                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal;" vgap="10.0">
                         </FlowPane>
-                     </content>
-                  </ScrollPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab fx:id="favoriteCardsTab" closable="false" onSelectionChanged="#switchToFavoriteCards" text="Favorite Cards">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane hbarPolicy="NEVER" layoutX="17.0" layoutY="82.0" prefViewportHeight="550.0">
+                                       <content>
+                                          <FlowPane fx:id="favoriteCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal;" vgap="10.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">

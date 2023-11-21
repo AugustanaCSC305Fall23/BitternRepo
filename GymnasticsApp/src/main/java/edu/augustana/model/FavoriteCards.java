@@ -1,4 +1,6 @@
 package edu.augustana.model;
+import edu.augustana.ui.CardView;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,8 @@ public class FavoriteCards {
     FileWriter fileWriter = new FileWriter(favCardsFile, true);
     List<Card> favoriteCards = new ArrayList<>();
 
+    List<CardView> favoritesCardView = new ArrayList<>();
+
     public FavoriteCards() throws IOException {
         /**
          * code from
@@ -21,6 +25,7 @@ public class FavoriteCards {
             while ((line = fileReader.readLine()) != null) {
                 Card card = CardDatabase.getFullCardCollection().getCardByID(line);
                 favoriteCards.add(card);
+                favoritesCardView.add(new CardView(card));
             }
         } finally {
             fileReader.close();
@@ -31,6 +36,7 @@ public class FavoriteCards {
         //add card to list
         fileWriter.append(card.getUniqueID() + "\n");
         favoriteCards.add(card);
+        favoritesCardView.add((new CardView(card)));
     }
     public void deleteFavorite(){
         //delete card from file (unique id)
@@ -43,4 +49,6 @@ public class FavoriteCards {
     public List<Card> getFavoriteCardsList(){
         return favoriteCards;
     }
+
+    public List<CardView> getFavoritesCardView(){return favoritesCardView;}
 }
