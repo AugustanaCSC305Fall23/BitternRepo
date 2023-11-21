@@ -82,7 +82,7 @@ public class PrintPreviewController {
                 if (pageIndex >= numPages) {
                     return null;
                 } else {
-                    return createPage(pageIndex, cardsToPrint, printerJob);
+                    return PrintStaging.createPage(pageIndex, cardsToPrint, printerJob);
                 }
             });
             mainPane.getChildren().addAll(pagination);
@@ -95,7 +95,7 @@ public class PrintPreviewController {
                 if (pageIndex >= numPages) {
                     return null;
                 } else {
-                    return createPage(pageIndex, ParseLessonPlanPrinting.getPages(), printerJob);
+                    return PrintStaging.createPage(pageIndex, printerJob);
                 }
             });
             mainPane.getChildren().addAll(pagination);
@@ -123,10 +123,12 @@ public class PrintPreviewController {
     void printAllCards(ActionEvent event) {
         Window window = mainPane.getScene().getWindow();
         if (printerJob != null && printerJob.showPrintDialog(window)) {
-            PageRange pgRange = new PageRange(1, ParseLessonPlanPrinting.getPages().size());
+            PageRange pgRange = new PageRange(1, 1);
             if (PrintStaging.getFXML().equals("card_browser")) {
                 pgRange = new PageRange(1, cardsToPrint.size());
-            } else
+            } else {
+                pgRange = new PageRange(1, ParseLessonPlanPrinting.getPages().size());
+            }
 
             printerJob.getJobSettings().setPageRanges(pgRange);
             PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
@@ -166,54 +168,6 @@ public class PrintPreviewController {
         App.setRoot(PrintStaging.getFXML());
     }
 
-
-
-
-    // Number of items per page (represents 1 page)
-    public int itemsPerPage() {
-        return 1;
-    }
-
-    public VBox createPage(int pageIndex, List<CardView> cardsToPrint, PrinterJob pj) {
-        PageLayout pg = pj.getJobSettings().getPageLayout();
-        VBox box = new VBox();
-        int page = pageIndex * itemsPerPage();
-
-        for (int p = page; p < page + itemsPerPage(); p++) {
-
-            Pane whitePaperPane = new Pane();
-            whitePaperPane.setStyle("-fx-background-color:white;");
-            whitePaperPane.setPrefHeight(pg.getPrintableHeight());
-            whitePaperPane.setPrefWidth(pg.getPrintableWidth());
-
-            CardView cardView = cardsToPrint.get(p);
-            cardView.setFitWidth(pg.getPrintableWidth() - 10);
-            cardView.setFitHeight(pg.getPrintableWidth() * .75);
-
-            // Adding the given print objects to the screen
-            if (PrintStaging.getFXML().equals("card_browser")) {
-                whitePaperPane.getChildren().add(cardsToPrint.get(p));
-                box.getChildren().add(whitePaperPane);
-            }
-
-        }
-        return box;
-    }
-
-    public VBox createPage(int pageIndex, ArrayList<Pane> pages, PrinterJob pj) {
-        PageLayout pg = pj.getJobSettings().getPageLayout();
-        VBox box = new VBox();
-        int page = pageIndex * itemsPerPage();
-
-        for (int p = page; p < page + itemsPerPage(); p++) {
-            Pane pagePane = new Pane(pages.get(p));
-            pagePane.setStyle("-fx-background-color: white");
-            pagePane.setPrefHeight(pg.getPrintableHeight());
-            pagePane.setPrefWidth(pg.getPrintableWidth());
-            box.getChildren().add(pagePane);
-        }
-        return box;
-    }
 
     public void endPrinting() {
         titleLabel.setText("Printing sent.\n" +
