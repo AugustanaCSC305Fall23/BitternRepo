@@ -104,6 +104,8 @@ public class CreateLessonPlanController {
                 }
                 root.getChildren().add(newEvent);
             }
+            titleField.setFont(new Font("Georgia Bold", 36.0));
+            titleField.setEditable(false);
             titleField.setText(App.getCurrentLessonPlan().getTitle());
         }
     }
