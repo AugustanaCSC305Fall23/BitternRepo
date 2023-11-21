@@ -104,6 +104,7 @@ public class CreateLessonPlanController {
                 }
                 root.getChildren().add(newEvent);
             }
+            titleField.setText(App.getCurrentLessonPlan().getTitle());
         }
     }
 
