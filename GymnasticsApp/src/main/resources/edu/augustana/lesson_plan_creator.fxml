@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -21,12 +23,17 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <HBox alignment="BOTTOM_LEFT" prefHeight="96.0" prefWidth="83.0">
+            <HBox alignment="BOTTOM_LEFT" prefHeight="96.0" prefWidth="83.0" spacing="10.0">
                <children>
                   <Button fx:id="addCardButton" mnemonicParsing="false" onAction="#addCardsToLessonPlan" prefHeight="30.0" prefWidth="30.0">
                      <HBox.margin>
                         <Insets bottom="10.0" />
                      </HBox.margin></Button>
+                  <Button fx:id="favoriteBtn" mnemonicParsing="false" onAction="#addCardsToFavorites">
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <VBox alignment="CENTER">
@@ -75,14 +82,39 @@
       </HBox>
       <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: LightSeaGreen;">
          <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
+            <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: transparent;" SplitPane.resizableWithParent="false">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" prefViewportHeight="550.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
-                     <content>
-                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: LightSeaGreen;" vgap="10.0">
-                        </FlowPane>
-                     </content>
-                  </ScrollPane>
+                  <TabPane fx:id="cardsTabPane" prefHeight="672.0" prefWidth="836.0" style="-fx-background-color: transparent;">
+                    <tabs>
+                      <Tab fx:id="allCardsTab" closable="false" onSelectionChanged="#switchToAllCards" text="All Cards">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="226.0" prefWidth="262.0" style="-fx-background-color: teal;">
+                                 <children>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="607.0" prefViewportHeight="550.0" prefWidth="826.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                       <content>
+                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: teal;" vgap="10.0"/>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab fx:id="favoriteCardsTab" closable="false" onSelectionChanged="#switchToFavoriteCards" text="Favorite Cards">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: Teal;">
+                                 <children>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="8.0" layoutY="93.0" prefHeight="549.0" prefViewportHeight="550.0" prefWidth="827.0" style="-fx-background-color: transparent;">
+                                       <content>
+                                          <FlowPane fx:id="favoriteCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal; -fx-border-color: Teal;" vgap="10.0" />
+                                       </content>
+                                    </ScrollPane>
+                                    <Button fx:id="removeFavoriteBtn" layoutX="43.0" layoutY="38.0" mnemonicParsing="false" onAction="#removeFavoriteAction" text="Remove Favorite" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">

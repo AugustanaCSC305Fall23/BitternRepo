@@ -23,6 +23,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,12 +43,26 @@ public class CreateLessonPlanController {
     @FXML
     private CheckComboBox<String> modelSexDropdown;
     List<CheckComboBox<String>> listOfDropdowns;
+    //@FXML
+    //private FlowPane cardsFlowPane;
     @FXML
-    private FlowPane cardsFlowPane;
+    private FlowPane allCardsFlowPane;
+    @FXML
+    private Tab allCardsTab;
+    @FXML
+    private FlowPane favoriteCardsFlowPane;
+    @FXML
+    private TabPane cardsTabPane;
+    @FXML
+    private Tab favoriteCardsTab;
     @FXML
     private TextField searchField;
     @FXML
     private Button addCardButton;
+    @FXML
+    private Button favoriteBtn;
+    @FXML
+    private Button removeFavoriteBtn;
     @FXML
     private TextField titleField;
 
@@ -73,12 +89,8 @@ public class CreateLessonPlanController {
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        String plusSignURL = new File("Symbols/plusSign.png").toURI().toURL().toString();
-        ImageView buttonImageView = new ImageView(new Image(plusSignURL));
-        buttonImageView.setFitHeight(20.0);
-        buttonImageView.setFitWidth(20.0);
-        addCardButton.setMaxSize(25.0, 25.0);
-        addCardButton.setGraphic(buttonImageView);
+        addImagesToButton("Symbols/plusSign.png", addCardButton);
+        addImagesToButton("Symbols/heart.png", favoriteBtn);
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -88,7 +100,20 @@ public class CreateLessonPlanController {
             CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
             cardViewList.add(newCardView);
         }
-        drawCardSet();
+        cardsTabPane.getSelectionModel().select(allCardsTab);
+        //cardsTabPane.
+        drawCardSet(findAndSetFlowPane(), cardViewList);
+        setUpTreeView();
+    }
+    private void addImagesToButton(String path, Button toAddImageTo) throws MalformedURLException {
+        String imageURL = new File(path).toURI().toURL().toString();
+        ImageView buttonImageView = new ImageView(new Image(imageURL));
+        buttonImageView.setFitHeight(20.0);
+        buttonImageView.setFitWidth(20.0);
+        toAddImageTo.setMaxSize(25.0, 25.0);
+        toAddImageTo.setGraphic(buttonImageView);
+    }
+    private void setUpTreeView(){
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
         //To help with tree view
         root = new TreeItem<>(App.getCurrentLessonPlan().getTitle());
@@ -104,6 +129,8 @@ public class CreateLessonPlanController {
                 }
                 root.getChildren().add(newEvent);
             }
+            titleField.setFont(new Font("Georgia Bold", 36.0));
+            titleField.setEditable(false);
             titleField.setText(App.getCurrentLessonPlan().getTitle());
         }
     }
@@ -116,7 +143,7 @@ public class CreateLessonPlanController {
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
     }
 
-    private void drawCardSet() {
+    private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
             cardView.setFitWidth(260.0);
             cardView.setFitHeight(195.0);
@@ -186,6 +213,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void applyFiltersAction() {
+        FlowPane cardsFlowPane = findAndSetFlowPane();
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
         for (CardView cardView : cardViewList) {
@@ -199,8 +227,8 @@ public class CreateLessonPlanController {
     @FXML
     void clearFiltersAction() throws MalformedURLException {
         FilterControl.resetDesiredFiltersLists();
-        cardsFlowPane.getChildren().clear();
-        drawCardSet();
+        findAndSetFlowPane().getChildren().clear();
+        drawCardSet(findAndSetFlowPane(), cardViewList);
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             List<String> checkedItems = getCheckedItems(dropdown);
             if (checkedItems != null) {
@@ -221,6 +249,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void searchAction(KeyEvent event) {
+        FlowPane cardsFlowPane = findAndSetFlowPane();
         if (event.getCode() == KeyCode.ENTER) {
             SearchFilter searchFilter = searchFromSearchBar();
             cardsFlowPane.getChildren().clear();
@@ -262,6 +291,22 @@ public class CreateLessonPlanController {
         } else {
             giveWarning("No card selected.");
         }
+    }
+    @FXML void addCardsToFavorites() throws IOException {
+        if (!selectedCards.isEmpty()) {
+            for (CardView cardView : selectedCards) {
+                Card card = cardView.getCard();
+                App.getFavoriteCards().addFavorite(card);
+            }
+            selectedCards.clear();
+        } else {
+            giveWarning("No card selected.");
+        }
+    }
+
+    @FXML
+    void removeFavoriteAction(ActionEvent event) {
+
     }
 
     /*
@@ -315,5 +360,36 @@ public class CreateLessonPlanController {
 
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
         App.setRoot("print_preview");
+    }
+    @FXML
+    void switchToAllCards() {
+        if(!(favoriteCardsTab == null)){
+            favoriteCardsTab.getContent().setVisible(false);
+        }
+        allCardsTab.getContent().setVisible(true);
+    }
+
+    @FXML
+    void switchToFavoriteCards() {
+        //System.out.println(cardsTabPane.getSelectionModel().isSelected(0));
+        allCardsTab.getContent().setVisible(false);
+        favoriteCardsTab.getContent().setVisible(true);
+        //System.out.println(cardsTabPane);
+        //cardsTabPane.getSelectionModel().isSelected(0);
+        //cardsTabPane.getSelectionModel().select(favoriteCardsTab);
+        if(favoriteCardsFlowPane.getChildren().isEmpty()){
+            drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
+        }else if(favoriteCardsFlowPane.getChildren().size() < App.getFavoriteCards().getFavoriteCardsList().size()){
+            favoriteCardsFlowPane.getChildren().clear();
+            drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
+        }
+        //drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
+    }
+    private FlowPane findAndSetFlowPane(){
+        if(favoriteCardsTab.isSelected()){
+            return favoriteCardsFlowPane;
+        }else {
+            return allCardsFlowPane;
+        }
     }
 }

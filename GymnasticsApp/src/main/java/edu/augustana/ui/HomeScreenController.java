@@ -46,7 +46,8 @@ public class HomeScreenController {
     }
 
     @FXML
-    void exitApp(ActionEvent event) {
+    void exitApp(ActionEvent event) throws IOException {
+        App.getFavoriteCards().closeFileWriter();
         Platform.exit();
 
     }

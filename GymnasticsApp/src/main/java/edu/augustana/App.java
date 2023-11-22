@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import edu.augustana.model.CardCollection;
 import edu.augustana.model.CardDatabase;
 import edu.augustana.model.Course;
+import edu.augustana.model.FavoriteCards;
 import edu.augustana.model.LessonPlan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +25,12 @@ public class App extends Application {
     private static Course currentCourse = new Course();
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
-
+    private static FavoriteCards favoriteCards;
 
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
+        favoriteCards = new FavoriteCards();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
         //createCardViewList();
@@ -63,6 +65,7 @@ public class App extends Application {
     public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
         currentLessonPlan = lessonPlan;
     }
+    public static FavoriteCards getFavoriteCards(){return favoriteCards;}
 
     public static void main(String[] args) {
         launch();
