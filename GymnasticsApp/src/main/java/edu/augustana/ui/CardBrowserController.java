@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -153,33 +154,11 @@ public class CardBrowserController {
         }
     }
 
-    /* @FXML
-    private void getImageClicked(MouseEvent event) throws IOException {
-        if (event.getTarget().getClass() == ImageView.class) {
-            if (clickedImageView == null) {
-                clickedImageView = (ImageView) event.getTarget();
-                prevImage = clickedImageView.getImage();
-                clickedImageView.setImage(checkImage);
-            } else if (event.getTarget().equals(clickedImageView)) {
-                clickedImageView.setImage(prevImage);
-                clickedImageView = null;
-                prevImage = null;
-            } else {
-                clickedImageView.setImage(prevImage);
-                clickedImageView = (ImageView) event.getTarget();
-                prevImage = clickedImageView.getImage();
-                clickedImageView.setImage(checkImage);
-            }
-        }
-    } */
-
-    //still adds everything to the selected cards, but no dropshadow
-    //and still is only showing one card in print preview
     private void selectCardAction(MouseEvent event){
         if (event.getTarget() instanceof CardView) {
             CardView cardViewSelected = (CardView) event.getTarget();
             if (!selectedCards.contains(cardViewSelected)) {
-                cardViewSelected.setEffect(new DropShadow(10, Color.BLACK));
+                cardViewSelected.setEffect(new InnerShadow(10, Color.PURPLE));
                 selectedCards.add(cardViewSelected);
             } else {
                 cardViewSelected.setEffect(null);
