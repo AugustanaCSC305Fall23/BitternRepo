@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: LightSeaGreen;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CreateLessonPlanController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: teal;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CreateLessonPlanController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
@@ -92,7 +92,7 @@
                                  <children>
                                     <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="607.0" prefViewportHeight="550.0" prefWidth="826.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                        <content>
-                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: teal;" vgap="10.0"/>
+                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: teal;" vgap="10.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>
@@ -117,15 +117,15 @@
                   </TabPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" SplitPane.resizableWithParent="false">
+            <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" style="-fx-background-color: teal;" SplitPane.resizableWithParent="false">
                <children>
                   <Button mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
                         <Font size="18.0" />
                      </font></Button>
-                  <TextField fx:id="titleField" alignment="CENTER" onKeyPressed="#lockInTitle" onMouseClicked="#editTitle" promptText="(Enter Lesson Title)" style="-fx-background-color: LightSeaGreen" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="titleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: teal;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
                      <font>
-                        <Font name="Georgia Italic" size="36.0" />
+                        <Font name="System Italic" size="36.0" />
                      </font></TextField>
                   <Button fx:id="returnToCourseBtn" mnemonicParsing="false" onAction="#returnToCourseHandler" text="Return to Course Outline" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
                      <font>

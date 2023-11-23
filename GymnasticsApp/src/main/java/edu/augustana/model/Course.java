@@ -12,13 +12,12 @@ public class Course {
     private ArrayList<LessonPlan> lessonPlanList;
 
     public Course() {
-        courseTitle = "Course Title";
         lessonPlanList = new ArrayList<>();
         //lessonPlanList.add(new LessonPlan("My Lesson Plan"));
     }
 
     public LessonPlan createNewLessonPlan() {
-        LessonPlan newLessonPlan = new LessonPlan("My Lesson Plan");
+        LessonPlan newLessonPlan = new LessonPlan();
         this.getLessonPlanList().add(newLessonPlan);
         return newLessonPlan;
     }
@@ -45,12 +44,8 @@ public class Course {
         return lessonPlanList;
     }
 
-    public void changeTitle(String newTitle) {
+    public void setTitle(String newTitle) {
         courseTitle = newTitle;
-    }
-
-    public String getTitle() {
-        return courseTitle;
     }
 
     @Override

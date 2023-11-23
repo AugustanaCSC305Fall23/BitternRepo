@@ -9,11 +9,12 @@ import java.util.TreeMap;
 
 public class LessonPlan {
     private String title;
-    private Map<String, List<String>> eventInPlanList = new TreeMap<>();
-    private List<String> eventIndexes = new ArrayList<>();
+    private Map<String, List<String>> eventInPlanList;
+    private List<String> eventIndexes;
 
-    public LessonPlan(String title) {
-        this.title = title;
+    public LessonPlan() {
+        eventInPlanList = new TreeMap<>();
+        eventIndexes = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -35,14 +36,10 @@ public class LessonPlan {
         eventInPlanList.get(card.getEvent()).add(card.getUniqueID());
     }
     public boolean eventInPlanList(Card card){
-        if(eventInPlanList.containsKey(card.getEvent())){
-            return true;
-        }
-        return false;
+        return (eventInPlanList.containsKey(card.getEvent()));
     }
     public boolean isLessonPlanEmpty(){
-        if(eventInPlanList.isEmpty()) return true;
-        return false;
+        return (eventInPlanList.isEmpty());
     }
 
     public List<String> getEventIndexes() {
@@ -58,10 +55,7 @@ public class LessonPlan {
     }
 
     public boolean cardInPlanList(Card card){
-        if(eventInPlanList.get(card.getEvent()).contains(card)){
-            return true;
-        }
-        return false;
+        return (eventInPlanList.get(card.getEvent()).contains(card));
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(Map<String, List<String>> mapOfIDs){

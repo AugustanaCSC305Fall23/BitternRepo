@@ -1,45 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="courseTitleLabel" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
+<AnchorPane fx:id="courseTitleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
    <children>
-      <Label fx:id="titleLabel" alignment="CENTER" layoutY="14.0" prefHeight="50.0" prefWidth="600.0" text="Course Title" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="14.0">
+      <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" layoutX="198.0" layoutY="21.0" promptText="(Enter Course Title)" style="-fx-background-color: DarkMagenta;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
          <font>
-            <Font name="Britannic Bold" size="40.0" />
-         </font>
-      </Label>
-      <ScrollPane layoutX="50.0" layoutY="137.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="137.0">
-         <padding>
-            <Insets bottom="10.0" left="50.0" right="50.0" top="20.0" />
-         </padding>
-         <content>
-            <TreeView fx:id="courseTreeView" prefHeight="361.0" prefWidth="596.0" />
-         </content>
-      </ScrollPane>
-      <Button mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" text="Duplicate Lesson Plan" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="500.0" />
+            <Font name="System Italic" size="40.0" />
+         </font></TextField>
       <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="23.0" />
          </font>
       </Button>
-      <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" text="Create New Lesson Plan" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Button>
-      <MenuBar layoutX="61.0" layoutY="7.0" prefHeight="27.0" prefWidth="94.0">
+      <MenuBar AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -57,29 +40,33 @@
           </Menu>
         </menus>
       </MenuBar>
-
-      <HBox alignment="CENTER" focusTraversable="true" spacing="125.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
+      <HBox spacing="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="120.0">
          <children>
-            <Button fx:id="doneBtn" mnemonicParsing="false" onAction="#setTitle" text="Done" />
-            <Button fx:id="editTitleBtn" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#switchToEditTitleView" text="Edit Title" />
-            <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#switchToCourseOutlineView" text="Cancel" />
+            <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" text="Create New Lesson Plan">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+      
+            <Button fx:id="editLessonPlanBtn" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#removeLessonPlanHandler" text="Remove Lesson Plan">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" text="Duplicate Lesson Plan">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </HBox>
-      <TextField fx:id="titleField" alignment="CENTER" layoutX="198.0" layoutY="21.0" prefHeight="44.0" prefWidth="412.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font name="Britannic Bold" size="40.0" />
-         </font></TextField>
-
-      <Button fx:id="editLessonPlanBtn" layoutX="303.0" layoutY="585.0" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="400.0">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Button>
-      <Button layoutX="506.0" layoutY="585.0" mnemonicParsing="false" onAction="#removeLessonPlanHandler" text="Remove Lesson Plan">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Button>
+      <TreeView fx:id="courseTreeView" fixedCellSize="3.0" prefHeight="361.0" prefWidth="596.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
+      <Line endX="1400.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
 
    </children>
 </AnchorPane>

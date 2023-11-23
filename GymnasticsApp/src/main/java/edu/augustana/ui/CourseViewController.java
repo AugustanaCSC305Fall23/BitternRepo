@@ -3,6 +3,7 @@ package edu.augustana.ui;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import edu.augustana.App;
@@ -11,8 +12,9 @@ import edu.augustana.model.LessonPlan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
@@ -26,9 +28,6 @@ public class CourseViewController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="courseTitleLabel"
-    private AnchorPane courseTitleLabel; // Value injected by FXMLLoader
-
     //@FXML // fx:id="courseListView"
     //private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
     @FXML private TreeView<LessonPlan> courseTreeView = new TreeView<>();
@@ -39,49 +38,51 @@ public class CourseViewController {
     @FXML
     private Button homeButton;
 
-    //Title UI Components
-
     @FXML
-    private Button doneBtn;
-
-    @FXML
-    private Button editTitleBtn;
-
-    @FXML
-    private Button cancelBtn;
-
-    @FXML
-    private TextField titleField;
-
-    @FXML
-    private Label titleLabel;
+    private TextField courseTitleField;
 
     // Non FXML
     private static Course currentCourse;
-    private TreeItem<LessonPlan> root = new TreeItem<>(new LessonPlan("root"));
+    private TreeItem<LessonPlan> root = new TreeItem<>(new LessonPlan());
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert courseTitleLabel != null : "fx:id=\"courseTitleLabel\" was not injected: check your FXML file 'course_view.fxml'.";
+        assert courseTitleField != null : "fx:id=\"courseTitleField\" was not injected: check your FXML file 'course_view.fxml'.";
         //assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
         courseTreeView.setRoot(root);
         courseTreeView.setShowRoot(false);
+        courseTreeView.getRoot().setExpanded(true);
         addLessonsToCourseList();
-
-        titleField.setVisible(false);
-        doneBtn.setVisible(false);
-        cancelBtn.setVisible(false);
 
         if (currentCourse == null) {
             currentCourse = new Course();
-            currentCourse.changeTitle(titleLabel.toString());
         }
+        setUpTitle();
     }
 
     @FXML
     private void goToHome() throws IOException {
         App.setRoot("home");
     }
+
+    @FXML void setUpTitle() {
+        if (App.getCurrentCourse().getCourseTitle() != null) {
+            courseTitleField.setText(App.getCurrentCourse().getCourseTitle());
+            courseTitleField.setFont(new Font("Britannic Bold", 36.0));
+        } else {
+            courseTitleField.setText(courseTitleField.getPromptText());
+            courseTitleField.setFont(new Font("System Italic", 40.0));
+        }
+        TitleEditor titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0));
+        courseTitleField.setOnMouseClicked(e -> titleEditor.editTitle());
+        courseTitleField.setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                titleEditor.lockInTitle();
+                App.getCurrentCourse().setTitle(courseTitleField.getText());
+            }
+        });
+    }
+
     @FXML
     private void createLessonPlanHandler() throws IOException {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
@@ -116,12 +117,14 @@ public class CourseViewController {
 
     @FXML
     private void addLessonsToCourseList() {
-        if (!(App.getCurrentCourse().getLessonPlanList().isEmpty())) {
-            TreeItem<LessonPlan> lessonPlan = new TreeItem<>(App.getCurrentCourse().getLessonPlanList().get(App.getCurrentCourse().getLessonPlanList().size() - 1));
-            for (LessonPlan lesson: App.getCurrentCourse().getLessonPlanList()) {
+        List<LessonPlan> lessonPlanList = App.getCurrentCourse().getLessonPlanList();
+        if (!(lessonPlanList.isEmpty())) {
+            TreeItem<LessonPlan> lessonPlan = new TreeItem<>(lessonPlanList.get(lessonPlanList.size() - 1));
+            for (LessonPlan lesson: lessonPlanList) {
                 //courseListView.getItems().add(lesson);
                 lessonPlan.setValue(lesson);
                 root.getChildren().add(lessonPlan);
+                // add a case for if the lesson plan doesn't have a name (somehow call it "Untitled" in course view)
             }
         }
     }
@@ -129,7 +132,8 @@ public class CourseViewController {
     @FXML private void duplicateLessonPlanHandler() {
         LessonPlan lessonPlanToDuplicate = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         if (lessonPlanToDuplicate != null) {
-            LessonPlan copyOfLessonPlan = new LessonPlan(lessonPlanToDuplicate.getTitle());
+            LessonPlan copyOfLessonPlan = new LessonPlan();
+            copyOfLessonPlan.setTitle(lessonPlanToDuplicate.getTitle());
             copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getEventInPlanList());
             App.getCurrentCourse().getLessonPlanList().add(lessonPlanToDuplicate);
             TreeItem<LessonPlan> newLesson = new TreeItem<>();
@@ -187,50 +191,11 @@ public class CourseViewController {
         courseTreeView.getRoot().getChildren().clear();
         App.setCurrentCourse(new Course());
         App.setCurrentCourseFile(null);
-        App.getCurrentCourse().getLessonPlanList().add(new LessonPlan("My Lesson Plan"));
+        App.getCurrentCourse().getLessonPlanList().add(new LessonPlan());
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             TreeItem<LessonPlan> lessonInCourse = new TreeItem<>();
             lessonInCourse.setValue(lessonPlan);
             root.getChildren().add(lessonInCourse);
         }
-    }
-
-    @FXML
-    void setTitle(ActionEvent event) {
-        String title = titleField.getText();
-        if (!title.isEmpty()) {
-            currentCourse.changeTitle(title);
-            titleLabel.setText(title);
-            Font titleFont = Font.font("Times New Roman", FontWeight.BOLD, 40);
-            titleLabel.setFont(titleFont);
-            switchToCourseOutlineView();
-        } else {
-            giveWarning("Cannot have empty title.");
-        }
-    }
-
-    @FXML
-    void switchToCourseOutlineView() {
-        titleLabel.setVisible(true);
-        titleField.setVisible(false);
-        doneBtn.setVisible(false);
-        cancelBtn.setVisible(false);
-        editTitleBtn.setVisible(true);
-    }
-
-    @FXML
-    void switchToEditTitleView(ActionEvent event) {
-        titleLabel.setVisible(false);
-        titleField.setVisible(true);
-        doneBtn.setVisible(true);
-        editTitleBtn.setVisible(false);
-        cancelBtn.setVisible(true);
-    }
-
-    @FXML private void giveWarning(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

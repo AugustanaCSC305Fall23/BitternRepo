@@ -91,6 +91,7 @@ public class CreateLessonPlanController {
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         addImagesToButton("Symbols/plusSign.png", addCardButton);
         addImagesToButton("Symbols/heart.png", favoriteBtn);
+        setUpTitle();
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -129,9 +130,6 @@ public class CreateLessonPlanController {
                 }
                 root.getChildren().add(newEvent);
             }
-            titleField.setFont(new Font("Georgia Bold", 36.0));
-            titleField.setEditable(false);
-            titleField.setText(App.getCurrentLessonPlan().getTitle());
         }
     }
 
@@ -190,12 +188,22 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void setTitle(String newTitle) {
-        if (!newTitle.isEmpty()) {
-            App.getCurrentLessonPlan().setTitle(newTitle);
+    @FXML void setUpTitle() {
+        if (App.getCurrentLessonPlan().getTitle() != null) {
+            titleField.setText(App.getCurrentLessonPlan().getTitle());
+            titleField.setFont(new Font("Georgia Bold", 36.0));
         } else {
-            giveWarning("Cannot have empty title.");
+            titleField.setText(titleField.getPromptText());
+            titleField.setFont(new Font("System Italic", 36.0));
         }
+        TitleEditor titleEditor = new TitleEditor(titleField, new Font("Georgia", 40.0), new Font("Georgia Bold", 40.0));
+        titleField.setOnMouseClicked(e -> titleEditor.editTitle());
+        titleField.setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                titleEditor.lockInTitle();
+                App.getCurrentLessonPlan().setTitle(titleField.getText());
+            }
+        });
     }
 
     @FXML void goToHome() throws IOException {
@@ -326,19 +334,6 @@ public class CreateLessonPlanController {
                 int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
                 root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
-        }
-    }
-
-    @FXML public void editTitle(MouseEvent event) {
-        titleField.setFont(new Font("Georgia", 40.0));
-        titleField.setEditable(true);
-    }
-
-    @FXML public void lockInTitle(KeyEvent event) {
-        if (event.getCode().equals(KeyCode.ENTER)) {
-            titleField.setFont(new Font("Georgia Bold", 36.0));
-            titleField.setEditable(false);
-            setTitle(titleField.getText());
         }
     }
 
