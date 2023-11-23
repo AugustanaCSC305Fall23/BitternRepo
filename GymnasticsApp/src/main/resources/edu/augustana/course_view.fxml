@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="courseTitleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
    <children>
       <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" layoutX="198.0" layoutY="21.0" promptText="(Enter Course Title)" style="-fx-background-color: DarkMagenta;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -40,33 +40,33 @@
           </Menu>
         </menus>
       </MenuBar>
-      <HBox spacing="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="120.0">
+      <HBox fx:id="buttonBar" alignment="CENTER" spacing="50.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="120.0">
          <children>
-            <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" text="Create New Lesson Plan">
+            <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Create New Lesson Plan">
                <font>
-                  <Font size="20.0" />
+                  <Font name="Georgia" size="20.0" />
                </font>
             </Button>
       
-            <Button fx:id="editLessonPlanBtn" mnemonicParsing="false" onAction="#editLessonPlanHandler" text="Edit Lesson Plan">
+            <Button fx:id="editLessonPlanBtn" disable="true" mnemonicParsing="false" onAction="#editLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Edit Lesson Plan">
                <font>
-                  <Font size="20.0" />
+                  <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#removeLessonPlanHandler" text="Remove Lesson Plan">
+            <Button fx:id="removeLessonPlanBtn" disable="true" mnemonicParsing="false" onAction="#removeLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Remove Lesson Plan">
                <font>
-                  <Font size="20.0" />
+                  <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" text="Duplicate Lesson Plan">
+            <Button fx:id="duplicateLessonPlanBtn" disable="true" mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Duplicate Lesson Plan">
                <font>
-                  <Font size="20.0" />
+                  <Font name="Georgia" size="20.0" />
                </font>
             </Button>
          </children>
       </HBox>
       <TreeView fx:id="courseTreeView" fixedCellSize="3.0" prefHeight="361.0" prefWidth="596.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
-      <Line endX="1400.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <Line endX="2000.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
 
    </children>
 </AnchorPane>

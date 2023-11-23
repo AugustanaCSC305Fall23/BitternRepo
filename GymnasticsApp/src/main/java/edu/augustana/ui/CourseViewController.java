@@ -11,10 +11,12 @@ import edu.augustana.model.Course;
 import edu.augustana.model.LessonPlan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
@@ -32,8 +34,11 @@ public class CourseViewController {
     //private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
     @FXML private TreeView<LessonPlan> courseTreeView = new TreeView<>();
 
-    @FXML
-    private Button createNewLessonPlanBtn;
+    @FXML private HBox buttonBar;
+    @FXML private Button createNewLessonPlanBtn;
+    @FXML private Button editLessonPlanBtn;
+    @FXML private Button removeLessonPlanBtn;
+    @FXML private Button duplicateLessonPlanBtn;
 
     @FXML
     private Button homeButton;
@@ -48,16 +53,18 @@ public class CourseViewController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert courseTitleField != null : "fx:id=\"courseTitleField\" was not injected: check your FXML file 'course_view.fxml'.";
-        //assert courseListView != null : "fx:id=\"lessonPlanListView\" was not injected: check your FXML file 'course_view.fxml'.";
         courseTreeView.setRoot(root);
         courseTreeView.setShowRoot(false);
-        courseTreeView.getRoot().setExpanded(true);
+        courseTreeView.setOnMouseClicked(e -> checkIfItemSelected());
+        //courseTreeView.getRoot().setExpanded(true);
         addLessonsToCourseList();
 
         if (currentCourse == null) {
             currentCourse = new Course();
         }
         setUpTitle();
+        createNewLessonPlanBtn.setOnMouseEntered(e -> enlargeButton(createNewLessonPlanBtn));
+        createNewLessonPlanBtn.setOnMouseExited(e -> resetButton(createNewLessonPlanBtn));
     }
 
     @FXML
@@ -81,6 +88,33 @@ public class CourseViewController {
                 App.getCurrentCourse().setTitle(courseTitleField.getText());
             }
         });
+    }
+
+    // see if some kind of listener or observer can be added to do this more easily
+    @FXML private void checkIfItemSelected() {
+        for (Node node : buttonBar.getChildren()) {
+            if (node instanceof Button) {
+                Button btn = (Button) node;
+                if (!courseTreeView.getSelectionModel().isEmpty()) {
+                    btn.setDisable(false);
+                    btn.setOnMouseEntered(e -> enlargeButton(btn));
+                    btn.setOnMouseExited(e -> resetButton(btn));
+                } else {
+                    if (btn != createNewLessonPlanBtn) {
+                        btn.setDisable(true);
+                    }
+                }
+            }
+        }
+    }
+
+    // Try to combine these classes with the ones in the home screen controller in some way (make new class?)
+    @FXML void enlargeButton(Button btn) {
+        btn.setPrefSize(btn.getWidth() + 3, btn.getHeight() + 3);
+    }
+
+    @FXML void resetButton(Button btn) {
+        btn.setPrefSize(btn.getWidth() - 3, btn.getHeight() - 3);
     }
 
     @FXML
