@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -274,7 +275,7 @@ public class CreateLessonPlanController {
         if (event.getTarget() instanceof CardView) {
             CardView cardViewSelected = (CardView) event.getTarget();
             if (!selectedCards.contains(cardViewSelected)) {
-                cardViewSelected.setEffect(new DropShadow(15, Color.BLACK));
+                cardViewSelected.setEffect(new InnerShadow(30, Color.ORCHID));
                 selectedCards.add(cardViewSelected);
             } else {
                 cardViewSelected.setEffect(null);
