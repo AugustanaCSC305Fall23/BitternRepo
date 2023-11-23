@@ -36,12 +36,10 @@ public class CourseViewController {
 
     @FXML private HBox buttonBar;
     @FXML private Button createNewLessonPlanBtn;
-    @FXML private Button editLessonPlanBtn;
-    @FXML private Button removeLessonPlanBtn;
-    @FXML private Button duplicateLessonPlanBtn;
-
     @FXML
     private Button homeButton;
+
+    private ButtonControl buttonControl;
 
     @FXML
     private TextField courseTitleField;
@@ -52,7 +50,7 @@ public class CourseViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert courseTitleField != null : "fx:id=\"courseTitleField\" was not injected: check your FXML file 'course_view.fxml'.";
+        buttonControl = new ButtonControl(3);
         courseTreeView.setRoot(root);
         courseTreeView.setShowRoot(false);
         courseTreeView.setOnMouseClicked(e -> checkIfItemSelected());
@@ -63,8 +61,7 @@ public class CourseViewController {
             currentCourse = new Course();
         }
         setUpTitle();
-        createNewLessonPlanBtn.setOnMouseEntered(e -> enlargeButton(createNewLessonPlanBtn));
-        createNewLessonPlanBtn.setOnMouseExited(e -> resetButton(createNewLessonPlanBtn));
+        setUpButtonActions(createNewLessonPlanBtn);
     }
 
     @FXML
@@ -101,8 +98,7 @@ public class CourseViewController {
                 Button btn = (Button) node;
                 if (!courseTreeView.getSelectionModel().isEmpty()) {
                     btn.setDisable(false);
-                    btn.setOnMouseEntered(e -> enlargeButton(btn));
-                    btn.setOnMouseExited(e -> resetButton(btn));
+                    setUpButtonActions(btn);
                 } else {
                     if (btn != createNewLessonPlanBtn) {
                         btn.setDisable(true);
@@ -112,13 +108,9 @@ public class CourseViewController {
         }
     }
 
-    // Try to combine these classes with the ones in the home screen controller in some way (make new class?)
-    @FXML void enlargeButton(Button btn) {
-        btn.setPrefSize(btn.getWidth() + 3, btn.getHeight() + 3);
-    }
-
-    @FXML void resetButton(Button btn) {
-        btn.setPrefSize(btn.getWidth() - 3, btn.getHeight() - 3);
+    private void setUpButtonActions(Button btn) {
+        btn.setOnMouseEntered(e -> buttonControl.enlargeButton(btn));
+        btn.setOnMouseExited(e -> buttonControl.resetButton(btn));
     }
 
     @FXML

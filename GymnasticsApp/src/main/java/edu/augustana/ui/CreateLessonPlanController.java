@@ -72,6 +72,7 @@ public class CreateLessonPlanController {
     @FXML private ImageView zoomedInCard;
     @FXML private Label equipmentLabel;
     @FXML private AnchorPane lessonOutlinePane;
+    private ButtonControl buttonControl;
 
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
@@ -79,8 +80,6 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
     @FXML private TreeView<String> lessonPlanTreeView;
-    @FXML
-    private Button returnToCourseBtn;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private List<CardView> selectedCards = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
@@ -93,6 +92,8 @@ public class CreateLessonPlanController {
         addImagesToButton("Symbols/plusSign.png", addCardButton);
         addImagesToButton("Symbols/heart.png", favoriteBtn);
         setUpTitle();
+        buttonControl = new ButtonControl(5);
+        setUpButtons();
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -209,6 +210,16 @@ public class CreateLessonPlanController {
                 }
             }
         });
+    }
+
+    public void setUpButtons() {
+        for (Node node : lessonOutlinePane.getChildren()) {
+            if (node instanceof Button) {
+                Button btn = (Button) node;
+                btn.setOnMouseEntered(e -> buttonControl.enlargeButton(btn));
+                btn.setOnMouseExited(e -> buttonControl.resetButton(btn));
+            }
+        }
     }
 
     @FXML void goToHome() throws IOException {
