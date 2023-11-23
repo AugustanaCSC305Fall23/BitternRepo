@@ -202,7 +202,11 @@ public class CreateLessonPlanController {
         titleField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 titleEditor.lockInTitle();
-                App.getCurrentLessonPlan().setTitle(titleField.getText());
+                if (!titleField.getText().equals(titleField.getPromptText())) {
+                    App.getCurrentLessonPlan().setTitle(titleField.getText());
+                } else {
+                    App.getCurrentLessonPlan().setTitle(null);
+                }
             }
         });
     }

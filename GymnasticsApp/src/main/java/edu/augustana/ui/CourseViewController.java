@@ -85,7 +85,11 @@ public class CourseViewController {
         courseTitleField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 titleEditor.lockInTitle();
-                App.getCurrentCourse().setTitle(courseTitleField.getText());
+                if (!courseTitleField.getText().equals(courseTitleField.getPromptText())) {
+                    App.getCurrentCourse().setTitle(courseTitleField.getText());
+                } else {
+                    App.getCurrentCourse().setTitle(null);
+                }
             }
         });
     }

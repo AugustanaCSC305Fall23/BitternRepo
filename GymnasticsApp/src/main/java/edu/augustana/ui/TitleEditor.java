@@ -30,11 +30,12 @@ public class TitleEditor {
 
     @FXML public void lockInTitle() {
         titleField.setFont(titleFont);
-        if (!titleField.getText().isEmpty()) {
-            titleField.setEditable(false);
-        } else {
+        if (titleField.getText().isEmpty()) {
+            titleField.setText(titleField.getPromptText());
+            titleField.setFont(new Font("System Italic", titleFont.getSize()));
             giveWarning("Cannot have empty title.");
         }
+        titleField.setEditable(false);
     }
 
     @FXML private void giveWarning(String message) {

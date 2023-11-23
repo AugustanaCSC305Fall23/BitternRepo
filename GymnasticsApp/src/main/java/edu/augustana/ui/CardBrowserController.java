@@ -158,7 +158,7 @@ public class CardBrowserController {
         if (event.getTarget() instanceof CardView) {
             CardView cardViewSelected = (CardView) event.getTarget();
             if (!selectedCards.contains(cardViewSelected)) {
-                cardViewSelected.setEffect(new InnerShadow(10, Color.PURPLE));
+                cardViewSelected.setEffect(new InnerShadow(20, Color.PURPLE));
                 selectedCards.add(cardViewSelected);
             } else {
                 cardViewSelected.setEffect(null);
