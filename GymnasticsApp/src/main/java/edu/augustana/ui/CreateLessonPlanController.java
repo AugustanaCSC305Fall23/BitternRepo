@@ -79,8 +79,8 @@ public class CreateLessonPlanController {
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        addImagesToButton("Symbols/plusSign.png", addCardBtn);
-        addImagesToButton("Symbols/heart.png", favoriteBtn);
+        //addImagesToButton("Symbols/plusSign.png", addCardBtn);
+        //addImagesToButton("Symbols/heart.png", favoriteBtn);
         setUpTitle();
         setUpButtons();
         if (eventDropdown.getItems().isEmpty()) {
@@ -95,14 +95,14 @@ public class CreateLessonPlanController {
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
     }
-    private void addImagesToButton(String path, Button toAddImageTo) throws MalformedURLException {
+    /* private void addImagesToButton(String path, Button toAddImageTo) throws MalformedURLException {
         String imageURL = new File(path).toURI().toURL().toString();
         ImageView buttonImageView = new ImageView(new Image(imageURL));
         buttonImageView.setFitHeight(20.0);
         buttonImageView.setFitWidth(20.0);
         toAddImageTo.setMaxSize(25.0, 25.0);
         toAddImageTo.setGraphic(buttonImageView);
-    }
+    } */
 
     private void setUpTreeView(){
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
