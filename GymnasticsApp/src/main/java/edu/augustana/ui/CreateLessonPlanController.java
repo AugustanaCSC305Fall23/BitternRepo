@@ -59,7 +59,7 @@ public class CreateLessonPlanController {
     @FXML private Label equipmentLabel;
 
     @FXML private AnchorPane lessonOutlinePane;
-    private ButtonControl buttonControl = new ButtonControl(5);
+    private ButtonControl buttonControl = new ButtonControl(3);
 
     // filter choices
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
@@ -208,6 +208,10 @@ public class CreateLessonPlanController {
                 btn.setOnMouseExited(e -> buttonControl.resetButton(btn));
             }
         }
+        addCardBtn.setOnMouseEntered(e -> buttonControl.enlargeButton(addCardBtn));
+        addCardBtn.setOnMouseExited(e -> buttonControl.resetButton(addCardBtn));
+        favoriteBtn.setOnMouseEntered(e -> buttonControl.enlargeButton(favoriteBtn));
+        favoriteBtn.setOnMouseExited(e -> buttonControl.resetButton(favoriteBtn));
     }
 
     @FXML void goToHome() throws IOException {

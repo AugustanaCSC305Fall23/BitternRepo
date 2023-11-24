@@ -48,7 +48,7 @@ public class CourseViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        buttonControl = new ButtonControl(3);
+        buttonControl = new ButtonControl(2);
         courseTreeView.setRoot(root);
         courseTreeView.setShowRoot(false);
         courseTreeView.setOnMouseClicked(e -> checkIfItemSelected());

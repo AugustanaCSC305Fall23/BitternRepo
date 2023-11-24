@@ -12,8 +12,11 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
@@ -21,38 +24,57 @@
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: teal;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CreateLessonPlanController">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+      <HBox spacing="60.0">
          <children>
-            <VBox alignment="CENTER">
+            <GridPane hgap="20.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <HBox alignment="CENTER" spacing="20.0">
-                     <children>
-                        <CheckComboBox fx:id="genderDropdown" showCheckedCount="true" title="Gender" />
-                        <CheckComboBox fx:id="levelDropdown" showCheckedCount="true" title="Level" />
-                        <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" title="Event" />
-                        <CheckComboBox fx:id="modelSexDropdown" showCheckedCount="true" title="Model Sex" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" spacing="20.0">
-                     <children>
-                        <Button fx:id="applyFiltersButton" mnemonicParsing="false" onAction="#applyFiltersAction" text="Apply Filters" />
-                        <Button fx:id="clearFiltersButton" mnemonicParsing="false" onAction="#clearFiltersAction" text="Clear Filters" />
-                     </children>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </HBox>
+                  <CheckComboBox fx:id="genderDropdown" showCheckedCount="true" title="Gender">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </CheckComboBox>
+                  <CheckComboBox fx:id="modelSexDropdown" showCheckedCount="true" title="Model Sex" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" title="Event" GridPane.columnIndex="1" />
+                  <CheckComboBox fx:id="levelDropdown" showCheckedCount="true" title="Level" GridPane.rowIndex="1" />
                </children>
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets />
                </HBox.margin>
+            </GridPane>
+            <VBox alignment="CENTER" spacing="15.0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <Button fx:id="applyFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#applyFiltersAction" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Apply Filters">
+                     <font>
+                        <Font name="Georgia" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Clear Filters">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Georgia" size="16.0" />
+                     </font>
+                  </Button>
+               </children>
             </VBox>
             <Label text="Search: " textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
                <HBox.margin>
-                  <Insets left="30.0" />
+                  <Insets left="10.0" right="-50.0" top="10.0" />
                </HBox.margin>
             </Label>
             <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="365.0">
@@ -60,27 +82,35 @@
                   <Font size="21.0" />
                </font>
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets top="5.0" />
                </HBox.margin></TextField>
+            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" prefWidth="150.0" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Return to Course Outline" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Georgia" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="140.0" />
+               </HBox.margin>
+            </Button>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <VBox.margin>
-            <Insets bottom="20.0" top="20.0" />
+            <Insets bottom="5.0" left="50.0" right="25.0" top="25.0" />
          </VBox.margin>
       </HBox>
-      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: teal;">
+      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: teal;">
          <items>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane>
                <children>
-                  <TabPane fx:id="cardsTabPane" style="-fx-background-color: transparent;">
+                  <TabPane fx:id="cardsTabPane" style="-fx-background-color: transparent;" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab fx:id="allCardsTab" closable="false" onSelectionChanged="#switchToAllCards" text="All Cards">
                            <content>
                               <AnchorPane>
                                  <children>
-                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="560.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="10.0">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="540.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="10.0">
                                        <content>
                                           <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="830.0" style="-fx-background-color: teal;" vgap="10.0" />
                                        </content>
@@ -105,9 +135,9 @@
                       </Tab>
                     </tabs>
                   </TabPane>
-                  <HBox alignment="BOTTOM_CENTER" spacing="100.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <HBox alignment="BOTTOM_CENTER" spacing="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <children>
-                        <Button fx:id="addCardBtn" mnemonicParsing="false" onAction="#addCardsToLessonPlan" style="-fx-background-color: Silver; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Add to Lesson Plan">
+                        <Button fx:id="addCardBtn" mnemonicParsing="false" onAction="#addCardsToLessonPlan" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Add to Lesson Plan">
                            <HBox.margin>
                               <Insets bottom="10.0" />
                            </HBox.margin>
@@ -115,7 +145,7 @@
                               <Font name="Georgia" size="18.0" />
                            </font>
                         </Button>
-                        <Button fx:id="favoriteBtn" mnemonicParsing="false" onAction="#addCardsToFavorites" style="-fx-background-color: Silver; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Add to Favorites">
+                        <Button fx:id="favoriteBtn" mnemonicParsing="false" onAction="#addCardsToFavorites" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Add to Favorites">
                            <HBox.margin>
                               <Insets bottom="10.0" />
                            </HBox.margin>
@@ -129,7 +159,7 @@
             </AnchorPane>
             <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" style="-fx-background-color: teal;" SplitPane.resizableWithParent="false">
                <children>
-                  <Button mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                  <Button mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
                      </font></Button>
@@ -137,17 +167,12 @@
                      <font>
                         <Font name="System Italic" size="36.0" />
                      </font></TextField>
-                  <Button fx:id="returnToCourseBtn" mnemonicParsing="false" onAction="#returnToCourseHandler" text="Return to Course Outline" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
-                     <font>
-                        <Font name="Georgia" size="18.0" />
-                     </font>
-                  </Button>
-                  <TreeView fx:id="lessonPlanTreeView" layoutX="47.0" layoutY="199.0" prefHeight="314.0" prefWidth="461.0" />
-                  <Button fx:id="deleteBtn" mnemonicParsing="false" text="Delete Card" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="130.0">
+                  <TreeView fx:id="lessonPlanTreeView" layoutX="47.0" layoutY="199.0" prefHeight="470.0" prefWidth="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="110.0" />
+                  <Button fx:id="deleteBtn" mnemonicParsing="false" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Delete Card" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
                      </font></Button>
-                  <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" text="Print Lesson Plan" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="130.0">
+                  <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Print Lesson Plan" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
                      </font></Button>
@@ -169,6 +194,9 @@
                </children>
             </AnchorPane>
          </items>
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
       </SplitPane>
    </children>
    <effect>

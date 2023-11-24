@@ -28,7 +28,7 @@ public class HomeScreenController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws MalformedURLException {
-        buttonControl = new ButtonControl(10);
+        buttonControl = new ButtonControl(8);
         setUpButtons();
         String logoURL = new File("Symbols/LOGO.jpeg").toURI().toURL().toString();
         logoView.setImage(new Image(logoURL));
