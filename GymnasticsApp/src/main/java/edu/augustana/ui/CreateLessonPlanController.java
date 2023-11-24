@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -30,56 +29,47 @@ import javafx.scene.control.TabPane;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 public class CreateLessonPlanController {
-    private URL location;
-    @FXML
-    private CheckComboBox<String> eventDropdown;
-    @FXML
-    private CheckComboBox<String> genderDropdown;
-    @FXML
-    private CheckComboBox<String> levelDropdown;
-    @FXML
-    private CheckComboBox<String> modelSexDropdown;
-    List<CheckComboBox<String>> listOfDropdowns;
-    //@FXML
-    //private FlowPane cardsFlowPane;
-    @FXML
-    private FlowPane allCardsFlowPane;
-    @FXML
-    private Tab allCardsTab;
-    @FXML
-    private FlowPane favoriteCardsFlowPane;
-    @FXML
-    private TabPane cardsTabPane;
-    @FXML
-    private Tab favoriteCardsTab;
-    @FXML
-    private TextField searchField;
-    @FXML
-    private Button addCardButton;
-    @FXML
-    private Button favoriteBtn;
-    @FXML
-    private Button removeFavoriteBtn;
-    @FXML
-    private TextField titleField;
 
+    // dropdowns
+    @FXML private CheckComboBox<String> eventDropdown;
+    @FXML private CheckComboBox<String> genderDropdown;
+    @FXML private CheckComboBox<String> levelDropdown;
+    @FXML private CheckComboBox<String> modelSexDropdown;
+    List<CheckComboBox<String>> listOfDropdowns;
+
+    @FXML private FlowPane allCardsFlowPane;
+    @FXML private Tab allCardsTab;
+    @FXML private FlowPane favoriteCardsFlowPane;
+    @FXML private TabPane cardsTabPane;
+    @FXML private Tab favoriteCardsTab;
+
+    @FXML private TextField searchField;
+    @FXML private Button addCardBtn;
+    @FXML private Button favoriteBtn;
+    @FXML private Button removeFavoriteBtn;
+    @FXML private TextField titleField;
+
+    // zoomed-in card elements
     @FXML private VBox zoomedInCardVBox;
     @FXML private Label eventLabel;
     @FXML private ImageView zoomedInCard;
     @FXML private Label equipmentLabel;
-    @FXML private AnchorPane lessonOutlinePane;
-    private ButtonControl buttonControl;
 
+    @FXML private AnchorPane lessonOutlinePane;
+    private ButtonControl buttonControl = new ButtonControl(5);
+
+    // filter choices
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
     @FXML private TreeView<String> lessonPlanTreeView;
+
+
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private List<CardView> selectedCards = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
@@ -89,22 +79,19 @@ public class CreateLessonPlanController {
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        addImagesToButton("Symbols/plusSign.png", addCardButton);
+        addImagesToButton("Symbols/plusSign.png", addCardBtn);
         addImagesToButton("Symbols/heart.png", favoriteBtn);
         setUpTitle();
-        buttonControl = new ButtonControl(5);
         setUpButtons();
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
-        // loop through all cards, making a CardView for each card
-        // and adding it to the cardViewList
+        // loop through all cards, making a CardView for each card and adding it to the cardViewList
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
             CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
             cardViewList.add(newCardView);
         }
         cardsTabPane.getSelectionModel().select(allCardsTab);
-        //cardsTabPane.
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
     }
@@ -116,6 +103,7 @@ public class CreateLessonPlanController {
         toAddImageTo.setMaxSize(25.0, 25.0);
         toAddImageTo.setGraphic(buttonImageView);
     }
+
     private void setUpTreeView(){
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
         //To help with tree view
@@ -235,6 +223,20 @@ public class CreateLessonPlanController {
         return dropdown.getCheckModel().getCheckedItems();
     }
 
+    private void selectCardAction(MouseEvent event) {
+        if (event.getTarget() instanceof CardView) {
+            CardView cardViewSelected = (CardView) event.getTarget();
+            if (!selectedCards.contains(cardViewSelected)) {
+                cardViewSelected.setEffect(new InnerShadow(30, Color.ORCHID));
+                selectedCards.add(cardViewSelected);
+            } else {
+                cardViewSelected.setEffect(null);
+                selectedCards.remove(cardViewSelected);
+            }
+            exitZoomedView();
+        }
+    }
+
     @FXML
     void applyFiltersAction() {
         FlowPane cardsFlowPane = findAndSetFlowPane();
@@ -283,20 +285,6 @@ public class CreateLessonPlanController {
                     cardView.setOnMouseClicked(this::selectCardAction);
                 }
             }
-        }
-    }
-
-    private void selectCardAction(MouseEvent event) {
-        if (event.getTarget() instanceof CardView) {
-            CardView cardViewSelected = (CardView) event.getTarget();
-            if (!selectedCards.contains(cardViewSelected)) {
-                cardViewSelected.setEffect(new InnerShadow(30, Color.ORCHID));
-                selectedCards.add(cardViewSelected);
-            } else {
-                cardViewSelected.setEffect(null);
-                selectedCards.remove(cardViewSelected);
-            }
-            exitZoomedView();
         }
     }
 

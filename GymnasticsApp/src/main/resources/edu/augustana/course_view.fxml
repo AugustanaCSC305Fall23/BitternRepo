@@ -26,10 +26,10 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#menuActionOpenCourse" text="Open Course" />
-                  <MenuItem mnemonicParsing="false" onAction="#menuActionSave" text="Save Course" />
-                  <MenuItem mnemonicParsing="false" onAction="#menuActionSaveAs" text="Save Course as..." />
-                  <MenuItem mnemonicParsing="false" onAction="#menuActionCreateNewCourse" text="Create New Course" />
+                  <MenuItem fx:id="createNewCourseMenuItem" mnemonicParsing="false" text="Create New Course" />
+                  <MenuItem fx:id="openCourseMenuItem" mnemonicParsing="false" text="Open Course" />
+                  <MenuItem fx:id="saveCourseMenuItem" mnemonicParsing="false" text="Save Course" />
+                  <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" text="Save Course as..." />
               <MenuItem mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>

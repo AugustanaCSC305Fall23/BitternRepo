@@ -108,6 +108,20 @@ public class CardBrowserController {
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
         return dropdown.getCheckModel().getCheckedItems();
     }
+
+    private void selectCardAction(MouseEvent event){
+        if (event.getTarget() instanceof CardView) {
+            CardView cardViewSelected = (CardView) event.getTarget();
+            if (!selectedCards.contains(cardViewSelected)) {
+                cardViewSelected.setEffect(new InnerShadow(20, Color.PURPLE));
+                selectedCards.add(cardViewSelected);
+            } else {
+                cardViewSelected.setEffect(null);
+                selectedCards.remove(cardViewSelected);
+            }
+        }
+    }
+
     @FXML private void applyFiltersAction() throws IOException {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
@@ -154,18 +168,7 @@ public class CardBrowserController {
         }
     }
 
-    private void selectCardAction(MouseEvent event){
-        if (event.getTarget() instanceof CardView) {
-            CardView cardViewSelected = (CardView) event.getTarget();
-            if (!selectedCards.contains(cardViewSelected)) {
-                cardViewSelected.setEffect(new InnerShadow(20, Color.PURPLE));
-                selectedCards.add(cardViewSelected);
-            } else {
-                cardViewSelected.setEffect(null);
-                selectedCards.remove(cardViewSelected);
-            }
-        }
-    }
+
 
     @FXML
     void printSelectedCards() throws IOException {
