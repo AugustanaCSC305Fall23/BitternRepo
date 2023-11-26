@@ -65,8 +65,9 @@ public class PrintStaging {
             whitePaperPane.setPrefWidth(pg.getPrintableWidth());
 
             CardView cardView = cardsToPrint.get(p);
-            cardView.setFitWidth(pg.getPrintableWidth() - 10);
-            cardView.setFitHeight(pg.getPrintableWidth() * .75);
+            cardView.setRotate(90);
+            cardView.setFitHeight(pg.getPrintableWidth());
+            cardView.setFitWidth(pg.getPrintableWidth());
 
             // Adding the given print objects to the screen
             if (PrintStaging.getFXML().equals("card_browser")) {
