@@ -22,7 +22,7 @@ public class FavoriteCards {
          */
         try {
             String line;
-            while ((line = fileReader.readLine()) != null) {
+            while (!(line = fileReader.readLine()).isEmpty()) {
                 Card card = CardDatabase.getFullCardCollection().getCardByID(line);
                 favoriteCards.add(card);
                 favoritesCardView.add(new CardView(card));
