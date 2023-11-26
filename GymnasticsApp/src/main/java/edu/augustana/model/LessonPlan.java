@@ -70,6 +70,30 @@ public class LessonPlan {
         return  mapOfCardsFromID;
     }
 
+    public void removeCard(String cardDisplayedTitle) {
+        System.out.println(eventInPlanList);
+        String cardIDToRemove = null;
+        String eventToChange = null;
+        for (String event : eventInPlanList.keySet()) {
+            for (String id : eventInPlanList.get(event)) {
+                System.out.println(eventInPlanList);
+                if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals( cardDisplayedTitle)) {
+                    //eventInPlanList.get(event).remove(id);
+                    //eventInPlanList.values().contains(id);
+                    System.out.println(eventInPlanList);
+                    cardIDToRemove = id;
+                    eventToChange = event;
+                }
+            }
+        }
+        if (cardIDToRemove != null) {
+            eventInPlanList.get(eventToChange).remove(cardIDToRemove);
+            System.out.println(eventInPlanList);
+        }
+
+        }
+
+
     @Override
     public String toString() {
         return title;

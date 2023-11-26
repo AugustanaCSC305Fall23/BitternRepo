@@ -20,6 +20,7 @@ public class Card {
     private String[] keywords;
     private String uniqueID;
     private Image image;
+    private String displayedTitle;
 
     public Card(String[] cardDataArray) throws MalformedURLException {
         code = cardDataArray[0].strip();
@@ -35,6 +36,7 @@ public class Card {
         keywords = cardDataArray[10].split(",");
         uniqueID = packFolder + "/" + imageName;
         image = CardDatabase.getImageFromPack(packFolder, imageName);
+        displayedTitle = code + ", " + title;
     }
 
     public String getCode() {
@@ -88,6 +90,8 @@ public class Card {
     public Image getImage() {
         return image;
     }
+    public String getDisplayedTitle() { return displayedTitle;}
+
 
     @Override
     public String toString() {

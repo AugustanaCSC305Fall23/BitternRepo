@@ -347,6 +347,12 @@ public class CreateLessonPlanController {
 
     @FXML
     public void removeCardFromLessonPlan() {
+        if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
+            String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
+            System.out.println(cardToRemove);
+            App.getCurrentLessonPlan().removeCard(cardToRemove);
+            setUpTreeView();
+        }
     }
 
     @FXML private void giveWarning(String message) {
