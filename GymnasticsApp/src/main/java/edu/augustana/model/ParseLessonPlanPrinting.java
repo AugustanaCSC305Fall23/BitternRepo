@@ -24,16 +24,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.javafx.tk.Toolkit;
+
 import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+
 
 public class ParseLessonPlanPrinting {
 
     private double pageWidth;
     private double pageHeight;
-    private static ArrayList<Pane> pages = new ArrayList<>();
+    private ArrayList<Pane> pages = new ArrayList<>();
 
     private Map<String, List<Card>> eventToCardsMap;
 
@@ -167,7 +166,7 @@ public class ParseLessonPlanPrinting {
 
     }
 
-    public static ArrayList<Pane> getPages() {
+    public ArrayList<Pane> getPages() {
         return pages;
     }
 

@@ -61,6 +61,8 @@ public class PrintPreviewController {
 
     private List<CardView> cardsToPrint;
 
+    private ParseLessonPlanPrinting lessonPlan;
+
 
     // ---------- Experimental Data Fields ----------
 
@@ -87,15 +89,16 @@ public class PrintPreviewController {
             });
             mainPane.getChildren().addAll(pagination);
         } else {
-            ParseLessonPlanPrinting lessonPlan = new ParseLessonPlanPrinting();
-            int numPages = ParseLessonPlanPrinting.getPages().size();
+            lessonPlan = new ParseLessonPlanPrinting();
+            ArrayList<Pane> pages = lessonPlan.getPages();
+            int numPages = lessonPlan.getPages().size();
             Pagination pagination = new Pagination(numPages);
             pagination.setStyle("-fx-border-color:white;");
             pagination.setPageFactory((Integer pageIndex) -> {
                 if (pageIndex >= numPages) {
                     return null;
                 } else {
-                    return PrintStaging.createPage(pageIndex, printerJob);
+                    return PrintStaging.createPage(pageIndex, pages, printerJob);
                 }
             });
             mainPane.getChildren().addAll(pagination);
@@ -127,7 +130,7 @@ public class PrintPreviewController {
             if (PrintStaging.getFXML().equals("card_browser")) {
                 pgRange = new PageRange(1, cardsToPrint.size());
             } else {
-                pgRange = new PageRange(1, ParseLessonPlanPrinting.getPages().size());
+                pgRange = new PageRange(1, lessonPlan.getPages().size());
             }
 
             printerJob.getJobSettings().setPageRanges(pgRange);
@@ -146,7 +149,7 @@ public class PrintPreviewController {
                         CardView cardView = cardsToPrint.get(p - 1);
                         printNode.getChildren().add(cardView);
                     } else {
-                        printNode.getChildren().add(ParseLessonPlanPrinting.getPages().get(p - 1));
+                        printNode.getChildren().add(lessonPlan.getPages().get(p - 1));
                     }
 
                     printed = printerJob.printPage(pgLayout, printNode);

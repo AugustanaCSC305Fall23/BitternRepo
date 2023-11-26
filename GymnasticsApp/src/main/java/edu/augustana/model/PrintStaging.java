@@ -79,8 +79,7 @@ public class PrintStaging {
     }
 
     // Creates pages for a lesson plan
-    public static VBox createPage(int pageIndex, PrinterJob pj) {
-        ArrayList<Pane> pages = ParseLessonPlanPrinting.getPages();
+    public static VBox createPage(int pageIndex, ArrayList<Pane> pages, PrinterJob pj) {
         PageLayout pg = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
         int page = pageIndex * itemsPerPage();
