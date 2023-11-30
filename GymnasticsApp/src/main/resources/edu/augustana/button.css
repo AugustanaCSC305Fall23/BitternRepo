@@ -1,7 +1,7 @@
 .button {
     -fx-border-width: 1;
     -fx-border-color: black;
-    -fx-background-color: red;
+    -fx-background-color: gray;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     cursor: pointer;
@@ -9,11 +9,10 @@
 
 /* I want MouseMoved button background-color effect 鼠标移入 */
 .button:hover {
-    -fx-background-color: red;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
 
 .button:pressed {
-    -fx-background-color: red; /* maybe some other color */
+    -fx-background-color: green
 }
