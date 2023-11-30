@@ -1,6 +1,7 @@
 package edu.augustana.model;
 
 import edu.augustana.App;
+import edu.augustana.structures.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class LessonPlan {
     private String title;
     private Map<String, List<String>> eventInPlanList;
     private List<String> eventIndexes;
+    private IndexedMap lessonPlan = new IndexedMap();
 
     public LessonPlan() {
         eventInPlanList = new TreeMap<>();
@@ -28,18 +30,27 @@ public class LessonPlan {
     public void addEventToPlanList(Card card){
         List<String> cardDisplay = new ArrayList<>();
         cardDisplay.add(card.getUniqueID());
-        eventInPlanList.put(card.getEvent(), cardDisplay);
-        eventIndexes.add(card.getEvent());
+        /*eventInPlanList.put(card.getEvent(), cardDisplay);
+        eventIndexes.add(card.getEvent());*/
+        lessonPlan.add(new Category(card.getEvent(), card.getUniqueID()));
+        System.out.println(lessonPlan.toString());
     }
     //rename this method
     public void addCardToEvent(Card card){
-        eventInPlanList.get(card.getEvent()).add(card.getUniqueID());
+        //eventInPlanList.get(card.getEvent()).add(card.getUniqueID());
+        Category addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
+        addTo.addCardToList(card.getUniqueID());
+        //l
+        System.out.println(lessonPlan.toString());
     }
     public boolean eventInPlanList(Card card){
-        return (eventInPlanList.containsKey(card.getEvent()));
+        if(/*eventInPlanList.containsKey(card.getEvent()) && */lessonPlan.contains(card.getEvent())){
+            return true;
+        }
+        return false;
     }
     public boolean isLessonPlanEmpty(){
-        return (eventInPlanList.isEmpty());
+        return (/*eventInPlanList.isEmpty() && */ lessonPlan.isEmpty());
     }
 
     public List<String> getEventIndexes() {
@@ -48,6 +59,7 @@ public class LessonPlan {
 
     public void setEventInPlanList(Map<String, List<String>> eventList) {
         eventInPlanList = eventList;
+        //lessonPlan.
     }
 
     public Map<String, List<String>> getEventInPlanList(){
@@ -55,7 +67,7 @@ public class LessonPlan {
     }
 
     public boolean cardInPlanList(Card card){
-        return (eventInPlanList.get(card.getEvent()).contains(card));
+        return (/*eventInPlanList.get(card.getEvent()).contains(card) || */lessonPlan.get(lessonPlan.get(card.getEvent())).contains(card.getUniqueID()));
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(Map<String, List<String>> mapOfIDs){
@@ -68,6 +80,9 @@ public class LessonPlan {
             mapOfCardsFromID.put(event, cardsFromID);
         }
         return  mapOfCardsFromID;
+    }
+    public IndexedMap getLessonPlan(){
+        return lessonPlan;
     }
 
     public void removeCard(String cardDisplayedTitle) {

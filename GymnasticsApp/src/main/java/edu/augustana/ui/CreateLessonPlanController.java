@@ -3,6 +3,7 @@ package edu.augustana.ui;
 import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
+import edu.augustana.structures.*;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
@@ -110,11 +111,21 @@ public class CreateLessonPlanController {
         root = new TreeItem<>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
+        System.out.println(App.getCurrentLessonPlan().getLessonPlan().toString());
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
             Card card;
-            for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
+      /*      for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
                 TreeItem<String> newEvent = new TreeItem<>(event);
                 for(String cardID : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                    card = CardDatabase.getFullCardCollection().getCardByID(cardID);
+                    newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                }
+                root.getChildren().add(newEvent);
+            }*/
+            for (ListIterator<Category> it = App.getCurrentLessonPlan().getLessonPlan().listIterator(); it.hasNext();) {
+                Category event = it.next();
+                TreeItem<String> newEvent = new TreeItem<>(event.getCategoryHeading());
+                for(String cardID : event.getCardsInList()){
                     card = CardDatabase.getFullCardCollection().getCardByID(cardID);
                     newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
                 }
@@ -337,10 +348,15 @@ public class CreateLessonPlanController {
             newEvent.getChildren().add(new TreeItem<>(card.getCode() + ", " + card.getTitle()));
             root.getChildren().add(newEvent);
         } else{
-            if (!App.getCurrentLessonPlan().cardInPlanList(card)){
+            /*if (!App.getCurrentLessonPlan().cardInPlanList(card)){
                 App.getCurrentLessonPlan().addCardToEvent(card);
                 int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
                 root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            }*/
+            if (!App.getCurrentLessonPlan().cardInPlanList(card)){
+                System.out.println("card is not in list");
+                App.getCurrentLessonPlan().addCardToEvent(card);
+                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlan().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
         }
     }
