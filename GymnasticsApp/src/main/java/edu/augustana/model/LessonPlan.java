@@ -93,10 +93,26 @@ public class LessonPlan implements Cloneable{
 
         }
 
-        public LessonPlan clone() throws CloneNotSupportedException {
-        LessonPlan lessonPlan = (LessonPlan) super.clone();
-        
-        return null;
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
+    public LessonPlan clone() throws CloneNotSupportedException {
+        /**
+         * Used https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone-- to
+         * understand how to use the clone() method
+         * Based this method on the clone() method in Drawing class of
+         * DrawingApp
+         */
+            try {
+                LessonPlan clone = (LessonPlan) super.clone();
+                clone.eventInPlanList = eventInPlanList;
+                return clone;
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
 
