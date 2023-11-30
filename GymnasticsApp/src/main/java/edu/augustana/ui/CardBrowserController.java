@@ -68,10 +68,6 @@ public class CardBrowserController {
     private List<CardView> selectedCards = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
 
-    //private Image prevImage;
-
-    //private final Image checkImage = new Image(getClass().getResource("images/Checkmark.png").toString(), 400, 300, true, true);
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws MalformedURLException {
         createDropdowns();

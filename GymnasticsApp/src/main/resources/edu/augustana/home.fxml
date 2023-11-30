@@ -21,7 +21,7 @@
       <Separator prefWidth="200.0" style="-fx-background-color: black;" />
       <HBox fx:id="buttonsHBox" alignment="CENTER" prefHeight="259.0" prefWidth="1094.0" spacing="50.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#openCourseEditorAndCreator" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: black;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openCourseEditorAndCreator" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-radius: 10;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Serif Bold" size="21.0" />
                </font>
@@ -33,7 +33,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-radius: 10;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Serif Bold" size="21.0" />
                </font>
@@ -45,7 +45,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: black;" text="Exit">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #98c1d9; -fx-background-radius: 10; -fx-border-radius: 10;" text="Exit" textAlignment="CENTER">
                <font>
                   <Font name="Serif Bold" size="21.0" />
                </font>

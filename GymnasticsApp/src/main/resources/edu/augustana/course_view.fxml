@@ -17,7 +17,7 @@
          <font>
             <Font name="System Italic" size="40.0" />
          </font></TextField>
-      <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: DarkGray;" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="23.0" />
          </font>
@@ -42,23 +42,23 @@
       </MenuBar>
       <HBox fx:id="buttonBar" alignment="CENTER" spacing="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="120.0">
          <children>
-            <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Create New Lesson Plan">
+            <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Create New Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
       
-            <Button disable="true" mnemonicParsing="false" onAction="#editLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Edit Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#editLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray;" text="Edit Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button disable="true" mnemonicParsing="false" onAction="#removeLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Remove Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#removeLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray;" text="Remove Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button disable="true" mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Duplicate Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray;" text="Duplicate Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>

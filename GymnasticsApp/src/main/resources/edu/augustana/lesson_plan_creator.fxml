@@ -54,12 +54,12 @@
                   <Insets />
                </HBox.margin>
                <children>
-                  <Button fx:id="applyFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#applyFiltersAction" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Apply Filters">
+                  <Button fx:id="applyFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#applyFiltersAction" style="-fx-background-color: Lavender;" text="Apply Filters">
                      <font>
                         <Font name="Georgia" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Clear Filters">
+                  <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Lavender;" text="Clear Filters">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -84,7 +84,7 @@
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin></TextField>
-            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" prefWidth="150.0" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Return to Course Outline" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" prefWidth="150.0" style="-fx-background-color: Lavender;" text="Return to Course Outline" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Georgia" size="18.0" />
                </font>
@@ -137,7 +137,7 @@
                   </TabPane>
                   <HBox alignment="BOTTOM_CENTER" spacing="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <children>
-                        <Button fx:id="addCardBtn" mnemonicParsing="false" onAction="#addCardsToLessonPlan" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Add to Lesson Plan">
+                        <Button fx:id="addCardBtn" mnemonicParsing="false" onAction="#addCardsToLessonPlan" style="-fx-background-color: Lavender;" text="Add to Lesson Plan">
                            <HBox.margin>
                               <Insets bottom="10.0" />
                            </HBox.margin>
@@ -145,7 +145,7 @@
                               <Font name="Georgia" size="18.0" />
                            </font>
                         </Button>
-                        <Button fx:id="favoriteBtn" mnemonicParsing="false" onAction="#addCardsToFavorites" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Add to Favorites">
+                        <Button fx:id="favoriteBtn" mnemonicParsing="false" onAction="#addCardsToFavorites" style="-fx-background-color: Lavender;" text="Add to Favorites">
                            <HBox.margin>
                               <Insets bottom="10.0" />
                            </HBox.margin>
@@ -159,7 +159,7 @@
             </AnchorPane>
             <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" style="-fx-background-color: teal;" SplitPane.resizableWithParent="false">
                <children>
-                  <Button mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                  <Button mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: Lavender;" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
                      </font></Button>
@@ -168,11 +168,11 @@
                         <Font name="System Italic" size="36.0" />
                      </font></TextField>
                   <TreeView fx:id="lessonPlanTreeView" layoutX="47.0" layoutY="199.0" prefHeight="470.0" prefWidth="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="110.0" />
-                  <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeCardFromLessonPlan" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Delete Card" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
+                  <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeCardFromLessonPlan" style="-fx-background-color: Lavender;" text="Delete Card" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
                      </font></Button>
-                  <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" style="-fx-background-color: Lavender; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Print Lesson Plan" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+                  <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" style="-fx-background-color: Lavender;" text="Print Lesson Plan" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
                      </font></Button>
@@ -200,7 +200,7 @@
       </SplitPane>
    </children>
    <effect>
-      <InnerShadow height="25.0" radius="13.25" width="30.0">
+      <InnerShadow height="15.0" radius="7.0" width="15.0">
          <color>
             <Color red="0.45635664463043213" green="0.20239999890327454" blue="0.8799999952316284" />
          </color>

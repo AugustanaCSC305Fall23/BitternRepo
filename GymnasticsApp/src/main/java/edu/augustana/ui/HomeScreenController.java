@@ -24,25 +24,10 @@ public class HomeScreenController {
     @FXML private HBox buttonsHBox;
     @FXML private ImageView logoView = new ImageView();
 
-    private ButtonControl buttonControl;
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws MalformedURLException {
-        buttonControl = new ButtonControl(8);
-        setUpButtons();
         String logoURL = new File("Symbols/LOGO.jpeg").toURI().toURL().toString();
         logoView.setImage(new Image(logoURL));
-    }
-
-    @FXML
-    private void setUpButtons() {
-        for (Node node : buttonsHBox.getChildren()) {
-            if (node instanceof Button) {
-                Button btn = (Button) node;
-                btn.setOnMouseEntered(e -> buttonControl.enlargeButton(btn));
-                btn.setOnMouseExited(e -> buttonControl.resetButton(btn));
-            }
-        }
     }
 
     @FXML

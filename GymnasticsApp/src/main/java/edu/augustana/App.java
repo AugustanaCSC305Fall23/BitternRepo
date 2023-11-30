@@ -38,6 +38,7 @@ public class App extends Application {
         double height = Screen.getPrimary().getBounds().getHeight();
         double width = Screen.getPrimary().getBounds().getWidth();
         scene = new Scene(loadFXML("home"), width - 25, height - 80);
+        scene.getStylesheets().add(this.getClass().getResource("button.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
