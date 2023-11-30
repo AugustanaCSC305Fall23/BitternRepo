@@ -26,6 +26,7 @@ public class CourseViewController {
 
     //private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
     @FXML private TreeView<LessonPlan> courseTreeView = new TreeView<>();
+    @FXML private ListView<String> courseListView = new ListView<>();
 
     @FXML private HBox buttonBar;
     @FXML private Button createNewLessonPlanBtn;

@@ -3,10 +3,7 @@ package edu.augustana.model;
 import edu.augustana.App;
 import edu.augustana.structures.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class LessonPlan {
     private String title;
@@ -85,14 +82,15 @@ public class LessonPlan {
         return lessonPlan;
     }
 
+    //fixed this
     public void removeCard(String cardDisplayedTitle) {
-        System.out.println(eventInPlanList);
+        System.out.println(lessonPlan.toString());
         String cardIDToRemove = null;
         String eventToChange = null;
-        for (String event : eventInPlanList.keySet()) {
+        /*for (String event : eventInPlanList.keySet()) {
             for (String id : eventInPlanList.get(event)) {
                 System.out.println(eventInPlanList);
-                if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals( cardDisplayedTitle)) {
+                if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
                     //eventInPlanList.get(event).remove(id);
                     //eventInPlanList.values().contains(id);
                     System.out.println(eventInPlanList);
@@ -100,13 +98,30 @@ public class LessonPlan {
                     eventToChange = event;
                 }
             }
+        }*/
+        for (ListIterator<Category> it = lessonPlan.listIterator(); it.hasNext(); ) {
+            Category event = it.next();
+            for (String id : event.getCardsInList()) {
+                System.out.println(lessonPlan.toString());
+                if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
+                    //eventInPlanList.get(event).remove(id);
+                    //eventInPlanList.values().contains(id);
+                    System.out.println(eventInPlanList);
+                    cardIDToRemove = id;
+                    eventToChange = event.getCategoryHeading();
+                }
+            }
         }
         if (cardIDToRemove != null) {
-            eventInPlanList.get(eventToChange).remove(cardIDToRemove);
-            System.out.println(eventInPlanList);
+            //eventInPlanList.get(eventToChange).remove(cardIDToRemove);
+            lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().remove(cardIDToRemove);
+            System.out.println(lessonPlan.toString());
+        }
+        if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().isEmpty()){
+            lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
         }
 
-        }
+    }
 
 
     @Override

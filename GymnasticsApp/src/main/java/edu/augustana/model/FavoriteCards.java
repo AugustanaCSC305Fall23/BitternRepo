@@ -22,7 +22,7 @@ public class FavoriteCards {
          */
         try {
             String line;
-            while ((line = fileReader.readLine()) != null && !(line.isEmpty())) {
+            while ((line = fileReader.readLine()) != null) {
                 Card card = CardDatabase.getFullCardCollection().getCardByID(line);
                 favoriteCards.add(card);
                 favoritesCardView.add(new CardView(card));
@@ -38,10 +38,13 @@ public class FavoriteCards {
         favoriteCards.add(card);
         favoritesCardView.add((new CardView(card)));
     }
-    public void deleteFavorite(){
+    public void deleteFavorite(String cardID){
         //delete card from file (unique id)
         //delete card from list
-
+        /**
+         * https://stackoverflow.com/questions/34999999/java-how-to-remove-blank-lines-from-a-text-file
+         * to help delete from a text file
+         */
 
     }
     public void closeFileWriter() throws IOException {
