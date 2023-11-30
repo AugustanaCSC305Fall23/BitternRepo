@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.javafx.tk.Toolkit;
+//import com.sun.javafx.tk.Toolkit;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;

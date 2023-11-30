@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import edu.augustana.model.CardCollection;
 import edu.augustana.model.CardDatabase;
 import edu.augustana.model.Course;
+import edu.augustana.structures.*;
 import edu.augustana.model.FavoriteCards;
 import edu.augustana.model.LessonPlan;
 import javafx.application.Application;
