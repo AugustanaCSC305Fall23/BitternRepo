@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class LessonPlan {
+public class LessonPlan implements Cloneable{
     private String title;
     private Map<String, List<String>> eventInPlanList;
     private List<String> eventIndexes;
@@ -91,6 +91,12 @@ public class LessonPlan {
             System.out.println(eventInPlanList);
         }
 
+        }
+
+        public LessonPlan clone() throws CloneNotSupportedException {
+        LessonPlan lessonPlan = (LessonPlan) super.clone();
+        
+        return null;
         }
 
 
