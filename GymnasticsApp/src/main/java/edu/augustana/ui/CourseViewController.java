@@ -26,7 +26,7 @@ public class CourseViewController {
 
     //private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
     @FXML private TreeView<LessonPlan> courseTreeView = new TreeView<>();
-    @FXML private ListView<String> courseListView = new ListView<>();
+    @FXML private ListView<LessonPlan> courseListView = new ListView<>();
 
     @FXML private HBox buttonBar;
     @FXML private Button createNewLessonPlanBtn;
@@ -52,8 +52,10 @@ public class CourseViewController {
         buttonControl = new ButtonControl(2);
         courseTreeView.setRoot(root);
         courseTreeView.setShowRoot(false);
-        courseTreeView.setOnMouseClicked(e -> checkIfItemSelected());
-        courseMenuControl = new CourseMenuControl(courseTreeView);
+        //courseTreeView.setOnMouseClicked(e -> checkIfItemSelected());
+        //courseMenuControl = new CourseMenuControl(courseTreeView);
+        courseListView.setOnMouseClicked(e -> checkIfItemSelected());
+        courseMenuControl = new CourseMenuControl(courseListView);
         setUpMenuActions();
         //courseTreeView.getRoot().setExpanded(true);
         addLessonsToCourseList();
@@ -97,7 +99,7 @@ public class CourseViewController {
         for (Node node : buttonBar.getChildren()) {
             if (node instanceof Button) {
                 Button btn = (Button) node;
-                if (!courseTreeView.getSelectionModel().isEmpty()) {
+                if (!courseListView.getSelectionModel().isEmpty()) {
                     btn.setDisable(false);
                     setUpButtonActions(btn);
                 } else {
@@ -143,8 +145,8 @@ public class CourseViewController {
 
     @FXML
     private void editLessonPlanHandler() throws  IOException {
-        //LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
-        LessonPlan lessonPlanToEdit = courseTreeView.getSelectionModel().getSelectedItem().getValue();
+        LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
+        //LessonPlan lessonPlanToEdit = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
             CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
@@ -155,11 +157,11 @@ public class CourseViewController {
     }
 
     @FXML private void removeLessonPlanHandler() {
-        //LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
-        LessonPlan lessonPlanToDelete = courseTreeView.getSelectionModel().getSelectedItem().getValue();
+        LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
+        //LessonPlan lessonPlanToDelete = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         if (lessonPlanToDelete != null) {
-            //courseListView.getItems().remove(lessonPlanToDelete);
-            courseTreeView.getSelectionModel().getSelectedItem().setValue(null);
+            courseListView.getItems().remove(lessonPlanToDelete);
+            //courseTreeView.getSelectionModel().getSelectedItem().setValue(null);
             App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
             App.setCurrentLessonPlan(null);
         }
@@ -169,11 +171,11 @@ public class CourseViewController {
     private void addLessonsToCourseList() {
         List<LessonPlan> lessonPlanList = App.getCurrentCourse().getLessonPlanList();
         if (!(lessonPlanList.isEmpty())) {
-            TreeItem<LessonPlan> lessonPlan = new TreeItem<>(lessonPlanList.get(lessonPlanList.size() - 1));
+            //TreeItem<LessonPlan> lessonPlan = new TreeItem<>(lessonPlanList.get(lessonPlanList.size() - 1));
             for (LessonPlan lesson: lessonPlanList) {
-                //courseListView.getItems().add(lesson);
-                lessonPlan.setValue(lesson);
-                root.getChildren().add(lessonPlan);
+                courseListView.getItems().add(lesson);
+                //lessonPlan.setValue(lesson);
+                //root.getChildren().add(lessonPlan);
                 // add a case for if the lesson plan doesn't have a name (somehow call it "Untitled" in course view)
             }
         }

@@ -6,7 +6,7 @@ import edu.augustana.model.*;
 import java.util.*;
 
 public class IndexedMap{
-    private static List<Category> indexedMap = new ArrayList<>();
+    private List<Category> indexedMap = new ArrayList<>();
 
     public IndexedMap(){
 
