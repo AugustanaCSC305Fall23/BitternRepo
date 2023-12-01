@@ -4,6 +4,7 @@ import edu.augustana.*;
 import edu.augustana.model.*;
 import edu.augustana.filters.SearchFilter;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -85,6 +86,17 @@ public class CardBrowserController {
         levelDropdown.getItems().addAll(levelFilterChoices);
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
+        for (CheckComboBox<String> dropdown : listOfDropdowns) {
+            dropdown.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+                public void onChanged(ListChangeListener.Change<? extends String> c) {
+                    try {
+                        applyFiltersAction();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        }
     }
 
     @FXML
@@ -118,7 +130,7 @@ public class CardBrowserController {
         }
     }
 
-    @FXML private void applyFiltersAction() throws IOException {
+    private void applyFiltersAction() throws IOException {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
         for (CardView cardView : cardViewList) {

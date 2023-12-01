@@ -15,5 +15,9 @@
 }
 
 .button:pressed {
-    -fx-background-color: green
+    -fx-background-color: green;
+}
+
+.check-combo-box {
+    -fx-background-color: lavender;
 }

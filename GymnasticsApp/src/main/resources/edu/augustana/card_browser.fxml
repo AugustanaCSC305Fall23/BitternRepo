@@ -62,32 +62,17 @@
                                  </VBox.margin>
                               </Label>
                               <CheckComboBox fx:id="eventDropdown" showCheckedCount="true" />
-                              <HBox alignment="BOTTOM_CENTER" spacing="10.0">
-                                 <children>
-                                    <Button fx:id="applyFiltersBtn" alignment="CENTER" mnemonicParsing="false" onAction="#applyFiltersAction" prefWidth="110.0" style="-fx-background-color: silver;" text="Apply Filters" wrapText="true">
-                                       <font>
-                                          <Font name="Georgia" size="24.0" />
-                                       </font>
-                                       <effect>
-                                          <DropShadow />
-                                       </effect>
-                                    </Button>
-                                    <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" prefWidth="110.0" style="-fx-background-color: silver;" text="Clear Filters" wrapText="true">
-                                       <font>
-                                          <Font name="Georgia" size="24.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                       <effect>
-                                          <DropShadow />
-                                       </effect>
-                                    </Button>
-                                 </children>
+                              <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: silver;" text="Clear Filters" wrapText="true">
+                                 <font>
+                                    <Font name="Georgia" size="24.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
                                  <VBox.margin>
-                                    <Insets top="100.0" />
+                                    <Insets top="80.0" />
                                  </VBox.margin>
-                              </HBox>
+                              </Button>
                            </children>
                            <padding>
                               <Insets left="25.0" top="20.0" />

@@ -7,6 +7,7 @@ import edu.augustana.structures.*;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,6 +139,13 @@ public class CreateLessonPlanController {
         levelDropdown.getItems().addAll(levelFilterChoices);
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
+        for (CheckComboBox<String> dropdown : listOfDropdowns) {
+            dropdown.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+                public void onChanged(ListChangeListener.Change<? extends String> c) {
+                    applyFiltersAction();
+                }
+            });
+        }
     }
 
     private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
