@@ -49,7 +49,6 @@ public class CourseViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        buttonControl = new ButtonControl(2);
         courseTreeView.setRoot(root);
         courseTreeView.setShowRoot(false);
         //courseTreeView.setOnMouseClicked(e -> checkIfItemSelected());
@@ -64,7 +63,6 @@ public class CourseViewController {
             currentCourse = new Course();
         }
         setUpTitle();
-        setUpButtonActions(createNewLessonPlanBtn);
     }
 
     @FXML
@@ -101,7 +99,6 @@ public class CourseViewController {
                 Button btn = (Button) node;
                 if (!courseListView.getSelectionModel().isEmpty()) {
                     btn.setDisable(false);
-                    setUpButtonActions(btn);
                 } else {
                     if (btn != createNewLessonPlanBtn) {
                         btn.setDisable(true);
@@ -109,11 +106,6 @@ public class CourseViewController {
                 }
             }
         }
-    }
-
-    private void setUpButtonActions(Button btn) {
-        btn.setOnMouseEntered(e -> buttonControl.enlargeButton(btn));
-        btn.setOnMouseExited(e -> buttonControl.resetButton(btn));
     }
 
     private void setUpMenuActions() {

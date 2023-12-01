@@ -32,10 +32,12 @@ public class App extends Application {
         favoriteCards = new FavoriteCards();
         // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
         // to help figure out how to get the dimensions of the screen.
-        //createCardViewList();
         double height = Screen.getPrimary().getBounds().getHeight();
         double width = Screen.getPrimary().getBounds().getWidth();
         scene = new Scene(loadFXML("home"), width - 25, height - 80);
+
+        // Used https://stackoverflow.com/questions/68768778/javafx-button-hover-effect for adding stylesheet
+        scene.getStylesheets().add(this.getClass().getResource("button.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

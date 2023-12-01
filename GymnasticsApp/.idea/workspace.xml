@@ -4,58 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c29b16f-653a-44f3-b456-46965af6e342" name="Changes" comment="">
+    <list default="true" id="eb2a390b-1fc2-43aa-94cb-91e40eb9fdf9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/12.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/13.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/14.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/15.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/17.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/18.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/19.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/20.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/21.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/22.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO1Pack/DEMO1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/22.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/23.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/24.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/25.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/26.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/27.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/28.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/29.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/30.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/31.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/33.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/34.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/35.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/36.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/37.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/DEMO2Pack/DEMO2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/CardDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/CardDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/IndexedMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/IndexedMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseMenuControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseMenuControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/button.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/card_browser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/card_browser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +40,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "courseListView"
+    "git-widget-placeholder": "main"
   }
 }]]></component>
   <component name="RecentsManager">
