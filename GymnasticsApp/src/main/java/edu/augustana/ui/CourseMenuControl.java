@@ -44,7 +44,8 @@ public class CourseMenuControl {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Gymnastics Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
-        Window mainWindow = courseTreeView.getScene().getWindow();
+        //Window mainWindow = courseTreeView.getScene().getWindow();
+        Window mainWindow = courseListView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
         if (chosenFile != null) {
             try {
@@ -79,7 +80,8 @@ public class CourseMenuControl {
         fileChooser.setTitle("Save New Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
         fileChooser.getExtensionFilters().add(filter);
-        Window mainWindow = courseTreeView.getScene().getWindow();
+        //Window mainWindow = courseTreeView.getScene().getWindow();
+        Window mainWindow = courseListView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
         App.getCurrentCourse().saveToFile(chosenFile);
         App.setCurrentCourseFile(chosenFile);

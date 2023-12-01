@@ -30,9 +30,9 @@ public class Course {
 
     public void saveToFile(File courseFile) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String serializedMovieLogText = gson.toJson(this);
+        String serializedCourseText = gson.toJson(this);
         PrintWriter writer = new PrintWriter(new FileWriter(courseFile));
-        writer.println(serializedMovieLogText);
+        writer.println(serializedCourseText);
         writer.close();
     }
 

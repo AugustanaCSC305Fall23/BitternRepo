@@ -1,6 +1,5 @@
 package edu.augustana.model;
 
-import edu.augustana.App;
 import edu.augustana.structures.*;
 
 import java.util.*;
@@ -9,9 +8,10 @@ public class LessonPlan {
     private String title;
     private Map<String, List<String>> eventInPlanList;
     private List<String> eventIndexes;
-    private IndexedMap lessonPlan = new IndexedMap();
+    private IndexedMap lessonPlan;
 
     public LessonPlan() {
+        lessonPlan = new IndexedMap();
         eventInPlanList = new TreeMap<>();
         eventIndexes = new ArrayList<>();
     }
@@ -82,7 +82,6 @@ public class LessonPlan {
         return lessonPlan;
     }
 
-    //fixed this
     public void removeCard(String cardDisplayedTitle) {
         System.out.println(lessonPlan.toString());
         String cardIDToRemove = null;

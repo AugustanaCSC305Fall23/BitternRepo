@@ -1,8 +1,5 @@
 package edu.augustana.structures;
 
-import edu.augustana.*;
-import edu.augustana.model.*;
-
 import java.util.List;
 
 import java.util.ArrayList;

@@ -182,7 +182,8 @@ public class CourseViewController {
     }
 
     @FXML private void duplicateLessonPlanHandler() {
-        LessonPlan lessonPlanToDuplicate = courseTreeView.getSelectionModel().getSelectedItem().getValue();
+        //LessonPlan lessonPlanToDuplicate = courseTreeView.getSelectionModel().getSelectedItem().getValue();
+        LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToDuplicate != null) {
             LessonPlan copyOfLessonPlan = new LessonPlan();
             copyOfLessonPlan.setTitle(lessonPlanToDuplicate.getTitle());

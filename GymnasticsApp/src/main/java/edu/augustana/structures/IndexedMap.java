@@ -1,12 +1,9 @@
 package edu.augustana.structures;
 
-import edu.augustana.*;
-import edu.augustana.model.*;
-
 import java.util.*;
 
 public class IndexedMap{
-    private List<Category> indexedMap = new ArrayList<>();
+    public List<Category> indexedMap = new ArrayList<>();
 
     public IndexedMap(){
 
@@ -20,7 +17,6 @@ public class IndexedMap{
     public boolean isEmpty(){
         return indexedMap.isEmpty();
     }
-
     public Boolean add(Category category) {
         return indexedMap.add(category);
     }
