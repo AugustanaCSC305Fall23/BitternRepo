@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -110,9 +111,9 @@
                                     <Insets />
                                  </VBox.margin>
                               </ScrollPane>
-                              <HBox alignment="CENTER" spacing="700.0">
+                              <HBox alignment="CENTER" spacing="800.0">
                                  <children>
-                                    <Button fx:id="printCardBtn" alignment="CENTER" mnemonicParsing="false" onAction="#printSelectedCards" style="-fx-background-color: silver;" text="Print Selected Card" wrapText="true">
+                                    <Button fx:id="printCardBtn" alignment="CENTER" mnemonicParsing="false" onAction="#printSelectedCards" style="-fx-background-color: silver;" text="Print" wrapText="true">
                                        <font>
                                           <Font name="Georgia" size="25.0" />
                                        </font>
@@ -120,8 +121,11 @@
                                           <DropShadow />
                                        </effect>
                                        <HBox.margin>
-                                          <Insets left="20.0" />
+                                          <Insets left="10.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Print selected card(s)" />
+                                       </tooltip>
                                     </Button>
                                     <Button fx:id="homeButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: silver;" text="Home">
                                        <font>
@@ -133,6 +137,9 @@
                                        <HBox.margin>
                                           <Insets right="20.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Return to home screen" />
+                                       </tooltip>
                                     </Button>
                                  </children>
                                  <VBox.margin>

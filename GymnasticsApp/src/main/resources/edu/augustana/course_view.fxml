@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,14 +14,28 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
    <children>
-      <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" layoutX="198.0" layoutY="21.0" promptText="(Enter Course Title)" style="-fx-background-color: DarkMagenta;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
+      <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" promptText="(Enter Course Title)" style="-fx-background-color: DarkMagenta;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="System Italic" size="40.0" />
-         </font></TextField>
+         </font>
+         <tooltip>
+            <Tooltip text="Click to edit course title">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Tooltip>
+         </tooltip></TextField>
       <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: DarkGray;" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="23.0" />
          </font>
+         <tooltip>
+            <Tooltip text="Return to home screen">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
       </Button>
       <MenuBar AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <menus>
@@ -66,7 +81,7 @@
          </children>
       </HBox>
       <TreeView fx:id="courseTreeView" fixedCellSize="3.0" prefHeight="361.0" prefWidth="596.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
-      <Line endX="2000.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <Line endX="1400.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
 
    </children>
 </AnchorPane>

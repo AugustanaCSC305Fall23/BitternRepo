@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.ImageView?>
@@ -84,13 +85,20 @@
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin></TextField>
-            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" prefWidth="150.0" style="-fx-background-color: Lavender;" text="Return to Course Outline" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Georgia" size="18.0" />
                </font>
                <HBox.margin>
-                  <Insets left="140.0" />
+                  <Insets left="220.0" />
                </HBox.margin>
+               <tooltip>
+                  <Tooltip text="Return to course outline">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
             </Button>
          </children>
          <opaqueInsets>
@@ -144,6 +152,13 @@
                            <font>
                               <Font name="Georgia" size="18.0" />
                            </font>
+                           <tooltip>
+                              <Tooltip text="Add selected cards to lesson plan">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
                         </Button>
                         <Button fx:id="favoriteBtn" mnemonicParsing="false" onAction="#addCardsToFavorites" style="-fx-background-color: Lavender;" text="Add to Favorites">
                            <HBox.margin>
@@ -152,6 +167,13 @@
                            <font>
                               <Font name="Georgia" size="18.0" />
                            </font>
+                           <tooltip>
+                              <Tooltip text="Add selected cards to favorite cards collection">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
                         </Button>
                      </children>
                   </HBox>
@@ -162,16 +184,37 @@
                   <Button mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: Lavender;" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
-                     </font></Button>
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Return to home screen">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip></Button>
                   <TextField fx:id="titleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: teal;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
                      <font>
                         <Font name="System Italic" size="36.0" />
-                     </font></TextField>
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Click to edit lesson plan title">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip></TextField>
                   <TreeView fx:id="lessonPlanTreeView" layoutX="47.0" layoutY="199.0" prefHeight="470.0" prefWidth="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="110.0" />
                   <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeCardFromLessonPlan" style="-fx-background-color: Lavender;" text="Delete Card" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
                      <font>
                         <Font name="Georgia" size="18.0" />
-                     </font></Button>
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Remove selected cards from this lesson plan">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip></Button>
                   <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" style="-fx-background-color: Lavender;" text="Print Lesson Plan" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
                      <font>
                         <Font name="Georgia" size="18.0" />

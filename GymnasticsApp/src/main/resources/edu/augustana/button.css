@@ -1,16 +1,17 @@
+/* Used https://stackoverflow.com/questions/68768778/javafx-button-hover-effect */
+
 .button {
     -fx-border-width: 1;
     -fx-border-color: black;
-    -fx-background-color: gray;
+    -fx-background-color: darkGray;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
-    cursor: pointer;
 }
 
-/* I want MouseMoved button background-color effect 鼠标移入 */
 .button:hover {
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
+    -fx-cursor: hand;
 }
 
 .button:pressed {

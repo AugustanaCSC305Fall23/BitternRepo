@@ -19,6 +19,7 @@ public class TitleEditor {
 
     @FXML public void editTitle() {
         titleField.setFont(editingFont);
+        //titleField.setStyle("-fx-text-fill: red");
         titleField.setEditable(true);
         if (titleField.getText().equals(titleField.getPromptText())) {
             titleField.clear();
