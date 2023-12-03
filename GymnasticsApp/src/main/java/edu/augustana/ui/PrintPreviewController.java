@@ -1,6 +1,7 @@
 package edu.augustana.ui;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class PrintPreviewController {
     // ---------- Non-FXML Data Fields ----------
     private PrinterJob printerJob;
 
-    private List<CardView> cardsToPrint;
+    private List<Card> cardsToPrint;
 
     private ParseLessonPlanPrinting lessonPlan;
 
@@ -69,14 +70,15 @@ public class PrintPreviewController {
 
 
     @FXML
-    void initialize() {
+    void initialize() throws MalformedURLException {
         printerJob = PrinterJob.createPrinterJob();
         if (PrintStaging.getFXML().equals("card_browser")) {
-            cardsToPrint = new ArrayList<>();
-            for (Card card : PrintStaging.getPrintCardList()) {
+            //cardsToPrint = new ArrayList<>();
+            cardsToPrint = PrintStaging.getPrintCardList();
+            /* for (Card card : PrintStaging.getPrintCardList()) {
                 CardView printCardView = new CardView(card);
                 cardsToPrint.add(printCardView);
-            }
+            } */
             int numPages = cardsToPrint.size();
             Pagination pagination = new Pagination(numPages);
             pagination.setStyle("-fx-border-color:white;");
@@ -84,7 +86,11 @@ public class PrintPreviewController {
                 if (pageIndex >= numPages) {
                     return null;
                 } else {
-                    return PrintStaging.createPage(pageIndex, cardsToPrint, printerJob);
+                    try {
+                        return PrintStaging.createPage(pageIndex, cardsToPrint, printerJob);
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
             mainPane.getChildren().addAll(pagination);
@@ -123,7 +129,7 @@ public class PrintPreviewController {
     }
 
     @FXML
-    void printAllCards(ActionEvent event) {
+    void printAllCards(ActionEvent event) throws MalformedURLException {
         Window window = mainPane.getScene().getWindow();
         if (printerJob != null && printerJob.showPrintDialog(window)) {
             PageRange pgRange = new PageRange(1, 1);
@@ -146,8 +152,9 @@ public class PrintPreviewController {
                     printNode.setPrefHeight(pgLayout.getPrintableHeight());
                     printNode.setPrefWidth(pgLayout.getPrintableWidth());
                     if (PrintStaging.getFXML().equals("card_browser")) {
-                        CardView cardView = cardsToPrint.get(p - 1);
-                        printNode.getChildren().add(cardView);
+                        Card card = cardsToPrint.get(p - 1);
+                        ImageView cardImageView = PrintStaging.createFullSizeImageView(card, pgLayout);
+                        printNode.getChildren().add(cardImageView);
                     } else {
                         printNode.getChildren().add(lessonPlan.getPages().get(p - 1));
                     }

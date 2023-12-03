@@ -105,10 +105,11 @@ public class CardBrowserController {
     }
 
     private void drawCardSet() throws MalformedURLException {
-        for (ImageView cardView : cardViewList) {
+        for (CardView cardView : cardViewList) {
+            System.out.println(cardView.getCard().getImageName());
             cardView.setOnMouseClicked(this::selectCardAction);
-            cardView.setFitWidth(350.0);
-            cardView.setFitHeight(275.0);
+            //cardView.setFitWidth(350.0);
+            //cardView.setFitHeight(275.0);
             cardsFlowPane.getChildren().add(cardView);
         }
     }
