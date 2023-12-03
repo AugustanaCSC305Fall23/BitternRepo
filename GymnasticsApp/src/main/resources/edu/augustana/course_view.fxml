@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
@@ -13,14 +14,28 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
    <children>
-      <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" layoutX="198.0" layoutY="21.0" promptText="(Enter Course Title)" style="-fx-background-color: DarkMagenta;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
+      <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" promptText="(Enter Course Title)" style="-fx-background-color: DarkMagenta;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="System Italic" size="40.0" />
-         </font></TextField>
-      <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         </font>
+         <tooltip>
+            <Tooltip text="Click to edit course title">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Tooltip>
+         </tooltip></TextField>
+      <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: DarkGray;" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="23.0" />
          </font>
+         <tooltip>
+            <Tooltip text="Return to home screen">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
       </Button>
       <MenuBar AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <menus>
@@ -42,31 +57,30 @@
       </MenuBar>
       <HBox fx:id="buttonBar" alignment="CENTER" spacing="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="120.0">
          <children>
-            <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Create New Lesson Plan">
+            <Button fx:id="createNewLessonPlanBtn" mnemonicParsing="false" onAction="#createLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Create New Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
       
-            <Button disable="true" mnemonicParsing="false" onAction="#editLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Edit Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#editLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Edit Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button disable="true" mnemonicParsing="false" onAction="#removeLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Remove Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#removeLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Remove Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button disable="true" mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray; -fx-background-radius: 5; -fx-border-color: Black; -fx-border-radius: 5;" text="Duplicate Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Duplicate Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
          </children>
       </HBox>
-      <TreeView fx:id="courseTreeView" fixedCellSize="3.0" prefHeight="361.0" prefWidth="596.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
+      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" />
       <Line endX="2000.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
-
    </children>
 </AnchorPane>

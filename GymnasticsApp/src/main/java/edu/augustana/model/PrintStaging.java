@@ -1,11 +1,15 @@
 package edu.augustana.model;
 import edu.augustana.ui.CardView;
+import javafx.fxml.FXML;
 import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +20,8 @@ public class PrintStaging {
     private static String lessonPlanTitle;
     private static Map<String, List<Card>> eventToCardMap;
     private static List<Card> printCardList;
+    private static boolean landscapeDisplay;
+    private static boolean cardDisplay;
 
  // Constructors
     public PrintStaging(List<Card> cardList, String fxml) {
@@ -23,10 +29,12 @@ public class PrintStaging {
         printCardList = cardList;
     }
 
-    public PrintStaging(String title, Map<String, List<Card>> map, String fxml) {
+    public PrintStaging(String title, Map<String, List<Card>> map, String fxml, boolean card_display, boolean landscape_display) {
         lessonPlanTitle = title;
         eventToCardMap = map;
         past_fxml = fxml;
+        cardDisplay = card_display;
+        landscapeDisplay = landscape_display;
     }
 
 // Getters
@@ -52,7 +60,7 @@ public class PrintStaging {
     // which heavily influenced the creation of the methods below.
 
     // Creates pages for individual cards (from Card Browser)
-    public static VBox createPage(int pageIndex, List<CardView> cardsToPrint, PrinterJob pj) {
+    public static VBox createPage(int pageIndex, List<Card> cardsToPrint, PrinterJob pj) throws MalformedURLException {
         PageLayout pg = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
         int page = pageIndex * itemsPerPage();
@@ -64,14 +72,13 @@ public class PrintStaging {
             whitePaperPane.setPrefHeight(pg.getPrintableHeight());
             whitePaperPane.setPrefWidth(pg.getPrintableWidth());
 
-            CardView cardView = cardsToPrint.get(p);
-            cardView.setRotate(90);
-            cardView.setFitHeight(pg.getPrintableWidth());
-            cardView.setFitWidth(pg.getPrintableWidth());
+            Card cardToPrint = cardsToPrint.get(p);
+            ImageView fullSizeImageView = createFullSizeImageView(cardToPrint, pg);
+
 
             // Adding the given print objects to the screen
             if (PrintStaging.getFXML().equals("card_browser")) {
-                whitePaperPane.getChildren().add(cardsToPrint.get(p));
+                whitePaperPane.getChildren().add(fullSizeImageView);
                 box.getChildren().add(whitePaperPane);
             }
 
@@ -81,15 +88,15 @@ public class PrintStaging {
 
     // Creates pages for a lesson plan
     public static VBox createPage(int pageIndex, ArrayList<Pane> pages, PrinterJob pj) {
-        PageLayout pg = pj.getJobSettings().getPageLayout();
+        PageLayout pgLayout = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
         int page = pageIndex * itemsPerPage();
 
         for (int p = page; p < page + itemsPerPage(); p++) {
             Pane pagePane = new Pane(pages.get(p));
             pagePane.setStyle("-fx-background-color: white");
-            pagePane.setPrefHeight(pg.getPrintableHeight());
-            pagePane.setPrefWidth(pg.getPrintableWidth());
+            pagePane.setPrefHeight(pgLayout.getPrintableHeight());
+            pagePane.setPrefWidth(pgLayout.getPrintableWidth());
             box.getChildren().add(pagePane);
         }
         return box;
@@ -99,6 +106,14 @@ public class PrintStaging {
     private static int itemsPerPage() {
         return 1;
     }
+
+    public static ImageView createFullSizeImageView(Card card, PageLayout pgLayout) throws MalformedURLException {
+        ImageView fullSizeImageView = new ImageView(card.getImage());
+        fullSizeImageView.setFitWidth(pgLayout.getPrintableWidth() - 10);
+        fullSizeImageView.setFitHeight(pgLayout.getPrintableWidth() * .75);
+        return fullSizeImageView;
+    }
+
 
 
 }

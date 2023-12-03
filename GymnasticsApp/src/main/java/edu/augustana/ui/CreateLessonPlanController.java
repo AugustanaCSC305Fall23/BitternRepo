@@ -3,9 +3,11 @@ package edu.augustana.ui;
 import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
+import edu.augustana.structures.*;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -26,7 +27,6 @@ import org.controlsfx.control.CheckComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
@@ -59,7 +59,6 @@ public class CreateLessonPlanController {
     @FXML private Label equipmentLabel;
 
     @FXML private AnchorPane lessonOutlinePane;
-    private ButtonControl buttonControl = new ButtonControl(3);
 
     // filter choices
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
@@ -82,7 +81,6 @@ public class CreateLessonPlanController {
         //addImagesToButton("Symbols/plusSign.png", addCardBtn);
         //addImagesToButton("Symbols/heart.png", favoriteBtn);
         setUpTitle();
-        setUpButtons();
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -110,11 +108,21 @@ public class CreateLessonPlanController {
         root = new TreeItem<>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
+        //System.out.println(App.getCurrentLessonPlan().getLessonPlan().toString());
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
             Card card;
-            for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
+      /*      for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
                 TreeItem<String> newEvent = new TreeItem<>(event);
                 for(String cardID : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
+                    card = CardDatabase.getFullCardCollection().getCardByID(cardID);
+                    newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                }
+                root.getChildren().add(newEvent);
+            }*/
+            for (ListIterator<Category> it = App.getCurrentLessonPlan().getLessonPlan().listIterator(); it.hasNext();) {
+                Category event = it.next();
+                TreeItem<String> newEvent = new TreeItem<>(event.getCategoryHeading());
+                for(String cardID : event.getCardsInList()){
                     card = CardDatabase.getFullCardCollection().getCardByID(cardID);
                     newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
                 }
@@ -129,19 +137,32 @@ public class CreateLessonPlanController {
         levelDropdown.getItems().addAll(levelFilterChoices);
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
+        for (CheckComboBox<String> dropdown : listOfDropdowns) {
+            dropdown.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+                public void onChanged(ListChangeListener.Change<? extends String> c) {
+                    applyFiltersAction();
+                }
+            });
+        }
     }
 
     private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
-            cardView.setFitWidth(260.0);
-            cardView.setFitHeight(195.0);
+            //cardView.setFitWidth(260.0);
+            //cardView.setFitHeight(195.0);
             cardsFlowPane.getChildren().add(cardView);
             cardView.setOnMouseClicked(this::selectCardAction);
             Animation delayAnim = new PauseTransition(Duration.seconds(1));
 
             cardView.setOnMouseEntered(e -> {
                 delayAnim.playFromStart();
-                delayAnim.setOnFinished(event -> zoomInOnImage(cardView));
+                delayAnim.setOnFinished(event -> {
+                    try {
+                        zoomInOnImage(cardView);
+                    } catch (MalformedURLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
             });
 
             cardView.setOnMouseExited(e -> {
@@ -151,9 +172,9 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void zoomInOnImage(CardView cardView) {
+    @FXML void zoomInOnImage(CardView cardView) throws MalformedURLException {
         eventLabel.setText(cardView.getCard().getEvent());
-        zoomedInCard.setImage(cardView.getImage());
+        zoomedInCard.setImage(cardView.getCard().getImage());
             String equipment = "Equipment: ";
             for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
                 if (i != 0) {
@@ -198,20 +219,6 @@ public class CreateLessonPlanController {
                 }
             }
         });
-    }
-
-    public void setUpButtons() {
-        for (Node node : lessonOutlinePane.getChildren()) {
-            if (node instanceof Button) {
-                Button btn = (Button) node;
-                btn.setOnMouseEntered(e -> buttonControl.enlargeButton(btn));
-                btn.setOnMouseExited(e -> buttonControl.resetButton(btn));
-            }
-        }
-        addCardBtn.setOnMouseEntered(e -> buttonControl.enlargeButton(addCardBtn));
-        addCardBtn.setOnMouseExited(e -> buttonControl.resetButton(addCardBtn));
-        favoriteBtn.setOnMouseEntered(e -> buttonControl.enlargeButton(favoriteBtn));
-        favoriteBtn.setOnMouseExited(e -> buttonControl.resetButton(favoriteBtn));
     }
 
     @FXML void goToHome() throws IOException {
@@ -337,10 +344,15 @@ public class CreateLessonPlanController {
             newEvent.getChildren().add(new TreeItem<>(card.getCode() + ", " + card.getTitle()));
             root.getChildren().add(newEvent);
         } else{
-            if (!App.getCurrentLessonPlan().cardInPlanList(card)){
+            /*if (!App.getCurrentLessonPlan().cardInPlanList(card)){
                 App.getCurrentLessonPlan().addCardToEvent(card);
                 int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
                 root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+            }*/
+            if (!App.getCurrentLessonPlan().cardInPlanList(card)){
+                //System.out.println("card is not in list");
+                App.getCurrentLessonPlan().addCardToEvent(card);
+                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlan().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
         }
     }
@@ -367,8 +379,50 @@ public class CreateLessonPlanController {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getEventInPlanList());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
-        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
+        boolean cardDisplay;
+        boolean landscapeDisplay;
+
+        // If true, show cards. Else, show text only
+        cardDisplay = promptCardDisplay();
+
+        // If true shows landscape mode. Else, show portrait mode
+        landscapeDisplay = promptPageFormat();
+
+
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay);
         App.setRoot("print_preview");
+    }
+
+    @FXML private boolean promptCardDisplay() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType cardImageBtn = new ButtonType("Card Image", ButtonBar.ButtonData.OK_DONE);
+        ButtonType textOnlyBtn = new ButtonType("Text Only", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be show card images, or be text only?", cardImageBtn, textOnlyBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.orElse(textOnlyBtn) == cardImageBtn) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @FXML private boolean promptPageFormat() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType landscapeBtn = new ButtonType("Landscape", ButtonBar.ButtonData.OK_DONE);
+        ButtonType portraitBtn = new ButtonType("Portrait", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be in Landscape or Portrait mode?", landscapeBtn, portraitBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.orElse(portraitBtn) == landscapeBtn) {
+            return true;
+        } else {
+            return false;
+        }
     }
     @FXML
     void switchToAllCards() {

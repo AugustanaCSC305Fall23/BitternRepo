@@ -31,13 +31,12 @@ public class CardDatabase {
     // Used https://stackoverflow.com/questions/1844688/how-to-read-all-files-in-a-folder-from-java/26215931#26215931
     public static void addCardsFromAllCSVFiles() throws IOException, CsvValidationException {
         fullCardCollection = new CardCollection();
-        File folder = new File("CardPacks");
+        File folder = new File("cardpacks");
         List<File> csvFileList = new ArrayList<>();
         csvFileList = listCSVFilesFromFolder(folder, csvFileList);
         for (File csvFile : csvFileList) {
             addCardsFromCSVFile(csvFile);
         }
-
     }
 
     // Used https://stackoverflow.com/questions/1844688/how-to-read-all-files-in-a-folder-from-java/26215931#26215931
@@ -58,8 +57,12 @@ public class CardDatabase {
     // Used https://stackoverflow.com/questions/59029879/javafx-image-from-resources-folder
     // Used https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
     public static Image getImageFromPack(String cardPack, String imageFilename) throws MalformedURLException {
-        String url = new File("CardPacks/" + cardPack.toUpperCase() + "Pack/" + imageFilename).toURI().toURL().toString();
-        //Image image = new Image(url, 402.45, 310.97, true, true);
+        String url = new File("cardpacks/" + cardPack + "/" + imageFilename + ".png").toURI().toURL().toString();
+        return new Image(url);
+    }
+
+    public static Image getThumbnail(String cardPack, String imageFilename) throws MalformedURLException {
+        String url = new File("cardpacks/" + cardPack + "/thumbs/" + imageFilename + ".jpg").toURI().toURL().toString();
         return new Image(url);
     }
 

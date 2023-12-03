@@ -19,11 +19,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import javafx.stage.Screen;
 
@@ -54,7 +54,7 @@ public class ParseLessonPlanPrinting {
 
     // The goal of this class is to set up the layout of each page and to set up the
     // list of Nodes that will represent the pages of the lesson plan
-    public ParseLessonPlanPrinting(){
+    public ParseLessonPlanPrinting() throws MalformedURLException {
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
         pageHeight = pgLayout.getPrintableHeight();
@@ -62,7 +62,7 @@ public class ParseLessonPlanPrinting {
         parseLessonPlan();
     }
 
-    private void parseLessonPlan() {
+    private void parseLessonPlan() throws MalformedURLException {
         labelToFlowPaneMap = new HashMap<Label, FlowPane>();
 
         // LessonPlan Title
