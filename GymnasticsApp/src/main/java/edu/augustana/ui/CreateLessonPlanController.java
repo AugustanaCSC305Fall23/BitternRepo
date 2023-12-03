@@ -148,15 +148,21 @@ public class CreateLessonPlanController {
 
     private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
-            cardView.setFitWidth(260.0);
-            cardView.setFitHeight(195.0);
+            //cardView.setFitWidth(260.0);
+            //cardView.setFitHeight(195.0);
             cardsFlowPane.getChildren().add(cardView);
             cardView.setOnMouseClicked(this::selectCardAction);
             Animation delayAnim = new PauseTransition(Duration.seconds(1));
 
             cardView.setOnMouseEntered(e -> {
                 delayAnim.playFromStart();
-                delayAnim.setOnFinished(event -> zoomInOnImage(cardView));
+                delayAnim.setOnFinished(event -> {
+                    try {
+                        zoomInOnImage(cardView);
+                    } catch (MalformedURLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
             });
 
             cardView.setOnMouseExited(e -> {
@@ -166,9 +172,9 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void zoomInOnImage(CardView cardView) {
+    @FXML void zoomInOnImage(CardView cardView) throws MalformedURLException {
         eventLabel.setText(cardView.getCard().getEvent());
-        zoomedInCard.setImage(cardView.getImage());
+        zoomedInCard.setImage(cardView.getCard().getImage());
             String equipment = "Equipment: ";
             for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
                 if (i != 0) {

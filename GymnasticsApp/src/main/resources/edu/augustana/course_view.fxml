@@ -7,7 +7,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
@@ -64,17 +63,17 @@
                </font>
             </Button>
       
-            <Button disable="true" mnemonicParsing="false" onAction="#editLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray;" text="Edit Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#editLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Edit Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button disable="true" mnemonicParsing="false" onAction="#removeLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray;" text="Remove Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#removeLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Remove Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Button disable="true" mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" opacity="0.6" style="-fx-background-color: DarkGray;" text="Duplicate Lesson Plan">
+            <Button disable="true" mnemonicParsing="false" onAction="#duplicateLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Duplicate Lesson Plan">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>

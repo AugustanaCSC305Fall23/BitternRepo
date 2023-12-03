@@ -20,6 +20,7 @@ public class Card {
     private String[] keywords;
     private String uniqueID;
     private Image image;
+    private Image thumbnail;
     private String displayedTitle;
 
     public Card(String[] cardDataArray) throws MalformedURLException {
@@ -28,14 +29,19 @@ public class Card {
         category = cardDataArray[2].strip();
         title = cardDataArray[3].strip();
         packFolder = cardDataArray[4].strip();
+
         imageName = cardDataArray[5].strip();
+        int suffixStartIndex = imageName.indexOf('.');
+        imageName = imageName.substring(0, suffixStartIndex);
+
         gender = cardDataArray[6].strip();
         modelSex = cardDataArray[7].strip();
         level = cardDataArray[8].strip();
         equipment = cardDataArray[9].split(",");
         keywords = cardDataArray[10].split(",");
         uniqueID = packFolder + "/" + imageName;
-        image = CardDatabase.getImageFromPack(packFolder, imageName);
+        //image = CardDatabase.getImageFromPack(packFolder, imageName);
+        thumbnail = CardDatabase.getThumbnail(packFolder, imageName);
         displayedTitle = code + ", " + title;
     }
 
@@ -87,8 +93,12 @@ public class Card {
         return uniqueID;
     }
 
-    public Image getImage() {
-        return image;
+    public Image getThumbnail() {
+        return thumbnail;
+    }
+
+    public Image getImage() throws MalformedURLException {
+        return CardDatabase.getImageFromPack(packFolder, imageName);
     }
     public String getDisplayedTitle() { return displayedTitle;}
 
