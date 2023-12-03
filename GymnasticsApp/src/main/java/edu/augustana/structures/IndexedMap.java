@@ -3,13 +3,16 @@ package edu.augustana.structures;
 import java.util.*;
 
 public class IndexedMap{
-    public List<Category> indexedMap = new ArrayList<>();
+    private List<Category> indexedMap = new ArrayList<>();
 
     public IndexedMap(){
 
     }
     public IndexedMap(Category category){
         indexedMap.add(category);
+    }
+    public List<Category> getIndexedMap(){
+        return indexedMap;
     }
     public int size(){
         return 0;

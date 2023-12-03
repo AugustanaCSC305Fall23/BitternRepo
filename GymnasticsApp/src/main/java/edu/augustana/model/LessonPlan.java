@@ -12,8 +12,8 @@ public class LessonPlan {
 
     public LessonPlan() {
         lessonPlan = new IndexedMap();
-        eventInPlanList = new TreeMap<>();
-        eventIndexes = new ArrayList<>();
+        //eventInPlanList = new TreeMap<>();
+        //eventIndexes = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -67,14 +67,17 @@ public class LessonPlan {
         return (/*eventInPlanList.get(card.getEvent()).contains(card) || */lessonPlan.get(lessonPlan.get(card.getEvent())).contains(card.getUniqueID()));
     }
 
-    public Map<String, List<Card>> getMapOfCardsFromID(Map<String, List<String>> mapOfIDs){
+    public Map<String, List<Card>> getMapOfCardsFromID(IndexedMap mapOfIDs){
         Map<String, List<Card>> mapOfCardsFromID = new TreeMap<>();
-        for(String event : mapOfIDs.keySet()){
-            List<Card> cardsFromID = new ArrayList<>();
-            for(String cardID : mapOfIDs.get(event)) {
-                cardsFromID.add(CardDatabase.getFullCardCollection().getCardByID(cardID));
+        if(!mapOfIDs.isEmpty()) {
+            for (ListIterator<Category> it = mapOfIDs.listIterator(); it.hasNext(); ) {
+                Category category = it.next();
+                List<Card> cardsFromID = new ArrayList<>();
+                for (String cardID : category.getCardsInList()) {
+                    cardsFromID.add(CardDatabase.getFullCardCollection().getCardByID(cardID));
+                }
+                mapOfCardsFromID.put(category.getCategoryHeading(), cardsFromID);
             }
-            mapOfCardsFromID.put(event, cardsFromID);
         }
         return  mapOfCardsFromID;
     }

@@ -370,7 +370,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void printLessonPlan() throws IOException {
-        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getEventInPlanList());
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlan());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
