@@ -66,7 +66,7 @@
                   <Insets left="80.0" top="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="365.0">
+            <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="385.0">
                <font>
                   <Font size="21.0" />
                </font>
@@ -78,7 +78,7 @@
                   <Font name="Georgia" size="21.0" />
                </font>
                <HBox.margin>
-                  <Insets left="150.0" top="15.0" />
+                  <Insets left="100.0" top="15.0" />
                </HBox.margin>
                <tooltip>
                   <Tooltip text="Return to course outline">
@@ -108,7 +108,7 @@
                                  <children>
                                     <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="540.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="10.0">
                                        <content>
-                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="830.0" style="-fx-background-color: teal;" vgap="10.0" />
+                                          <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="850.0" style="-fx-background-color: teal;" vgap="10.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>

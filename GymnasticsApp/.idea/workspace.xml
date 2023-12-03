@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb2a390b-1fc2-43aa-94cb-91e40eb9fdf9" name="Changes" comment="" />
+    <list default="true" id="eb2a390b-1fc2-43aa-94cb-91e40eb9fdf9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +37,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "newBranch"
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "git-widget-placeholder": "newBranch",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.21494253"
   }
 }]]></component>
   <component name="RecentsManager">
