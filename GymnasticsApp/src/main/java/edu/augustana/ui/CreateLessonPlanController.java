@@ -380,13 +380,15 @@ public class CreateLessonPlanController {
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
         boolean cardDisplay;
-        boolean landscapeDisplay;
+        boolean landscapeDisplay = false;
 
         // If true, show cards. Else, show text only
         cardDisplay = promptCardDisplay();
 
         // If true shows landscape mode. Else, show portrait mode
-        landscapeDisplay = promptPageFormat();
+        if (cardDisplay) {
+            landscapeDisplay = promptPageFormat();
+        }
 
 
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay);

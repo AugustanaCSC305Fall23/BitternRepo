@@ -3,6 +3,7 @@ import edu.augustana.ui.CardView;
 import javafx.fxml.FXML;
 import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -54,6 +55,14 @@ public class PrintStaging {
         return printCardList;
     }
 
+    public static boolean getCardDisplay() {
+        return cardDisplay;
+    }
+
+    public static boolean getLandscapeDisplay() {
+        return landscapeDisplay;
+    }
+
 // Creates Pages for PrintPreviewController
     // Used https://coderanch.com/t/709329/java/JavaFX-approach-dividing-text-blob
     // and https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/pagination.htm
@@ -69,18 +78,18 @@ public class PrintStaging {
 
             Pane whitePaperPane = new Pane();
             whitePaperPane.setStyle("-fx-background-color:white;");
-            whitePaperPane.setPrefHeight(pg.getPrintableHeight());
-            whitePaperPane.setPrefWidth(pg.getPrintableWidth());
+            whitePaperPane.setPrefHeight(pg.getPrintableWidth());
+            whitePaperPane.setPrefWidth(pg.getPrintableHeight());
 
             Card cardToPrint = cardsToPrint.get(p);
             ImageView fullSizeImageView = createFullSizeImageView(cardToPrint, pg);
 
 
-            // Adding the given print objects to the screen
-            if (PrintStaging.getFXML().equals("card_browser")) {
-                whitePaperPane.getChildren().add(fullSizeImageView);
-                box.getChildren().add(whitePaperPane);
-            }
+
+            whitePaperPane.getChildren().add(fullSizeImageView);
+
+            box.getChildren().add(whitePaperPane);
+
 
         }
         return box;
@@ -95,9 +104,16 @@ public class PrintStaging {
         for (int p = page; p < page + itemsPerPage(); p++) {
             Pane pagePane = new Pane(pages.get(p));
             pagePane.setStyle("-fx-background-color: white");
-            pagePane.setPrefHeight(pgLayout.getPrintableHeight());
-            pagePane.setPrefWidth(pgLayout.getPrintableWidth());
-            box.getChildren().add(pagePane);
+            if (landscapeDisplay) {
+                // "Rotates" pagination so that it is in landscape mode
+                pagePane.setPrefHeight(pgLayout.getPrintableWidth());
+                pagePane.setPrefWidth(pgLayout.getPrintableHeight());
+                box.getChildren().add(pagePane);
+            } else {
+                pagePane.setPrefHeight(pgLayout.getPrintableHeight());
+                pagePane.setPrefWidth(pgLayout.getPrintableWidth());
+                box.getChildren().add(pagePane);
+            }
         }
         return box;
     }
