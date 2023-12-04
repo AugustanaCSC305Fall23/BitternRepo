@@ -22,20 +22,6 @@ public class Course {
         return newLessonPlan;
     }
 
-    public static Course loadFromFile(File courseFile) throws IOException {
-        FileReader reader = new FileReader(courseFile);
-        Gson gson = new Gson();
-        return gson.fromJson(reader, Course.class);
-    }
-
-    public void saveToFile(File courseFile) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String serializedCourseText = gson.toJson(this);
-        PrintWriter writer = new PrintWriter(new FileWriter(courseFile));
-        writer.println(serializedCourseText);
-        writer.close();
-    }
-
     public String getCourseTitle() {
         return courseTitle;
     }

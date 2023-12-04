@@ -72,6 +72,7 @@ public class PrintStaging {
     public static VBox createPage(int pageIndex, List<Card> cardsToPrint, PrinterJob pj) throws MalformedURLException {
         PageLayout pg = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
+
         int page = pageIndex * itemsPerPage();
 
         for (int p = page; p < page + itemsPerPage(); p++) {
