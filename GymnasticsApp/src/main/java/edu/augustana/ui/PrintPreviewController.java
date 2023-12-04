@@ -73,12 +73,9 @@ public class PrintPreviewController {
     void initialize() throws MalformedURLException {
         printerJob = PrinterJob.createPrinterJob();
         if (PrintStaging.getFXML().equals("card_browser")) {
-            //cardsToPrint = new ArrayList<>();
+
             cardsToPrint = PrintStaging.getPrintCardList();
-            /* for (Card card : PrintStaging.getPrintCardList()) {
-                CardView printCardView = new CardView(card);
-                cardsToPrint.add(printCardView);
-            } */
+
             int numPages = cardsToPrint.size();
             Pagination pagination = new Pagination(numPages);
             pagination.setStyle("-fx-border-color:white;");
@@ -95,7 +92,7 @@ public class PrintPreviewController {
             });
             mainPane.getChildren().addAll(pagination);
         } else {
-            lessonPlan = new ParseLessonPlanPrinting();
+            lessonPlan = new ParseLessonPlanPrinting(printerJob);
             ArrayList<Pane> pages = lessonPlan.getPages();
             int numPages = lessonPlan.getPages().size();
             Pagination pagination = new Pagination(numPages);
@@ -145,9 +142,7 @@ public class PrintPreviewController {
 
             boolean printed = false;
             for (PageRange pr : js.getPageRanges()) {
-                for(int p = pr.getStartPage(); p <= pr.getEndPage(); p++){        // This loops through the selected page range
-                    //List<CardView> cardsToPrintClone = new ArrayList<>(cardsToPrint);
-                    //CardView cardView = cardsToPrintClone.get(p - 1);
+                for (int p = pr.getStartPage(); p <= pr.getEndPage(); p++){        // This loops through the selected page range
                     Pane printNode = new Pane();
                     printNode.setPrefHeight(pgLayout.getPrintableHeight());
                     printNode.setPrefWidth(pgLayout.getPrintableWidth());
@@ -156,7 +151,14 @@ public class PrintPreviewController {
                         ImageView cardImageView = PrintStaging.createFullSizeImageView(card, pgLayout);
                         printNode.getChildren().add(cardImageView);
                     } else {
-                        printNode.getChildren().add(lessonPlan.getPages().get(p - 1));
+                        Pane page = lessonPlan.getPages().get(p - 1);
+                        if (PrintStaging.getLandscapeDisplay()) {
+                            printNode.setPrefHeight(pgLayout.getPrintableWidth());
+                            printNode.setPrefWidth(pgLayout.getPrintableHeight());
+                            page.setRotate(-90);
+
+                        }
+                        printNode.getChildren().add(page);
                     }
 
                     printed = printerJob.printPage(pgLayout, printNode);

@@ -359,7 +359,7 @@ public class CreateLessonPlanController {
                 root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }*/
             if (!App.getCurrentLessonPlan().cardInPlanList(card)){
-                System.out.println("card is not in list");
+                //System.out.println("card is not in list");
                 App.getCurrentLessonPlan().addCardToEvent(card);
                 root.getChildren().get(App.getCurrentLessonPlan().getLessonPlan().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
@@ -388,8 +388,52 @@ public class CreateLessonPlanController {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlan());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
-        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator");
+        boolean cardDisplay;
+        boolean landscapeDisplay = false;
+
+        // If true, show cards. Else, show text only
+        cardDisplay = promptCardDisplay();
+
+        // If true shows landscape mode. Else, show portrait mode
+        if (cardDisplay) {
+            landscapeDisplay = promptPageFormat();
+        }
+
+
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay);
         App.setRoot("print_preview");
+    }
+
+    @FXML private boolean promptCardDisplay() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType cardImageBtn = new ButtonType("Card Image", ButtonBar.ButtonData.OK_DONE);
+        ButtonType textOnlyBtn = new ButtonType("Text Only", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be show card images, or be text only?", cardImageBtn, textOnlyBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.orElse(textOnlyBtn) == cardImageBtn) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @FXML private boolean promptPageFormat() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType landscapeBtn = new ButtonType("Landscape", ButtonBar.ButtonData.OK_DONE);
+        ButtonType portraitBtn = new ButtonType("Portrait", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be in Landscape or Portrait mode?", landscapeBtn, portraitBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.orElse(portraitBtn) == landscapeBtn) {
+            return true;
+        } else {
+            return false;
+        }
     }
     @FXML
     void switchToAllCards() {
