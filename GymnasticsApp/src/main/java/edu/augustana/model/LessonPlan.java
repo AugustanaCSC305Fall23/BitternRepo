@@ -1,5 +1,6 @@
 package edu.augustana.model;
 
+import edu.augustana.App;
 import edu.augustana.structures.*;
 
 import java.util.*;
@@ -30,7 +31,7 @@ public class LessonPlan implements Cloneable{
         /*eventInPlanList.put(card.getEvent(), cardDisplay);
         eventIndexes.add(card.getEvent());*/
         lessonPlan.add(new Category(card.getEvent(), card.getUniqueID()));
-        System.out.println(lessonPlan.toString());
+        //System.out.println(App.getCurrentLessonPlan().toString());
     }
     //rename this method
     public void addCardToEvent(Card card){
@@ -38,7 +39,7 @@ public class LessonPlan implements Cloneable{
         Category addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
         addTo.addCardToList(card.getUniqueID());
         //l
-        System.out.println(lessonPlan.toString());
+        //System.out.println(lessonPlan.toString());
     }
     public boolean eventInPlanList(Card card){
         if(/*eventInPlanList.containsKey(card.getEvent()) && */lessonPlan.contains(card.getEvent())){
@@ -104,11 +105,11 @@ public class LessonPlan implements Cloneable{
         for (ListIterator<Category> it = lessonPlan.listIterator(); it.hasNext(); ) {
             Category event = it.next();
             for (String id : event.getCardsInList()) {
-                System.out.println(lessonPlan.toString());
+                //System.out.println(lessonPlan.toString());
                 if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
                     //eventInPlanList.get(event).remove(id);
                     //eventInPlanList.values().contains(id);
-                    System.out.println(eventInPlanList);
+                    //System.out.println(eventInPlanList);
                     cardIDToRemove = id;
                     eventToChange = event.getCategoryHeading();
                 }
@@ -123,6 +124,7 @@ public class LessonPlan implements Cloneable{
             lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
         }
 
+
     }
 
     /**
@@ -130,26 +132,34 @@ public class LessonPlan implements Cloneable{
      * @return
      * @throws CloneNotSupportedException
      */
-    public LessonPlan clone() throws CloneNotSupportedException {
-        /**
-         * Used https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone-- to
-         * understand how to use the clone() method
-         * Based this method on the clone() method in Drawing class of
-         * DrawingApp
-         */
-            try {
-                LessonPlan clone = (LessonPlan) super.clone();
-                clone.eventInPlanList = eventInPlanList;
-                return clone;
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
+//    public LessonPlan clone() {
+//        /**
+//         * Used https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone-- to
+//         * understand how to use the clone() method
+//         * Based this method on the clone() method in Drawing class of
+//         * DrawingApp
+//         */
+//            try {
+//                LessonPlan clone = (LessonPlan) super.clone();
+//                clone.eventInPlanList = eventInPlanList;
+//                clone.title = title;
+//                return clone;
+//            } catch (CloneNotSupportedException e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
 
 
     @Override
     public String toString() {
-        return title;
+        return "LessonPlan{" +
+                "title='" + title + '\'' +
+                ", eventInPlanList=" + eventInPlanList +
+                ", eventIndexes=" + eventIndexes +
+                ", lessonPlan=" + lessonPlan +
+                '}';
     }
+
+
 }

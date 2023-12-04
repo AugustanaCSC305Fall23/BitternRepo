@@ -74,6 +74,8 @@ public class CreateLessonPlanController {
     private List<CardView> cardViewList = new ArrayList<>();
     TreeItem<String> root = new TreeItem<>();
 
+    private UndoRedoHandler undoRedoHandler;
+
     @FXML
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
@@ -81,6 +83,7 @@ public class CreateLessonPlanController {
         //addImagesToButton("Symbols/plusSign.png", addCardBtn);
         //addImagesToButton("Symbols/heart.png", favoriteBtn);
         setUpTitle();
+        undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -310,6 +313,7 @@ public class CreateLessonPlanController {
                 addToTreeView(cardView.getCard());
                 cardView.setEffect(null);
             }
+            undoRedoHandler.saveState();
             selectedCards.clear();
         } else {
             giveWarning("No card selected.");
@@ -361,10 +365,22 @@ public class CreateLessonPlanController {
     public void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
-            System.out.println(cardToRemove);
             App.getCurrentLessonPlan().removeCard(cardToRemove);
             setUpTreeView();
+            undoRedoHandler.saveState();
         }
+    }
+
+    public void undo() {
+        undoRedoHandler.undo();
+        setUpTreeView();
+        setUpTitle();
+    }
+
+    public void redo() {
+        undoRedoHandler.redo();
+        setUpTreeView();
+        setUpTitle();
     }
 
     @FXML private void giveWarning(String message) {
