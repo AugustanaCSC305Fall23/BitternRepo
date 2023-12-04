@@ -22,7 +22,6 @@ public class App extends Application {
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
     private static FavoriteCards favoriteCards;
-    //private static UndoRedoHandler
 
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {

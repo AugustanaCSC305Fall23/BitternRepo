@@ -31,13 +31,6 @@ public class IndexedMap implements Cloneable{
             }
         }
     }
-/*    public void add(String eventHeading, List<String> IDList){
-        for(int i = 0; i < indexedMap.size(); i++){
-            if(indexedMap.get(i).getCategoryHeading().equalsIgnoreCase(eventHeading)){
-                indexedMap.get(i).addCardToList(cardID);
-            }
-        }
-    }*/
 
     public boolean remove(Category o) {
         return indexedMap.remove(o);

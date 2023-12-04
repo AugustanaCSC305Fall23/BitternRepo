@@ -108,8 +108,6 @@ public class CardBrowserController {
         for (CardView cardView : cardViewList) {
             System.out.println(cardView.getCard().getImageName());
             cardView.setOnMouseClicked(this::selectCardAction);
-            //cardView.setFitWidth(350.0);
-            //cardView.setFitHeight(275.0);
             cardsFlowPane.getChildren().add(cardView);
         }
     }
@@ -181,18 +179,12 @@ public class CardBrowserController {
 
     @FXML
     void printSelectedCards() throws IOException {
-        //PrintStaging printCard = new PrintStaging(prevImage, "card_browser");
         if (selectedCards != null){
-            /* for (Card card : selectedCards.keySet()) {
-                PrintStaging printCard = new PrintStaging(card.getImage(), "card_browser");
-                selectedCards.get(card).setEffect(null);
-            } */
             List<Card> cardsToPrint = new ArrayList<>();
             for (CardView cardView : selectedCards) {
                 cardsToPrint.add(cardView.getCard());
             }
             PrintStaging printCardList = new PrintStaging(cardsToPrint, "card_browser");
-            //System.out.println(printCardList.getPrintCardList());
             selectedCards.clear();
             App.setRoot("print_preview");
         }

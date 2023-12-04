@@ -99,14 +99,6 @@ public class CreateLessonPlanController {
         favoriteBtn.setDisable(true);
         removeFavoriteBtn.setDisable(true);
     }
-    /* private void addImagesToButton(String path, Button toAddImageTo) throws MalformedURLException {
-        String imageURL = new File(path).toURI().toURL().toString();
-        ImageView buttonImageView = new ImageView(new Image(imageURL));
-        buttonImageView.setFitHeight(20.0);
-        buttonImageView.setFitWidth(20.0);
-        toAddImageTo.setMaxSize(25.0, 25.0);
-        toAddImageTo.setGraphic(buttonImageView);
-    } */
 
     private void setUpTreeView(){
         //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
@@ -369,7 +361,6 @@ public class CreateLessonPlanController {
                 root.getChildren().get(App.getCurrentLessonPlan().getLessonPlan().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
         }
-        //undoRedoHandler.saveState();
     }
 
     @FXML
@@ -465,19 +456,14 @@ public class CreateLessonPlanController {
 
     @FXML
     void switchToFavoriteCards() {
-        //System.out.println(cardsTabPane.getSelectionModel().isSelected(0));
         allCardsTab.getContent().setVisible(false);
         favoriteCardsTab.getContent().setVisible(true);
-        //System.out.println(cardsTabPane);
-        //cardsTabPane.getSelectionModel().isSelected(0);
-        //cardsTabPane.getSelectionModel().select(favoriteCardsTab);
         if(favoriteCardsFlowPane.getChildren().isEmpty()){
             drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
         }else if(favoriteCardsFlowPane.getChildren().size() < App.getFavoriteCards().getFavoriteCardsList().size()){
             favoriteCardsFlowPane.getChildren().clear();
             drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
         }
-        //drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
     }
     private FlowPane findAndSetFlowPane(){
         if(favoriteCardsTab.isSelected()){

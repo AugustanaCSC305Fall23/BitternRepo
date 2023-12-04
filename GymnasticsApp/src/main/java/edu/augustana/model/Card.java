@@ -40,7 +40,6 @@ public class Card {
         equipment = cardDataArray[9].split(",");
         keywords = cardDataArray[10].split(",");
         uniqueID = packFolder + "/" + imageName;
-        //image = CardDatabase.getImageFromPack(packFolder, imageName);
         thumbnail = CardDatabase.getThumbnail(packFolder, imageName);
         displayedTitle = code + ", " + title;
     }

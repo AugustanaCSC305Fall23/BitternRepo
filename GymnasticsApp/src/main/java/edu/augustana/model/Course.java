@@ -13,7 +13,6 @@ public class Course {
 
     public Course() {
         lessonPlanList = new ArrayList<>();
-        //lessonPlanList.add(new LessonPlan("My Lesson Plan"));
     }
 
     public LessonPlan createNewLessonPlan() {
