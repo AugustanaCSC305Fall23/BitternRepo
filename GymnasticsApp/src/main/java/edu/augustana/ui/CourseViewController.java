@@ -179,11 +179,12 @@ public class CourseViewController {
         if (lessonPlanToDuplicate != null) {
             LessonPlan copyOfLessonPlan = new LessonPlan();
             copyOfLessonPlan.setTitle(lessonPlanToDuplicate.getTitle());
-            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getEventInPlanList());
+            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getLessonPlan());
             App.getCurrentCourse().getLessonPlanList().add(lessonPlanToDuplicate);
-            TreeItem<LessonPlan> newLesson = new TreeItem<>();
-            newLesson.setValue(lessonPlanToDuplicate);
-            root.getChildren().add(newLesson);
+            courseListView.getItems().add(copyOfLessonPlan);
+            //TreeItem<LessonPlan> newLesson = new TreeItem<>();
+            //newLesson.setValue(lessonPlanToDuplicate);
+            //root.getChildren().add(newLesson);
         }
     }
 }

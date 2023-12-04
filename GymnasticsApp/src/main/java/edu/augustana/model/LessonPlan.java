@@ -54,9 +54,12 @@ public class LessonPlan {
         return eventIndexes;
     }
 
-    public void setEventInPlanList(Map<String, List<String>> eventList) {
+/*    public void setEventInPlanList(Map<String, List<String>> eventList) {
         eventInPlanList = eventList;
         //lessonPlan.
+    }*/
+    public void setEventInPlanList(IndexedMap lessonPlan){
+        this.lessonPlan = lessonPlan;
     }
 
     public Map<String, List<String>> getEventInPlanList(){

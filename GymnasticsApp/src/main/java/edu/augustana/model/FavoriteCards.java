@@ -2,6 +2,9 @@ package edu.augustana.model;
 import edu.augustana.ui.CardView;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,6 @@ import java.util.List;
 public class FavoriteCards {
     File favCardsFile = new File("cardpacks/favoriteCards");
     BufferedReader fileReader = new BufferedReader(new FileReader(favCardsFile));
-    FileWriter fileWriter = new FileWriter(favCardsFile, true);
     List<Card> favoriteCards = new ArrayList<>();
 
     List<CardView> favoritesCardView = new ArrayList<>();
@@ -34,21 +36,34 @@ public class FavoriteCards {
     public void addFavorite(Card card) throws IOException {
         //add card to file (unique id)
         //add card to list
-        fileWriter.append(card.getUniqueID() + "\n");
-        favoriteCards.add(card);
-        favoritesCardView.add((new CardView(card)));
-    }
-    public void deleteFavorite(String cardID){
-        //delete card from file (unique id)
-        //delete card from list
-        /**
-         * https://stackoverflow.com/questions/34999999/java-how-to-remove-blank-lines-from-a-text-file
-         * to help delete from a text file
-         */
-
-    }
-    public void closeFileWriter() throws IOException {
+        FileWriter fileWriter = new FileWriter(favCardsFile, true);
+        if(!favoriteCards.contains(card)){
+            fileWriter.append(card.getUniqueID() + "\n");
+            favoriteCards.add(card);
+            favoritesCardView.add((new CardView(card)));
+        }
         fileWriter.close();
+    }
+    public void deleteFavorite(Card card) throws IOException {
+        if(favoriteCards.contains(card)){
+            favoriteCards.remove(card);
+        }
+        reWriteFavoritesFile();
+    }
+
+    public void removeFavoriteCardView(CardView card){
+        favoritesCardView.remove(card);
+    }
+
+    private void reWriteFavoritesFile() throws IOException {
+        FileWriter fileWriter = new FileWriter(favCardsFile, false);
+        fileWriter.flush();
+        fileWriter.close();
+        FileWriter reWriter = new FileWriter(favCardsFile, true);
+        for(Card cardInList : favoriteCards){
+            reWriter.append(cardInList.getUniqueID() + "\n");
+        }
+        reWriter.close();
     }
     public List<Card> getFavoriteCardsList(){
         return favoriteCards;

@@ -108,7 +108,6 @@ public class CreateLessonPlanController {
         root = new TreeItem<>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
-        System.out.println(App.getCurrentLessonPlan().getLessonPlan().toString());
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
             Card card;
       /*      for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
@@ -328,8 +327,18 @@ public class CreateLessonPlanController {
     }
 
     @FXML
-    void removeFavoriteAction(ActionEvent event) {
-
+    void removeFavoriteAction() throws IOException {
+        if (!selectedCards.isEmpty()) {
+            for (CardView cardView : selectedCards) {
+                Card card = cardView.getCard();
+                App.getFavoriteCards().deleteFavorite(card);
+                App.getFavoriteCards().removeFavoriteCardView(cardView);
+                favoriteCardsFlowPane.getChildren().remove(cardView);
+            }
+            selectedCards.clear();
+        } else {
+            giveWarning("No card selected.");
+        }
     }
 
     /*
