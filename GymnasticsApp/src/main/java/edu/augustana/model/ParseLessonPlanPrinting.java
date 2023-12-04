@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -38,14 +37,14 @@ public class ParseLessonPlanPrinting {
 
     private Map<Label, FlowPane> labelToFlowPaneMap;
 
-    private Map<Label, List<Label>> labelToCardLabelList;
+    private Map<Label, List<Label>> labelToCardLabelsMap;
 
-    private String lessonPlanTitleS;
+    private String lessonPlanTitle;
 
 
-    // ---------- Experimental FXML ----------
+    // ---------- FXML ----------
     @FXML
-    private Label lessonPlanTitleL = new Label();
+    private Label lessonPlanTitleLabel = new Label();
     @FXML
     private Font eventTitleTemplate = new Font("Times New Roman", 15);
     @FXML
@@ -59,7 +58,6 @@ public class ParseLessonPlanPrinting {
     public ParseLessonPlanPrinting(PrinterJob printerJob) throws MalformedURLException {
 
         PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
-
 
         if (PrintStaging.getLandscapeDisplay()) {
             // Switches the height and width, so it can parse through landscape mode
@@ -82,10 +80,10 @@ public class ParseLessonPlanPrinting {
 
         // LessonPlan Title
         eventToCardsMap = PrintStaging.getEventToCardMap();
-        lessonPlanTitleS = PrintStaging.getLessonPlanTitle();
+        lessonPlanTitle = PrintStaging.getLessonPlanTitle();
         Font titleFont = new Font("Times New Roman", 30);
-        lessonPlanTitleL.setText(lessonPlanTitleS);
-        lessonPlanTitleL.setFont(titleFont);
+        lessonPlanTitleLabel.setText(lessonPlanTitle);
+        lessonPlanTitleLabel.setFont(titleFont);
 
 
     // Parsing through the Event to Card Map
@@ -103,10 +101,10 @@ public class ParseLessonPlanPrinting {
             eventCardsPane.setMaxWidth(pageWidth + 5);
             eventCardsPane.setPrefWrapLength(pageWidth + 5);
             for (Card card : event.getValue()) {
-                CardView cardView = new CardView(card);
-                cardView.setFitWidth(pageWidth / 3.0);
-                cardView.setFitHeight(pageWidth / 4.0);
-                eventCardsPane.getChildren().add(cardView);
+                ImageView cardImageView = new ImageView(card.getImage());
+                cardImageView.setFitWidth(pageWidth / 3.0);
+                cardImageView.setFitHeight(pageWidth / 4.0);
+                eventCardsPane.getChildren().add(cardImageView);
             }
             labelToFlowPaneMap.put(eventLabel, eventCardsPane);
         }
@@ -131,7 +129,7 @@ public class ParseLessonPlanPrinting {
         pageContents.setMaxHeight(pageHeight);
         currentPane.getChildren().add(pageContents);
 
-        pageContents.getChildren().add(lessonPlanTitleL);
+        pageContents.getChildren().add(lessonPlanTitleLabel);
 
         // Runs layout onto a dummy Node to get the actual Height
         dummyRoot.getChildren().add(dummyBox);
@@ -139,7 +137,7 @@ public class ParseLessonPlanPrinting {
         dummyRoot.applyCss();
         dummyRoot.layout();
 
-        double runningPageHeight = lessonPlanTitleL.getHeight();
+        double runningPageHeight = lessonPlanTitleLabel.getHeight();
 
 
     // Runs through the JavaFX Objects map to add the given events and cards to the page
@@ -182,14 +180,14 @@ public class ParseLessonPlanPrinting {
     }
 
     private void parseLessonPlanText(PageLayout pgLayout) throws MalformedURLException {
-        labelToCardLabelList = new HashMap<Label, List<Label>>();
+        labelToCardLabelsMap = new HashMap<Label, List<Label>>();
 
         // LessonPlan Title
         eventToCardsMap = PrintStaging.getEventToCardMap();
-        lessonPlanTitleS = PrintStaging.getLessonPlanTitle();
+        lessonPlanTitle = PrintStaging.getLessonPlanTitle();
         Font titleFont = new Font("Times New Roman", 30);
-        lessonPlanTitleL.setText(lessonPlanTitleS);
-        lessonPlanTitleL.setFont(titleFont);
+        lessonPlanTitleLabel.setText(lessonPlanTitle);
+        lessonPlanTitleLabel.setFont(titleFont);
 
 
         // Parsing through the Event to Card Map
@@ -210,7 +208,7 @@ public class ParseLessonPlanPrinting {
                 cardInfo.setText(cardInfoS);
                 eventCards.add(cardInfo);
             }
-            labelToCardLabelList.put(eventLabel, eventCards);
+            labelToCardLabelsMap.put(eventLabel, eventCards);
         }
 
 // Sets up pages
@@ -233,7 +231,7 @@ public class ParseLessonPlanPrinting {
         pageContents.setMaxHeight(pageHeight);
         currentPane.getChildren().add(pageContents);
 
-        pageContents.getChildren().add(lessonPlanTitleL);
+        pageContents.getChildren().add(lessonPlanTitleLabel);
 
         // Runs layout onto a dummy Node to get the actual Height
         dummyRoot.getChildren().add(dummyBox);
@@ -241,11 +239,11 @@ public class ParseLessonPlanPrinting {
         dummyRoot.applyCss();
         dummyRoot.layout();
 
-        double runningPageHeight = lessonPlanTitleL.getHeight();
+        double runningPageHeight = lessonPlanTitleLabel.getHeight();
 
 
         // Runs through the JavaFX Objects map to add the given events and cards to the page
-        for (Map.Entry<Label, List<Label>> event : labelToCardLabelList.entrySet()) {
+        for (Map.Entry<Label, List<Label>> event : labelToCardLabelsMap.entrySet()) {
 
             Label eventLabel = event.getKey();
             List<Label> cardsInEvent = event.getValue();
