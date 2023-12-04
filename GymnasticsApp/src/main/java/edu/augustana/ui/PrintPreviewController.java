@@ -13,10 +13,7 @@ import edu.augustana.model.ParseLessonPlanPrinting;
 import edu.augustana.model.PrintStaging;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.print.JobSettings;
-import javafx.print.PageLayout;
-import javafx.print.PageRange;
-import javafx.print.PrinterJob;
+import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -136,7 +133,16 @@ public class PrintPreviewController {
                 pgRange = new PageRange(1, lessonPlan.getPages().size());
             }
 
+
+            // Used https://stackoverflow.com/questions/28102141/javafx-8-webengine-print-method-unable-to-print-in-landscape
+            // to create landscape mode for a lesson plan
+            Printer printer = Printer.getDefaultPrinter();
+
+            PageLayout pageLayout = printer.createPageLayout(Paper.A4,
+                    PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+
             printerJob.getJobSettings().setPageRanges(pgRange);
+            printerJob.getJobSettings().setPageLayout(pageLayout);
             PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
             JobSettings js = printerJob.getJobSettings();
 
@@ -155,7 +161,7 @@ public class PrintPreviewController {
                         if (PrintStaging.getLandscapeDisplay()) {
                             printNode.setPrefHeight(pgLayout.getPrintableWidth());
                             printNode.setPrefWidth(pgLayout.getPrintableHeight());
-                            page.setRotate(-90);
+                            // page.setRotate(-90);
 
                         }
                         printNode.getChildren().add(page);
