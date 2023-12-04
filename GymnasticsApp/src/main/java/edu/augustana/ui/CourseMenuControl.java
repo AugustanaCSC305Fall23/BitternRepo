@@ -94,10 +94,12 @@ public class CourseMenuControl {
     public void setUpTitle() {
         if (App.getCurrentCourse().getCourseTitle() != null) {
             courseTitleField.setText(App.getCurrentCourse().getCourseTitle());
-            courseTitleField.setFont(new Font("Britannic Bold", 36.0));
+            courseTitleField.setStyle("-fx-text-fill: white;" + "-fx-background-color: transparent");
+            courseTitleField.setFont(new Font("Britannic Bold", 45.0));
         } else {
             courseTitleField.setText(courseTitleField.getPromptText());
-            courseTitleField.setFont(new Font("System Italic", 40.0));
+            courseTitleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
+            courseTitleField.setFont(new Font("System Italic", 45.0));
         }
         TitleEditor titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0));
         courseTitleField.setOnMouseClicked(e -> titleEditor.editTitle());

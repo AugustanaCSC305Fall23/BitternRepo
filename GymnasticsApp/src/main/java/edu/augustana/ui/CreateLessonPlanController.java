@@ -92,6 +92,9 @@ public class CreateLessonPlanController {
         cardsTabPane.getSelectionModel().select(allCardsTab);
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
+        addCardBtn.setDisable(true);
+        favoriteBtn.setDisable(true);
+        removeFavoriteBtn.setDisable(true);
     }
     /* private void addImagesToButton(String path, Button toAddImageTo) throws MalformedURLException {
         String imageURL = new File(path).toURI().toURL().toString();
@@ -110,14 +113,6 @@ public class CreateLessonPlanController {
         lessonPlanTreeView.setShowRoot(false);
         if(!App.getCurrentLessonPlan().isLessonPlanEmpty()){
             Card card;
-      /*      for(String event : App.getCurrentLessonPlan().getEventInPlanList().keySet()){
-                TreeItem<String> newEvent = new TreeItem<>(event);
-                for(String cardID : App.getCurrentLessonPlan().getEventInPlanList().get(event)){
-                    card = CardDatabase.getFullCardCollection().getCardByID(cardID);
-                    newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
-                }
-                root.getChildren().add(newEvent);
-            }*/
             for (ListIterator<Category> it = App.getCurrentLessonPlan().getLessonPlan().listIterator(); it.hasNext();) {
                 Category event = it.next();
                 TreeItem<String> newEvent = new TreeItem<>(event.getCategoryHeading());
@@ -147,8 +142,6 @@ public class CreateLessonPlanController {
 
     private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
-            //cardView.setFitWidth(260.0);
-            //cardView.setFitHeight(195.0);
             cardsFlowPane.getChildren().add(cardView);
             cardView.setOnMouseClicked(this::selectCardAction);
             Animation delayAnim = new PauseTransition(Duration.seconds(1));
@@ -201,9 +194,11 @@ public class CreateLessonPlanController {
     @FXML void setUpTitle() {
         if (App.getCurrentLessonPlan().getTitle() != null) {
             titleField.setText(App.getCurrentLessonPlan().getTitle());
+            titleField.setStyle("-fx-text-fill: white;" + "-fx-background-color: transparent");
             titleField.setFont(new Font("Georgia Bold", 36.0));
         } else {
             titleField.setText(titleField.getPromptText());
+            titleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
             titleField.setFont(new Font("System Italic", 36.0));
         }
         TitleEditor titleEditor = new TitleEditor(titleField, new Font("Georgia", 40.0), new Font("Georgia Bold", 40.0));
@@ -244,6 +239,19 @@ public class CreateLessonPlanController {
                 selectedCards.remove(cardViewSelected);
             }
             exitZoomedView();
+            checkSelectedCardsStatus();
+        }
+    }
+
+    private void checkSelectedCardsStatus() {
+        if (selectedCards.isEmpty()) {
+            addCardBtn.setDisable(true);
+            favoriteBtn.setDisable(true);
+            removeFavoriteBtn.setDisable(true);
+        } else {
+            addCardBtn.setDisable(false);
+            favoriteBtn.setDisable(false);
+            removeFavoriteBtn.setDisable(false);
         }
     }
 
@@ -310,8 +318,6 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             selectedCards.clear();
-        } else {
-            giveWarning("No card selected.");
         }
     }
     @FXML void addCardsToFavorites() throws IOException {
@@ -319,10 +325,9 @@ public class CreateLessonPlanController {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
                 App.getFavoriteCards().addFavorite(card);
+                cardView.setEffect(null);
             }
             selectedCards.clear();
-        } else {
-            giveWarning("No card selected.");
         }
     }
 
