@@ -74,6 +74,8 @@ public class CreateLessonPlanController {
     private List<CardView> cardViewList = new ArrayList<>();
     TreeItem<String> root = new TreeItem<>();
 
+    private UndoRedoHandler undoRedoHandler;
+
     @FXML
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
@@ -81,6 +83,7 @@ public class CreateLessonPlanController {
         //addImagesToButton("Symbols/plusSign.png", addCardBtn);
         //addImagesToButton("Symbols/heart.png", favoriteBtn);
         setUpTitle();
+        undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -211,6 +214,7 @@ public class CreateLessonPlanController {
                 } else {
                     App.getCurrentLessonPlan().setTitle(null);
                 }
+                undoRedoHandler.saveState();
             }
         });
     }
@@ -317,6 +321,7 @@ public class CreateLessonPlanController {
                 addToTreeView(cardView.getCard());
                 cardView.setEffect(null);
             }
+            undoRedoHandler.saveState();
             selectedCards.clear();
         }
     }
@@ -358,27 +363,37 @@ public class CreateLessonPlanController {
             newEvent.getChildren().add(new TreeItem<>(card.getCode() + ", " + card.getTitle()));
             root.getChildren().add(newEvent);
         } else{
-            /*if (!App.getCurrentLessonPlan().cardInPlanList(card)){
-                App.getCurrentLessonPlan().addCardToEvent(card);
-                int eventIndex = App.getCurrentLessonPlan().getEventIndexes().indexOf(card.getEvent());
-                root.getChildren().get(eventIndex).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
-            }*/
+
             if (!App.getCurrentLessonPlan().cardInPlanList(card)){
-                //System.out.println("card is not in list");
                 App.getCurrentLessonPlan().addCardToEvent(card);
                 root.getChildren().get(App.getCurrentLessonPlan().getLessonPlan().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
         }
+        //undoRedoHandler.saveState();
     }
 
     @FXML
     public void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
-            System.out.println(cardToRemove);
             App.getCurrentLessonPlan().removeCard(cardToRemove);
             setUpTreeView();
+            undoRedoHandler.saveState();
         }
+    }
+
+    public void undo() {
+        undoRedoHandler.undo();
+        System.out.println("AFTER UNDO in GUI: app current lesson plan =");
+        System.out.println(App.getCurrentLessonPlan());
+        setUpTreeView();
+        setUpTitle();
+    }
+
+    public void redo() {
+        undoRedoHandler.redo();
+        setUpTreeView();
+        setUpTitle();
     }
 
     @FXML private void giveWarning(String message) {

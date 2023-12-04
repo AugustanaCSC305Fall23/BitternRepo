@@ -10,7 +10,6 @@ module edu.augustana {
      * https://stackoverflow.com/questions/72769462/failed-making-field-property-accessible-either-change-its-visibility-or-write
      */
     opens edu.augustana.structures to com.google.gson;
-    //opens java.io to com.google.gson;
     exports edu.augustana;
     exports edu.augustana.filters;
     opens edu.augustana.filters to javafx.fxml;
