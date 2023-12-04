@@ -4,6 +4,7 @@ import edu.augustana.*;
 import edu.augustana.model.*;
 import edu.augustana.filters.SearchFilter;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,10 +69,6 @@ public class CardBrowserController {
     private List<CardView> selectedCards = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
 
-    //private Image prevImage;
-
-    //private final Image checkImage = new Image(getClass().getResource("images/Checkmark.png").toString(), 400, 300, true, true);
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws MalformedURLException {
         createDropdowns();
@@ -89,6 +86,17 @@ public class CardBrowserController {
         levelDropdown.getItems().addAll(levelFilterChoices);
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
+        for (CheckComboBox<String> dropdown : listOfDropdowns) {
+            dropdown.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+                public void onChanged(ListChangeListener.Change<? extends String> c) {
+                    try {
+                        applyFiltersAction();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        }
     }
 
     @FXML
@@ -97,10 +105,11 @@ public class CardBrowserController {
     }
 
     private void drawCardSet() throws MalformedURLException {
-        for (ImageView cardView : cardViewList) {
+        for (CardView cardView : cardViewList) {
+            System.out.println(cardView.getCard().getImageName());
             cardView.setOnMouseClicked(this::selectCardAction);
-            cardView.setFitWidth(350.0);
-            cardView.setFitHeight(275.0);
+            //cardView.setFitWidth(350.0);
+            //cardView.setFitHeight(275.0);
             cardsFlowPane.getChildren().add(cardView);
         }
     }
@@ -122,7 +131,7 @@ public class CardBrowserController {
         }
     }
 
-    @FXML private void applyFiltersAction() throws IOException {
+    private void applyFiltersAction() throws IOException {
         cardsFlowPane.getChildren().clear();
         FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
         for (CardView cardView : cardViewList) {

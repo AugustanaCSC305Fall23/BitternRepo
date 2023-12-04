@@ -5,7 +5,7 @@ import edu.augustana.model.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CardFilter implements Filters {
+public abstract class CardFilter implements Filter {
     private List<String> listOfDesiredFilters;
     public CardFilter(List<String> listOfDesiredFilters) {
         this.listOfDesiredFilters = listOfDesiredFilters;

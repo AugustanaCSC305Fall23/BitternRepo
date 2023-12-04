@@ -2,6 +2,8 @@ package edu.augustana.filters;
 
 import edu.augustana.model.Card;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SearchFilter extends CardFilter{
@@ -38,6 +40,12 @@ public class SearchFilter extends CardFilter{
                     return true;
                 }
             }
+            List<String> genderSynonyms = getListOfGenderSynonyms(card.getGender().toLowerCase());
+            for (int index = 0; index < genderSynonyms.size(); index++) {
+                if (genderSynonyms.get(index).toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(genderSynonyms.get(index).toLowerCase())) {
+                    return true;
+                }
+            }
         }
         if (super.checkIfListEmpty(wordsToSearchFor) ||
                 wordsToSearchFor.contains(card.getCategory().toLowerCase())||
@@ -49,6 +57,19 @@ public class SearchFilter extends CardFilter{
             return true;
         }
         return false;
+    }
+
+    public List<String> getListOfGenderSynonyms(String gender) {
+        List<String> genderSynonyms = new ArrayList<>();
+        if (gender.equalsIgnoreCase("M")) {
+            genderSynonyms = Arrays.asList("M, man, male, men, boy");
+        } else if (gender.equalsIgnoreCase("F")) {
+            genderSynonyms = Arrays.asList("F, woman, female, women, girl");
+        } else {
+            genderSynonyms = Arrays.asList("N, neutral");
+        }
+
+        return genderSynonyms;
     }
 
     /* private static final EventFilter eventFilter = new EventFilter();
