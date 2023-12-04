@@ -132,23 +132,26 @@ public class LessonPlan implements Cloneable{
      * @return
      * @throws CloneNotSupportedException
      */
-//    public LessonPlan clone() {
-//        /**
-//         * Used https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone-- to
-//         * understand how to use the clone() method
-//         * Based this method on the clone() method in Drawing class of
-//         * DrawingApp
-//         */
-//            try {
-//                LessonPlan clone = (LessonPlan) super.clone();
-//                clone.eventInPlanList = eventInPlanList;
-//                clone.title = title;
-//                return clone;
-//            } catch (CloneNotSupportedException e) {
+    public LessonPlan clone() {
+        /**
+         * Used https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone-- to
+         * understand how to use the clone() method
+         * Based this method on the clone() method in Drawing class of
+         * DrawingApp
+         */
+
+                LessonPlan clone = new LessonPlan();
+                //clone.eventInPlanList = this.getEventInPlanList();
+                clone.title = this.getTitle();
+                //clone.eventIndexes = new ArrayList<>(this.getEventIndexes());
+                clone.lessonPlan = this.lessonPlan.clone();
+                return clone;
+
+//            catch (CloneNotSupportedException e) {
 //                e.printStackTrace();
 //                return null;
 //            }
-//        }
+        }
 
 
     @Override
@@ -162,4 +165,13 @@ public class LessonPlan implements Cloneable{
     }
 
 
+    /**
+     * For use by the Undo/Redo mechanism
+     * @param copyOfPreviousState
+     */
+    public void restoreState(LessonPlan copyOfPreviousState) {
+        this.title = copyOfPreviousState.title;
+        this.lessonPlan = copyOfPreviousState.lessonPlan;
+
+    }
 }

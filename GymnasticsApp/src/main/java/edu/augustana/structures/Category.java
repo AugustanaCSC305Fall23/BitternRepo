@@ -4,7 +4,7 @@ import java.util.List;
 
 import java.util.ArrayList;
 
-public class Category {
+public class Category implements Cloneable {
     private String categoryHeading;
     private List<String> cardsInList = new ArrayList<>(); //a list of the card IDs in the heading
     public Category(String heading, String cardID){
@@ -41,5 +41,16 @@ public class Category {
             }
         }
         return false;
+    }
+
+    @Override
+    public Category clone() {
+        try {
+            Category clone = (Category) super.clone();
+            clone.cardsInList = new ArrayList<>(clone.cardsInList);
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

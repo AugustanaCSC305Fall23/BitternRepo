@@ -11,52 +11,65 @@ import java.util.Stack;
 public class UndoRedoHandler {
     private Stack<LessonPlan> undoStack, redoStack;
 
-    private LessonPlan lessonPlan;
+    //private LessonPlan lessonPlan;
 
     public UndoRedoHandler(LessonPlan lessonPlan) {
         undoStack = new Stack<>();
         redoStack = new Stack<>();
-        this.lessonPlan = lessonPlan;
-        undoStack.push(lessonPlan);
+        undoStack.push(lessonPlan.clone());
     }
 
     public void saveState() {
-        undoStack.push(App.getCurrentLessonPlan());
+        undoStack.push(App.getCurrentLessonPlan().clone());
         redoStack.clear();
+        System.out.println("SAVE STATE CALLED, undo stack=");
+        System.out.println(undoStack);
+        System.out.println("------------------------------");
     }
 
     public void undo() {
-        System.out.println("app: " + App.getCurrentLessonPlan());
-        System.out.println();
-        System.out.println("undo stack: " + undoStack);
-        System.out.println();
+        System.out.println("UNDO CALLED, undo stack=");
+        System.out.println(undoStack);
+        System.out.println("------------------------------");
         if (undoStack.size() == 1) {
-            System.out.println("size == 1 undo stack: " + undoStack);
-            System.out.println();
-            System.out.println(" size == 1 app: " + App.getCurrentLessonPlan());
-            System.out.println("-------------------------------------");
+//            System.out.println("size == 1 undo stack: " + undoStack);
+//            System.out.println();
+//            System.out.println(" size == 1 app: " + App.getCurrentLessonPlan());
+//            System.out.println("-------------------------------------");
             return;
         } else {
             redoStack.push(undoStack.pop());
-            App.setCurrentLessonPlan(undoStack.peek());
-            System.out.println("undo peek after pop: " + undoStack.peek());
-            System.out.println("app: " + App.getCurrentLessonPlan());
-            System.out.println();
-            System.out.println("undo stack: " + undoStack);
-            System.out.println("{------------------------------");
+            System.out.println("UNDO CALLED, after popping, undo stack=");
+            System.out.println(undoStack);
+            System.out.println("------------------------------");
+            System.out.println("undoStack.peek = " + undoStack.peek());
+            System.out.println("------------------------------");
+            System.out.println("undoStack.peek.clone() = " + undoStack.peek().clone());
+            App.getCurrentLessonPlan().restoreState(undoStack.peek().clone());
+//            System.out.println("undo peek after pop: " + undoStack.peek());
+//            System.out.println();
+//            System.out.println("app.getCurrentLessonPlan(): " + App.getCurrentLessonPlan());
+//            System.out.println();
+
         }
 
     }
 
     public void redo() {
-        System.out.println(redoStack);
+        System.out.println("REDO CALLED, undo stack=");
+        System.out.println(undoStack);
+        System.out.println("------------------------------");
         if (redoStack.isEmpty()) {
             return;
         } else {
-            App.setCurrentLessonPlan(redoStack.pop());
-            undoStack.push(App.getCurrentLessonPlan());
-            System.out.println(App.getCurrentLessonPlan());
+            System.out.println("redo: " + redoStack);
+            LessonPlan temp = redoStack.pop();
+            App.getCurrentLessonPlan().restoreState(temp.clone());
+            undoStack.push(temp);
+            //System.out.println("redo :" + redoStack);
         }
     }
+
+    public Stack<LessonPlan> getUndoStack() { return undoStack; }
 
 }
