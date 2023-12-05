@@ -6,6 +6,7 @@ module edu.augustana {
     requires com.opencsv;
     requires com.google.gson;
     requires java.prefs;
+    requires java.desktop;
     opens edu.augustana to javafx.fxml, com.google.gson;
     /**
      * https://stackoverflow.com/questions/72769462/failed-making-field-property-accessible-either-change-its-visibility-or-write

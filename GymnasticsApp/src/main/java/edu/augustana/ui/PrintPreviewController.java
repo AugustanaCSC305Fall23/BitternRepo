@@ -13,10 +13,8 @@ import edu.augustana.model.ParseLessonPlanPrinting;
 import edu.augustana.model.PrintStaging;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.print.JobSettings;
-import javafx.print.PageLayout;
-import javafx.print.PageRange;
-import javafx.print.PrinterJob;
+import javafx.geometry.Pos;
+import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -44,9 +42,6 @@ public class PrintPreviewController {
 
     @FXML
     private Button printAllButton;
-
-    @FXML
-    private Button printPageButton;
 
     @FXML
     private Button returnButton;
@@ -109,69 +104,10 @@ public class PrintPreviewController {
     }
 
     @FXML
-    void printScreen(ActionEvent event) {
-        // Used http://www.java2s.com/example/java/javafx/printing-with-javafx.html
-        // https://stackoverflow.com/questions/28847757/how-to-display-print-dialog-in-java-fx-and-print-node
-
-        Window window = mainPane.getScene().getWindow();
-        if (printerJob != null && printerJob.showPrintDialog(window)){
-            boolean success = printerJob.printPage(mainPane);
-            if (success) {
-                printerJob.endJob();
-                endPrinting();
-            }
-
-        }
-
-    }
-
-    @FXML
     void printAllCards(ActionEvent event) throws MalformedURLException {
         Window window = mainPane.getScene().getWindow();
-        if (printerJob != null && printerJob.showPrintDialog(window)) {
-            PageRange pgRange = new PageRange(1, 1);
-            if (PrintStaging.getFXML().equals("card_browser")) {
-                pgRange = new PageRange(1, cardsToPrint.size());
-            } else {
-                pgRange = new PageRange(1, lessonPlan.getPages().size());
-            }
-
-            printerJob.getJobSettings().setPageRanges(pgRange);
-            PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
-            JobSettings js = printerJob.getJobSettings();
-
-            boolean printed = false;
-            for (PageRange pr : js.getPageRanges()) {
-                for (int p = pr.getStartPage(); p <= pr.getEndPage(); p++){        // This loops through the selected page range
-                    Pane printNode = new Pane();
-                    printNode.setPrefHeight(pgLayout.getPrintableHeight());
-                    printNode.setPrefWidth(pgLayout.getPrintableWidth());
-                    if (PrintStaging.getFXML().equals("card_browser")) {
-                        Card card = cardsToPrint.get(p - 1);
-                        ImageView cardImageView = PrintStaging.createFullSizeImageView(card, pgLayout);
-                        printNode.getChildren().add(cardImageView);
-                    } else {
-                        Pane page = lessonPlan.getPages().get(p - 1);
-                        if (PrintStaging.getLandscapeDisplay()) {
-                            printNode.setPrefHeight(pgLayout.getPrintableWidth());
-                            printNode.setPrefWidth(pgLayout.getPrintableHeight());
-                            page.setRotate(-90);
-
-                        }
-                        printNode.getChildren().add(page);
-                    }
-
-                    printed = printerJob.printPage(pgLayout, printNode);
-                    if (!printed) {
-                        System.out.println("Printing failed."); // for testing
-                        break;
-                    }
-                }
-            }
-            if(printed) printerJob.endJob();
-            endPrinting();
-        }
-
+        PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlan);
+        endPrinting();
 
     }
 
@@ -185,8 +121,9 @@ public class PrintPreviewController {
         titleLabel.setText("Printing sent.\n" +
                 "If saved as PDF, you can find it in the saved file.\n" );
 
+        titleLabel.setAlignment(Pos.CENTER);
+
         printAllButton.setVisible(false);
-        printPageButton.setVisible(false);
         mainPane.setVisible(false);
     }
 

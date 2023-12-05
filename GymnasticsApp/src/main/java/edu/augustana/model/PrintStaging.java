@@ -1,19 +1,21 @@
 package edu.augustana.model;
 import edu.augustana.ui.CardView;
 import javafx.fxml.FXML;
-import javafx.print.PageLayout;
-import javafx.print.PrinterJob;
+import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Window;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.awt.SystemColor.window;
 
 public class PrintStaging {
     private static String past_fxml;
@@ -130,6 +132,62 @@ public class PrintStaging {
         fullSizeImageView.setFitHeight(pgLayout.getPrintableWidth() * .75);
         return fullSizeImageView;
     }
+
+    public static void printAllCards(Window window, PrinterJob printerJob, List<Card> cardsToPrint, ParseLessonPlanPrinting lessonPlan) throws MalformedURLException {
+        if (printerJob != null && printerJob.showPrintDialog(window)) {
+            PageRange pgRange = new PageRange(1, 1);
+            if (getFXML().equals("card_browser")) {
+                pgRange = new PageRange(1, cardsToPrint.size());
+            } else {
+                pgRange = new PageRange(1, lessonPlan.getPages().size());
+            }
+
+
+            // Used https://stackoverflow.com/questions/28102141/javafx-8-webengine-print-method-unable-to-print-in-landscape
+            // to create landscape mode for a lesson plan
+            Printer printer = Printer.getDefaultPrinter();
+
+            PageLayout pageLandscapeLayout = printer.createPageLayout(Paper.A4,
+                    PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+
+            printerJob.getJobSettings().setPageRanges(pgRange);
+            PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
+            JobSettings js = printerJob.getJobSettings();
+
+            boolean printed = false;
+            for (PageRange pr : js.getPageRanges()) {
+                for (int p = pr.getStartPage(); p <= pr.getEndPage(); p++){        // This loops through the selected page range
+                    Pane printNode = new Pane();
+                    printNode.setPrefHeight(pgLayout.getPrintableHeight());
+                    printNode.setPrefWidth(pgLayout.getPrintableWidth());
+                    if (getFXML().equals("card_browser")) {
+                        printerJob.getJobSettings().setPageLayout(pageLandscapeLayout);
+                        Card card = cardsToPrint.get(p - 1);
+                        ImageView cardImageView = createFullSizeImageView(card, printerJob.getJobSettings().getPageLayout());
+                        printNode.getChildren().add(cardImageView);
+                    } else {
+                        Pane page = lessonPlan.getPages().get(p - 1);
+                        if (PrintStaging.getLandscapeDisplay()) {
+                            printerJob.getJobSettings().setPageLayout(pageLandscapeLayout);
+                            printNode.setPrefHeight(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
+                            printNode.setPrefWidth(printerJob.getJobSettings().getPageLayout().getPrintableHeight());
+
+                        }
+                        printNode.getChildren().add(page);
+                    }
+
+                    printed = printerJob.printPage(printerJob.getJobSettings().getPageLayout(), printNode);
+                    if (!printed) {
+                        System.out.println("Printing failed."); // for testing
+                        break;
+                    }
+                }
+            }
+            if(printed) printerJob.endJob();
+        }
+    }
+
+
 
 
 
