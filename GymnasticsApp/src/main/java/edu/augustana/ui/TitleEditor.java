@@ -4,6 +4,7 @@ import edu.augustana.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class TitleEditor {
@@ -19,7 +20,7 @@ public class TitleEditor {
 
     @FXML public void editTitle() {
         titleField.setFont(editingFont);
-        //titleField.setStyle("-fx-text-fill: red");
+        titleField.setStyle("-fx-text-fill: white;" + "-fx-background-color: transparent");
         titleField.setEditable(true);
         if (titleField.getText().equals(titleField.getPromptText())) {
             titleField.clear();
@@ -30,6 +31,7 @@ public class TitleEditor {
         titleField.setFont(titleFont);
         if (titleField.getText().isEmpty()) {
             titleField.setText(titleField.getPromptText());
+            titleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
             titleField.setFont(new Font("System Italic", titleFont.getSize()));
             giveWarning("Cannot have empty title.");
         }

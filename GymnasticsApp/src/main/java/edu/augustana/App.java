@@ -1,10 +1,7 @@
 package edu.augustana;
 
 import com.opencsv.exceptions.CsvValidationException;
-import edu.augustana.model.CardDatabase;
-import edu.augustana.model.Course;
-import edu.augustana.model.FavoriteCards;
-import edu.augustana.model.LessonPlan;
+import edu.augustana.model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

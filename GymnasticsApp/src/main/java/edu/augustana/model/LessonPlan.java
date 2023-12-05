@@ -4,7 +4,7 @@ import edu.augustana.structures.*;
 
 import java.util.*;
 
-public class LessonPlan {
+public class LessonPlan implements Cloneable{
     private String title;
     private IndexedMap lessonPlan;
 
@@ -24,14 +24,12 @@ public class LessonPlan {
         List<String> cardDisplay = new ArrayList<>();
         cardDisplay.add(card.getUniqueID());
         lessonPlan.add(new Category(card.getEvent(), card.getUniqueID()));
-        System.out.println(lessonPlan.toString());
     }
 
     //rename this method
     public void addCardToEvent(Card card){
         Category addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
         addTo.addCardToList(card.getUniqueID());
-        System.out.println(lessonPlan.toString());
     }
     public boolean eventInPlanList(Card card){
         if(lessonPlan.contains(card.getEvent())){
@@ -76,7 +74,6 @@ public class LessonPlan {
         for (ListIterator<Category> it = lessonPlan.listIterator(); it.hasNext(); ) {
             Category event = it.next();
             for (String id : event.getCardsInList()) {
-                System.out.println(lessonPlan.toString());
                 if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
                     cardIDToRemove = id;
                     eventToChange = event.getCategoryHeading();
@@ -92,8 +89,40 @@ public class LessonPlan {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
+    public LessonPlan clone() {
+        /**
+         * Used https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone-- to
+         * understand how to use the clone() method
+         * Based this method on the clone() method in Drawing class of
+         * DrawingApp
+         */
+                LessonPlan clone = new LessonPlan();
+                clone.title = this.getTitle();
+                clone.lessonPlan = this.lessonPlan.clone();
+                return clone;
+        }
+
     @Override
     public String toString() {
-        return title;
+        return "LessonPlan{" +
+                "title='" + title + '\'' +
+                ", lessonPlan=" + lessonPlan.toString() +
+                '}';
+    }
+
+
+    /**
+     * For use by the Undo/Redo mechanism
+     * @param copyOfPreviousState
+     */
+    public void restoreState(LessonPlan copyOfPreviousState) {
+        this.title = copyOfPreviousState.title;
+        this.lessonPlan = copyOfPreviousState.lessonPlan;
+
     }
 }

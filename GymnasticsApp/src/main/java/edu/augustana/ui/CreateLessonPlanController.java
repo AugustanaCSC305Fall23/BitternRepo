@@ -75,11 +75,14 @@ public class CreateLessonPlanController {
     TreeItem<String> root = new TreeItem<>();
     TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
 
+    private UndoRedoHandler undoRedoHandler;
+
     @FXML
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         setUpTitle();
+        undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -91,6 +94,9 @@ public class CreateLessonPlanController {
         cardsTabPane.getSelectionModel().select(allCardsTab);
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
+        addCardBtn.setDisable(true);
+        favoriteBtn.setDisable(true);
+        removeFavoriteBtn.setDisable(true);
     }
 
     private void setUpTreeView(){
@@ -119,8 +125,6 @@ public class CreateLessonPlanController {
 
     private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
-            //cardView.setFitWidth(260.0);
-            //cardView.setFitHeight(195.0);
             cardsFlowPane.getChildren().add(cardView);
             cardView.setOnMouseClicked(this::selectCardAction);
             Animation delayAnim = new PauseTransition(Duration.seconds(1));
@@ -173,9 +177,11 @@ public class CreateLessonPlanController {
     @FXML void setUpTitle() {
         if (App.getCurrentLessonPlan().getTitle() != null) {
             titleField.setText(App.getCurrentLessonPlan().getTitle());
+            titleField.setStyle("-fx-text-fill: white;" + "-fx-background-color: transparent");
             titleField.setFont(new Font("Georgia Bold", 36.0));
         } else {
             titleField.setText(titleField.getPromptText());
+            titleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
             titleField.setFont(new Font("System Italic", 36.0));
         }
         TitleEditor titleEditor = new TitleEditor(titleField, new Font("Georgia", 40.0), new Font("Georgia Bold", 40.0));
@@ -188,6 +194,7 @@ public class CreateLessonPlanController {
                 } else {
                     App.getCurrentLessonPlan().setTitle(null);
                 }
+                undoRedoHandler.saveState();
             }
         });
     }
@@ -224,6 +231,19 @@ public class CreateLessonPlanController {
                 selectedCards.remove(cardViewSelected);
             }
             exitZoomedView();
+            checkSelectedCardsStatus();
+        }
+    }
+
+    private void checkSelectedCardsStatus() {
+        if (selectedCards.isEmpty()) {
+            addCardBtn.setDisable(true);
+            favoriteBtn.setDisable(true);
+            removeFavoriteBtn.setDisable(true);
+        } else {
+            addCardBtn.setDisable(false);
+            favoriteBtn.setDisable(false);
+            removeFavoriteBtn.setDisable(false);
         }
     }
 
@@ -289,9 +309,8 @@ public class CreateLessonPlanController {
                 treeViewManager.addToTreeView(cardView.getCard(), root);
                 cardView.setEffect(null);
             }
+            undoRedoHandler.saveState();
             selectedCards.clear();
-        } else {
-            giveWarning("No card selected.");
         }
     }
     @FXML void addCardsToFavorites() throws IOException {
@@ -299,10 +318,9 @@ public class CreateLessonPlanController {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
                 App.getFavoriteCards().addFavorite(card);
+                cardView.setEffect(null);
             }
             selectedCards.clear();
-        } else {
-            giveWarning("No card selected.");
         }
     }
 
@@ -325,10 +343,24 @@ public class CreateLessonPlanController {
     public void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
-            System.out.println(cardToRemove);
             App.getCurrentLessonPlan().removeCard(cardToRemove);
             treeViewManager.removeFromTreeView(root);
+            undoRedoHandler.saveState();
         }
+    }
+
+    public void undo() {
+        undoRedoHandler.undo();
+        System.out.println("AFTER UNDO in GUI: app current lesson plan =");
+        System.out.println(App.getCurrentLessonPlan());
+        setUpTreeView();
+        setUpTitle();
+    }
+
+    public void redo() {
+        undoRedoHandler.redo();
+        setUpTreeView();
+        setUpTitle();
     }
 
     @FXML private void giveWarning(String message) {

@@ -24,8 +24,6 @@ import javafx.stage.Window;
 
 public class CourseViewController {
 
-    //private ListView<LessonPlan> courseListView = new ListView<>(); // Value injected by FXMLLoader
-    @FXML private TreeView<LessonPlan> courseTreeView = new TreeView<>();
     @FXML private ListView<LessonPlan> courseListView = new ListView<>();
 
     @FXML private HBox buttonBar;
@@ -45,51 +43,23 @@ public class CourseViewController {
     private static Course currentCourse;
     private ButtonControl buttonControl;
     private CourseMenuControl courseMenuControl;
-    private TreeItem<LessonPlan> root = new TreeItem<>(new LessonPlan());
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        courseTreeView.setRoot(root);
-        courseTreeView.setShowRoot(false);
-        //courseTreeView.setOnMouseClicked(e -> checkIfItemSelected());
-        //courseMenuControl = new CourseMenuControl(courseTreeView);
         courseListView.setOnMouseClicked(e -> checkIfItemSelected());
-        courseMenuControl = new CourseMenuControl(courseListView);
+        courseMenuControl = new CourseMenuControl(courseListView, courseTitleField);
         setUpMenuActions();
-        //courseTreeView.getRoot().setExpanded(true);
         addLessonsToCourseList();
 
         if (currentCourse == null) {
             currentCourse = new Course();
         }
-        setUpTitle();
+        courseMenuControl.setUpTitle();
     }
 
     @FXML
     private void goToHome() throws IOException {
         App.setRoot("home");
-    }
-
-    @FXML void setUpTitle() {
-        if (App.getCurrentCourse().getCourseTitle() != null) {
-            courseTitleField.setText(App.getCurrentCourse().getCourseTitle());
-            courseTitleField.setFont(new Font("Britannic Bold", 36.0));
-        } else {
-            courseTitleField.setText(courseTitleField.getPromptText());
-            courseTitleField.setFont(new Font("System Italic", 40.0));
-        }
-        TitleEditor titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0));
-        courseTitleField.setOnMouseClicked(e -> titleEditor.editTitle());
-        courseTitleField.setOnKeyPressed(e -> {
-            if (e.getCode().equals(KeyCode.ENTER)) {
-                titleEditor.lockInTitle();
-                if (!courseTitleField.getText().equals(courseTitleField.getPromptText())) {
-                    App.getCurrentCourse().setTitle(courseTitleField.getText());
-                } else {
-                    App.getCurrentCourse().setTitle(null);
-                }
-            }
-        });
     }
 
     // see if some kind of listener or observer can be added to do this more easily
