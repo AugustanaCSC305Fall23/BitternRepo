@@ -100,7 +100,7 @@ public class CourseViewController {
     @FXML
     private void createLessonPlanHandler() throws IOException {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
-        CreateLessonPlanController.setCurrentLessonPlan(lessonPlan);
+        App.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
         //might need to move parts of method
     }
@@ -110,7 +110,6 @@ public class CourseViewController {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
-            CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
             App.setRoot("lesson_plan_creator");
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a Lesson Plan first.");
