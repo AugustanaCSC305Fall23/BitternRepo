@@ -138,11 +138,10 @@ public class PrintPreviewController {
             // to create landscape mode for a lesson plan
             Printer printer = Printer.getDefaultPrinter();
 
-            PageLayout pageLayout = printer.createPageLayout(Paper.A4,
+            PageLayout pageLandscapeLayout = printer.createPageLayout(Paper.A4,
                     PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
 
             printerJob.getJobSettings().setPageRanges(pgRange);
-            printerJob.getJobSettings().setPageLayout(pageLayout);
             PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
             JobSettings js = printerJob.getJobSettings();
 
@@ -153,21 +152,22 @@ public class PrintPreviewController {
                     printNode.setPrefHeight(pgLayout.getPrintableHeight());
                     printNode.setPrefWidth(pgLayout.getPrintableWidth());
                     if (PrintStaging.getFXML().equals("card_browser")) {
+                        printerJob.getJobSettings().setPageLayout(pageLandscapeLayout);
                         Card card = cardsToPrint.get(p - 1);
-                        ImageView cardImageView = PrintStaging.createFullSizeImageView(card, pgLayout);
+                        ImageView cardImageView = PrintStaging.createFullSizeImageView(card, printerJob.getJobSettings().getPageLayout());
                         printNode.getChildren().add(cardImageView);
                     } else {
                         Pane page = lessonPlan.getPages().get(p - 1);
                         if (PrintStaging.getLandscapeDisplay()) {
-                            printNode.setPrefHeight(pgLayout.getPrintableWidth());
-                            printNode.setPrefWidth(pgLayout.getPrintableHeight());
-                            // page.setRotate(-90);
+                            printerJob.getJobSettings().setPageLayout(pageLandscapeLayout);
+                            printNode.setPrefHeight(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
+                            printNode.setPrefWidth(printerJob.getJobSettings().getPageLayout().getPrintableHeight());
 
                         }
                         printNode.getChildren().add(page);
                     }
 
-                    printed = printerJob.printPage(pgLayout, printNode);
+                    printed = printerJob.printPage(printerJob.getJobSettings().getPageLayout(), printNode);
                     if (!printed) {
                         System.out.println("Printing failed."); // for testing
                         break;
