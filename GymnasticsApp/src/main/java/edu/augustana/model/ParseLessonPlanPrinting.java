@@ -271,6 +271,16 @@ public class ParseLessonPlanPrinting {
                 currentPane.setMaxHeight(pageHeight);
                 currentPane.setMaxWidth(pageWidth);
 
+                // Creates dummy box to calcualte new height
+                dummyBox = new VBox();
+                dummyBox.getChildren().add(eventLabel);
+                for (Label card: cardsInEvent) {
+                    dummyBox.getChildren().add(card);
+                }
+                dummyRoot.applyCss();
+                dummyRoot.layout();
+                runningPageHeight = dummyBox.getHeight();
+
                 pageContents = new VBox();
                 pageContents.setAlignment(Pos.CENTER_LEFT);
                 pageContents.setMaxHeight(pageHeight);

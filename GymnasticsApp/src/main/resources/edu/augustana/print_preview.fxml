@@ -33,11 +33,6 @@
    <right>
       <VBox spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="printPageButton" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#printScreen" text="Print Page">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
             <Button fx:id="printAllButton" mnemonicParsing="false" onAction="#printAllCards" prefHeight="44.0" prefWidth="102.0" text="Print All">
                <font>
                   <Font size="20.0" />
