@@ -138,7 +138,6 @@ public class CourseViewController {
     @FXML
     private void editLessonPlanHandler() throws  IOException {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
-        //LessonPlan lessonPlanToEdit = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
             CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
@@ -150,10 +149,8 @@ public class CourseViewController {
 
     @FXML private void removeLessonPlanHandler() {
         LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
-        //LessonPlan lessonPlanToDelete = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         if (lessonPlanToDelete != null) {
             courseListView.getItems().remove(lessonPlanToDelete);
-            //courseTreeView.getSelectionModel().getSelectedItem().setValue(null);
             App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
             App.setCurrentLessonPlan(null);
         }
@@ -163,18 +160,14 @@ public class CourseViewController {
     private void addLessonsToCourseList() {
         List<LessonPlan> lessonPlanList = App.getCurrentCourse().getLessonPlanList();
         if (!(lessonPlanList.isEmpty())) {
-            //TreeItem<LessonPlan> lessonPlan = new TreeItem<>(lessonPlanList.get(lessonPlanList.size() - 1));
             for (LessonPlan lesson: lessonPlanList) {
                 courseListView.getItems().add(lesson);
-                //lessonPlan.setValue(lesson);
-                //root.getChildren().add(lessonPlan);
                 // add a case for if the lesson plan doesn't have a name (somehow call it "Untitled" in course view)
             }
         }
     }
 
     @FXML private void duplicateLessonPlanHandler() {
-        //LessonPlan lessonPlanToDuplicate = courseTreeView.getSelectionModel().getSelectedItem().getValue();
         LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToDuplicate != null) {
             LessonPlan copyOfLessonPlan = new LessonPlan();
@@ -182,9 +175,6 @@ public class CourseViewController {
             copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getLessonPlan());
             App.getCurrentCourse().getLessonPlanList().add(lessonPlanToDuplicate);
             courseListView.getItems().add(copyOfLessonPlan);
-            //TreeItem<LessonPlan> newLesson = new TreeItem<>();
-            //newLesson.setValue(lessonPlanToDuplicate);
-            //root.getChildren().add(newLesson);
         }
     }
 }

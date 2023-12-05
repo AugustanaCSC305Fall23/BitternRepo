@@ -17,6 +17,11 @@ public class FavoriteCards {
 
     List<CardView> favoritesCardView = new ArrayList<>();
 
+    /**
+     * Adds the cards and cardViews from the uniqueID's listed in the favoriteCards
+     * file to their respective lists
+     * @throws IOException if favoriteCards file is not found
+     */
     public FavoriteCards() throws IOException {
         /**
          * code from
@@ -33,9 +38,15 @@ public class FavoriteCards {
             fileReader.close();
         }
     }
+
+    /**
+     *
+     * @param card to be added to list of favorite cards
+     *             adds the card's uniqueID to the favoriteCards file
+     *             creates a cardView of the card
+     * @throws IOException if the favoriteCards file is not found
+     */
     public void addFavorite(Card card) throws IOException {
-        //add card to file (unique id)
-        //add card to list
         FileWriter fileWriter = new FileWriter(favCardsFile, true);
         if(!favoriteCards.contains(card)){
             fileWriter.append(card.getUniqueID() + "\n");
@@ -44,6 +55,11 @@ public class FavoriteCards {
         }
         fileWriter.close();
     }
+
+    /**
+     * @param card being removed from a list of favorite cards
+     * @throws IOException if favoriteCards file is not found
+     */
     public void deleteFavorite(Card card) throws IOException {
         if(favoriteCards.contains(card)){
             favoriteCards.remove(card);
@@ -51,10 +67,18 @@ public class FavoriteCards {
         reWriteFavoritesFile();
     }
 
-    public void removeFavoriteCardView(CardView card){
-        favoritesCardView.remove(card);
+    /**
+     * @param cardView to be removed from list of favorites
+     */
+    public void removeFavoriteCardView(CardView cardView){
+        favoritesCardView.remove(cardView);
     }
 
+    /**
+     * Clears the favorite cards file and rewrite the favorite cards list
+     * after the card to be deleted has been removed from it
+     * @throws IOException if the favoriteCards file is not found
+     */
     private void reWriteFavoritesFile() throws IOException {
         FileWriter fileWriter = new FileWriter(favCardsFile, false);
         fileWriter.flush();
