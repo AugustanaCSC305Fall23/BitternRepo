@@ -6,8 +6,6 @@ import java.util.*;
 
 public class LessonPlan implements Cloneable{
     private String title;
-    private Map<String, List<String>> eventInPlanList;
-    private List<String> eventIndexes;
     private IndexedMap lessonPlan;
 
     public LessonPlan() {
@@ -27,6 +25,7 @@ public class LessonPlan implements Cloneable{
         cardDisplay.add(card.getUniqueID());
         lessonPlan.add(new Category(card.getEvent(), card.getUniqueID()));
     }
+
     //rename this method
     public void addCardToEvent(Card card){
         Category addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
@@ -39,19 +38,11 @@ public class LessonPlan implements Cloneable{
         return false;
     }
     public boolean isLessonPlanEmpty(){
-        return (/*eventInPlanList.isEmpty() && */ lessonPlan.isEmpty());
-    }
-
-    public List<String> getEventIndexes() {
-        return eventIndexes;
+        return (lessonPlan.isEmpty());
     }
 
     public void setEventInPlanList(IndexedMap lessonPlan){
         this.lessonPlan = lessonPlan;
-    }
-
-    public Map<String, List<String>> getEventInPlanList(){
-        return eventInPlanList;
     }
 
     public boolean cardInPlanList(Card card){
@@ -90,15 +81,12 @@ public class LessonPlan implements Cloneable{
             }
         }
         if (cardIDToRemove != null) {
-            //eventInPlanList.get(eventToChange).remove(cardIDToRemove);
             lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().remove(cardIDToRemove);
             System.out.println(lessonPlan.toString());
         }
         if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().isEmpty()){
             lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
         }
-
-
     }
 
     /**
@@ -119,14 +107,11 @@ public class LessonPlan implements Cloneable{
                 return clone;
         }
 
-
     @Override
     public String toString() {
         return "LessonPlan{" +
                 "title='" + title + '\'' +
-                ", eventInPlanList=" + eventInPlanList +
-                ", eventIndexes=" + eventIndexes +
-                ", lessonPlan=" + lessonPlan +
+                ", lessonPlan=" + lessonPlan.toString() +
                 '}';
     }
 

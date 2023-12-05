@@ -131,7 +131,6 @@ public class CourseViewController {
         if (!(lessonPlanList.isEmpty())) {
             for (LessonPlan lesson: lessonPlanList) {
                 courseListView.getItems().add(lesson);
-
                 // add a case for if the lesson plan doesn't have a name (somehow call it "Untitled" in course view)
             }
         }
