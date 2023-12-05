@@ -13,27 +13,12 @@ public class Course {
 
     public Course() {
         lessonPlanList = new ArrayList<>();
-        //lessonPlanList.add(new LessonPlan("My Lesson Plan"));
     }
 
     public LessonPlan createNewLessonPlan() {
         LessonPlan newLessonPlan = new LessonPlan();
         this.getLessonPlanList().add(newLessonPlan);
         return newLessonPlan;
-    }
-
-    public static Course loadFromFile(File courseFile) throws IOException {
-        FileReader reader = new FileReader(courseFile);
-        Gson gson = new Gson();
-        return gson.fromJson(reader, Course.class);
-    }
-
-    public void saveToFile(File courseFile) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String serializedCourseText = gson.toJson(this);
-        PrintWriter writer = new PrintWriter(new FileWriter(courseFile));
-        writer.println(serializedCourseText);
-        writer.close();
     }
 
     public String getCourseTitle() {

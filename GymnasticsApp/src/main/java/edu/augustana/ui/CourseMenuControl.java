@@ -1,42 +1,37 @@
 package edu.augustana.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edu.augustana.App;
 import edu.augustana.model.Course;
 import edu.augustana.model.LessonPlan;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class CourseMenuControl {
 
-    TreeView<LessonPlan> courseTreeView;
     ListView<LessonPlan> courseListView;
-    public CourseMenuControl(TreeView<LessonPlan> treeView) {
-        courseTreeView = treeView;
-    }
-    public CourseMenuControl(ListView<LessonPlan> listView) {
+    TextField courseTitleField;
+    public CourseMenuControl(ListView<LessonPlan> listView, TextField titleField) {
         courseListView = listView;
+        courseTitleField = titleField;
     }
 
     @FXML public void createNewCourse() {
-        //courseTreeView.getRoot().getChildren().clear();
         courseListView.getItems().clear();
         App.setCurrentCourse(new Course());
         App.setCurrentCourseFile(null);
         App.getCurrentCourse().getLessonPlanList().add(new LessonPlan());
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-            //TreeItem<LessonPlan> lessonInCourse = new TreeItem<>();
-            //lessonInCourse.setValue(lessonPlan);
-            //courseTreeView.getRoot().getChildren().add(lessonInCourse);
             courseListView.getItems().add(lessonPlan);
         }
+        setUpTitle();
     }
 
     @FXML public void openCourseFromFiles() {
@@ -44,21 +39,16 @@ public class CourseMenuControl {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Gymnastics Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
-        //Window mainWindow = courseTreeView.getScene().getWindow();
         Window mainWindow = courseListView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
         if (chosenFile != null) {
             try {
-                Course.loadFromFile(chosenFile);
-                //courseTreeView.getRoot().getChildren().clear();
-                courseListView.getItems().clear();
-                App.setCurrentCourse(Course.loadFromFile(chosenFile));
+                Course openedCourse = loadFromFile(chosenFile);
+                App.setCurrentCourse(openedCourse);
                 App.setCurrentCourseFile(chosenFile);
+                courseTitleField.setText(openedCourse.getCourseTitle());
+                courseListView.getItems().clear();
                 for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-                    //TreeItem<LessonPlan> lessonInCourse = new TreeItem<>();
-                    //lessonInCourse.setValue(lessonPlan);
-                    //courseTreeView.getRoot().getChildren().add(lessonInCourse);
-                    //courseTreeView.getRoot().(lessonPlan);
                     courseListView.getItems().add(lessonPlan);
                 }
             } catch (IOException e) {
@@ -69,7 +59,7 @@ public class CourseMenuControl {
 
     @FXML public void saveCourse() throws IOException{
         if (App.getCurrentCourseFile() != null) {
-            App.getCurrentCourse().saveToFile(App.getCurrentCourseFile());
+            saveToFile(App.getCurrentCourseFile());
         } else {
             System.out.println("error");
         }
@@ -80,11 +70,48 @@ public class CourseMenuControl {
         fileChooser.setTitle("Save New Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
         fileChooser.getExtensionFilters().add(filter);
-        //Window mainWindow = courseTreeView.getScene().getWindow();
         Window mainWindow = courseListView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
-        App.getCurrentCourse().saveToFile(chosenFile);
+        saveToFile(chosenFile);
         App.setCurrentCourseFile(chosenFile);
 
+    }
+
+    public static Course loadFromFile(File courseFile) throws IOException {
+        FileReader reader = new FileReader(courseFile);
+        Gson gson = new Gson();
+        return gson.fromJson(reader, Course.class);
+    }
+
+    public void saveToFile(File courseFile) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String serializedCourseText = gson.toJson(App.getCurrentCourse());
+        PrintWriter writer = new PrintWriter(new FileWriter(courseFile));
+        writer.println(serializedCourseText);
+        writer.close();
+    }
+
+    public void setUpTitle() {
+        if (App.getCurrentCourse().getCourseTitle() != null) {
+            courseTitleField.setText(App.getCurrentCourse().getCourseTitle());
+            courseTitleField.setStyle("-fx-text-fill: white;" + "-fx-background-color: transparent");
+            courseTitleField.setFont(new Font("Britannic Bold", 45.0));
+        } else {
+            courseTitleField.setText(courseTitleField.getPromptText());
+            courseTitleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
+            courseTitleField.setFont(new Font("System Italic", 45.0));
+        }
+        TitleEditor titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0));
+        courseTitleField.setOnMouseClicked(e -> titleEditor.editTitle());
+        courseTitleField.setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                titleEditor.lockInTitle();
+                if (!courseTitleField.getText().equals(courseTitleField.getPromptText())) {
+                    App.getCurrentCourse().setTitle(courseTitleField.getText());
+                } else {
+                    App.getCurrentCourse().setTitle(null);
+                }
+            }
+        });
     }
 }

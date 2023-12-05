@@ -2,7 +2,7 @@ package edu.augustana.structures;
 
 import java.util.*;
 
-public class IndexedMap{
+public class IndexedMap implements Cloneable{
     private List<Category> indexedMap = new ArrayList<>();
 
     public IndexedMap(){
@@ -31,13 +31,6 @@ public class IndexedMap{
             }
         }
     }
-/*    public void add(String eventHeading, List<String> IDList){
-        for(int i = 0; i < indexedMap.size(); i++){
-            if(indexedMap.get(i).getCategoryHeading().equalsIgnoreCase(eventHeading)){
-                indexedMap.get(i).addCardToList(cardID);
-            }
-        }
-    }*/
 
     public boolean remove(Category o) {
         return indexedMap.remove(o);
@@ -120,4 +113,14 @@ public class IndexedMap{
         return toReturn + "}\n";
     }
 
+    @Override
+    public IndexedMap clone() {
+        try {
+            IndexedMap clone = (IndexedMap) super.clone();
+            clone.indexedMap = new ArrayList<>(clone.indexedMap);
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

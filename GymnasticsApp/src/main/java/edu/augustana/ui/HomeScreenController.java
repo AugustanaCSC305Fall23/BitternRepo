@@ -42,8 +42,6 @@ public class HomeScreenController {
 
     @FXML
     private void openCourseEditorAndCreator() throws IOException {
-//        Course newCourse = new Course();
-//        CourseViewController.setCurrentCourse(newCourse);
         App.setRoot("course_view");
 
     }

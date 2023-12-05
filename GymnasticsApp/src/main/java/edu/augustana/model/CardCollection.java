@@ -3,12 +3,9 @@ package edu.augustana.model;
 import java.util.*;
 
 public class CardCollection {
-    private int count = 1;
-    //private List<Card> cardList;
     private Map<String, Card> mapFromIdToCard;
     public CardCollection() {
         mapFromIdToCard = new TreeMap<String, Card>();
-        //cardList = new ArrayList<>();
     }
 
     public void addCard(Card newCard) {
