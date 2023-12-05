@@ -22,7 +22,7 @@ public class App extends Application {
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
     private static FavoriteCards favoriteCards;
-
+    private static RecentFilesManager userPreferences = new RecentFilesManager();
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
@@ -64,6 +64,13 @@ public class App extends Application {
         currentLessonPlan = lessonPlan;
     }
     public static FavoriteCards getFavoriteCards(){return favoriteCards;}
+
+    public static RecentFilesManager getUserPreferences() {
+        return userPreferences;
+    }
+    public static void setUserPreferences(RecentFilesManager userPreferences) {
+        App.userPreferences = userPreferences;
+    }
 
     public static void main(String[] args) {
         launch();
