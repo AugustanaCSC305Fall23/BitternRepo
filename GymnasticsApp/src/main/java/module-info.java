@@ -5,6 +5,7 @@ module edu.augustana {
     requires org.controlsfx.controls;
     requires com.opencsv;
     requires com.google.gson;
+    requires java.desktop;
     opens edu.augustana to javafx.fxml, com.google.gson;
     /**
      * https://stackoverflow.com/questions/72769462/failed-making-field-property-accessible-either-change-its-visibility-or-write
