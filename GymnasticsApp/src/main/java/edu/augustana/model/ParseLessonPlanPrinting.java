@@ -108,6 +108,7 @@ public class ParseLessonPlanPrinting {
         currentPane.getChildren().add(pageContents);
 
         pageContents.getChildren().add(lessonPlanTitleLabel);
+        pageContents.setAlignment(Pos.CENTER);
 
         // Runs layout onto a dummy Node to get the actual Height
         dummyRoot.getChildren().add(dummyBox);
@@ -167,11 +168,49 @@ public class ParseLessonPlanPrinting {
             FlowPane eventCardsPane = new FlowPane();
             eventCardsPane.setMaxWidth(pageWidth + 5);
             eventCardsPane.setPrefWrapLength(pageWidth + 5);
+            int numCards = event.getValue().size();
             for (Card card : event.getValue()) {
                 ImageView cardImageView = new ImageView(card.getImage());
-                cardImageView.setFitWidth(pageWidth / 3.0);
-                cardImageView.setFitHeight(pageWidth / 4.0);
+                if (numCards > 12) {
+                    // Used https://stackoverflow.com/questions/7446710/how-to-round-up-integer-division-and-have-int-result-in-java
+
+
+                    int numRows;
+                    if (PrintStaging.getLandscapeDisplay()) {
+                        numRows = (int) Math.ceil(numCards / 4.0);
+                    } else {
+                        numRows = (int) Math.ceil(numCards / 3.0);
+                    }
+
+                    // Calculates usable page height for the card pane only with dummy layout objects
+                    Group dummyRoot = new Group();
+                    VBox dummyBox = new VBox();
+                    double height = Screen.getPrimary().getBounds().getHeight();
+                    double width = Screen.getPrimary().getBounds().getWidth();
+                    Scene scene = new Scene(dummyRoot, width, height);
+
+                    dummyRoot.getChildren().add(dummyBox);
+                    dummyBox.getChildren().add(lessonPlanTitleLabel);
+                    dummyBox.getChildren().add(eventLabel);
+                    dummyRoot.applyCss();
+                    dummyRoot.layout();
+
+                    double usablePageHeight = pageHeight - lessonPlanTitleLabel.getHeight() - eventLabel.getHeight() - 10;
+
+                    double cardHeight = usablePageHeight / numRows + 0.0;
+                    cardImageView.setFitWidth(cardHeight * (4/3.0));
+                    cardImageView.setFitHeight(cardHeight);
+                } else if (PrintStaging.getLandscapeDisplay()) {
+                    double cardWidth = pageWidth / 4.0;
+                    double cardHeight = cardWidth * 0.75;
+                    cardImageView.setFitWidth(cardWidth);
+                    cardImageView.setFitHeight(cardHeight);
+                } else {
+                    cardImageView.setFitWidth(pageWidth / 3.0);
+                    cardImageView.setFitHeight(pageWidth / 4.0);
+                }
                 eventCardsPane.getChildren().add(cardImageView);
+                eventCardsPane.setAlignment(Pos.CENTER);
             }
             labelToFlowPaneMap.put(eventLabel, eventCardsPane);
         }
