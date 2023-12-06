@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
@@ -52,6 +53,13 @@ public class CreateLessonPlanController {
     @FXML private Button removeFavoriteBtn;
     @FXML private TextField titleField;
 
+    @FXML private Button editEventHeadingBtn;
+    @FXML private TextField editEventHeadingTextField;
+
+    @FXML private Button downBtn;
+    @FXML private Button upBtn;
+
+
     // zoomed-in card elements
     @FXML private VBox zoomedInCardVBox;
     @FXML private Label eventLabel;
@@ -81,6 +89,7 @@ public class CreateLessonPlanController {
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
+        editEventHeadingTextField.setVisible(false);
         setUpTitle();
         undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());
         if (eventDropdown.getItems().isEmpty()) {
@@ -97,6 +106,10 @@ public class CreateLessonPlanController {
         addCardBtn.setDisable(true);
         favoriteBtn.setDisable(true);
         removeFavoriteBtn.setDisable(true);
+
+        //set up button functionality
+        upBtn.setOnAction(e -> moveEventUpAction(-1));
+        downBtn.setOnAction(e -> moveEventUpAction(1));
     }
 
     private void setUpTreeView(){
@@ -446,5 +459,24 @@ public class CreateLessonPlanController {
         }else {
             return allCardsFlowPane;
         }
+    }
+    @FXML private void editEventHeadingAction() {
+        lessonPlanTreeView.setEffect(new BoxBlur());
+        editEventHeadingTextField.setVisible(true);
+    }
+    @FXML private void setEventHeading(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER){
+            String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+            Category categoryOfEvent = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventToChange));
+            treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), categoryOfEvent, root);
+            editEventHeadingTextField.setVisible(false);
+            lessonPlanTreeView.setEffect(null);
+        }
+    }
+
+    private void moveEventUpAction(int direction) {
+        String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+        Category categoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
+        treeViewManager.moveEvent(categoryToMove, direction, root);
     }
 }
