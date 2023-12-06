@@ -5,13 +5,9 @@ import edu.augustana.model.Card;
 import edu.augustana.model.CardDatabase;
 import edu.augustana.model.LessonPlan;
 import edu.augustana.structures.Category;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ListIterator;
-
-import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
 /*
     I used https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm and
