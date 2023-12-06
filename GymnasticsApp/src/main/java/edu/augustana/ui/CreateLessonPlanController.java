@@ -175,7 +175,7 @@ public class CreateLessonPlanController {
     }
 
     @FXML void setUpTitle() {
-        if (App.getCurrentLessonPlan().getTitle() != null) {
+        if (!App.getCurrentLessonPlan().getTitle().equals("Untitled")) {
             titleField.setText(App.getCurrentLessonPlan().getTitle());
             titleField.setStyle("-fx-text-fill: white;" + "-fx-background-color: transparent");
             titleField.setFont(new Font("Georgia Bold", 36.0));
@@ -192,7 +192,7 @@ public class CreateLessonPlanController {
                 if (!titleField.getText().equals(titleField.getPromptText())) {
                     App.getCurrentLessonPlan().setTitle(titleField.getText());
                 } else {
-                    App.getCurrentLessonPlan().setTitle(null);
+                    App.getCurrentLessonPlan().setTitle("Untitled");
                 }
                 undoRedoHandler.saveState();
             }
@@ -200,20 +200,12 @@ public class CreateLessonPlanController {
     }
 
     @FXML void goToHome() throws IOException {
-        setUntitledLessonPlan();
         App.setRoot("home");
     }
 
     @FXML
     void returnToCourseHandler() throws IOException {
-        setUntitledLessonPlan();
         App.setRoot("course_view");
-    }
-
-    private void setUntitledLessonPlan(){
-        if(App.getCurrentLessonPlan().getTitle() == null){
-            App.getCurrentLessonPlan().setTitle("Untitled");
-        }
     }
 
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
