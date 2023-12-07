@@ -3,13 +3,11 @@ package edu.augustana.ui;
 import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
-import edu.augustana.structures.*;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -50,7 +48,7 @@ public class CreateLessonPlanController {
     @FXML private Button addCardBtn;
     @FXML private Button favoriteBtn;
     @FXML private Button removeFavoriteBtn;
-    @FXML private TextField titleField;
+    @FXML private TextField lessonTitleField;
 
     // zoomed-in card elements
     @FXML private VBox zoomedInCardVBox;
@@ -76,17 +74,17 @@ public class CreateLessonPlanController {
     TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
 
     private UndoRedoHandler undoRedoHandler;
+    private TitleEditor titleEditor;
+    private final FilterHandler filterHandler = new FilterHandler();
 
     @FXML
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
-        setUpTitle();
         undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
-        // loop through all cards, making a CardView for each card and adding it to the cardViewList
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
             CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
             cardViewList.add(newCardView);
@@ -94,9 +92,11 @@ public class CreateLessonPlanController {
         cardsTabPane.getSelectionModel().select(allCardsTab);
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
-        addCardBtn.setDisable(true);
-        favoriteBtn.setDisable(true);
-        removeFavoriteBtn.setDisable(true);
+        titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
+        titleEditor.initializeTitleFieldEvents();
+        titleEditor.setTitleFieldText();
+        undoRedoHandler.saveState();
+        setDisableButtons(true);
     }
 
     private void setUpTreeView(){
@@ -115,11 +115,7 @@ public class CreateLessonPlanController {
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
-            dropdown.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
-                public void onChanged(ListChangeListener.Change<? extends String> c) {
-                    applyFiltersAction();
-                }
-            });
+            dropdown.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) e -> updateFilteredVisibleCards());
         }
     }
 
@@ -174,31 +170,6 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void setUpTitle() {
-        if (!App.getCurrentLessonPlan().getTitle().equals("Untitled")) {
-            titleField.setText(App.getCurrentLessonPlan().getTitle());
-            titleField.setStyle("-fx-text-fill: white;" + "-fx-background-color: transparent");
-            titleField.setFont(new Font("Georgia Bold", 36.0));
-        } else {
-            titleField.setText(titleField.getPromptText());
-            titleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
-            titleField.setFont(new Font("System Italic", 36.0));
-        }
-        TitleEditor titleEditor = new TitleEditor(titleField, new Font("Georgia", 40.0), new Font("Georgia Bold", 40.0));
-        titleField.setOnMouseClicked(e -> titleEditor.editTitle());
-        titleField.setOnKeyPressed(e -> {
-            if (e.getCode().equals(KeyCode.ENTER)) {
-                titleEditor.lockInTitle();
-                if (!titleField.getText().equals(titleField.getPromptText())) {
-                    App.getCurrentLessonPlan().setTitle(titleField.getText());
-                } else {
-                    App.getCurrentLessonPlan().setTitle("Untitled");
-                }
-                undoRedoHandler.saveState();
-            }
-        });
-    }
-
     @FXML void goToHome() throws IOException {
         App.setRoot("home");
     }
@@ -229,34 +200,41 @@ public class CreateLessonPlanController {
 
     private void checkSelectedCardsStatus() {
         if (selectedCards.isEmpty()) {
-            addCardBtn.setDisable(true);
-            favoriteBtn.setDisable(true);
-            removeFavoriteBtn.setDisable(true);
+            setDisableButtons(true);
         } else {
-            addCardBtn.setDisable(false);
-            favoriteBtn.setDisable(false);
-            removeFavoriteBtn.setDisable(false);
+            setDisableButtons(false);
         }
     }
 
-    @FXML
-    void applyFiltersAction() {
-        FlowPane cardsFlowPane = findAndSetFlowPane();
-        cardsFlowPane.getChildren().clear();
-        FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
+    private void setDisableButtons(boolean disable) {
+        addCardBtn.setDisable(disable);
+        favoriteBtn.setDisable(disable);
+        removeFavoriteBtn.setDisable(disable);
+    }
+
+    // Used code from MovieTrackerApp
+    private void updateFilteredVisibleCards() {
+        List<String> searchTermList = Arrays.asList(searchField.getText().split("\\s+"));
+        List<String> checkedEvents = getCheckedItems(eventDropdown);
+        List<String> checkedGenders = getCheckedItems(genderDropdown);
+        List<String> checkedLevels = getCheckedItems(levelDropdown);
+        List<String> checkedModelSexes = getCheckedItems(modelSexDropdown);
         for (CardView cardView : cardViewList) {
-            if (FilterControl.checkIfAllFiltersMatch(cardView.getCard()) && searchFromSearchBar().matchesFilters(cardView.getCard())) {
-                cardsFlowPane.getChildren().add(cardView);
-                cardView.setOnMouseClicked(this::selectCardAction);
-            }
+            CardFilter combinedFilter = filterHandler.getCombinedFilter(searchTermList, checkedEvents, checkedGenders, checkedLevels, checkedModelSexes);
+            boolean includeThisCard = combinedFilter.matchesFilters(cardView.getCard());
+            cardView.setVisible(includeThisCard);
+            cardView.setManaged(includeThisCard);
+            cardView.setOnMouseClicked(this::selectCardAction);
         }
     }
 
     @FXML
-    void clearFiltersAction() throws MalformedURLException {
-        FilterControl.resetDesiredFiltersLists();
-        findAndSetFlowPane().getChildren().clear();
-        drawCardSet(findAndSetFlowPane(), cardViewList);
+    void clearFiltersAction() {
+        for (CardView cardView : cardViewList) {
+            cardView.setVisible(true);
+            cardView.setManaged(true);
+        }
+
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             List<String> checkedItems = getCheckedItems(dropdown);
             if (checkedItems != null) {
@@ -267,26 +245,9 @@ public class CreateLessonPlanController {
         }
     }
 
-    private SearchFilter searchFromSearchBar(){
-        List<String> searchWordList = new ArrayList<>();
-        for (String word : searchField.getText().split("\\s+")) {
-            searchWordList.add(word.toLowerCase());
-        }
-        return new SearchFilter(searchWordList);
-    }
-
-    @FXML
-    void searchAction(KeyEvent event) {
-        FlowPane cardsFlowPane = findAndSetFlowPane();
+    @FXML void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            SearchFilter searchFilter = searchFromSearchBar();
-            cardsFlowPane.getChildren().clear();
-            for (CardView cardView : cardViewList) {
-                if (FilterControl.checkIfAllFiltersMatch(cardView.getCard()) && searchFilter.matchesFilters(cardView.getCard())) {
-                    cardsFlowPane.getChildren().add(cardView);
-                    cardView.setOnMouseClicked(this::selectCardAction);
-                }
-            }
+            updateFilteredVisibleCards();
         }
     }
 
@@ -342,13 +303,13 @@ public class CreateLessonPlanController {
         System.out.println("AFTER UNDO in GUI: app current lesson plan =");
         System.out.println(App.getCurrentLessonPlan());
         setUpTreeView();
-        setUpTitle();
+        titleEditor.setTitleFieldText();
     }
 
     public void redo() {
         undoRedoHandler.redo();
         setUpTreeView();
-        setUpTitle();
+        titleEditor.setTitleFieldText();
     }
 
     @FXML private void giveWarning(String message) {
@@ -387,11 +348,7 @@ public class CreateLessonPlanController {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.orElse(textOnlyBtn) == cardImageBtn) {
-            return true;
-        } else {
-            return false;
-        }
+        return result.orElse(textOnlyBtn) == cardImageBtn;
     }
 
     @FXML private boolean promptPageFormat() {
@@ -403,11 +360,7 @@ public class CreateLessonPlanController {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.orElse(portraitBtn) == landscapeBtn) {
-            return true;
-        } else {
-            return false;
-        }
+        return result.orElse(portraitBtn) == landscapeBtn;
     }
     @FXML
     void switchToAllCards() {

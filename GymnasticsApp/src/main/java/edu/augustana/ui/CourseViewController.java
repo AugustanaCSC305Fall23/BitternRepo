@@ -25,15 +25,13 @@ public class CourseViewController {
 
     @FXML private HBox buttonBar;
     @FXML private Button createNewLessonPlanBtn;
-    @FXML private Button homeButton;
-
     @FXML private TextField courseTitleField;
     @FXML private Menu recentFilesMenu;
    // @FXML private MenuItem recentFileMenuItem1;
 
     // Non FXML
     private static Course currentCourse;
-    private CourseModel courseMenuControl;
+    private CourseModel courseModel;
     private TitleEditor titleEditor;
     private List<Button> buttonsList = new ArrayList<>();
 
@@ -43,10 +41,11 @@ public class CourseViewController {
             currentCourse = new Course();
         }
         courseListView.setOnMouseClicked(e -> checkIfItemSelected());
-        courseMenuControl = new CourseModel();
+        courseModel = new CourseModel();
         addLessonsToCourseList();
-        titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0));
-        titleEditor.setUpTitle();
+        titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
+        titleEditor.initializeTitleFieldEvents();
+        titleEditor.setTitleFieldText();
         //recentFileMenuItem1.setText(RecentFilesManager.getUserPreferences().get("1", "empty"));
         setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {
@@ -61,35 +60,44 @@ public class CourseViewController {
         App.setRoot("home");
     }
 
+    private void setCourseTitle() {
+        if (courseTitleField.getText() != null) {
+            App.getCurrentCourse().setTitle(courseTitleField.getText());
+            System.out.println("Listener worked for course!!!");
+        } else {
+            App.getCurrentCourse().setTitle("Untitled");
+        }
+    }
+
     private void checkIfItemSelected() {
         if (!courseListView.getSelectionModel().isEmpty()) {
             for (Button btn : buttonsList) {
                 btn.setDisable(false);
             }
-            courseMenuControl.setSelectedLessonPlan(courseListView.getSelectionModel().getSelectedItem());
+            courseModel.setSelectedLessonPlan(courseListView.getSelectionModel().getSelectedItem());
         } else {
             for (Button btn : buttonsList) {
                 if (btn != createNewLessonPlanBtn) {
                     btn.setDisable(true);
                 }
             }
-            courseMenuControl.setSelectedLessonPlan(null);
+            courseModel.setSelectedLessonPlan(null);
         }
     }
 
     @FXML private void createNewCourseHandler() {
-        courseMenuControl.createNewCourse();
+        courseModel.createNewCourse();
         courseListView.getItems().clear();
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             courseListView.getItems().add(lessonPlan);
         }
-        titleEditor.setUpTitle();
+        //titleEditor.setUpTitleActions();
     }
 
     @FXML private void openCourseHandler() {
         Window mainWindow = courseListView.getScene().getWindow();
-        courseMenuControl.openCourseFromFiles(mainWindow);
-        courseTitleField.setText(App.getCurrentCourse().getCourseTitle());
+        courseModel.openCourseFromFiles(mainWindow);
+        courseTitleField.setText(App.getCurrentCourse().getTitle());
         courseListView.getItems().clear();
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             courseListView.getItems().add(lessonPlan);
@@ -100,7 +108,7 @@ public class CourseViewController {
 
     @FXML private void saveCourseHandler() {
         try {
-            courseMenuControl.saveCourse();
+            courseModel.saveCourse();
         } catch (IOException e) {
             new Alert(Alert.AlertType.ERROR, "No course file is open").show();
         }
@@ -109,7 +117,7 @@ public class CourseViewController {
     @FXML private void saveCourseAsHandler() {
         Window mainWindow = courseListView.getScene().getWindow();
         try {
-            courseMenuControl.saveCourseAs(mainWindow);
+            courseModel.saveCourseAs(mainWindow);
         } catch (IOException e) {
             new Alert(Alert.AlertType.ERROR, "No course file is open").show();
         }
@@ -121,12 +129,11 @@ public class CourseViewController {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
         App.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
-        //might need to move parts of method
     }
 
     @FXML private void openRecentFileHandler(String filePath) throws IOException {
-        courseMenuControl.openRecentFile(filePath);
-        courseTitleField.setText(App.getCurrentCourse().getCourseTitle());
+        courseModel.openRecentFile(filePath);
+        courseTitleField.setText(App.getCurrentCourse().getTitle());
         courseListView.getItems().clear();
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             courseListView.getItems().add(lessonPlan);

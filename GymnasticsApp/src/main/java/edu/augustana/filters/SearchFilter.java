@@ -6,110 +6,103 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SearchFilter extends CardFilter{
-    public SearchFilter(List<String> searchTerms) {
-        super(searchTerms);
+public class SearchFilter implements CardFilter {
+    private List<String> searchTermList;
+
+    public SearchFilter(List<String> searchTermList) {
+        this.searchTermList = searchTermList;
     }
 
     @Override
     public boolean matchesFilters(Card card){
-        List<String> wordsToSearchFor = super.getListOfDesiredFilters();
-
-        //I think the problem is in these two methods
-        String[] keywords = card.getKeywords();
-/*        for (int index = 0; index < keywords.length; index++) {
-            if (wordsToSearchFor.contains(keywords[index])) {
-                keywordsMatch = true;
-            }
-        }*/
-        String[] equipment = card.getEquipment();
-/*        for (int index = 0; index < equipment.length; index++) {
-            if (wordsToSearchFor.contains(equipment[index])) {
-                equipmentMatch = true;
-            }
-        }*/
-        //Arrays.stream(equipment).toArray();
-        for(int i = 0; i < wordsToSearchFor.size(); i++){
-            for (int index = 0; index < keywords.length; index++) {
-                if (keywords[index].toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(keywords[index].toLowerCase())) {
-                    return true;
-                }
-            }
-            for (int index = 0; index < equipment.length; index++) {
-                if (equipment[index].toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(equipment[index].toLowerCase())) {
-                    return true;
-                }
-            }
-            List<String> genderSynonyms = getListOfGenderSynonyms(card.getGender().toLowerCase());
-            for (int index = 0; index < genderSynonyms.size(); index++) {
-                if (genderSynonyms.get(index).toLowerCase().contains(wordsToSearchFor.get(i).toLowerCase()) || wordsToSearchFor.get(i).toLowerCase().contains(genderSynonyms.get(index).toLowerCase())) {
-                    return true;
-                }
+        if (searchTermList.isEmpty()) {
+            return true;
+        }
+        for (String term : searchTermList) {
+            term = term.toLowerCase();
+            if (!termMatches(term, card)) {
+                return false;
             }
         }
-        if (super.checkIfListEmpty(wordsToSearchFor) ||
-                wordsToSearchFor.contains(card.getCategory().toLowerCase())||
-                wordsToSearchFor.contains(card.getCode().toLowerCase()) ||
-                wordsToSearchFor.contains(card.getEvent().toLowerCase()) ||
-                wordsToSearchFor.contains(String.valueOf(card.getGender()).toLowerCase()) ||
-                wordsToSearchFor.contains(String.valueOf(card.getModelSex()).toLowerCase()) ||
-                wordsToSearchFor.contains(card.getTitle())) {
-            return true;
+        return true;
+    }
+
+    public boolean termMatches(String term, Card card) {
+        return (card.getTitle().toLowerCase().contains(term)
+                || card.getEvent().toLowerCase().contains(term)
+                || card.getEvent().equalsIgnoreCase("ALL")
+                || matchesGender(term, card)
+                || matchesLevel(term, card)
+                || card.getCategory().toLowerCase().contains(term)
+                || card.getCode().toLowerCase().contains(term)
+                || isKeyword(term, card)
+                || isInEquipmentList(term, card));
+    }
+
+    private boolean isKeyword(String term, Card card) {
+        for (String keyword : card.getKeywords()) {
+            if (keyword.toLowerCase().contains(term)) {
+                return true;
+            }
         }
         return false;
     }
 
-    public List<String> getListOfGenderSynonyms(String gender) {
-        List<String> genderSynonyms = new ArrayList<>();
-        if (gender.equalsIgnoreCase("M")) {
-            genderSynonyms = Arrays.asList("M, man, male, men, boy");
-        } else if (gender.equalsIgnoreCase("F")) {
-            genderSynonyms = Arrays.asList("F, woman, female, women, girl");
+    private boolean isInEquipmentList(String term, Card card) {
+        for (String equipment : card.getEquipment()) {
+            if (equipment.toLowerCase().contains(term)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean matchesLevel(String term, Card card) {
+        String[] cardLevelSymbols = card.getLevel().split("\\+s");
+        List<String> cardLevelWords = new ArrayList<>();
+        for (String level : cardLevelSymbols) {
+            if (level.contains("AB")) {
+                cardLevelWords.add("advanced beginner");
+            } else if (level.contains("A")) {
+                cardLevelWords.add("advanced");
+            } else if (level.contains("I")) {
+                cardLevelWords.add("intermediate");
+            } else if (level.contains("B")) {
+                cardLevelWords.add("beginner");
+            }
+        }
+
+        // advanced beginner never used since it is two words
+        for (String word : cardLevelWords) {
+            if (word.equals(term)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean matchesGender(String term, Card card) {
+        if (card.getGender().equalsIgnoreCase("M")) {
+            return card.getGender().equalsIgnoreCase("N") || isBoySynonym(term);
+        } else if (card.getGender().equalsIgnoreCase("F")) {
+            return card.getGender().equalsIgnoreCase("N") || isGirlSynonym(term);
         } else {
-            genderSynonyms = Arrays.asList("N, neutral");
+            return isNeutralSynonym(term);
         }
-
-        return genderSynonyms;
     }
 
-    /* private static final EventFilter eventFilter = new EventFilter();
-    private static final GenderFilter genderFilter = new GenderFilter();
-    private static final ModelSexFilter modelSexFilter = new ModelSexFilter();
-    private static final LevelFilter levelFilter = new LevelFilter();
-    private static final CategoryFilter categoryFilter = new CategoryFilter();
-    private static final CodeFilter codeFilter = new CodeFilter();
-    private static final EquipmentFilter equipmentFilter = new EquipmentFilter();
-    private static final KeywordsFilter keywordsFilter = new KeywordsFilter();
-    private static final TitleFilter titleFilter = new TitleFilter();
-    
-    public boolean match(Card card){
-        if(categoryFilter.match(card) || codeFilter.match(card) || equipmentFilter.match(card) ||
-                eventFilter.match(card) || genderFilter.match(card) || keywordsFilter.match(card) || levelFilter.match(card) ||
-                modelSexFilter.match(card) || titleFilter.match(card)){
-            return true;
-        }
-        return false;
+    private boolean isBoySynonym(String term) {
+        List<String> boySynonyms = List.of("m, male, man, men, boy");
+        return (boySynonyms.contains(term));
     }
-    public void setFilter(String filter){
-        categoryFilter.setFilter(filter);
-        codeFilter.setFilter(filter);
-        equipmentFilter.setFilter(filter);
-        eventFilter.setFilter(filter);
-        genderFilter.setFilter(filter);
-        keywordsFilter.setFilter(filter);
-        levelFilter.setFilter(filter);
-        modelSexFilter.setFilter(filter);
-        titleFilter.setFilter(filter);
+
+    private boolean isGirlSynonym(String term) {
+        List<String> girlSynonyms = List.of("f, woman, female, women, girl");
+        return (girlSynonyms.contains(term));
     }
-    public void resetFilter(){
-        categoryFilter.resetFilter();
-        codeFilter.resetFilter();
-        equipmentFilter.resetFilter();
-        eventFilter.resetFilter();
-        genderFilter.resetFilter();
-        keywordsFilter.resetFilter();
-        levelFilter.resetFilter();
-        modelSexFilter.resetFilter();
-        titleFilter.resetFilter();
-    } */
+
+    private boolean isNeutralSynonym(String term) {
+        List<String> neutralSynonyms = List.of("n, neutral");
+        return (neutralSynonyms.contains(term));
+    }
 }

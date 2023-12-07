@@ -1,25 +1,23 @@
 package edu.augustana.model;
 
 import edu.augustana.filters.*;
+import javafx.scene.control.TextField;
+import org.controlsfx.control.CheckComboBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FilterControl {
-    private static CardFilter eventFilter = new EventFilter(new ArrayList<>());
-    private static CardFilter genderFilter = new GenderFilter(new ArrayList<>());
-    private static CardFilter levelFilter = new LevelFilter(new ArrayList<>());
-    private static CardFilter modelSexFilter = new ModelSexFilter(new ArrayList<>());
-    //private static List<CardFilter> listOfFilters = Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter);
-
-    public static List<CardFilter> updateFilterLists(List<String> eventCheckList, List<String> genderCheckList, List<String> levelCheckList, List<String> modelSexCheckList) {
-        eventFilter.updateListOfDesiredFilters(checkForTramp(eventCheckList));
-        genderFilter.updateListOfDesiredFilters(convertListToCharacters(genderCheckList));
-        levelFilter.updateListOfDesiredFilters(changeToLevelKey(levelCheckList));
-        modelSexFilter.updateListOfDesiredFilters(convertListToCharacters(modelSexCheckList));
-        return Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter);
+public class FilterHandler {
+    public CardFilter getCombinedFilter(List<String> searchTermList, List<String> checkedEvents, List<String> checkedGenders, List<String> checkedLevels, List<String> checkedModelSexes) {
+        CardFilter searchFilter = new SearchFilter(searchTermList);
+        CardFilter eventFilter = new EventFilter(checkForTramp(checkedEvents));
+        CardFilter genderFilter = new GenderFilter(convertListToCharacters(checkedGenders));
+        CardFilter levelFilter = new LevelFilter(changeToLevelKey(checkedLevels));
+        CardFilter modelSexFilter = new ModelSexFilter(convertListToCharacters(checkedModelSexes));
+        return new CombinedAndFilter(searchFilter, eventFilter, genderFilter, levelFilter, modelSexFilter);
     }
+
     public static List<String> checkForTramp(List<String> checkedEventFilters){
         List<String> matchingCSVEvents = new ArrayList<>();
         for(int i = 0; i < checkedEventFilters.size(); i++){
@@ -59,22 +57,4 @@ public class FilterControl {
         }
         return shorterFilterList;
     }
-
-    public static boolean checkIfAllFiltersMatch(Card cardToCheck) {
-        List<CardFilter> cardFilterTypes = Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter);
-        for (int i = 0; i < cardFilterTypes.size(); i++) {
-            if (!(cardFilterTypes.get(i).matchesFilters(cardToCheck))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void resetDesiredFiltersLists() {
-        List<CardFilter> cardFilterTypes = Arrays.asList(eventFilter, genderFilter, levelFilter, modelSexFilter);
-        for (CardFilter filter : cardFilterTypes) {
-            filter.resetDesiredFiltersList();
-        }
-    }
-
 }

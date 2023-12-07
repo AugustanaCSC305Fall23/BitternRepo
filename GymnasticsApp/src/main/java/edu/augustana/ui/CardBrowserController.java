@@ -1,6 +1,7 @@
 package edu.augustana.ui;
 
 import edu.augustana.*;
+import edu.augustana.filters.CardFilter;
 import edu.augustana.model.*;
 import edu.augustana.filters.SearchFilter;
 import javafx.collections.FXCollections;
@@ -10,9 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -27,22 +26,6 @@ import javafx.scene.paint.Color;
 import org.controlsfx.control.CheckComboBox;
 
 public class CardBrowserController {
-
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="applyFiltersBtn"
-    private Button applyFiltersBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="clearFiltersBtn"
-    private Button clearFiltersBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="backToLessonPlanBtn"
-    private Button backToLessonPlanBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="homeButton"
     private Button homeButton; // Value injected by FXMLLoader
@@ -67,7 +50,8 @@ public class CardBrowserController {
     @FXML private TextField searchField;
 
     private List<CardView> selectedCards = new ArrayList<>();
-    private List<CardView> cardViewList = new ArrayList<>();
+    private final List<CardView> cardViewList = new ArrayList<>();
+    private final FilterHandler filterHandler = new FilterHandler();
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws MalformedURLException {
@@ -87,20 +71,12 @@ public class CardBrowserController {
         modelSexDropdown.getItems().addAll(modelSexFilterChoices);
         listOfDropdowns = Arrays.asList(eventDropdown, genderDropdown, levelDropdown, modelSexDropdown);
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
-            dropdown.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
-                public void onChanged(ListChangeListener.Change<? extends String> c) {
-                    try {
-                        applyFiltersAction();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
+            dropdown.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) e -> updateFilteredVisibleCards());
         }
     }
 
     @FXML
-    private void goToHome(ActionEvent event) throws IOException {
+    private void goToHome() throws IOException {
         App.setRoot("home");
     }
 
@@ -129,22 +105,29 @@ public class CardBrowserController {
         }
     }
 
-    private void applyFiltersAction() throws IOException {
-        cardsFlowPane.getChildren().clear();
-        FilterControl.updateFilterLists(getCheckedItems(eventDropdown), getCheckedItems(genderDropdown), getCheckedItems(levelDropdown), getCheckedItems(modelSexDropdown));
+    // Used code from MovieTrackerApp
+    @FXML void updateFilteredVisibleCards() {
+        List<String> searchTermList = Arrays.asList(searchField.getText().split("\\s+"));
+        List<String> checkedEvents = getCheckedItems(eventDropdown);
+        List<String> checkedGenders = getCheckedItems(genderDropdown);
+        List<String> checkedLevels = getCheckedItems(levelDropdown);
+        List<String> checkedModelSexes = getCheckedItems(modelSexDropdown);
         for (CardView cardView : cardViewList) {
-            if (FilterControl.checkIfAllFiltersMatch(cardView.getCard()) && searchFromSearchBar().matchesFilters(cardView.getCard())) {
-                cardsFlowPane.getChildren().add(cardView);
-                cardView.setOnMouseClicked(this::selectCardAction);
-            }
+            CardFilter combinedFilter = filterHandler.getCombinedFilter(searchTermList, checkedEvents, checkedGenders, checkedLevels, checkedModelSexes);
+            boolean includeThisCard = combinedFilter.matchesFilters(cardView.getCard());
+            cardView.setVisible(includeThisCard);
+            cardView.setManaged(includeThisCard);
+            cardView.setOnMouseClicked(this::selectCardAction);
         }
     }
 
     @FXML
-    private void clearFiltersAction(ActionEvent event) throws IOException {
-        FilterControl.resetDesiredFiltersLists();
-        cardsFlowPane.getChildren().clear();
-        drawCardSet();
+    private void clearFiltersAction() {
+        for (CardView cardView : cardViewList) {
+            cardView.setVisible(true);
+            cardView.setManaged(true);
+        }
+
         for (CheckComboBox<String> dropdown : listOfDropdowns) {
             if (dropdown.getCheckModel().getCheckedItems() != null){
                 List<Integer> checkedIndices = dropdown.getCheckModel().getCheckedIndices();
@@ -154,28 +137,12 @@ public class CardBrowserController {
             }
         }
     }
-    private SearchFilter searchFromSearchBar(){
-        List<String> searchWordList = new ArrayList<>();
-        for (String word : searchField.getText().split("\\s+")) {
-            searchWordList.add(word.toLowerCase());
-        }
-        return new SearchFilter(searchWordList);
-    }
-    @FXML
-    void searchAction(KeyEvent event) {
+
+    @FXML void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            SearchFilter searchFilter = searchFromSearchBar();
-            cardsFlowPane.getChildren().clear();
-            for (CardView cardView : cardViewList) {
-                if (FilterControl.checkIfAllFiltersMatch(cardView.getCard()) && searchFilter.matchesFilters(cardView.getCard())) {
-                    cardsFlowPane.getChildren().add(cardView);
-                    cardView.setOnMouseClicked(this::selectCardAction);
-                }
-            }
+            updateFilteredVisibleCards();
         }
     }
-
-
 
     @FXML
     void printSelectedCards() throws IOException {
