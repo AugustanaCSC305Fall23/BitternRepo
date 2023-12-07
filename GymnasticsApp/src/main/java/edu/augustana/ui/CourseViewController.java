@@ -10,6 +10,7 @@ import edu.augustana.model.Course;
 import edu.augustana.model.CourseModel;
 import edu.augustana.model.LessonPlan;
 import edu.augustana.model.RecentFilesManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -131,6 +132,10 @@ public class CourseViewController {
         }
         App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
         setUpRecentFilesMenu();
+    }
+
+    @FXML private void exitHandler() {
+        Platform.exit();
     }
 
     @FXML private void setUpRecentFilesMenu() {
