@@ -21,7 +21,7 @@ public class CourseModel {
     public void openCourseFromFiles(Window mainWindow) {
         //Used https://www.youtube.com/watch?v=hNz8Xf4tMI
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Gymnastics Course File");
+         fileChooser.setTitle("Open Gymnastics Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
         if (chosenFile != null) {
@@ -33,6 +33,16 @@ public class CourseModel {
                 new Alert(Alert.AlertType.ERROR, "Error loading Course: " + chosenFile).show();
             }
         }
+    }
+
+
+    //has some repeated code from openCourseFromFiles method in this class
+    public void openRecentFile(String filePath) throws IOException {
+        File recentFile = new File(filePath);
+        App.setCurrentCourseFile(recentFile);
+        Course openedCourse = loadFromFile(recentFile);
+        App.setCurrentCourse(openedCourse);
+        App.setCurrentCourseFile(recentFile);
     }
 
     public void saveCourse() throws IOException {

@@ -1,5 +1,6 @@
 package edu.augustana.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import edu.augustana.App;
 import edu.augustana.model.Course;
 import edu.augustana.model.CourseModel;
 import edu.augustana.model.LessonPlan;
+import edu.augustana.model.RecentFilesManager;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -24,6 +26,8 @@ public class CourseViewController {
     @FXML private Button homeButton;
 
     @FXML private TextField courseTitleField;
+    @FXML private Menu recentFilesMenu;
+   // @FXML private MenuItem recentFileMenuItem1;
 
     // Non FXML
     private static Course currentCourse;
@@ -41,6 +45,8 @@ public class CourseViewController {
         addLessonsToCourseList();
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0));
         titleEditor.setUpTitle();
+        //recentFileMenuItem1.setText(RecentFilesManager.getUserPreferences().get("1", "empty"));
+        setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {
             if (node instanceof Button) {
                 Button btn = (Button) node;
@@ -86,6 +92,8 @@ public class CourseViewController {
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             courseListView.getItems().add(lessonPlan);
         }
+        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
+        setUpRecentFilesMenu();
     }
 
     @FXML private void saveCourseHandler() {
@@ -103,20 +111,52 @@ public class CourseViewController {
         } catch (IOException e) {
             new Alert(Alert.AlertType.ERROR, "No course file is open").show();
         }
+        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
+        setUpRecentFilesMenu();
     }
 
     @FXML private void createLessonPlanHandler() throws IOException {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
-        CreateLessonPlanController.setCurrentLessonPlan(lessonPlan);
+        App.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
         //might need to move parts of method
+    }
+
+    @FXML private void openRecentFileHandler(String filePath) throws IOException {
+        courseMenuControl.openRecentFile(filePath);
+        courseTitleField.setText(App.getCurrentCourse().getCourseTitle());
+        courseListView.getItems().clear();
+        for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+            courseListView.getItems().add(lessonPlan);
+        }
+        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
+        setUpRecentFilesMenu();
+    }
+
+    @FXML private void setUpRecentFilesMenu() {
+        //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/MenuItem.html
+        //https://stackoverflow.com/questions/57074185/how-to-use-setonaction-event-on-javafx
+        recentFilesMenu.getItems().clear();
+        for (int i = 0; i < RecentFilesManager.getMaxRecentFiles(); i++) {
+            String recentFileNum = Integer.toString(i + 1);
+            if (!RecentFilesManager.getUserPreferences().get(recentFileNum, "empty").equals("empty")) {
+                MenuItem recentFile = new MenuItem(RecentFilesManager.getUserPreferences().get(recentFileNum, "empty"));
+                recentFile.setOnAction(event -> {
+                    try {
+                        openRecentFileHandler(recentFile.getText());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                recentFilesMenu.getItems().add(recentFile);
+            }
+        }
     }
 
     @FXML private void editLessonPlanHandler() throws  IOException {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
-            CreateLessonPlanController.setCurrentLessonPlan(lessonPlanToEdit);
             App.setRoot("lesson_plan_creator");
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a Lesson Plan first.");

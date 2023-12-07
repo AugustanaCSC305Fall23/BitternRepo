@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 /**
  * JavaFX App
@@ -22,7 +23,7 @@ public class App extends Application {
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
     private static FavoriteCards favoriteCards;
-
+    private static RecentFilesManager recentFilesManager = new RecentFilesManager();
     @Override
     public void start(Stage stage) throws IOException, CsvValidationException {
         CardDatabase.addCardsFromAllCSVFiles();
@@ -64,6 +65,12 @@ public class App extends Application {
         currentLessonPlan = lessonPlan;
     }
     public static FavoriteCards getFavoriteCards(){return favoriteCards;}
+
+    public static RecentFilesManager getRecentFilesManager() {
+        return recentFilesManager;
+    }
+
+    public static void setRecentFilesManager(RecentFilesManager recentFilesManager) { App.recentFilesManager = recentFilesManager; }
 
     public static void main(String[] args) {
         launch();

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -42,7 +43,8 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#createNewCourseHandler" text="Create New Course" />
-                  <MenuItem mnemonicParsing="false" onAction="#openCourseHandler" text="Open Course" />
+                  <MenuItem mnemonicParsing="false" onAction="#openCourseHandler" text="Open Course From Files" />
+                  <Menu fx:id="recentFilesMenu" mnemonicParsing="false" text="Open Recent Course..." />
                   <MenuItem mnemonicParsing="false" onAction="#saveCourseHandler" text="Save Course" />
                   <MenuItem mnemonicParsing="false" onAction="#saveCourseAsHandler" text="Save Course as..." />
               <MenuItem mnemonicParsing="false" text="Exit" />
@@ -54,6 +56,13 @@
             </items>
           </Menu>
         </menus>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </MenuBar>
       <HBox fx:id="buttonBar" alignment="CENTER" spacing="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="120.0">
          <children>

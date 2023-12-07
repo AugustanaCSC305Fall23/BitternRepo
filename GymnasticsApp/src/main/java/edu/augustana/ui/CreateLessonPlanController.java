@@ -290,10 +290,6 @@ public class CreateLessonPlanController {
         }
     }
 
-    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
-        App.setCurrentLessonPlan(lessonPlan);
-    }
-
     @FXML
     void addCardsToLessonPlan() {
         if (!selectedCards.isEmpty()) {
