@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
    <children>
       <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" promptText="(Enter Course Title)" style="-fx-background-color: DarkMagenta;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -93,7 +93,7 @@
             </Button>
          </children>
       </HBox>
-      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" />
+      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="217.0" />
       <Line endX="2000.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
    </children>
 </AnchorPane>
