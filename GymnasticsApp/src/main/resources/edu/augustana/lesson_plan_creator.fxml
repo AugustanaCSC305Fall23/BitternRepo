@@ -180,7 +180,7 @@
                            </font>
                         </Tooltip>
                      </tooltip></TextField>
-                  <TreeView fx:id="lessonPlanTreeView" layoutX="47.0" layoutY="199.0" prefHeight="470.0" prefWidth="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="110.0" />
+                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="474.0" prefWidth="439.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="110.0" />
                   <HBox spacing="70.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
                      <children>
                         <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" style="-fx-background-color: Lavender;" text="Print Lesson Plan">
@@ -229,8 +229,12 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button layoutX="156.0" layoutY="65.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
-                  <Button layoutX="350.0" layoutY="65.0" mnemonicParsing="false" onAction="#redo" text="Redo" />
+                  <Button layoutX="98.0" layoutY="65.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
+                  <Button layoutX="212.0" layoutY="65.0" mnemonicParsing="false" onAction="#redo" text="Redo" />
+                  <Button fx:id="editEventHeadingBtn" layoutX="349.0" layoutY="66.0" mnemonicParsing="false" onAction="#editEventHeadingAction" text="Edit Event Heading" />
+                  <TextField fx:id="editEventHeadingTextField" layoutX="230.0" layoutY="332.0" onKeyPressed="#setEventHeading" />
+                  <Button fx:id="upBtn" layoutX="30.0" layoutY="198.0" mnemonicParsing="false" text="Up" />
+                  <Button fx:id="downBtn" layoutX="20.0" layoutY="274.0" mnemonicParsing="false" text="Down" />
                </children>
             </AnchorPane>
          </items>
