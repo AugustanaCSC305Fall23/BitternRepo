@@ -27,7 +27,6 @@ public class CourseViewController {
     @FXML private Button createNewLessonPlanBtn;
     @FXML private TextField courseTitleField;
     @FXML private Menu recentFilesMenu;
-   // @FXML private MenuItem recentFileMenuItem1;
 
     // Non FXML
     private static Course currentCourse;
@@ -46,7 +45,6 @@ public class CourseViewController {
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
         titleEditor.initializeTitleFieldEvents();
         titleEditor.setTitleFieldText();
-        //recentFileMenuItem1.setText(RecentFilesManager.getUserPreferences().get("1", "empty"));
         setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {
             if (node instanceof Button) {
@@ -58,15 +56,6 @@ public class CourseViewController {
 
     @FXML private void goToHome() throws IOException {
         App.setRoot("home");
-    }
-
-    private void setCourseTitle() {
-        if (courseTitleField.getText() != null) {
-            App.getCurrentCourse().setTitle(courseTitleField.getText());
-            System.out.println("Listener worked for course!!!");
-        } else {
-            App.getCurrentCourse().setTitle("Untitled");
-        }
     }
 
     private void checkIfItemSelected() {
@@ -91,7 +80,6 @@ public class CourseViewController {
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             courseListView.getItems().add(lessonPlan);
         }
-        //titleEditor.setUpTitleActions();
     }
 
     @FXML private void openCourseHandler() {
@@ -197,7 +185,6 @@ public class CourseViewController {
         if (!(lessonPlanList.isEmpty())) {
             for (LessonPlan lesson: lessonPlanList) {
                 courseListView.getItems().add(lesson);
-                // add a case for if the lesson plan doesn't have a name (somehow call it "Untitled" in course view)
             }
         }
     }
