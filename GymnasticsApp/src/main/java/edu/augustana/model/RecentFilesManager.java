@@ -19,12 +19,6 @@ public class RecentFilesManager {
             userPreferences.put(Integer.toString(i), userPreferences.get(Integer.toString(i - 1), "empty"));
         }
         userPreferences.put("1", recentFilePath);
-        System.out.println(userPreferences.get("1", "empty1"));
-        System.out.println(userPreferences.get("2", "empty2"));
-        System.out.println(userPreferences.get("3", "empty3"));
-        System.out.println(userPreferences.get("4", "empty4"));
-        System.out.println(userPreferences.get("5", "empty5"));
-        System.out.println();
     }
 
     public static Preferences getUserPreferences() {

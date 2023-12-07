@@ -314,8 +314,6 @@ public class CreateLessonPlanController {
 
     public void undo() {
         undoRedoHandler.undo();
-        System.out.println("AFTER UNDO in GUI: app current lesson plan =");
-        System.out.println(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
@@ -421,8 +419,6 @@ public class CreateLessonPlanController {
         if(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading) >= 0){
             Category categoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
             treeViewManager.moveEvent(categoryToMove, direction, root);
-        }else{
-            System.out.println("You selected a card");
         }
     }
 }

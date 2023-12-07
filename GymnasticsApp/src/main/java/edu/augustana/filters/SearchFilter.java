@@ -1,6 +1,7 @@
 package edu.augustana.filters;
 
 import edu.augustana.model.Card;
+import edu.augustana.model.FilterHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,23 +59,11 @@ public class SearchFilter implements CardFilter {
     }
 
     private boolean matchesLevel(String term, Card card) {
-        String[] cardLevelSymbols = card.getLevel().split("\\+s");
-        List<String> cardLevelWords = new ArrayList<>();
-        for (String level : cardLevelSymbols) {
-            if (level.contains("AB")) {
-                cardLevelWords.add("advanced beginner");
-            } else if (level.contains("A")) {
-                cardLevelWords.add("advanced");
-            } else if (level.contains("I")) {
-                cardLevelWords.add("intermediate");
-            } else if (level.contains("B")) {
-                cardLevelWords.add("beginner");
-            }
-        }
+        FilterHandler filterHandler = new FilterHandler();
+        List<String> cardLevelWords = filterHandler.convertLevelKeysToWords(card.getLevel());
 
-        // advanced beginner never used since it is two words
         for (String word : cardLevelWords) {
-            if (word.equals(term)) {
+            if (word.equalsIgnoreCase("all") || word.contains(term)) {
                 return true;
             }
         }
