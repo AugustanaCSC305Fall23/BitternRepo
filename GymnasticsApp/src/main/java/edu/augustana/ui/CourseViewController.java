@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import edu.augustana.App;
 import edu.augustana.model.Course;
@@ -169,12 +170,18 @@ public class CourseViewController {
     }
 
     @FXML private void removeLessonPlanHandler() {
-        LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
-        if (lessonPlanToDelete != null) {
-            courseListView.getItems().remove(lessonPlanToDelete);
-            App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
-            App.setCurrentLessonPlan(null);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Are you sure you want to delete this lesson plan?");
+        Optional<ButtonType> confirmation =  alert.showAndWait();
+        if (confirmation.isPresent() && confirmation.get() == ButtonType.OK) {
+            LessonPlan lessonPlanToDelete = courseListView.getSelectionModel().getSelectedItem();
+            if (lessonPlanToDelete != null) {
+                courseListView.getItems().remove(lessonPlanToDelete);
+                App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
+                App.setCurrentLessonPlan(null);
+            }
         }
+
     }
 
     @FXML
