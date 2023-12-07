@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8d47e037-2787-4acb-b966-5ccb55812ed2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/SearchFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/filters/SearchFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/FilterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/FilterHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/PrintStaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/PrintStaging.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/RecentFilesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/RecentFilesManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
