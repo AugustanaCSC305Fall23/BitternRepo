@@ -109,10 +109,7 @@ public class LessonPlan implements Cloneable{
 
     @Override
     public String toString() {
-        return "LessonPlan{" +
-                "title='" + title + '\'' +
-                ", lessonPlan=" + lessonPlan.toString() +
-                '}';
+        return title;
     }
 
 

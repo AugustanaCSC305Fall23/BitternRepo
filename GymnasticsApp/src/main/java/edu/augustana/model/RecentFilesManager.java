@@ -8,7 +8,7 @@ import java.util.prefs.Preferences;
 public class RecentFilesManager {
 
     private static Preferences userPreferences;
-    private static final int MAX_RECENT_FILES = 5;
+    private static final int MAX_RECENT_FILES = 10;
     public RecentFilesManager() {
         userPreferences = Preferences.userNodeForPackage(RecentFilesManager.class);
     }
@@ -30,4 +30,6 @@ public class RecentFilesManager {
     public static Preferences getUserPreferences() {
         return userPreferences;
     }
+
+    public static int getMaxRecentFiles() { return MAX_RECENT_FILES; }
 }
