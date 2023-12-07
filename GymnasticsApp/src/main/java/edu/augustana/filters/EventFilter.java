@@ -4,14 +4,15 @@ import edu.augustana.model.Card;
 
 import java.util.List;
 
-public class EventFilter extends CardFilter {
-    public EventFilter(List<String> listOfCheckedEventFilters) {
-        super(listOfCheckedEventFilters);
+public class EventFilter implements CardFilter {
+    private List<String> eventFilterList;
+
+    public EventFilter(List<String> eventFilterList) {
+        this.eventFilterList = eventFilterList;
     }
 
     @Override
     public boolean matchesFilters(Card card){
-        List<String> checkedEventFilters = getListOfDesiredFilters();
-        return checkIfListEmpty(checkedEventFilters) || checkedEventFilters.contains(card.getEvent()) || card.getEvent().equals("ALL");
+        return eventFilterList.isEmpty() || eventFilterList.contains(card.getEvent()) || card.getEvent().equals("ALL");
     }
 }

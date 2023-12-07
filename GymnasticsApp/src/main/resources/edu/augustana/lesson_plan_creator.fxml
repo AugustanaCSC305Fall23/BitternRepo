@@ -169,7 +169,7 @@
             </AnchorPane>
             <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" style="-fx-background-color: teal;" SplitPane.resizableWithParent="false">
                <children>
-                  <TextField fx:id="titleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: teal;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                  <TextField fx:id="lessonTitleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: teal;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                      <font>
                         <Font name="System Italic" size="36.0" />
                      </font>

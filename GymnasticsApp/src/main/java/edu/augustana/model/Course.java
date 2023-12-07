@@ -1,18 +1,15 @@
 package edu.augustana.model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-    private String courseTitle;
+    private String title;
     private ArrayList<LessonPlan> lessonPlanList;
 
     public Course() {
         lessonPlanList = new ArrayList<>();
+        title = "Untitled";
     }
 
     public LessonPlan createNewLessonPlan() {
@@ -21,8 +18,8 @@ public class Course {
         return newLessonPlan;
     }
 
-    public String getCourseTitle() {
-        return courseTitle;
+    public String getTitle() {
+        return title;
     }
 
     public List<LessonPlan> getLessonPlanList() {
@@ -30,13 +27,13 @@ public class Course {
     }
 
     public void setTitle(String newTitle) {
-        courseTitle = newTitle;
+        title = newTitle;
     }
 
     @Override
     public String toString() {
         return "Course{" +
-                "courseTitle='" + courseTitle + '\'' +
+                "courseTitle='" + title + '\'' +
                 ", lessonPlanList=" + lessonPlanList +
                 '}';
     }

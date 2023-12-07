@@ -5,29 +5,24 @@ import edu.augustana.model.Course;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class HomeScreenController {
 
-    @FXML private HBox buttonsHBox;
     @FXML private ImageView logoView = new ImageView();
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws MalformedURLException {
         String logoURL = new File("Symbols/LOGO.jpeg").toURI().toURL().toString();
         logoView.setImage(new Image(logoURL));
+        logoView.setEffect(new DropShadow(5, Color.BLACK));
     }
 
     @FXML
@@ -42,7 +37,9 @@ public class HomeScreenController {
 
     @FXML
     private void openCourseEditorAndCreator() throws IOException {
+        if (App.getCurrentCourse() == null) {
+            App.setCurrentCourse(new Course());
+        }
         App.setRoot("course_view");
-
     }
 }

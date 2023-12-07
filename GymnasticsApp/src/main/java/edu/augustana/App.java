@@ -18,7 +18,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    private static Course currentCourse = new Course();
+    private static Course currentCourse;
     private static File currentCourseFile;
     private static LessonPlan currentLessonPlan;
     private static FavoriteCards favoriteCards;
