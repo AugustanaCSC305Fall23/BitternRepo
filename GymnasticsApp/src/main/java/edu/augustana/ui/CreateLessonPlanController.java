@@ -9,7 +9,6 @@ import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -108,8 +107,8 @@ public class CreateLessonPlanController {
         removeFavoriteBtn.setDisable(true);
 
         //set up button functionality
-        upBtn.setOnAction(e -> moveEventUpAction(-1));
-        downBtn.setOnAction(e -> moveEventUpAction(1));
+        upBtn.setOnAction(e -> moveTreeItemAction(-1));
+        downBtn.setOnAction(e -> moveTreeItemAction(1));
     }
 
     private void setUpTreeView(){
@@ -474,9 +473,13 @@ public class CreateLessonPlanController {
         }
     }
 
-    private void moveEventUpAction(int direction) {
+    private void moveTreeItemAction(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-        Category categoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
-        treeViewManager.moveEvent(categoryToMove, direction, root);
+        if(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading) >= 0){
+            Category categoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
+            treeViewManager.moveEvent(categoryToMove, direction, root);
+        }else{
+            System.out.println("You selected a card");
+        }
     }
 }
