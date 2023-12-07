@@ -111,7 +111,8 @@ public class CourseViewController {
         } catch (IOException e) {
             new Alert(Alert.AlertType.ERROR, "No course file is open").show();
         }
-        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getName());
+        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
+        setUpRecentFilesMenu();
     }
 
     @FXML private void createLessonPlanHandler() throws IOException {
