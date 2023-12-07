@@ -22,6 +22,7 @@ import javafx.scene.control.Pagination;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -47,7 +48,10 @@ public class PrintPreviewController {
     private Button returnButton;
 
     @FXML
-    private Pane mainPane;
+    private VBox mainVBox;
+
+    @FXML
+    private HBox mainHBox;
 
     @FXML
     private Label titleLabel;
@@ -85,7 +89,7 @@ public class PrintPreviewController {
                     }
                 }
             });
-            mainPane.getChildren().addAll(pagination);
+            mainVBox.getChildren().addAll(pagination);
         } else {
             lessonPlan = new ParseLessonPlanPrinting(printerJob);
             ArrayList<Pane> pages = lessonPlan.getPages();
@@ -99,13 +103,15 @@ public class PrintPreviewController {
                     return PrintStaging.createPage(pageIndex, pages, printerJob);
                 }
             });
-            mainPane.getChildren().addAll(pagination);
+            mainVBox.getChildren().addAll(pagination);
+            mainVBox.setAlignment(Pos.CENTER);
+            mainHBox.setAlignment(Pos.CENTER);
         }
     }
 
     @FXML
     void printAllCards(ActionEvent event) throws MalformedURLException {
-        Window window = mainPane.getScene().getWindow();
+        Window window = mainVBox.getScene().getWindow();
         PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlan);
         endPrinting();
 
@@ -124,7 +130,7 @@ public class PrintPreviewController {
         titleLabel.setAlignment(Pos.CENTER);
 
         printAllButton.setVisible(false);
-        mainPane.setVisible(false);
+        mainVBox.setVisible(false);
     }
 
 }
