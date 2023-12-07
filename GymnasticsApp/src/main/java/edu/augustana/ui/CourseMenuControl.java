@@ -56,7 +56,6 @@ public class CourseMenuControl {
                 new Alert(Alert.AlertType.ERROR, "Error loading Course: " + chosenFile).show();
             }
         }
-        App.getUserPreferences().addRecentFile(App.getCurrentCourseFile().getAbsolutePath());
     }
 
     @FXML public void saveCourse() throws IOException{
@@ -76,7 +75,6 @@ public class CourseMenuControl {
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
         saveToFile(chosenFile);
         App.setCurrentCourseFile(chosenFile);
-        App.getUserPreferences().addRecentFile(App.getCurrentCourseFile().getPath());
     }
 
     public static Course loadFromFile(File courseFile) throws IOException {

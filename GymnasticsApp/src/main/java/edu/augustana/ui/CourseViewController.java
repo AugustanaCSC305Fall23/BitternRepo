@@ -8,6 +8,7 @@ import edu.augustana.App;
 import edu.augustana.model.Course;
 import edu.augustana.model.CourseModel;
 import edu.augustana.model.LessonPlan;
+import edu.augustana.model.RecentFilesManager;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -86,6 +87,8 @@ public class CourseViewController {
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
             courseListView.getItems().add(lessonPlan);
         }
+        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
+
     }
 
     @FXML private void saveCourseHandler() {
@@ -103,6 +106,7 @@ public class CourseViewController {
         } catch (IOException e) {
             new Alert(Alert.AlertType.ERROR, "No course file is open").show();
         }
+        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getName());
     }
 
     @FXML private void createLessonPlanHandler() throws IOException {
