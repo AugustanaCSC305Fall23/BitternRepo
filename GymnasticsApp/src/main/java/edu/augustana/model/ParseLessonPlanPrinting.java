@@ -77,41 +77,19 @@ public class ParseLessonPlanPrinting {
 
     private void parseLessonPlanImages(PageLayout pgLayout) throws MalformedURLException {
         labelToFlowPaneMap = new HashMap<Label, FlowPane>();
-
-        // LessonPlan Title
         eventToCardsMap = PrintStaging.getEventToCardMap();
-        lessonPlanTitle = PrintStaging.getLessonPlanTitle();
-        Font titleFont = new Font("Times New Roman", 30);
-        lessonPlanTitleLabel.setText(lessonPlanTitle);
-        lessonPlanTitleLabel.setFont(titleFont);
 
+        initializeTitle();
 
-    // Parsing through the Event to Card Map
 
         // Used https://codegym.cc/groups/posts/how-to-iterate-a-map-in-java to run through a Map
-        // Sets up a new Map that initializes JavaFX objects
-        for (Map.Entry<String, List<Card>> event : eventToCardsMap.entrySet()) {
-            double runningHeight = 0;
+        initializeLabelToFlowPaneMap();
 
-            Label eventLabel = new Label();
-            eventLabel.setFont(eventTitleTemplate);
-            eventLabel.setText(event.getKey());
-            eventLabel.setPadding(new Insets(10,0, 10, 0));
-            FlowPane eventCardsPane = new FlowPane();
-            eventCardsPane.setMaxWidth(pageWidth + 5);
-            eventCardsPane.setPrefWrapLength(pageWidth + 5);
-            for (Card card : event.getValue()) {
-                ImageView cardImageView = new ImageView(card.getImage());
-                cardImageView.setFitWidth(pageWidth / 3.0);
-                cardImageView.setFitHeight(pageWidth / 4.0);
-                eventCardsPane.getChildren().add(cardImageView);
-            }
-            labelToFlowPaneMap.put(eventLabel, eventCardsPane);
-        }
 
 // Sets up pages
         // Sets up dummy scene so that we can render the actual height/width of the JavaFX Objects
         // Used https://stackoverflow.com/questions/26152642/get-the-height-of-a-node-in-javafx-generate-a-layout-pass
+        double runningHeight = 0;
         Group dummyRoot = new Group();
         VBox dummyBox = new VBox();
         double height = Screen.getPrimary().getBounds().getHeight();
@@ -130,6 +108,7 @@ public class ParseLessonPlanPrinting {
         currentPane.getChildren().add(pageContents);
 
         pageContents.getChildren().add(lessonPlanTitleLabel);
+        pageContents.setAlignment(Pos.CENTER);
 
         // Runs layout onto a dummy Node to get the actual Height
         dummyRoot.getChildren().add(dummyBox);
@@ -179,37 +158,72 @@ public class ParseLessonPlanPrinting {
         pages.add(currentPane);
     }
 
-    private void parseLessonPlanText(PageLayout pgLayout) throws MalformedURLException {
-        labelToCardLabelsMap = new HashMap<Label, List<Label>>();
-
-        // LessonPlan Title
-        eventToCardsMap = PrintStaging.getEventToCardMap();
-        lessonPlanTitle = PrintStaging.getLessonPlanTitle();
-        Font titleFont = new Font("Times New Roman", 30);
-        lessonPlanTitleLabel.setText(lessonPlanTitle);
-        lessonPlanTitleLabel.setFont(titleFont);
-
-
-        // Parsing through the Event to Card Map
-
-        // Used https://codegym.cc/groups/posts/how-to-iterate-a-map-in-java to run through a Map
-        // Sets up a new Map that initializes JavaFX objects
+    private void initializeLabelToFlowPaneMap() throws MalformedURLException {
         for (Map.Entry<String, List<Card>> event : eventToCardsMap.entrySet()) {
-            double runningHeight = 0;
-
+            // Set up Label to card FlowPane Map
             Label eventLabel = new Label();
             eventLabel.setFont(eventTitleTemplate);
             eventLabel.setText(event.getKey());
             eventLabel.setPadding(new Insets(10,0, 10, 0));
-            List<Label> eventCards = new ArrayList<>();
+            FlowPane eventCardsPane = new FlowPane();
+            eventCardsPane.setMaxWidth(pageWidth + 5);
+            eventCardsPane.setPrefWrapLength(pageWidth + 5);
+            int numCards = event.getValue().size();
             for (Card card : event.getValue()) {
-                Label cardInfo = new Label();
-                String cardInfoS = "-   " + card.getTitle() +", " + card.getCode();
-                cardInfo.setText(cardInfoS);
-                eventCards.add(cardInfo);
+                ImageView cardImageView = new ImageView(card.getImage());
+                if (numCards > 12) {
+                    // Used https://stackoverflow.com/questions/7446710/how-to-round-up-integer-division-and-have-int-result-in-java
+
+
+                    int numRows;
+                    if (PrintStaging.getLandscapeDisplay()) {
+                        numRows = (int) Math.ceil(numCards / 4.0);
+                    } else {
+                        numRows = (int) Math.ceil(numCards / 3.0);
+                    }
+
+                    // Calculates usable page height for the card pane only with dummy layout objects
+                    Group dummyRoot = new Group();
+                    VBox dummyBox = new VBox();
+                    double height = Screen.getPrimary().getBounds().getHeight();
+                    double width = Screen.getPrimary().getBounds().getWidth();
+                    Scene scene = new Scene(dummyRoot, width, height);
+
+                    dummyRoot.getChildren().add(dummyBox);
+                    dummyBox.getChildren().add(lessonPlanTitleLabel);
+                    dummyBox.getChildren().add(eventLabel);
+                    dummyRoot.applyCss();
+                    dummyRoot.layout();
+
+                    double usablePageHeight = pageHeight - lessonPlanTitleLabel.getHeight() - eventLabel.getHeight() - 10;
+
+                    double cardHeight = usablePageHeight / numRows + 0.0;
+                    cardImageView.setFitWidth(cardHeight * (4/3.0));
+                    cardImageView.setFitHeight(cardHeight);
+                } else if (PrintStaging.getLandscapeDisplay()) {
+                    double cardWidth = pageWidth / 4.0;
+                    double cardHeight = cardWidth * 0.75;
+                    cardImageView.setFitWidth(cardWidth);
+                    cardImageView.setFitHeight(cardHeight);
+                } else {
+                    cardImageView.setFitWidth(pageWidth / 3.0);
+                    cardImageView.setFitHeight(pageWidth / 4.0);
+                }
+                eventCardsPane.getChildren().add(cardImageView);
+                eventCardsPane.setAlignment(Pos.CENTER);
             }
-            labelToCardLabelsMap.put(eventLabel, eventCards);
+            labelToFlowPaneMap.put(eventLabel, eventCardsPane);
         }
+    }
+
+    private void parseLessonPlanText(PageLayout pgLayout) throws MalformedURLException {
+        labelToCardLabelsMap = new HashMap<Label, List<Label>>();
+        eventToCardsMap = PrintStaging.getEventToCardMap();
+
+        initializeTitle();
+
+        // Used https://codegym.cc/groups/posts/how-to-iterate-a-map-in-java to run through a Map
+        initializeLabelToCardLabelsMap();
 
 // Sets up pages
         // Sets up dummy scene so that we can render the actual height/width of the JavaFX Objects
@@ -294,6 +308,32 @@ public class ParseLessonPlanPrinting {
             }
         }
         pages.add(currentPane);
+    }
+
+    private void initializeLabelToCardLabelsMap() {
+        for (Map.Entry<String, List<Card>> event : eventToCardsMap.entrySet()) {
+            double runningHeight = 0;
+
+            Label eventLabel = new Label();
+            eventLabel.setFont(eventTitleTemplate);
+            eventLabel.setText(event.getKey());
+            eventLabel.setPadding(new Insets(10,0, 10, 0));
+            List<Label> eventCards = new ArrayList<>();
+            for (Card card : event.getValue()) {
+                Label cardInfo = new Label();
+                String cardInfoS = "-   " + card.getTitle() +", " + card.getCode();
+                cardInfo.setText(cardInfoS);
+                eventCards.add(cardInfo);
+            }
+            labelToCardLabelsMap.put(eventLabel, eventCards);
+        }
+    }
+
+    private void initializeTitle() {
+        lessonPlanTitle = PrintStaging.getLessonPlanTitle();
+        Font titleFont = new Font("Times New Roman", 30);
+        lessonPlanTitleLabel.setText(lessonPlanTitle);
+        lessonPlanTitleLabel.setFont(titleFont);
     }
 
     public ArrayList<Pane> getPages() {

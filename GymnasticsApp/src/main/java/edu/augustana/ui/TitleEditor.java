@@ -36,7 +36,7 @@ public class TitleEditor {
                 if (!titleField.getText().equals(titleField.getPromptText())) {
                     App.getCurrentCourse().setTitle(titleField.getText());
                 } else {
-                    App.getCurrentCourse().setTitle(null);
+                    App.getCurrentCourse().setTitle("Untitled");
                 }
             }
         });

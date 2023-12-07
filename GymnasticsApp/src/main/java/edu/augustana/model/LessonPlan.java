@@ -10,6 +10,7 @@ public class LessonPlan implements Cloneable{
 
     public LessonPlan() {
         lessonPlan = new IndexedMap();
+        title = "Untitled";
     }
 
     public String getTitle() {
