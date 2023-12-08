@@ -10,6 +10,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -102,7 +103,7 @@
             </Button>
          </children>
       </HBox>
-      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="217.0" />
+      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="215.0" />
       <Line endX="2000.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
       <VBox fx:id="upArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="680.0" AnchorPane.topAnchor="375.0">
          <children>
@@ -132,5 +133,6 @@
             </Polygon>
          </children>
       </VBox>
+      <TreeView fx:id="lessonPlanTreeView" layoutX="92.0" layoutY="209.0" prefHeight="474.0" prefWidth="439.0" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="215.0" />
    </children>
 </AnchorPane>

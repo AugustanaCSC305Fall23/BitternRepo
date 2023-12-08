@@ -30,6 +30,10 @@ public class CourseViewController {
     @FXML private TextField courseTitleField;
     @FXML private Menu recentFilesMenu;
 
+    @FXML private TreeView<String> lessonPlanTreeView;
+    private TreeItem<String> root = new TreeItem<>();
+    private TreeViewManager treeViewManager;
+
     // Non FXML
     private static Course currentCourse;
     private CourseModel courseModel;
@@ -58,6 +62,17 @@ public class CourseViewController {
         }
     }
 
+    private void displayTreeView(LessonPlan lessonPlan){
+        //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+        //To help with tree view
+        root = new TreeItem<>(lessonPlan.getTitle());
+        lessonPlanTreeView.setRoot(root);
+        lessonPlanTreeView.setShowRoot(false);
+        treeViewManager = new TreeViewManager(lessonPlan);
+        treeViewManager.setUpTreeView(root);
+        lessonPlanTreeView.setVisible(true);
+    }
+
     @FXML private void goToHome() throws IOException {
         App.setRoot("home");
     }
@@ -65,10 +80,13 @@ public class CourseViewController {
     private void checkIfItemSelected() {
         if (!courseListView.getSelectionModel().isEmpty()) {
             disableButtons(false);
-            courseModel.setSelectedLessonPlan(courseListView.getSelectionModel().getSelectedItem());
+            LessonPlan selectedLesson = courseListView.getSelectionModel().getSelectedItem();
+            courseModel.setSelectedLessonPlan(selectedLesson);
+            displayTreeView(selectedLesson);
         } else {
             disableButtons(true);
             courseModel.setSelectedLessonPlan(null);
+            lessonPlanTreeView.setVisible(false);
         }
     }
 
@@ -79,8 +97,9 @@ public class CourseViewController {
     }
 
     @FXML void deselectLessonPlan() {
-        CourseModel.setSelectedLessonPlan(null);
+        courseModel.setSelectedLessonPlan(null);
         courseListView.getSelectionModel().clearSelection();
+        lessonPlanTreeView.setVisible(false);
         disableButtons(true);
     }
 

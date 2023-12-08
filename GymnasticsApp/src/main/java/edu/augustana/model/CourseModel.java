@@ -82,11 +82,11 @@ public class CourseModel {
         writer.close();
     }
 
-    public static void setSelectedLessonPlan(LessonPlan lessonPlan) {
+    public void setSelectedLessonPlan(LessonPlan lessonPlan) {
         selectedLessonPlan = lessonPlan;
     }
 
-    public static LessonPlan getSelectedLessonPlan() {
+    public LessonPlan getSelectedLessonPlan() {
         return selectedLessonPlan;
     }
 }

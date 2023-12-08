@@ -73,6 +73,7 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
+
     @FXML private TreeView<String> lessonPlanTreeView;
 
 
@@ -80,8 +81,8 @@ public class CreateLessonPlanController {
     private List<CardView> selectedCards = new ArrayList<>();
     private List<CardView> favoriteCardsSelected = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
-    TreeItem<String> root = new TreeItem<>();
-    TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
+    private TreeItem<String> root = new TreeItem<>();
+    private TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
 
     private UndoRedoHandler undoRedoHandler;
     private TitleEditor titleEditor;
