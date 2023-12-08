@@ -104,9 +104,8 @@ public class CreateLessonPlanController {
         setUpTreeView();
 
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
-        titleEditor.initializeTitleFieldEvents();
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler);
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState();
         setDisableButtons(true);
 
         upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
@@ -284,6 +283,7 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             undoRedoHandler.saveState();
+            System.out.println("undo stack after add: " + undoRedoHandler.getUndoStack());
             selectedCards.clear();
         }
     }
@@ -316,8 +316,9 @@ public class CreateLessonPlanController {
     @FXML
     public void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
+            undoRedoHandler.saveState();
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
-            App.getCurrentLessonPlan().removeCard(cardToRemove);
+            App.getCurrentLessonPlan().removeCard(cardToRemove, undoRedoHandler);
             treeViewManager.removeFromTreeView(root);
             undoRedoHandler.saveState();
         }

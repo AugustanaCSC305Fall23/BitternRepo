@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import edu.augustana.App;
-import edu.augustana.model.Course;
-import edu.augustana.model.CourseModel;
-import edu.augustana.model.LessonPlan;
-import edu.augustana.model.RecentFilesManager;
+import edu.augustana.model.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -36,6 +33,7 @@ public class CourseViewController {
     private CourseModel courseModel;
     private TitleEditor titleEditor;
     private List<Button> buttonsList = new ArrayList<>();
+    private UndoRedoHandler undoRedoHandler;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -46,7 +44,7 @@ public class CourseViewController {
         courseModel = new CourseModel();
         addLessonsToCourseList();
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
-        titleEditor.initializeTitleFieldEvents();
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler);
         titleEditor.setTitleFieldText();
         setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {

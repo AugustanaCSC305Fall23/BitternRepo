@@ -17,6 +17,7 @@ public class LessonPlan implements Cloneable{
         return title;
     }
 
+
     public void setTitle(String newTitle) {
         title = newTitle;
     }
@@ -92,7 +93,7 @@ public class LessonPlan implements Cloneable{
         return equipmentListFinal;
     }
 
-    public void removeCard(String cardDisplayedTitle) {
+    public void removeCard(String cardDisplayedTitle, UndoRedoHandler undoRedoHandler) {
         String cardIDToRemove = null;
         String eventToChange = null;
         for (ListIterator<Category> it = lessonPlan.listIterator(); it.hasNext(); ) {
@@ -106,9 +107,11 @@ public class LessonPlan implements Cloneable{
         }
         if (cardIDToRemove != null) {
             lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().remove(cardIDToRemove);
+            //undoRedoHandler.saveState();
         }
         if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().isEmpty()){
             lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
+            undoRedoHandler.saveState();
         }
     }
 
@@ -130,11 +133,6 @@ public class LessonPlan implements Cloneable{
                 return clone;
         }
 
-    @Override
-    public String toString() {
-        return title;
-    }
-
 
     /**
      * For use by the Undo/Redo mechanism
@@ -144,5 +142,13 @@ public class LessonPlan implements Cloneable{
         this.title = copyOfPreviousState.title;
         this.lessonPlan = copyOfPreviousState.lessonPlan;
 
+    }
+
+    @Override
+    public String toString() {
+        return "LessonPlan{" +
+                "title='" + title + '\'' +
+                ", lessonPlan=" + lessonPlan +
+                '}';
     }
 }
