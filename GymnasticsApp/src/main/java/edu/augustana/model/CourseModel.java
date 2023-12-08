@@ -18,10 +18,10 @@ public class CourseModel {
         App.getCurrentCourse().getLessonPlanList().add(new LessonPlan());
     }
 
-    public void openCourseFromFiles(Window mainWindow) {
+    public boolean openCourseFromFiles(Window mainWindow) {
         //Used https://www.youtube.com/watch?v=hNz8Xf4tMI
         FileChooser fileChooser = new FileChooser();
-         fileChooser.setTitle("Open Gymnastics Course File");
+        fileChooser.setTitle("Open Gymnastics Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Gymnastics Course (*.gymnasticscourse)", "*.gymnasticscourse");
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
         if (chosenFile != null) {
@@ -29,10 +29,12 @@ public class CourseModel {
                 Course openedCourse = loadFromFile(chosenFile);
                 App.setCurrentCourse(openedCourse);
                 App.setCurrentCourseFile(chosenFile);
+                return true;
             } catch (IOException e) {
                 new Alert(Alert.AlertType.ERROR, "Error loading Course: " + chosenFile).show();
             }
         }
+        return false;
     }
 
 

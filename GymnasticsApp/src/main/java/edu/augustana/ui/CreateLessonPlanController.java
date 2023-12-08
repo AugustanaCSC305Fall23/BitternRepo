@@ -233,18 +233,29 @@ public class CreateLessonPlanController {
         List<String> checkedGenders = getCheckedItems(genderDropdown);
         List<String> checkedLevels = getCheckedItems(levelDropdown);
         List<String> checkedModelSexes = getCheckedItems(modelSexDropdown);
+        CardFilter combinedFilter = filterHandler.getCombinedFilter(searchTermList, checkedEvents, checkedGenders, checkedLevels, checkedModelSexes);
         for (CardView cardView : cardViewList) {
-            CardFilter combinedFilter = filterHandler.getCombinedFilter(searchTermList, checkedEvents, checkedGenders, checkedLevels, checkedModelSexes);
-            boolean includeThisCard = combinedFilter.matchesFilters(cardView.getCard());
-            cardView.setVisible(includeThisCard);
-            cardView.setManaged(includeThisCard);
-            cardView.setOnMouseClicked(this::selectCardAction);
+            showMatchingCards(cardView, combinedFilter);
         }
+        for (CardView favoriteCardView : App.getFavoriteCards().getFavoritesCardView()) {
+            showMatchingCards(favoriteCardView, combinedFilter);
+        }
+    }
+
+    private void showMatchingCards(CardView cardView, CardFilter combinedFilter) {
+        boolean includeThisCard = combinedFilter.matchesFilters(cardView.getCard());
+        cardView.setVisible(includeThisCard);
+        cardView.setManaged(includeThisCard);
+        cardView.setOnMouseClicked(this::selectCardAction);
     }
 
     @FXML
     void clearFiltersAction() {
         for (CardView cardView : cardViewList) {
+            cardView.setVisible(true);
+            cardView.setManaged(true);
+        }
+        for (CardView cardView : App.getFavoriteCards().getFavoritesCardView()) {
             cardView.setVisible(true);
             cardView.setManaged(true);
         }
