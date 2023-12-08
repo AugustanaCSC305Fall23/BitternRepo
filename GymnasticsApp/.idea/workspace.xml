@@ -4,140 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c51a9f1-481d-442a-97aa-675b97240a72" name="Changes" comment="">
+    <list default="true" id="3f2a5bbc-dfbb-4afd-a1d8-fd21c56f62fb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cardpacks/favoriteCards" beforeDir="false" afterPath="$PROJECT_DIR$/cardpacks/favoriteCards" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/FavoriteCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/FavoriteCards.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/CourseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/CourseModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/UndoRedoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/UndoRedoHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/EventSubcategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/IndexedMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/structures/IndexedMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/TreeViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/TreeViewManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/card_browser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/card_browser.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CodeStyleSettingsInfer">
-    <option name="done" value="true" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="MacroExpansionManager">
-    <option name="directoryName" value="zo1jij72" />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
-  </component>
-  <component name="ProjectCodeStyleSettingsMigration">
-    <option name="version" value="2" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 6
-}</component>
-  <component name="ProjectId" id="2ZDtfEZ1kgfSFtK2NeSxuxq1moi" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/git/BitternRepo/GymnasticsApp&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "Merging main"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="edu.augustana" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/symbols" />
-      <recent name="$PROJECT_DIR$/src/main/resources/edu/augustana" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp\Symbols" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana\images" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="edu.augustana" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="GymnasticsApp [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="javafx:run" />
-              </list>
-            </option>
-            <option name="pomFileName" value="pom.xml" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Maven.GymnasticsApp [javafx:run]" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+}]]></component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="0c51a9f1-481d-442a-97aa-675b97240a72" name="Changes" comment="" />
-      <created>1701827507577</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1701827507577</updated>
-    </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/App_java$App.ic" NAME="App Coverage Results" MODIFIED="1700529996976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

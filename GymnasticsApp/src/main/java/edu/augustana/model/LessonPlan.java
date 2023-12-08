@@ -28,7 +28,6 @@ public class LessonPlan implements Cloneable{
         lessonPlan.addEventSubcategory(new EventSubcategory(card.getEvent(), card.getUniqueID()));
     }
 
-    //rename this method
     public void addCardToEvent(Card card){
         EventSubcategory addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
         addTo.addCardIDToList(card.getUniqueID());

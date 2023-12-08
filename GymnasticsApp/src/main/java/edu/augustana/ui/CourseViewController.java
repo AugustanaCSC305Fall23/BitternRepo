@@ -30,6 +30,10 @@ public class CourseViewController {
     @FXML private TextField courseTitleField;
     @FXML private Menu recentFilesMenu;
 
+    @FXML private TreeView<String> lessonPlanTreeView;
+    private TreeItem<String> root = new TreeItem<>();
+    private TreeViewManager treeViewManager;
+
     // Non FXML
     private static Course currentCourse;
     private CourseModel courseModel;
@@ -52,9 +56,22 @@ public class CourseViewController {
         for (Node node : buttonBar.getChildren()) {
             if (node instanceof Button) {
                 Button btn = (Button) node;
-                buttonsList.add(btn);
+                if (btn != createNewLessonPlanBtn) {
+                    buttonsList.add(btn);
+                }
             }
         }
+    }
+
+    private void displayTreeView(LessonPlan lessonPlan){
+        //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+        //To help with tree view
+        root = new TreeItem<>(lessonPlan.getTitle());
+        lessonPlanTreeView.setRoot(root);
+        lessonPlanTreeView.setShowRoot(false);
+        treeViewManager = new TreeViewManager(lessonPlan);
+        treeViewManager.setUpTreeView(root);
+        lessonPlanTreeView.setVisible(true);
     }
 
     @FXML private void goToHome() throws IOException {
@@ -63,18 +80,28 @@ public class CourseViewController {
 
     private void checkIfItemSelected() {
         if (!courseListView.getSelectionModel().isEmpty()) {
-            for (Button btn : buttonsList) {
-                btn.setDisable(false);
-            }
-            courseModel.setSelectedLessonPlan(courseListView.getSelectionModel().getSelectedItem());
+            disableButtons(false);
+            LessonPlan selectedLesson = courseListView.getSelectionModel().getSelectedItem();
+            courseModel.setSelectedLessonPlan(selectedLesson);
+            displayTreeView(selectedLesson);
         } else {
-            for (Button btn : buttonsList) {
-                if (btn != createNewLessonPlanBtn) {
-                    btn.setDisable(true);
-                }
-            }
+            disableButtons(true);
             courseModel.setSelectedLessonPlan(null);
+            lessonPlanTreeView.setVisible(false);
         }
+    }
+
+    private void disableButtons(boolean disable) {
+        for (Button btn : buttonsList) {
+            btn.setDisable(disable);
+        }
+    }
+
+    @FXML void deselectLessonPlan() {
+        courseModel.setSelectedLessonPlan(null);
+        courseListView.getSelectionModel().clearSelection();
+        lessonPlanTreeView.setVisible(false);
+        disableButtons(true);
     }
 
     @FXML private void createNewCourseHandler() {
