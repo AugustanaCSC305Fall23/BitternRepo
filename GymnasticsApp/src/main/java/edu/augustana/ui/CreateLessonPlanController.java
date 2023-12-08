@@ -78,6 +78,7 @@ public class CreateLessonPlanController {
 
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private List<CardView> selectedCards = new ArrayList<>();
+    private List<CardView> favoriteCardsSelected = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
     TreeItem<String> root = new TreeItem<>();
     TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
@@ -107,7 +108,7 @@ public class CreateLessonPlanController {
         titleEditor.initializeTitleFieldEvents();
         titleEditor.setTitleFieldText();
         undoRedoHandler.saveState();
-        setDisableButtons(true);
+        disableButtons();
 
         upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
         downArrow.setOnMouseClicked(e -> moveTreeItemAction(1));
@@ -203,9 +204,15 @@ public class CreateLessonPlanController {
             if (!selectedCards.contains(cardViewSelected)) {
                 cardViewSelected.setEffect(new InnerShadow(30, Color.ORCHID));
                 selectedCards.add(cardViewSelected);
+                if (favoriteCardsTab.isSelected()) {
+                    favoriteCardsSelected.add(cardViewSelected);
+                }
             } else {
                 cardViewSelected.setEffect(null);
                 selectedCards.remove(cardViewSelected);
+                if (favoriteCardsTab.isSelected()) {
+                    favoriteCardsSelected.remove(cardViewSelected);
+                }
             }
             exitZoomedView();
             checkSelectedCardsStatus();
@@ -214,16 +221,21 @@ public class CreateLessonPlanController {
 
     private void checkSelectedCardsStatus() {
         if (selectedCards.isEmpty()) {
-            setDisableButtons(true);
-        } else {
-            setDisableButtons(false);
+            disableButtons();
+        } else if (allCardsTab.isSelected()) {
+            addCardBtn.setDisable(false);
+            favoriteBtn.setDisable(false);
+            removeFavoriteBtn.setDisable(true);
+        } else if (favoriteCardsTab.isSelected()) {
+            addCardBtn.setDisable(false);
+            removeFavoriteBtn.setDisable(favoriteCardsSelected.isEmpty());
         }
     }
 
-    private void setDisableButtons(boolean disable) {
-        addCardBtn.setDisable(disable);
-        favoriteBtn.setDisable(disable);
-        removeFavoriteBtn.setDisable(disable);
+    private void disableButtons() {
+        addCardBtn.setDisable(true);
+        favoriteBtn.setDisable(true);
+        removeFavoriteBtn.setDisable(true);
     }
 
     // Used code from MovieTrackerApp
@@ -285,6 +297,7 @@ public class CreateLessonPlanController {
             }
             undoRedoHandler.saveState();
             selectedCards.clear();
+            disableButtons();
         }
     }
     @FXML void addCardsToFavorites() throws IOException {
@@ -295,6 +308,7 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             selectedCards.clear();
+            disableButtons();
         }
     }
 
@@ -323,12 +337,14 @@ public class CreateLessonPlanController {
         }
     }
 
+    @FXML
     public void undo() {
         undoRedoHandler.undo();
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
 
+    @FXML
     public void redo() {
         undoRedoHandler.redo();
         setUpTreeView();
