@@ -55,8 +55,8 @@ public class CreateLessonPlanController {
     @FXML private Button editEventHeadingBtn;
     @FXML private TextField editEventHeadingTextField;
 
-    @FXML private Button downBtn;
-    @FXML private Button upBtn;
+    @FXML private VBox upArrow;
+    @FXML private VBox downArrow;
 
 
     // zoomed-in card elements
@@ -109,8 +109,8 @@ public class CreateLessonPlanController {
         undoRedoHandler.saveState();
         setDisableButtons(true);
 
-        upBtn.setOnAction(e -> moveTreeItemAction(-1));
-        downBtn.setOnAction(e -> moveTreeItemAction(1));
+        upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
+        downArrow.setOnMouseClicked(e -> moveTreeItemAction(1));
     }
 
     private void setUpTreeView(){

@@ -18,6 +18,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
@@ -212,8 +216,34 @@
                   <Button layoutX="212.0" layoutY="65.0" mnemonicParsing="false" onAction="#redo" text="Redo" AnchorPane.leftAnchor="225.0" />
                   <Button fx:id="editEventHeadingBtn" layoutX="349.0" layoutY="66.0" mnemonicParsing="false" onAction="#editEventHeadingAction" text="Edit Event Heading" AnchorPane.rightAnchor="75.0" />
                   <TextField fx:id="editEventHeadingTextField" layoutX="230.0" layoutY="332.0" onKeyPressed="#setEventHeading" />
-                  <Button fx:id="upBtn" layoutX="30.0" layoutY="198.0" mnemonicParsing="false" text="Up" />
-                  <Button fx:id="downBtn" layoutX="20.0" layoutY="274.0" mnemonicParsing="false" text="Down" />
+                  <VBox fx:id="upArrow" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="250.0">
+                     <children>
+                        <Polygon fill="#c7ccd1" points="-30.200000762939453, 24.40008544921875, 7.599998474121094, 23.60000991821289, -9.400001525878906, 1.9999523162841797" stroke="BLACK" strokeType="INSIDE">
+                           <VBox.margin>
+                              <Insets bottom="-2.0" />
+                           </VBox.margin>
+                        </Polygon>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7ccd1" height="25.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Rectangle>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="downArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="315.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7ccd1" height="25.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Rectangle>
+                        <Polygon fill="#c7ccd1" points="-30.200000762939453, 24.40008544921875, 7.599998474121094, 23.60000991821289, -11.000038146972656, 44.40000915527344" stroke="BLACK" strokeType="INSIDE">
+                           <VBox.margin>
+                              <Insets top="-2.0" />
+                           </VBox.margin>
+                        </Polygon>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </items>
