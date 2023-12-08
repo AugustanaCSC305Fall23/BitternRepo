@@ -51,7 +51,9 @@ public class CourseViewController {
         for (Node node : buttonBar.getChildren()) {
             if (node instanceof Button) {
                 Button btn = (Button) node;
-                buttonsList.add(btn);
+                if (btn != createNewLessonPlanBtn) {
+                    buttonsList.add(btn);
+                }
             }
         }
     }
@@ -62,18 +64,24 @@ public class CourseViewController {
 
     private void checkIfItemSelected() {
         if (!courseListView.getSelectionModel().isEmpty()) {
-            for (Button btn : buttonsList) {
-                btn.setDisable(false);
-            }
+            disableButtons(false);
             courseModel.setSelectedLessonPlan(courseListView.getSelectionModel().getSelectedItem());
         } else {
-            for (Button btn : buttonsList) {
-                if (btn != createNewLessonPlanBtn) {
-                    btn.setDisable(true);
-                }
-            }
+            disableButtons(true);
             courseModel.setSelectedLessonPlan(null);
         }
+    }
+
+    private void disableButtons(boolean disable) {
+        for (Button btn : buttonsList) {
+            btn.setDisable(disable);
+        }
+    }
+
+    @FXML void deselectLessonPlan() {
+        CourseModel.setSelectedLessonPlan(null);
+        courseListView.getSelectionModel().clearSelection();
+        disableButtons(true);
     }
 
     @FXML private void createNewCourseHandler() {

@@ -11,7 +11,7 @@ import java.io.*;
 
 public class CourseModel {
 
-    private LessonPlan selectedLessonPlan;
+    private static LessonPlan selectedLessonPlan;
     public void createNewCourse() {
         App.setCurrentCourse(new Course());
         App.setCurrentCourseFile(null);
@@ -82,11 +82,11 @@ public class CourseModel {
         writer.close();
     }
 
-    public void setSelectedLessonPlan(LessonPlan lessonPlan) {
+    public static void setSelectedLessonPlan(LessonPlan lessonPlan) {
         selectedLessonPlan = lessonPlan;
     }
 
-    public LessonPlan getSelectedLessonPlan() {
+    public static LessonPlan getSelectedLessonPlan() {
         return selectedLessonPlan;
     }
 }
