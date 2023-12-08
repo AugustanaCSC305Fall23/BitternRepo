@@ -3,6 +3,7 @@ package edu.augustana.ui;
 import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
+import edu.augustana.structures.Category;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
@@ -50,6 +52,13 @@ public class CreateLessonPlanController {
     @FXML private Button removeFavoriteBtn;
     @FXML private TextField lessonTitleField;
 
+    @FXML private Button editEventHeadingBtn;
+    @FXML private TextField editEventHeadingTextField;
+
+    @FXML private VBox upArrow;
+    @FXML private VBox downArrow;
+
+
     // zoomed-in card elements
     @FXML private VBox zoomedInCardVBox;
     @FXML private Label eventLabel;
@@ -81,6 +90,7 @@ public class CreateLessonPlanController {
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
+        editEventHeadingTextField.setVisible(false);
         undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
@@ -92,11 +102,15 @@ public class CreateLessonPlanController {
         cardsTabPane.getSelectionModel().select(allCardsTab);
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
+
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
         titleEditor.initializeTitleFieldEvents();
         titleEditor.setTitleFieldText();
         undoRedoHandler.saveState();
         setDisableButtons(true);
+
+        upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
+        downArrow.setOnMouseClicked(e -> moveTreeItemAction(1));
     }
 
     private void setUpTreeView(){
@@ -300,8 +314,6 @@ public class CreateLessonPlanController {
 
     public void undo() {
         undoRedoHandler.undo();
-        System.out.println("AFTER UNDO in GUI: app current lesson plan =");
-        System.out.println(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
@@ -401,6 +413,27 @@ public class CreateLessonPlanController {
             return favoriteCardsFlowPane;
         }else {
             return allCardsFlowPane;
+        }
+    }
+    @FXML private void editEventHeadingAction() {
+        lessonPlanTreeView.setEffect(new BoxBlur());
+        editEventHeadingTextField.setVisible(true);
+    }
+    @FXML private void setEventHeading(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER){
+            String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+            Category categoryOfEvent = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventToChange));
+            treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), categoryOfEvent, root);
+            editEventHeadingTextField.setVisible(false);
+            lessonPlanTreeView.setEffect(null);
+        }
+    }
+
+    private void moveTreeItemAction(int direction) {
+        String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+        if(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading) >= 0){
+            Category categoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
+            treeViewManager.moveEvent(categoryToMove, direction, root);
         }
     }
 }

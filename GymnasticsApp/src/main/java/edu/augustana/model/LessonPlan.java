@@ -93,7 +93,6 @@ public class LessonPlan implements Cloneable{
     }
 
     public void removeCard(String cardDisplayedTitle) {
-        System.out.println(lessonPlan.toString());
         String cardIDToRemove = null;
         String eventToChange = null;
         for (ListIterator<Category> it = lessonPlan.listIterator(); it.hasNext(); ) {
@@ -107,7 +106,6 @@ public class LessonPlan implements Cloneable{
         }
         if (cardIDToRemove != null) {
             lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().remove(cardIDToRemove);
-            System.out.println(lessonPlan.toString());
         }
         if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().isEmpty()){
             lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));

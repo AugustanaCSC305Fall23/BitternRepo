@@ -10,7 +10,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,15 +18,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: teal;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CreateLessonPlanController">
+<AnchorPane style="-fx-background-color: teal;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CreateLessonPlanController">
    <children>
-      <HBox spacing="40.0">
+      <AnchorPane layoutX="80.0" layoutY="12.0" prefHeight="70.0" prefWidth="1235.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <GridPane hgap="20.0" vgap="10.0">
+            <GridPane hgap="20.0" layoutX="57.0" vgap="10.0" AnchorPane.leftAnchor="50.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -37,49 +39,35 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <CheckComboBox fx:id="genderDropdown" prefWidth="140.0" title="Gender">
+                  <CheckComboBox fx:id="genderDropdown" prefWidth="140.0" title="Event Gender">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </CheckComboBox>
-                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="140.0" title="Model Sex" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="140.0" title="Model Gender" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <CheckComboBox fx:id="eventDropdown" prefWidth="140.0" title="Event" GridPane.columnIndex="1" />
                   <CheckComboBox fx:id="levelDropdown" prefWidth="140.0" title="Level" GridPane.rowIndex="1" />
                </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
             </GridPane>
-            <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Lavender;" text="Clear Filters" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="414.0" layoutY="16.0" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Lavender;" text="Clear Filters" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Georgia" size="21.0" />
                </font>
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin>
             </Button>
-            <Label text="Search: " textFill="WHITE">
+            <Label layoutX="684.0" layoutY="18.0" text="Search: " textFill="WHITE" AnchorPane.leftAnchor="684.0">
                <font>
                   <Font size="24.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="80.0" top="10.0" />
-               </HBox.margin>
             </Label>
-            <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="385.0">
+            <TextField fx:id="searchField" layoutX="807.0" layoutY="13.0" onKeyPressed="#searchAction" prefWidth="385.0" AnchorPane.leftAnchor="807.0">
                <font>
                   <Font size="21.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="-30.0" top="5.0" />
-               </HBox.margin></TextField>
-            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true">
+            </TextField>
+            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="1265.0" layoutY="20.0" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="111.0">
                <font>
                   <Font name="Georgia" size="21.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="100.0" top="15.0" />
-               </HBox.margin>
                <tooltip>
                   <Tooltip text="Return to course outline">
                      <font>
@@ -89,24 +77,18 @@
                </tooltip>
             </Button>
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <VBox.margin>
-            <Insets bottom="5.0" left="50.0" right="25.0" top="25.0" />
-         </VBox.margin>
-      </HBox>
-      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: teal;">
+      </AnchorPane>
+      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: teal;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
          <items>
             <AnchorPane>
                <children>
-                  <TabPane fx:id="cardsTabPane" style="-fx-background-color: transparent;" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="cardsTabPane" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab fx:id="allCardsTab" closable="false" onSelectionChanged="#switchToAllCards" text="All Cards">
                            <content>
                               <AnchorPane>
                                  <children>
-                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="540.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="10.0">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="540.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
                                           <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="850.0" style="-fx-background-color: teal;" vgap="10.0" />
                                        </content>
@@ -119,12 +101,11 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: Teal;">
                                  <children>
-                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="8.0" layoutY="93.0" prefHeight="549.0" prefViewportHeight="550.0" prefWidth="827.0" style="-fx-background-color: transparent;">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="8.0" layoutY="93.0" prefHeight="549.0" prefViewportHeight="550.0" prefWidth="827.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
                                           <FlowPane fx:id="favoriteCardsFlowPane" hgap="10.0" prefWrapLength="810.0" style="-fx-background-color: Teal; -fx-border-color: Teal;" vgap="10.0" />
                                        </content>
                                     </ScrollPane>
-                                    <Button fx:id="removeFavoriteBtn" layoutX="43.0" layoutY="38.0" mnemonicParsing="false" onAction="#removeFavoriteAction" text="Remove Favorite" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -133,6 +114,7 @@
                   </TabPane>
                   <HBox alignment="BOTTOM_CENTER" spacing="100.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <children>
+                        <Button fx:id="removeFavoriteBtn" mnemonicParsing="false" onAction="#removeFavoriteAction" text="Remove Favorite" />
                         <Button fx:id="addCardBtn" mnemonicParsing="false" onAction="#addCardsToLessonPlan" style="-fx-background-color: Lavender;" text="Add to Lesson Plan">
                            <HBox.margin>
                               <Insets bottom="10.0" />
@@ -179,8 +161,9 @@
                               <Font size="11.0" />
                            </font>
                         </Tooltip>
-                     </tooltip></TextField>
-                  <TreeView fx:id="lessonPlanTreeView" layoutX="47.0" layoutY="199.0" prefHeight="470.0" prefWidth="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="110.0" />
+                     </tooltip>
+                  </TextField>
+                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="474.0" prefWidth="439.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="110.0" />
                   <HBox spacing="70.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
                      <children>
                         <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" style="-fx-background-color: Lavender;" text="Print Lesson Plan">
@@ -229,21 +212,41 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button layoutX="156.0" layoutY="65.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
-                  <Button layoutX="350.0" layoutY="65.0" mnemonicParsing="false" onAction="#redo" text="Redo" />
+                  <Button layoutX="98.0" layoutY="65.0" mnemonicParsing="false" onAction="#undo" text="Undo" AnchorPane.leftAnchor="100.0" />
+                  <Button layoutX="212.0" layoutY="65.0" mnemonicParsing="false" onAction="#redo" text="Redo" AnchorPane.leftAnchor="225.0" />
+                  <Button fx:id="editEventHeadingBtn" layoutX="349.0" layoutY="66.0" mnemonicParsing="false" onAction="#editEventHeadingAction" text="Edit Event Heading" AnchorPane.rightAnchor="75.0" />
+                  <TextField fx:id="editEventHeadingTextField" layoutX="230.0" layoutY="332.0" onKeyPressed="#setEventHeading" />
+                  <VBox fx:id="upArrow" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="250.0">
+                     <children>
+                        <Polygon fill="#c7ccd1" points="-30.200000762939453, 24.40008544921875, 7.599998474121094, 23.60000991821289, -9.400001525878906, 1.9999523162841797" stroke="BLACK" strokeType="INSIDE">
+                           <VBox.margin>
+                              <Insets bottom="-2.0" />
+                           </VBox.margin>
+                        </Polygon>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7ccd1" height="25.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Rectangle>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="downArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="315.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7ccd1" height="25.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Rectangle>
+                        <Polygon fill="#c7ccd1" points="-30.200000762939453, 24.40008544921875, 7.599998474121094, 23.60000991821289, -11.000038146972656, 44.40000915527344" stroke="BLACK" strokeType="INSIDE">
+                           <VBox.margin>
+                              <Insets top="-2.0" />
+                           </VBox.margin>
+                        </Polygon>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </items>
-         <VBox.margin>
-            <Insets top="15.0" />
-         </VBox.margin>
       </SplitPane>
    </children>
-   <effect>
-      <InnerShadow height="15.0" radius="7.0" width="15.0">
-         <color>
-            <Color red="0.45635664463043213" green="0.20239999890327454" blue="0.8799999952316284" />
-         </color>
-      </InnerShadow>
-   </effect>
-</VBox>
+</AnchorPane>

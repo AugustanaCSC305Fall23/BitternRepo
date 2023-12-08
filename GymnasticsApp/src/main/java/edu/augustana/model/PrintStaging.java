@@ -183,10 +183,6 @@ public class PrintStaging {
                     }
 
                     printed = printerJob.printPage(printerJob.getJobSettings().getPageLayout(), printNode);
-                    if (!printed) {
-                        System.out.println("Printing failed."); // for testing
-                        break;
-                    }
                 }
             }
             if(printed) printerJob.endJob();

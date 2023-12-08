@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.ListView?>
@@ -11,7 +12,10 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: DarkMagenta;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
@@ -93,7 +97,35 @@
             </Button>
          </children>
       </HBox>
-      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" />
+      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="217.0" />
       <Line endX="2000.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <VBox fx:id="upArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="680.0" AnchorPane.topAnchor="375.0">
+         <children>
+            <Polygon fill="#c7ccd1" points="-30.200000762939453, 24.40008544921875, 7.599998474121094, 23.60000991821289, -9.400001525878906, 1.9999523162841797" stroke="BLACK" strokeType="INSIDE">
+               <VBox.margin>
+                  <Insets bottom="-2.0" />
+               </VBox.margin>
+            </Polygon>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7ccd1" height="25.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Rectangle>
+         </children>
+      </VBox>
+      <VBox fx:id="downArrow" layoutX="20.0" layoutY="20.0" AnchorPane.leftAnchor="680.0" AnchorPane.topAnchor="450.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7ccd1" height="25.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Rectangle>
+            <Polygon fill="#c7ccd1" points="-30.200000762939453, 24.40008544921875, 7.599998474121094, 23.60000991821289, -11.000038146972656, 44.40000915527344" stroke="BLACK" strokeType="INSIDE">
+               <VBox.margin>
+                  <Insets top="-2.0" />
+               </VBox.margin>
+            </Polygon>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
