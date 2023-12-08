@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -14,6 +16,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.awt.SystemColor.window;
 
@@ -187,6 +190,42 @@ public class PrintStaging {
             }
             if(printed) printerJob.endJob();
         }
+    }
+
+    public static boolean promptCardDisplay() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType cardImageBtn = new ButtonType("Card Image", ButtonBar.ButtonData.OK_DONE);
+        ButtonType textOnlyBtn = new ButtonType("Text Only", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be show card images, or be text only?", cardImageBtn, textOnlyBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.orElse(textOnlyBtn) == cardImageBtn;
+    }
+
+    public static boolean promptPageFormat() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType landscapeBtn = new ButtonType("Landscape", ButtonBar.ButtonData.OK_DONE);
+        ButtonType portraitBtn = new ButtonType("Portrait", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be in Landscape or Portrait mode?", landscapeBtn, portraitBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.orElse(portraitBtn) == landscapeBtn;
+    }
+
+    public static boolean promptForEquipment() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType yesBtn = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType noBtn = new ButtonType("No", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like a list of all needed equipment printed with your lesson plan?", yesBtn, noBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.orElse(noBtn) == yesBtn;
     }
 
 

@@ -95,6 +95,11 @@
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
+            <Button disable="true" mnemonicParsing="false" onAction="#printLessonPlanHandler" style="-fx-background-color: DarkGray;" text="Print Lesson Plan">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Button>
          </children>
       </HBox>
       <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="217.0" />

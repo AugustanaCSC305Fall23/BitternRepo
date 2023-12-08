@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import edu.augustana.App;
-import edu.augustana.model.Course;
-import edu.augustana.model.CourseModel;
-import edu.augustana.model.LessonPlan;
-import edu.augustana.model.RecentFilesManager;
+import edu.augustana.model.*;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -202,4 +201,29 @@ public class CourseViewController {
             courseListView.getItems().add(copyOfLessonPlan);
         }
     }
+
+    @FXML public void printLessonPlanHandler(ActionEvent actionEvent) throws IOException {
+        LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
+        if (lessonPlanToDuplicate != null) {
+            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlan());
+            String lessonPlanTitle = lessonPlanToDuplicate.getTitle();
+
+            boolean cardDisplay;
+            boolean landscapeDisplay = false;
+
+            // If true, show cards. Else, show text only
+            cardDisplay = PrintStaging.promptCardDisplay();
+
+            // If true shows landscape mode. Else, show portrait mode
+            if (cardDisplay) {
+                landscapeDisplay = PrintStaging.promptPageFormat();
+            }
+
+            boolean equipmentDisplay = PrintStaging.promptForEquipment();
+
+            new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
+            App.setRoot("print_preview");
+        }
+    }
+
 }
