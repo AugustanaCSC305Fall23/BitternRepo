@@ -22,18 +22,14 @@ public class UndoRedoHandler {
     }
 
     public void undo() {
-        if (undoStack.size() == 1) {
-            return;
-        } else {
+        if (undoStack.size() != 1) {
             redoStack.push(undoStack.pop());
             App.getCurrentLessonPlan().restoreState(undoStack.peek().clone());
         }
     }
 
     public void redo() {
-        if (redoStack.isEmpty()) {
-            return;
-        } else {
+        if (!redoStack.isEmpty()) {
             LessonPlan temp = redoStack.pop();
             App.getCurrentLessonPlan().restoreState(temp.clone());
             undoStack.push(temp);

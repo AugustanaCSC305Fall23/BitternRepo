@@ -9,9 +9,13 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,16 +26,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.controlsfx.control.CheckComboBox;
 
 public class CardBrowserController {
 
-    @FXML // fx:id="homeButton"
-    private Button homeButton; // Value injected by FXMLLoader
+    @FXML private Button homeButton;
+    @FXML private Button printCardBtn;
+    @FXML private Button zoomBtn;
 
-    @FXML
-    private FlowPane cardsFlowPane;
+    @FXML private FlowPane cardsFlowPane;
+
+    @FXML private Pane cardsAnchorPane;
 
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
             "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
@@ -45,6 +53,12 @@ public class CardBrowserController {
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
     @FXML private CheckComboBox<String> modelSexDropdown;
+
+    // zoomed-in card elements
+    @FXML private VBox zoomedInCardVBox;
+    @FXML private Label eventLabel;
+    @FXML private ImageView zoomedInCard;
+    @FXML private Label equipmentLabel;
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
 
     @FXML private TextField searchField;
@@ -61,7 +75,7 @@ public class CardBrowserController {
             cardViewList.add(newCardView);
         }
         drawCardSet();
-        assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'card_browser.fxml'.";
+        disableButtons(true);
     }
     
     private void createDropdowns() {
@@ -87,6 +101,37 @@ public class CardBrowserController {
         }
     }
 
+    @FXML void zoomAction() throws MalformedURLException {
+        zoomInOnImage(selectedCards.get(selectedCards.size() - 1));
+    }
+
+    private void zoomInOnImage(CardView cardView) throws MalformedURLException {
+        eventLabel.setText(cardView.getCard().getEvent());
+        zoomedInCard.setImage(cardView.getCard().getImage());
+        String equipment = "Equipment: ";
+        for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
+            if (i != 0) {
+                equipment = equipment + ", ";
+            }
+            equipment = equipment + cardView.getCard().getEquipment()[i];
+        }
+        equipmentLabel.setText(equipment);
+        zoomedInCardVBox.setVisible(true);
+        /* GaussianBlur blur = new GaussianBlur();
+        for (Node child : cardsAnchorPane.getChildren()) {
+            if (child != zoomedInCardVBox) {
+                child.setEffect(blur);
+            }
+        } */
+    }
+
+    @FXML void exitZoomedView() {
+        zoomedInCardVBox.setVisible(false);
+        for (Node child : cardsAnchorPane.getChildren()) {
+            child.setEffect(null);
+        }
+    }
+
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
         return dropdown.getCheckModel().getCheckedItems();
     }
@@ -101,7 +146,13 @@ public class CardBrowserController {
                 cardViewSelected.setEffect(null);
                 selectedCards.remove(cardViewSelected);
             }
+            disableButtons(selectedCards.isEmpty());
         }
+    }
+
+    private void disableButtons(boolean disable) {
+        printCardBtn.setDisable(disable);
+        zoomBtn.setDisable(disable);
     }
 
     // Used code from MovieTrackerApp
