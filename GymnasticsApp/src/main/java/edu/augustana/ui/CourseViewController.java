@@ -87,14 +87,15 @@ public class CourseViewController {
 
     @FXML private void openCourseHandler() {
         Window mainWindow = courseListView.getScene().getWindow();
-        courseModel.openCourseFromFiles(mainWindow);
-        courseTitleField.setText(App.getCurrentCourse().getTitle());
-        courseListView.getItems().clear();
-        for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-            courseListView.getItems().add(lessonPlan);
+        if (courseModel.openCourseFromFiles(mainWindow)) {
+            courseTitleField.setText(App.getCurrentCourse().getTitle());
+            courseListView.getItems().clear();
+            for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+                courseListView.getItems().add(lessonPlan);
+            }
+            App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
+            setUpRecentFilesMenu();
         }
-        App.getRecentFilesManager().addRecentFile(App.getCurrentCourseFile().getPath());
-        setUpRecentFilesMenu();
     }
 
     @FXML private void saveCourseHandler() {
