@@ -117,7 +117,11 @@ public class IndexedMap implements Cloneable{
     public IndexedMap clone() {
         try {
             IndexedMap clone = (IndexedMap) super.clone();
-            clone.indexedMap = new ArrayList<>(clone.indexedMap);
+            clone.indexedMap = new ArrayList<>();
+            for (Category category : indexedMap) {
+                clone.add(category.clone());
+            }
+            //clone.indexedMap = new ArrayList<>(clone.indexedMap);
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

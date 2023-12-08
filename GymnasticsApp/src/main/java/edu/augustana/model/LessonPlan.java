@@ -111,7 +111,6 @@ public class LessonPlan implements Cloneable{
         }
         if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().isEmpty()){
             lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
-            undoRedoHandler.saveState();
         }
     }
 

@@ -316,11 +316,12 @@ public class CreateLessonPlanController {
     @FXML
     public void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
-            undoRedoHandler.saveState();
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
             App.getCurrentLessonPlan().removeCard(cardToRemove, undoRedoHandler);
             treeViewManager.removeFromTreeView(root);
-            undoRedoHandler.saveState();
+            //undoRedoHandler.saveState();
+            System.out.println("undo stack after delete: " + undoRedoHandler.getUndoStack());
+            System.out.println();
         }
     }
 

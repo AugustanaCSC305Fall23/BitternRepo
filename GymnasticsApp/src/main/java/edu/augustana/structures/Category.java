@@ -47,7 +47,11 @@ public class Category implements Cloneable {
     public Category clone() {
         try {
             Category clone = (Category) super.clone();
-            clone.cardsInList = new ArrayList<>(clone.cardsInList);
+            clone.cardsInList = new ArrayList<>();
+            for (String cardID : cardsInList) {
+                clone.addCardToList(cardID);
+            }
+            //clone.cardsInList = new ArrayList<>(clone.cardsInList);
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
