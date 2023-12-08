@@ -3,6 +3,7 @@
 
 package edu.augustana.model;
 
+import edu.augustana.App;
 import edu.augustana.ui.CardView;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -24,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Screen;
 
 
@@ -155,7 +158,76 @@ public class ParseLessonPlanPrinting {
                 runningPageHeight = event.getKey().getHeight() + event.getValue().getHeight();
             }
         }
+
         pages.add(currentPane);
+
+        // Adds equipment
+        TextFlow equipmentTF = new TextFlow();
+
+        if (PrintStaging.getEquipmentDisplay()) {
+            List<String> equipmentList = App.getCurrentLessonPlan().getEquipmentFromMap(eventToCardsMap);
+            if (equipmentList != null && (!(equipmentList.isEmpty()))) {
+                String equipmentSentence = "EQUIPMENT: \n" + equipmentList.get(0);
+                String equipmentString = "Equipment: \n" + "   *" + equipmentList.get(0);
+                for (int x = 1; x < equipmentList.size(); x++) {
+                    equipmentString = equipmentString + "\n   *" + equipmentList.get(x);
+                    equipmentSentence = equipmentSentence + ", " + equipmentList.get(x);
+                }
+
+                Text equipmentText = new Text(equipmentString);
+                Font font = new Font("Times New Roman", 15);
+                equipmentText.setFont(font);
+                equipmentTF = new TextFlow(equipmentText);
+                equipmentTF.setMaxWidth(pageWidth);
+
+                dummyBox = new VBox();
+                dummyRoot = new Group();
+                dummyBox.getChildren().add(equipmentTF);
+                dummyRoot.getChildren().add(dummyBox);
+                dummyRoot.applyCss();
+                dummyRoot.layout();
+
+                if (!(dummyBox.getHeight() > pageHeight)) {
+
+                    currentPane = new Pane();
+                    currentPane.setMaxHeight(pageHeight);
+                    currentPane.setMaxWidth(pageWidth);
+
+                    pageContents = new VBox();
+                    pageContents.setAlignment(Pos.CENTER);
+                    pageContents.setMaxHeight(pageHeight);
+                    currentPane.getChildren().add(pageContents);
+
+                    pageContents.getChildren().add(equipmentTF);
+
+                    pages.add(currentPane);
+                } else {
+                    equipmentText = new Text(equipmentSentence);
+                    font = new Font("Times New Roman", 15);
+                    equipmentText.setFont(font);
+                    equipmentTF = new TextFlow(equipmentText);
+                    equipmentTF.setMaxWidth(pageWidth);
+
+                    currentPane = new Pane();
+                    currentPane.setMaxHeight(pageHeight);
+                    currentPane.setMaxWidth(pageWidth);
+
+                    pageContents = new VBox();
+                    pageContents.setAlignment(Pos.CENTER);
+                    pageContents.setMaxHeight(pageHeight);
+                    currentPane.getChildren().add(pageContents);
+
+                    pageContents.getChildren().add(equipmentTF);
+
+                    pages.add(currentPane);
+                }
+            }
+
+
+        }
+
+
+
     }
 
     private void initializeLabelToFlowPaneMap() throws MalformedURLException {
@@ -307,7 +379,46 @@ public class ParseLessonPlanPrinting {
                 }
             }
         }
+
         pages.add(currentPane);
+
+        // Adds equipment
+        TextFlow equipmentTF = new TextFlow();
+
+        if (PrintStaging.getEquipmentDisplay()) {
+            List<String> equipmentList = App.getCurrentLessonPlan().getEquipmentFromMap(eventToCardsMap);
+            String equipmentString = "Equipment: \n" + "   *" + equipmentList.get(0);
+            for (int x = 1; x < equipmentList.size(); x++) {
+                equipmentString = equipmentString + "\n   *" + equipmentList.get(x);
+            }
+
+            Text equipmentText = new Text(equipmentString);
+            Font font = new Font("Times New Roman", 15);
+            equipmentText.setFont(font);
+            equipmentTF = new TextFlow(equipmentText);
+            equipmentTF.setMaxWidth(pageWidth);
+
+            dummyBox = new VBox();
+            dummyRoot = new Group();
+            dummyBox.getChildren().add(equipmentTF);
+            dummyRoot.getChildren().add(dummyBox);
+            dummyRoot.applyCss();
+            dummyRoot.layout();
+
+            currentPane = new Pane();
+            currentPane.setMaxHeight(pageHeight);
+            currentPane.setMaxWidth(pageWidth);
+
+            pageContents = new VBox();
+            pageContents.setAlignment(Pos.CENTER);
+            pageContents.setMaxHeight(pageHeight);
+            currentPane.getChildren().add(pageContents);
+
+            pageContents.getChildren().add(equipmentTF);
+
+            pages.add(currentPane);
+
+        }
     }
 
     private void initializeLabelToCardLabelsMap() {

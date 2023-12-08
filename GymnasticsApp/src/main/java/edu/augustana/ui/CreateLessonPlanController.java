@@ -358,11 +358,13 @@ public class CreateLessonPlanController {
             landscapeDisplay = promptPageFormat();
         }
 
-        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay);
+        boolean equipmentDisplay = promptForEquipment();
+
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay, equipmentDisplay);
         App.setRoot("print_preview");
     }
 
-    @FXML private boolean promptCardDisplay() {
+    private boolean promptCardDisplay() {
         // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
         ButtonType cardImageBtn = new ButtonType("Card Image", ButtonBar.ButtonData.OK_DONE);
         ButtonType textOnlyBtn = new ButtonType("Text Only", ButtonBar.ButtonData.OK_DONE);
@@ -374,7 +376,7 @@ public class CreateLessonPlanController {
         return result.orElse(textOnlyBtn) == cardImageBtn;
     }
 
-    @FXML private boolean promptPageFormat() {
+    private boolean promptPageFormat() {
         // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
         ButtonType landscapeBtn = new ButtonType("Landscape", ButtonBar.ButtonData.OK_DONE);
         ButtonType portraitBtn = new ButtonType("Portrait", ButtonBar.ButtonData.OK_DONE);
@@ -385,6 +387,19 @@ public class CreateLessonPlanController {
 
         return result.orElse(portraitBtn) == landscapeBtn;
     }
+
+    private boolean promptForEquipment() {
+        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
+        ButtonType yesBtn = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType noBtn = new ButtonType("No", ButtonBar.ButtonData.OK_DONE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like a list of all needed equipment printed with your lesson plan?", yesBtn, noBtn);
+        alert.setTitle("Confirm");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.orElse(noBtn) == yesBtn;
+    }
+
     @FXML
     void switchToAllCards() {
         if(!(favoriteCardsTab == null)){

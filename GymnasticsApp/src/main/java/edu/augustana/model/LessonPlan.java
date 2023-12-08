@@ -68,6 +68,30 @@ public class LessonPlan implements Cloneable{
         return lessonPlan;
     }
 
+    public List<String> getEquipmentFromMap(Map<String, List<Card>> eventToCardsMap) {
+        List<String> equipmentList = new ArrayList<>();
+        for (Map.Entry<String, List<Card>> event : eventToCardsMap.entrySet()) {
+            List<Card> cardList = event.getValue();
+            for (Card card : cardList) {
+                String[] equipmentArray = card.getEquipment();
+                equipmentList.addAll(Arrays.asList(equipmentArray));
+            }
+        }
+
+        List<String> equipmentListFinal = new ArrayList<>();
+        for (int i = 0; i < equipmentList.size(); i++) {
+            String equipment = equipmentList.get(i);
+            equipment = equipment.trim();
+            if (!equipmentListFinal.contains(equipment)) {
+                if (!equipment.equals("None")) {
+                    equipmentListFinal.add(equipment);
+                }
+            }
+        }
+
+        return equipmentListFinal;
+    }
+
     public void removeCard(String cardDisplayedTitle) {
         String cardIDToRemove = null;
         String eventToChange = null;
