@@ -23,9 +23,9 @@
 
 <AnchorPane style="-fx-background-color: teal;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CreateLessonPlanController">
    <children>
-      <HBox spacing="40.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+      <AnchorPane layoutX="80.0" layoutY="12.0" prefHeight="70.0" prefWidth="1235.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <GridPane hgap="20.0" vgap="10.0">
+            <GridPane hgap="20.0" layoutX="57.0" vgap="10.0" AnchorPane.leftAnchor="50.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -35,50 +35,35 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <CheckComboBox fx:id="genderDropdown" prefWidth="140.0" title="Gender">
+                  <CheckComboBox fx:id="genderDropdown" prefWidth="140.0" title="Event Gender">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </CheckComboBox>
-                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="140.0" title="Model Sex" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="140.0" title="Model Gender" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <CheckComboBox fx:id="eventDropdown" prefWidth="140.0" title="Event" GridPane.columnIndex="1" />
                   <CheckComboBox fx:id="levelDropdown" prefWidth="140.0" title="Level" GridPane.rowIndex="1" />
                </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
             </GridPane>
-            <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Lavender;" text="Clear Filters" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" layoutX="414.0" layoutY="16.0" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: Lavender;" text="Clear Filters" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Georgia" size="21.0" />
                </font>
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin>
             </Button>
-            <Label text="Search: " textFill="WHITE">
+            <Label layoutX="684.0" layoutY="18.0" text="Search: " textFill="WHITE" AnchorPane.leftAnchor="684.0">
                <font>
                   <Font size="24.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="80.0" top="10.0" />
-               </HBox.margin>
             </Label>
-            <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="385.0">
+            <TextField fx:id="searchField" layoutX="807.0" layoutY="13.0" onKeyPressed="#searchAction" prefWidth="385.0" AnchorPane.leftAnchor="807.0">
                <font>
                   <Font size="21.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="-30.0" top="5.0" />
-               </HBox.margin>
             </TextField>
-            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="1265.0" layoutY="20.0" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="111.0">
                <font>
                   <Font name="Georgia" size="21.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="100.0" top="15.0" />
-               </HBox.margin>
                <tooltip>
                   <Tooltip text="Return to course outline">
                      <font>
@@ -88,11 +73,8 @@
                </tooltip>
             </Button>
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </HBox>
-      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: teal;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
+      </AnchorPane>
+      <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" style="-fx-background-color: teal;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
          <items>
             <AnchorPane>
                <children>
@@ -177,7 +159,7 @@
                         </Tooltip>
                      </tooltip>
                   </TextField>
-                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="474.0" prefWidth="439.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="110.0" />
+                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="474.0" prefWidth="439.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="110.0" />
                   <HBox spacing="70.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
                      <children>
                         <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" style="-fx-background-color: Lavender;" text="Print Lesson Plan">
@@ -226,9 +208,9 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button layoutX="98.0" layoutY="65.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
-                  <Button layoutX="212.0" layoutY="65.0" mnemonicParsing="false" onAction="#redo" text="Redo" />
-                  <Button fx:id="editEventHeadingBtn" layoutX="349.0" layoutY="66.0" mnemonicParsing="false" onAction="#editEventHeadingAction" text="Edit Event Heading" />
+                  <Button layoutX="98.0" layoutY="65.0" mnemonicParsing="false" onAction="#undo" text="Undo" AnchorPane.leftAnchor="100.0" />
+                  <Button layoutX="212.0" layoutY="65.0" mnemonicParsing="false" onAction="#redo" text="Redo" AnchorPane.leftAnchor="225.0" />
+                  <Button fx:id="editEventHeadingBtn" layoutX="349.0" layoutY="66.0" mnemonicParsing="false" onAction="#editEventHeadingAction" text="Edit Event Heading" AnchorPane.rightAnchor="75.0" />
                   <TextField fx:id="editEventHeadingTextField" layoutX="230.0" layoutY="332.0" onKeyPressed="#setEventHeading" />
                   <Button fx:id="upBtn" layoutX="30.0" layoutY="198.0" mnemonicParsing="false" text="Up" />
                   <Button fx:id="downBtn" layoutX="20.0" layoutY="274.0" mnemonicParsing="false" text="Down" />
