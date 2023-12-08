@@ -25,8 +25,6 @@ public class UndoRedoHandler {
         if (undoStack.size() == 1) {
             return;
         } else {
-            System.out.println("undo stack: " + undoStack);
-            System.out.println();
             redoStack.push(undoStack.pop());
             App.getCurrentLessonPlan().restoreState(undoStack.peek().clone());
         }

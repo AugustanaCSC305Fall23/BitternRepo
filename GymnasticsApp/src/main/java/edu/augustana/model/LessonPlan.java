@@ -25,13 +25,13 @@ public class LessonPlan implements Cloneable{
     public void addEventToPlanList(Card card){
         List<String> cardDisplay = new ArrayList<>();
         cardDisplay.add(card.getUniqueID());
-        lessonPlan.add(new Category(card.getEvent(), card.getUniqueID()));
+        lessonPlan.addEventSubcategory(new EventSubcategory(card.getEvent(), card.getUniqueID()));
     }
 
     //rename this method
     public void addCardToEvent(Card card){
-        Category addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
-        addTo.addCardToList(card.getUniqueID());
+        EventSubcategory addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
+        addTo.addCardIDToList(card.getUniqueID());
     }
     public boolean eventInPlanList(Card card){
         if(lessonPlan.contains(card.getEvent())){
@@ -48,19 +48,19 @@ public class LessonPlan implements Cloneable{
     }
 
     public boolean cardInPlanList(Card card){
-        return (lessonPlan.get(lessonPlan.get(card.getEvent())).contains(card.getUniqueID()));
+        return (lessonPlan.get(lessonPlan.get(card.getEvent())).containsCardID(card.getUniqueID()));
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(IndexedMap mapOfIDs){
         Map<String, List<Card>> mapOfCardsFromID = new TreeMap<>();
         if(!mapOfIDs.isEmpty()) {
-            for (ListIterator<Category> it = mapOfIDs.listIterator(); it.hasNext(); ) {
-                Category category = it.next();
+            for (ListIterator<EventSubcategory> it = mapOfIDs.listIterator(); it.hasNext(); ) {
+                EventSubcategory eventSubcategory = it.next();
                 List<Card> cardsFromID = new ArrayList<>();
-                for (String cardID : category.getCardsInList()) {
+                for (String cardID : eventSubcategory.getCardIDList()) {
                     cardsFromID.add(CardDatabase.getFullCardCollection().getCardByID(cardID));
                 }
-                mapOfCardsFromID.put(category.getCategoryHeading(), cardsFromID);
+                mapOfCardsFromID.put(eventSubcategory.getEventHeading(), cardsFromID);
             }
         }
         return  mapOfCardsFromID;
@@ -96,20 +96,20 @@ public class LessonPlan implements Cloneable{
     public void removeCard(String cardDisplayedTitle, UndoRedoHandler undoRedoHandler) {
         String cardIDToRemove = null;
         String eventToChange = null;
-        for (ListIterator<Category> it = lessonPlan.listIterator(); it.hasNext(); ) {
-            Category event = it.next();
-            for (String id : event.getCardsInList()) {
+        for (ListIterator<EventSubcategory> it = lessonPlan.listIterator(); it.hasNext(); ) {
+            EventSubcategory event = it.next();
+            for (String id : event.getCardIDList()) {
                 if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
                     cardIDToRemove = id;
-                    eventToChange = event.getCategoryHeading();
+                    eventToChange = event.getEventHeading();
                 }
             }
         }
         if (cardIDToRemove != null) {
-            lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().remove(cardIDToRemove);
+            lessonPlan.get(lessonPlan.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
             //undoRedoHandler.saveState();
         }
-        if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().isEmpty()){
+        if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardIDList().isEmpty()){
             lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
         }
     }

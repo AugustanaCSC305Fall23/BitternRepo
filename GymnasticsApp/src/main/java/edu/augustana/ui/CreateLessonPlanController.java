@@ -3,7 +3,7 @@ package edu.augustana.ui;
 import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
-import edu.augustana.structures.Category;
+import edu.augustana.structures.EventSubcategory;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
@@ -283,7 +283,6 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             undoRedoHandler.saveState();
-            System.out.println("undo stack after add: " + undoRedoHandler.getUndoStack());
             selectedCards.clear();
         }
     }
@@ -320,8 +319,6 @@ public class CreateLessonPlanController {
             App.getCurrentLessonPlan().removeCard(cardToRemove, undoRedoHandler);
             treeViewManager.removeFromTreeView(root);
             undoRedoHandler.saveState();
-            System.out.println("undo stack after delete: " + undoRedoHandler.getUndoStack());
-            System.out.println();
         }
     }
 
@@ -435,8 +432,8 @@ public class CreateLessonPlanController {
     @FXML private void setEventHeading(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER){
             String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-            Category categoryOfEvent = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventToChange));
-            treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), categoryOfEvent, root);
+            EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventToChange));
+            treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
             editEventHeadingTextField.setVisible(false);
             lessonPlanTreeView.setEffect(null);
         }
@@ -445,8 +442,8 @@ public class CreateLessonPlanController {
     private void moveTreeItemAction(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
         if(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading) >= 0){
-            Category categoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
-            treeViewManager.moveEvent(categoryToMove, direction, root);
+            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
+            treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
         }
     }
 }

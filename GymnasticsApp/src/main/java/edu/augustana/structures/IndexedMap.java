@@ -3,49 +3,49 @@ package edu.augustana.structures;
 import java.util.*;
 
 public class IndexedMap implements Cloneable{
-    private List<Category> indexedMap = new ArrayList<>();
+    private List<EventSubcategory> eventSubcategoryList = new ArrayList<>();
 
     public IndexedMap(){
 
     }
-    public IndexedMap(Category category){
-        indexedMap.add(category);
+    public IndexedMap(EventSubcategory eventSubcategory){
+        eventSubcategoryList.add(eventSubcategory);
     }
-    public List<Category> getIndexedMap(){
-        return indexedMap;
+    public List<EventSubcategory> getEventSubcategoryList(){
+        return eventSubcategoryList;
     }
     public int size(){
         return 0;
     }
     public boolean isEmpty(){
-        return indexedMap.isEmpty();
+        return eventSubcategoryList.isEmpty();
     }
-    public Boolean add(Category category) {
-        return indexedMap.add(category);
+    public void addEventSubcategory(EventSubcategory eventSubcategory) {
+        eventSubcategoryList.add(eventSubcategory);
     }
 
-    public void add(String eventHeading, String cardID){
-        for(int i = 0; i < indexedMap.size(); i++){
-            if(indexedMap.get(i).getCategoryHeading().equalsIgnoreCase(eventHeading)){
-                indexedMap.get(i).addCardToList(cardID);
+    public void addEventSubcategory(String eventHeading, String cardID){
+        for(int i = 0; i < eventSubcategoryList.size(); i++){
+            if(eventSubcategoryList.get(i).getEventHeading().equalsIgnoreCase(eventHeading)){
+                eventSubcategoryList.get(i).addCardIDToList(cardID);
             }
         }
     }
 
-    public boolean remove(Category o) {
-        return indexedMap.remove(o);
+    public boolean remove(EventSubcategory o) {
+        return eventSubcategoryList.remove(o);
     }
 
     public void clear() {
-        indexedMap.clear();
+        eventSubcategoryList.clear();
     }
 
-    public Category get(int index) {
-        return indexedMap.get(index);
+    public EventSubcategory get(int index) {
+        return eventSubcategoryList.get(index);
     }
     public Boolean contains(String heading){
-        for(int i = 0; i < indexedMap.size(); i++){
-            if(indexedMap.get(i).getCategoryHeading().equalsIgnoreCase(heading)){
+        for(int i = 0; i < eventSubcategoryList.size(); i++){
+            if(eventSubcategoryList.get(i).getEventHeading().equalsIgnoreCase(heading)){
                 return true;
             }
         }
@@ -53,41 +53,41 @@ public class IndexedMap implements Cloneable{
     }
     public int get(String category){
         //TODO:
-        for(int i = 0; i < indexedMap.size(); i++){
-            if(indexedMap.get(i).getCategoryHeading().equals(category)){
+        for(int i = 0; i < eventSubcategoryList.size(); i++){
+            if(eventSubcategoryList.get(i).getEventHeading().equals(category)){
                 return i;
             }
         }
         return -1;
     }
 
-    public Category set(int index, Category element) {
-        return indexedMap.set(index, element);
+    public EventSubcategory set(int index, EventSubcategory element) {
+        return eventSubcategoryList.set(index, element);
     }
 
-    public void add(int index, Category element) {
-        indexedMap.add(index, element);
+    public void addEventSubcategory(int index, EventSubcategory element) {
+        eventSubcategoryList.add(index, element);
     }
 
-    public int indexOf(Category category) {
-        for(int i = 0; i < indexedMap.size(); i++){
-            if(indexedMap.get(i).equals(category)){
+    public int indexOf(EventSubcategory eventSubcategory) {
+        for(int i = 0; i < eventSubcategoryList.size(); i++){
+            if(eventSubcategoryList.get(i).equals(eventSubcategory)){
                 return i;
             }
         }
         return -1;
     }
 
-    public ListIterator<Category> listIterator() {
-        return indexedMap.listIterator();
+    public ListIterator<EventSubcategory> listIterator() {
+        return eventSubcategoryList.listIterator();
     }
 
-    public ListIterator<Category> listIterator(int index) {
-        return indexedMap.listIterator(index);
+    public ListIterator<EventSubcategory> listIterator(int index) {
+        return eventSubcategoryList.listIterator(index);
     }
 
-    public List<Category> subList(int fromIndex, int toIndex) {
-        return indexedMap.subList(fromIndex, toIndex);
+    public List<EventSubcategory> subList(int fromIndex, int toIndex) {
+        return eventSubcategoryList.subList(fromIndex, toIndex);
     }
     public void move(int fromIndex, int toIndex){
         //changes the position in the list that the heading is in along with
@@ -95,9 +95,9 @@ public class IndexedMap implements Cloneable{
     }
     public void moveByOne(int direction, int index){
         //moves by one index for each call to method
-        Category temp = indexedMap.get(direction + index);
-        indexedMap.set(direction + index, indexedMap.get(index));
-        indexedMap.set(index, temp);
+        EventSubcategory temp = eventSubcategoryList.get(direction + index);
+        eventSubcategoryList.set(direction + index, eventSubcategoryList.get(index));
+        eventSubcategoryList.set(index, temp);
     }
     @Override
     public String toString(){
@@ -105,9 +105,9 @@ public class IndexedMap implements Cloneable{
         String header;
         String list;
         toReturn = "{";
-        for(Category category : indexedMap){
-            header = category.getCategoryHeading();
-            list = category.getCardsInList().toString();
+        for(EventSubcategory eventSubcategory : eventSubcategoryList){
+            header = eventSubcategory.getEventHeading();
+            list = eventSubcategory.getCardIDList().toString();
             toReturn = toReturn + header + " : " + list + "\n";
         }
         return toReturn + "}\n";
@@ -117,9 +117,9 @@ public class IndexedMap implements Cloneable{
     public IndexedMap clone() {
         try {
             IndexedMap clone = (IndexedMap) super.clone();
-            clone.indexedMap = new ArrayList<>();
-            for (Category category : indexedMap) {
-                clone.add(category.clone());
+            clone.eventSubcategoryList = new ArrayList<>();
+            for (EventSubcategory eventSubcategory : eventSubcategoryList) {
+                clone.addEventSubcategory(eventSubcategory.clone());
             }
             //clone.indexedMap = new ArrayList<>(clone.indexedMap);
             return clone;
