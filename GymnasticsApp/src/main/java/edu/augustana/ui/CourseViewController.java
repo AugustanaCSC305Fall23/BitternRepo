@@ -35,6 +35,7 @@ public class CourseViewController {
     private CourseModel courseModel;
     private TitleEditor titleEditor;
     private List<Button> buttonsList = new ArrayList<>();
+    private UndoRedoHandler undoRedoHandler;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -45,7 +46,7 @@ public class CourseViewController {
         courseModel = new CourseModel();
         addLessonsToCourseList();
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
-        titleEditor.initializeTitleFieldEvents();
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler);
         titleEditor.setTitleFieldText();
         setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {
