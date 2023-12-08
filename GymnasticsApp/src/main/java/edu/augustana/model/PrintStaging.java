@@ -25,6 +25,7 @@ public class PrintStaging {
     private static List<Card> printCardList;
     private static boolean landscapeDisplay;
     private static boolean cardDisplay;
+    private static boolean equipmentDisplay;
 
  // Constructors
     public PrintStaging(List<Card> cardList, String fxml) {
@@ -32,12 +33,13 @@ public class PrintStaging {
         printCardList = cardList;
     }
 
-    public PrintStaging(String title, Map<String, List<Card>> map, String fxml, boolean card_display, boolean landscape_display) {
+    public PrintStaging(String title, Map<String, List<Card>> map, String fxml, boolean card_display, boolean landscape_display, boolean equipment_display) {
         lessonPlanTitle = title;
         eventToCardMap = map;
         past_fxml = fxml;
         cardDisplay = card_display;
         landscapeDisplay = landscape_display;
+        equipmentDisplay = equipment_display;
     }
 
 // Getters
@@ -63,6 +65,10 @@ public class PrintStaging {
 
     public static boolean getLandscapeDisplay() {
         return landscapeDisplay;
+    }
+
+    public static boolean getEquipmentDisplay() {
+        return equipmentDisplay;
     }
 
 // Creates Pages for PrintPreviewController
