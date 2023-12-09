@@ -325,6 +325,8 @@ public class CreateLessonPlanController {
             }
             selectedCards.clear();
             disableButtons();
+            lessonTitleField.deselect();
+            lessonPlanTreeView.requestFocus();
         }
     }
 
