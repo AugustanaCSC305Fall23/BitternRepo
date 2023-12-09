@@ -95,9 +95,11 @@ public class IndexedMap implements Cloneable{
     }
     public void moveByOne(int direction, int index){
         //moves by one index for each call to method
-        EventSubcategory temp = eventSubcategoryList.get(direction + index);
-        eventSubcategoryList.set(direction + index, eventSubcategoryList.get(index));
-        eventSubcategoryList.set(index, temp);
+        if (direction + index >= 0 && direction + index < eventSubcategoryList.size()) {
+            EventSubcategory temp = eventSubcategoryList.get(direction + index);
+            eventSubcategoryList.set(direction + index, eventSubcategoryList.get(index));
+            eventSubcategoryList.set(index, temp);
+        }
     }
     @Override
     public String toString(){

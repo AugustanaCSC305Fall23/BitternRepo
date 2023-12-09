@@ -216,8 +216,6 @@ public class CourseViewController {
                 App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
                 App.setCurrentLessonPlan(null);
                 undoRedoHandler.saveState(App.getCurrentCourse().clone());
-                System.out.println(undoRedoHandler);
-                System.out.println();
             }
         }
 
