@@ -10,6 +10,10 @@ import java.util.Stack;
 public class UndoRedoHandler {
     private Stack<Undoable> undoStack, redoStack;
 
+    /**
+     * Contructs an UndoRedoHandler object
+     * @param undoable the Undoable to 
+     */
     public UndoRedoHandler(Undoable undoable) {
         undoStack = new Stack<>();
         redoStack = new Stack<>();
