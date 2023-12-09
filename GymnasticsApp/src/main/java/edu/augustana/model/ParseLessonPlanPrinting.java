@@ -74,8 +74,8 @@ public class ParseLessonPlanPrinting {
             } else {
                 pageHeight = pgLayout.getPrintableWidth() * 1.25;
                 pageWidth = pgLayout.getPrintableHeight() * 1.75;
-                eventTitleTemplate = new Font("Times New Roman", 20);
-                titleFont = new Font("Times New Roman", 35);
+                eventTitleTemplate = new Font("Times New Roman Bold", 20);
+                titleFont = new Font("Times New Roman Bold", 35);
             }
         }  else {
             System.out.println(isPrinting);
@@ -86,8 +86,8 @@ public class ParseLessonPlanPrinting {
             } else {
                 pageHeight = pgLayout.getPrintableHeight() * 1.75;
                 pageWidth = pgLayout.getPrintableWidth() * 1.75;
-                eventTitleTemplate = new Font("Times New Roman", 20);
-                titleFont = new Font("Times New Roman", 35);
+                eventTitleTemplate = new Font("Times New Roman Bold", 20);
+                titleFont = new Font("Times New Roman Bold", 35);
             }
         }
 
@@ -356,7 +356,7 @@ public class ParseLessonPlanPrinting {
 
             // Creates dummy box to see if there is enough room
             dummyBox.getChildren().add(eventLabel);
-            for (Label card: cardsInEvent) {
+            for (Label card : cardsInEvent) {
                 dummyBox.getChildren().add(card);
             }
             dummyRoot.applyCss();
@@ -367,7 +367,7 @@ public class ParseLessonPlanPrinting {
             if (runningPageHeight < pageHeight) {
                 pageContents.getChildren().add(eventLabel);
 
-                for (Label card: cardsInEvent) {
+                for (Label card : cardsInEvent) {
                     pageContents.getChildren().add(card);
                 }
             } else {
@@ -380,7 +380,7 @@ public class ParseLessonPlanPrinting {
                 // Creates dummy box to calcualte new height
                 dummyBox = new VBox();
                 dummyBox.getChildren().add(eventLabel);
-                for (Label card: cardsInEvent) {
+                for (Label card : cardsInEvent) {
                     dummyBox.getChildren().add(card);
                 }
                 dummyRoot.applyCss();
@@ -394,7 +394,7 @@ public class ParseLessonPlanPrinting {
 
 
                 pageContents.getChildren().add(eventLabel);
-                for (Label card: cardsInEvent) {
+                for (Label card : cardsInEvent) {
                     pageContents.getChildren().add(card);
                 }
             }
@@ -407,41 +407,70 @@ public class ParseLessonPlanPrinting {
 
         if (PrintStaging.getEquipmentDisplay()) {
             List<String> equipmentList = App.getCurrentLessonPlan().getEquipmentFromMap(eventToCardsMap);
-            String equipmentString = "Equipment: \n" + "   *" + equipmentList.get(0);
-            for (int x = 1; x < equipmentList.size(); x++) {
-                equipmentString = equipmentString + "\n   *" + equipmentList.get(x);
+            if (equipmentList != null && (!(equipmentList.isEmpty()))) {
+                String equipmentSentence = "EQUIPMENT: \n" + equipmentList.get(0);
+                String equipmentString = "Equipment: \n" + "   *" + equipmentList.get(0);
+                for (int x = 1; x < equipmentList.size(); x++) {
+                    equipmentString = equipmentString + "\n   *" + equipmentList.get(x);
+                    equipmentSentence = equipmentSentence + ", " + equipmentList.get(x);
+                }
+
+                Text equipmentText = new Text(equipmentString);
+                Font font = new Font("Times New Roman", 15 * 1.75);
+                if (isPrinting) {
+                    font = new Font("Times New Roman", 15 );
+                }
+                equipmentText.setFont(font);
+                equipmentTF = new TextFlow(equipmentText);
+                equipmentTF.setMaxWidth(pageWidth);
+
+                dummyBox = new VBox();
+                dummyRoot = new Group();
+                dummyBox.getChildren().add(equipmentTF);
+                dummyRoot.getChildren().add(dummyBox);
+                dummyRoot.applyCss();
+                dummyRoot.layout();
+
+                if (!(dummyBox.getHeight() > pageHeight)) {
+
+                    currentPane = new Pane();
+                    currentPane.setMaxHeight(pageHeight);
+                    currentPane.setMaxWidth(pageWidth);
+
+                    pageContents = new VBox();
+                    pageContents.setAlignment(Pos.CENTER);
+                    pageContents.setMaxHeight(pageHeight);
+                    currentPane.getChildren().add(pageContents);
+
+                    pageContents.getChildren().add(equipmentTF);
+
+                    pages.add(currentPane);
+                } else {
+                    equipmentText = new Text(equipmentSentence);
+                    equipmentText.setFont(font);
+                    equipmentTF = new TextFlow(equipmentText);
+                    equipmentTF.setMaxWidth(pageWidth);
+
+                    currentPane = new Pane();
+                    currentPane.setMaxHeight(pageHeight);
+                    currentPane.setMaxWidth(pageWidth);
+
+                    pageContents = new VBox();
+                    pageContents.setAlignment(Pos.CENTER);
+                    pageContents.setMaxHeight(pageHeight);
+                    currentPane.getChildren().add(pageContents);
+
+                    pageContents.getChildren().add(equipmentTF);
+
+                    pages.add(currentPane);
+                }
+
             }
-
-            Text equipmentText = new Text(equipmentString);
-            Font font = new Font("Times New Roman", 15);
-            equipmentText.setFont(font);
-            equipmentTF = new TextFlow(equipmentText);
-            equipmentTF.setMaxWidth(pageWidth);
-
-            dummyBox = new VBox();
-            dummyRoot = new Group();
-            dummyBox.getChildren().add(equipmentTF);
-            dummyRoot.getChildren().add(dummyBox);
-            dummyRoot.applyCss();
-            dummyRoot.layout();
-
-            currentPane = new Pane();
-            currentPane.setMaxHeight(pageHeight);
-            currentPane.setMaxWidth(pageWidth);
-
-            pageContents = new VBox();
-            pageContents.setAlignment(Pos.CENTER);
-            pageContents.setMaxHeight(pageHeight);
-            currentPane.getChildren().add(pageContents);
-
-            pageContents.getChildren().add(equipmentTF);
-
-            pages.add(currentPane);
-
         }
     }
 
     private void initializeLabelToCardLabelsMap() {
+
         for (Map.Entry<String, List<Card>> event : eventToCardsMap.entrySet()) {
             double runningHeight = 0;
 
@@ -454,7 +483,14 @@ public class ParseLessonPlanPrinting {
                 Label cardInfo = new Label();
                 String cardInfoS = "-   " + card.getTitle() +", " + card.getCode();
                 cardInfo.setText(cardInfoS);
+                if (!isPrinting) {
+                    cardInfo.setFont(new Font("Times New Roman", 15 * 1.75));
+                }
                 eventCards.add(cardInfo);
+            }
+
+            if (!isPrinting) {
+                eventLabel.setFont(new Font("Times New Roman", 20 * 1.75));
             }
             labelToCardLabelsMap.put(eventLabel, eventCards);
         }
@@ -465,6 +501,8 @@ public class ParseLessonPlanPrinting {
         lessonPlanTitleLabel.setText(lessonPlanTitle);
         lessonPlanTitleLabel.setFont(titleFont);
     }
+
+
 
     public ArrayList<Pane> getPages() {
         return pages;

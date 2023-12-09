@@ -135,7 +135,7 @@ public class PrintStaging {
         return 1;
     }
 
-    public static ImageView createFullSizeImageView(Card card, PageLayout pgLayout) throws MalformedURLException {
+    private static ImageView createFullSizeImageView(Card card, PageLayout pgLayout) throws MalformedURLException {
         ImageView fullSizeImageView = new ImageView(card.getImage());
         fullSizeImageView.setFitWidth(pgLayout.getPrintableWidth() - 10);
         fullSizeImageView.setFitHeight(pgLayout.getPrintableWidth() * .75);
@@ -150,7 +150,6 @@ public class PrintStaging {
             } else {
                 pgRange = new PageRange(1, lessonPlan.getPages().size());
             }
-
 
             // Used https://stackoverflow.com/questions/28102141/javafx-8-webengine-print-method-unable-to-print-in-landscape
             // to create landscape mode for a lesson plan
