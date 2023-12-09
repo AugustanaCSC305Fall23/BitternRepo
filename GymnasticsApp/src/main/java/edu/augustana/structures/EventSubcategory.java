@@ -1,5 +1,8 @@
 package edu.augustana.structures;
 
+import edu.augustana.model.Card;
+import edu.augustana.model.CardDatabase;
+
 import java.util.List;
 
 import java.util.ArrayList;
@@ -33,6 +36,11 @@ public class EventSubcategory implements Cloneable {
     public void setCardIDList(List<String> IDList){
         cardIDList.addAll(IDList);
     }
+    public void moveCardByOne(int direction, int index){
+        String temp = cardIDList.get(direction + index);
+        cardIDList.set(direction + index, cardIDList.get(index));
+        cardIDList.set(index, temp);
+    }
 
     public boolean containsCardID(String cardID){
         for(String id : cardIDList){
@@ -41,6 +49,14 @@ public class EventSubcategory implements Cloneable {
             }
         }
         return false;
+    }
+
+    public List<Card> getListOfCards(){
+        List<Card> listOfCards = new ArrayList<>();
+        for(String id : cardIDList){
+            listOfCards.add(CardDatabase.getFullCardCollection().getCardByID(id));
+        }
+        return listOfCards;
     }
 
     @Override

@@ -89,11 +89,10 @@ public class IndexedMap implements Cloneable{
     public List<EventSubcategory> subList(int fromIndex, int toIndex) {
         return eventSubcategoryList.subList(fromIndex, toIndex);
     }
-    public void move(int fromIndex, int toIndex){
-        //changes the position in the list that the heading is in along with
-        //moving everything before or after
+    public void moveCardByOne(int direction, int index, EventSubcategory subcategory){
+        subcategory.moveCardByOne(direction, index);
     }
-    public void moveByOne(int direction, int index){
+    public void moveEventByOne(int direction, int index){
         //moves by one index for each call to method
         EventSubcategory temp = eventSubcategoryList.get(direction + index);
         eventSubcategoryList.set(direction + index, eventSubcategoryList.get(index));
