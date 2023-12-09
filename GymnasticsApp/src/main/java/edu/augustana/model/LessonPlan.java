@@ -88,6 +88,18 @@ public class LessonPlan implements Cloneable, Undoable{
         return equipmentListFinal;
     }
 
+    public String getIDFromDisplayTitle(String displayTitle){
+        for(EventSubcategory subcategory : lessonPlanIndexedMap.getEventSubcategoryList()){
+            List<Card> cardList = subcategory.getListOfCards();
+            for(Card card : cardList){
+                if(card.getDisplayedTitle().equals(displayTitle)){
+                    return card.getUniqueID();
+                }
+            }
+        }
+        return "";
+    }
+
     public void removeCard(String cardDisplayedTitle, UndoRedoHandler undoRedoHandler) {
         String cardIDToRemove = null;
         String eventToChange = null;

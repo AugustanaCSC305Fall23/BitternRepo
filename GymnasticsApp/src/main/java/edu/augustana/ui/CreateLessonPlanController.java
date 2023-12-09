@@ -28,6 +28,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import org.w3c.dom.events.Event;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -471,6 +472,13 @@ public class CreateLessonPlanController {
         if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
             EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
+        }else{
+            String displayTitle = eventHeading;
+            String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(displayTitle);
+            Card cardFromID = CardDatabase.getFullCardCollection().getCardByID(cardID);
+            EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardFromID.getEvent()));
+            treeViewManager.moveCard(subcategory, cardID, direction, root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
