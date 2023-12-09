@@ -6,6 +6,7 @@ import edu.augustana.filters.*;
 import edu.augustana.structures.EventSubcategory;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -91,7 +92,7 @@ public class CreateLessonPlanController {
     private TreeItem<String> root = new TreeItem<>();
     private final TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
 
-    private UndoRedoHandler undoRedoHandler;
+    private final UndoRedoHandler undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());;
     private TitleEditor titleEditor;
     private final FilterHandler filterHandler = new FilterHandler();
 
@@ -100,7 +101,6 @@ public class CreateLessonPlanController {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         editEventHeadingTextField.setVisible(false);
-        undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
         }
@@ -311,8 +311,11 @@ public class CreateLessonPlanController {
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
             selectedCards.clear();
             disableButtons();
+            lessonTitleField.deselect();
+            lessonPlanTreeView.requestFocus();
         }
     }
+
     @FXML void addCardsToFavorites() throws IOException {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
@@ -352,12 +355,14 @@ public class CreateLessonPlanController {
         undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
+        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
+        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
     private void giveWarning(String message) {
@@ -440,8 +445,8 @@ public class CreateLessonPlanController {
         } else if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
             editEventHeadingBtn.setDisable(true);
             moveBtn.setVisible(true);
-            disableArrowButton(upArrow);
-            disableArrowButton(downArrow);
+            //disableArrowButton(upArrow);
+            //disableArrowButton(downArrow);
             deleteBtn.setDisable(false);
         }
     }

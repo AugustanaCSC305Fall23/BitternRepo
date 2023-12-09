@@ -255,10 +255,8 @@ public class CourseViewController {
             boolean cardDisplay;
             boolean landscapeDisplay = false;
 
-            // If true, show cards. Else, show text only
             cardDisplay = PrintStaging.promptCardDisplay();
 
-            // If true shows landscape mode. Else, show portrait mode
             if (cardDisplay) {
                 landscapeDisplay = PrintStaging.promptPageFormat();
             }
@@ -275,6 +273,7 @@ public class CourseViewController {
         titleEditor.setTitleFieldText();
         courseListView.getItems().clear();
         addLessonsToCourseList();
+        undoRedoHandler.saveState(App.getCurrentCourse().clone());
 
     }
 
@@ -283,6 +282,7 @@ public class CourseViewController {
         titleEditor.setTitleFieldText();
         courseListView.getItems().clear();
         addLessonsToCourseList();
+        undoRedoHandler.saveState(App.getCurrentCourse().clone());
     }
 
 }
