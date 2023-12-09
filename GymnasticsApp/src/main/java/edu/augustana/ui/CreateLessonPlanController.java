@@ -418,6 +418,7 @@ public class CreateLessonPlanController {
             treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
             editEventHeadingTextField.setVisible(false);
             lessonPlanTreeView.setEffect(null);
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
 
@@ -426,6 +427,7 @@ public class CreateLessonPlanController {
         if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
             EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
 }
