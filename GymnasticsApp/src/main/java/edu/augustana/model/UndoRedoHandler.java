@@ -8,34 +8,41 @@ import java.util.Stack;
  * Based a lot of this code on the undoRedoHandler in MovieTrackerApp
  */
 public class UndoRedoHandler {
-    private Stack<LessonPlan> undoStack, redoStack;
+    private Stack<Undoable> undoStack, redoStack;
 
-    public UndoRedoHandler(LessonPlan lessonPlan) {
+    public UndoRedoHandler(Undoable undoable) {
         undoStack = new Stack<>();
         redoStack = new Stack<>();
-        undoStack.push(lessonPlan.clone());
+        undoStack.push(undoable.clone());
     }
 
-    public void saveState() {
-        undoStack.push(App.getCurrentLessonPlan().clone());
+    public void saveState(Undoable state) {
+        undoStack.push(state);
         redoStack.clear();
     }
 
-    public void undo() {
+    public void undo(Undoable stateToUndo) {
         if (undoStack.size() != 1) {
             redoStack.push(undoStack.pop());
-            App.getCurrentLessonPlan().restoreState(undoStack.peek().clone());
+            stateToUndo.restoreState(undoStack.peek().clone());
         }
     }
 
-    public void redo() {
+    public void redo(Undoable stateToRedo) {
         if (!redoStack.isEmpty()) {
-            LessonPlan temp = redoStack.pop();
-            App.getCurrentLessonPlan().restoreState(temp.clone());
+            Undoable temp = redoStack.pop();
+            stateToRedo.restoreState(temp.clone());
             undoStack.push(temp);
         }
     }
 
-    public Stack<LessonPlan> getUndoStack() { return undoStack; }
+    public Stack<Undoable> getUndoStack() { return undoStack; }
 
+    @Override
+    public String toString() {
+        return "UndoRedoHandler{" +
+                "undoStack=" + undoStack +
+                ", redoStack=" + redoStack +
+                '}';
+    }
 }
