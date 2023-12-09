@@ -140,9 +140,6 @@ public class LessonPlan implements Cloneable, Undoable{
 
     @Override
     public String toString() {
-        return "LessonPlan{" +
-                "title='" + title + '\'' +
-                ", lessonPlan=" + lessonPlanIndexedMap +
-                '}';
+        return title;
     }
 }
