@@ -15,7 +15,7 @@ public class IndexedMap implements Cloneable{
         return eventSubcategoryList;
     }
     public int size(){
-        return 0;
+        return eventSubcategoryList.size();
     }
     public boolean isEmpty(){
         return eventSubcategoryList.isEmpty();
@@ -32,8 +32,8 @@ public class IndexedMap implements Cloneable{
         }
     }
 
-    public boolean remove(EventSubcategory o) {
-        return eventSubcategoryList.remove(o);
+    public void remove(EventSubcategory o) {
+        eventSubcategoryList.remove(o);
     }
 
     public void clear() {

@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: LightBlue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.PrintPreviewController">
+<BorderPane prefHeight="800.0" prefWidth="1400.0" styleClass="medium-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.PrintPreviewController">
    <top>
-      <Label fx:id="titleLabel" maxHeight="-Infinity" maxWidth="-Infinity" text="Your Print Preview" BorderPane.alignment="CENTER">
+      <Label fx:id="titleLabel" maxHeight="-Infinity" maxWidth="-Infinity" text="Your Print Preview" textFill="WHITE" BorderPane.alignment="CENTER">
          <font>
-            <Font name="Times New Roman" size="36.0" />
+            <Font name="Georgia" size="36.0" />
          </font>
          <BorderPane.margin>
             <Insets top="30.0" />

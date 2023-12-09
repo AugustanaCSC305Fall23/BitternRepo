@@ -6,10 +6,10 @@ import java.util.*;
 
 public class LessonPlan implements Cloneable{
     private String title;
-    private IndexedMap lessonPlan;
+    private IndexedMap indexedMap;
 
     public LessonPlan() {
-        lessonPlan = new IndexedMap();
+        indexedMap = new IndexedMap();
         title = "Untitled";
     }
 
@@ -25,29 +25,26 @@ public class LessonPlan implements Cloneable{
     public void addEventToPlanList(Card card){
         List<String> cardDisplay = new ArrayList<>();
         cardDisplay.add(card.getUniqueID());
-        lessonPlan.addEventSubcategory(new EventSubcategory(card.getEvent(), card.getUniqueID()));
+        indexedMap.addEventSubcategory(new EventSubcategory(card.getEvent(), card.getUniqueID()));
     }
 
     public void addCardToEvent(Card card){
-        EventSubcategory addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
+        EventSubcategory addTo = indexedMap.get(indexedMap.get(card.getEvent()));
         addTo.addCardIDToList(card.getUniqueID());
     }
     public boolean eventInPlanList(Card card){
-        if(lessonPlan.contains(card.getEvent())){
-            return true;
-        }
-        return false;
+        return indexedMap.contains(card.getEvent());
     }
     public boolean isLessonPlanEmpty(){
-        return (lessonPlan.isEmpty());
+        return (indexedMap.isEmpty());
     }
 
     public void setEventInPlanList(IndexedMap lessonPlan){
-        this.lessonPlan = lessonPlan;
+        this.indexedMap = lessonPlan;
     }
 
     public boolean cardInPlanList(Card card){
-        return (lessonPlan.get(lessonPlan.get(card.getEvent())).containsCardID(card.getUniqueID()));
+        return (indexedMap.get(indexedMap.get(card.getEvent())).containsCardID(card.getUniqueID()));
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(IndexedMap mapOfIDs){
@@ -64,8 +61,8 @@ public class LessonPlan implements Cloneable{
         }
         return  mapOfCardsFromID;
     }
-    public IndexedMap getLessonPlan(){
-        return lessonPlan;
+    public IndexedMap getIndexedMap(){
+        return indexedMap;
     }
 
     public List<String> getEquipmentFromMap(Map<String, List<Card>> eventToCardsMap) {
@@ -79,8 +76,7 @@ public class LessonPlan implements Cloneable{
         }
 
         List<String> equipmentListFinal = new ArrayList<>();
-        for (int i = 0; i < equipmentList.size(); i++) {
-            String equipment = equipmentList.get(i);
+        for (String equipment : equipmentList) {
             equipment = equipment.trim();
             if (!equipmentListFinal.contains(equipment)) {
                 if (!equipment.equals("None")) {
@@ -95,7 +91,7 @@ public class LessonPlan implements Cloneable{
     public void removeCard(String cardDisplayedTitle, UndoRedoHandler undoRedoHandler) {
         String cardIDToRemove = null;
         String eventToChange = null;
-        for (ListIterator<EventSubcategory> it = lessonPlan.listIterator(); it.hasNext(); ) {
+        for (ListIterator<EventSubcategory> it = indexedMap.listIterator(); it.hasNext(); ) {
             EventSubcategory event = it.next();
             for (String id : event.getCardIDList()) {
                 if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
@@ -105,11 +101,10 @@ public class LessonPlan implements Cloneable{
             }
         }
         if (cardIDToRemove != null) {
-            lessonPlan.get(lessonPlan.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
-            //undoRedoHandler.saveState();
+            indexedMap.get(indexedMap.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
         }
-        if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardIDList().isEmpty()){
-            lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
+        if(indexedMap.get(indexedMap.get(eventToChange)).getCardIDList().isEmpty()){
+            indexedMap.remove(indexedMap.get(indexedMap.get(eventToChange)));
         }
     }
 
@@ -125,10 +120,10 @@ public class LessonPlan implements Cloneable{
          * Based this method on the clone() method in Drawing class of
          * DrawingApp
          */
-                LessonPlan clone = new LessonPlan();
-                clone.title = this.getTitle();
-                clone.lessonPlan = this.lessonPlan.clone();
-                return clone;
+         LessonPlan clone = new LessonPlan();
+         clone.title = this.getTitle();
+         clone.indexedMap = this.indexedMap.clone();
+         return clone;
         }
 
 
@@ -138,7 +133,7 @@ public class LessonPlan implements Cloneable{
      */
     public void restoreState(LessonPlan copyOfPreviousState) {
         this.title = copyOfPreviousState.title;
-        this.lessonPlan = copyOfPreviousState.lessonPlan;
+        this.indexedMap = copyOfPreviousState.indexedMap;
 
     }
 
@@ -146,7 +141,7 @@ public class LessonPlan implements Cloneable{
     public String toString() {
         return "LessonPlan{" +
                 "title='" + title + '\'' +
-                ", lessonPlan=" + lessonPlan +
+                ", lessonPlan=" + indexedMap +
                 '}';
     }
 }

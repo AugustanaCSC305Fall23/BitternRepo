@@ -1,6 +1,5 @@
 package edu.augustana.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -46,7 +46,6 @@ public class CourseViewController {
         if (currentCourse == null) {
             currentCourse = new Course();
         }
-        courseListView.setOnMouseClicked(e -> checkIfItemSelected());
         courseModel = new CourseModel();
         addLessonsToCourseList();
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
@@ -70,12 +69,21 @@ public class CourseViewController {
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
         treeViewManager = new TreeViewManager(lessonPlan);
-        treeViewManager.setUpTreeView(root);
+        treeViewManager.displayTreeView(root);
         lessonPlanTreeView.setVisible(true);
+        lessonPlanTreeView.setEditable(false);
     }
 
     @FXML private void goToHome() throws IOException {
         App.setRoot("home");
+    }
+
+    @FXML void checkNumClicks(MouseEvent e) throws IOException {
+        if (e.getClickCount() == 2) {
+            editLessonPlanHandler();
+        } else if (e.getClickCount() == 1) {
+            checkIfItemSelected();
+        }
     }
 
     private void checkIfItemSelected() {
@@ -185,7 +193,7 @@ public class CourseViewController {
         }
     }
 
-    @FXML private void editLessonPlanHandler() throws  IOException {
+    @FXML private void editLessonPlanHandler() throws IOException {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
@@ -225,16 +233,16 @@ public class CourseViewController {
         if (lessonPlanToDuplicate != null) {
             LessonPlan copyOfLessonPlan = new LessonPlan();
             copyOfLessonPlan.setTitle(lessonPlanToDuplicate.getTitle());
-            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getLessonPlan());
+            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getIndexedMap());
             App.getCurrentCourse().getLessonPlanList().add(lessonPlanToDuplicate);
             courseListView.getItems().add(copyOfLessonPlan);
         }
     }
 
-    @FXML public void printLessonPlanHandler(ActionEvent actionEvent) throws IOException {
+    @FXML public void printLessonPlanHandler() throws IOException {
         LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToDuplicate != null) {
-            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlan());
+            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getIndexedMap());
             String lessonPlanTitle = lessonPlanToDuplicate.getTitle();
 
             boolean cardDisplay;
