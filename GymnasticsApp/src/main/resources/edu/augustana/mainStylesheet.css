@@ -39,7 +39,7 @@
 .button {
     -fx-border-width: 1;
     -fx-border-color: black;
-    -fx-background-color: #caf0f8;
+    -fx-background-color: #cae9ff;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
 }
@@ -61,4 +61,39 @@
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     -fx-text-style: Georgia;
+}
+
+.list-view {
+    -fx-background-color: #cae9ff;
+    -fx-border-color: black;
+    -fx-border-width: 1;
+}
+
+.list-cell {
+    -fx-font: 13pt "Georgia";
+    -fx-background-color: #cae9ff;
+    -fx-border-color: black;
+    -fx-border-width: 0.5;
+}
+
+.list-cell:selected {
+    -fx-background-color: #014f86;
+    -fx-text-fill: white;
+}
+
+/* Used https://stackoverflow.com/questions/29220712/simple-way-to-change-javafx-treeview-background-and-text-color */
+.tree-cell {
+    -fx-background-color: #cae9ff;
+    -fx-font: 14pt "Georgia";
+}
+
+.tree-cell: selected {
+    -fx-background-color: #014f86;
+    -fx-text-fill: white;
+}
+
+.tree-view {
+    -fx-background-color: #cae9ff;
+    -fx-border-color: black;
+    -fx-border-width: 1;
 }

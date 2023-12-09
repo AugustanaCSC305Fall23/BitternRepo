@@ -7,6 +7,7 @@ import java.util.*;
 public class LessonPlan implements Cloneable, Undoable{
     private String title;
     private IndexedMap lessonPlanIndexedMap;
+    private String customNote;
 
     public LessonPlan() {
         lessonPlanIndexedMap = new IndexedMap();
@@ -121,6 +122,14 @@ public class LessonPlan implements Cloneable, Undoable{
         }
     }
 
+    public void setCustomNote(String note) {
+        customNote = note;
+    }
+
+    public String getCustomNote() {
+        return customNote;
+    }
+
     /**
      *
      * @return
@@ -152,9 +161,6 @@ public class LessonPlan implements Cloneable, Undoable{
 
     @Override
     public String toString() {
-        return "LessonPlan{" +
-                "title='" + title + '\'' +
-                ", lessonPlan=" + lessonPlanIndexedMap +
-                '}';
+        return title;
     }
 }
