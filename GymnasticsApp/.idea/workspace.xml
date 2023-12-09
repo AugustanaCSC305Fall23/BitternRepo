@@ -4,114 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f2a5bbc-dfbb-4afd-a1d8-fd21c56f62fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/edu/augustana/CourseUnitTest.java" afterDir="false" />
+    <list default="true" id="8bf2eb2d-1864-4d77-85f4-f6c8f4910eae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/TreeViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/TreeViewManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
-}</component>
-  <component name="ProjectId" id="2ZJkvOo5yl3KwEfIcwiD02oXbYE" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-=======
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 03af98fadc54410f92410769b1a804fb380c81a9
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "Merging main"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="edu.augustana" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/symbols" />
-      <recent name="$PROJECT_DIR$/src/main/resources/edu/augustana" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp\Symbols" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana\images" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources" />
-      <recent name="C:\git\BitternRepo\GymnasticsApp\src\main\resources\edu\augustana" />
-      <recent name="C:\Users\jessa\CSC305\git\BitternRepo\GymnasticsApp" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="edu.augustana" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="GymnasticsApp [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="cmdOptions" />
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="javafx:run" />
-              </list>
-            </option>
-            <option name="pomFileName" value="pom.xml" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="projectsCmdOptionValues">
-              <list />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Maven.GymnasticsApp [javafx:run]" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+}]]></component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="3f2a5bbc-dfbb-4afd-a1d8-fd21c56f62fb" name="Changes" comment="" />
-      <created>1702076081245</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1702076081245</updated>
-    </task>
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/App_java$App.ic" NAME="App Coverage Results" MODIFIED="1700529996976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
