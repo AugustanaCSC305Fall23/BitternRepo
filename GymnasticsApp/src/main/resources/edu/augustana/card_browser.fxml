@@ -85,9 +85,9 @@
                      </content>
                   </ScrollPane>
                   <HBox alignment="CENTER" spacing="800.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0" />
-                  <VBox fx:id="zoomedInCardVBox" alignment="CENTER" spacing="10.0" style="-fx-background-color: #78C6A3; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="50.0">
+                  <VBox fx:id="zoomedInCardVBox" alignment="CENTER" spacing="10.0" style="-fx-border-color: black;" styleClass="medium-blue" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="50.0">
                      <children>
-                        <Button alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#exitZoomedView" text="x" textAlignment="CENTER">
+                        <Button alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#exitZoomedView" style="-fx-background-color: lavender;" text="x" textAlignment="CENTER">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -142,7 +142,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <TextField fx:id="searchField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchAction" prefHeight="65.0" prefWidth="1000.0" promptText="Search" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="10.0">
+      <TextField fx:id="searchField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchAction" prefHeight="65.0" prefWidth="850.0" promptText="Search" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="32.0" />
          </font>

@@ -4,7 +4,6 @@ import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
 import edu.augustana.structures.EventSubcategory;
-import edu.augustana.structures.IndexedMap;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
@@ -14,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
@@ -57,7 +55,12 @@ public class CreateLessonPlanController {
     @FXML private VBox editSubheadingVBox;
     @FXML private TextField editEventHeadingTextField;
     @FXML private Button editEventHeadingBtn;
+    @FXML private Button moveBtn;
     @FXML private Button deleteBtn;
+    @FXML private Button customNoteBtn;
+    @FXML private VBox enterCustomNoteVBox;
+    @FXML private TextArea customNoteTextArea;
+    @FXML private Label customNoteLabel;
 
     @FXML private VBox upArrow;
     @FXML private VBox downArrow;
@@ -114,6 +117,9 @@ public class CreateLessonPlanController {
         titleEditor.setTitleFieldText();
         undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         disableButtons();
+        if (App.getCurrentLessonPlan().getCustomNote() != null) {
+            customNoteBtn.setText("Edit Custom Note");
+        }
     }
 
     private void setUpTreeView(){
@@ -143,6 +149,7 @@ public class CreateLessonPlanController {
             Animation delayAnim = new PauseTransition(Duration.seconds(1));
 
             cardView.setOnMouseEntered(e -> {
+                cardView.setCursor(Cursor.HAND);
                 delayAnim.playFromStart();
                 delayAnim.setOnFinished(event -> {
                     try {
@@ -412,7 +419,8 @@ public class CreateLessonPlanController {
     private void treeViewItemSelectedAction() {
         if (!lessonPlanTreeView.getSelectionModel().isEmpty() &&
                 !lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
-            editEventHeadingBtn.setDisable(false);
+            editEventHeadingBtn.setVisible(true);
+            moveBtn.setVisible(false);
             int selectedIndex = lessonPlanTreeView.getSelectionModel().getSelectedIndex();
             if (selectedIndex != 0) {
                 upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
@@ -424,12 +432,14 @@ public class CreateLessonPlanController {
             downArrow.setCursor(Cursor.HAND);
             deleteBtn.setDisable(true);
         } else if (lessonPlanTreeView.getSelectionModel().isEmpty()) {
-            editEventHeadingBtn.setDisable(true);
+            editEventHeadingBtn.setVisible(false);
+            moveBtn.setVisible(false);
             disableArrowButton(upArrow);
             disableArrowButton(downArrow);
             deleteBtn.setDisable(true);
         } else if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
             editEventHeadingBtn.setDisable(true);
+            moveBtn.setVisible(true);
             disableArrowButton(upArrow);
             disableArrowButton(downArrow);
             deleteBtn.setDisable(false);
@@ -463,7 +473,7 @@ public class CreateLessonPlanController {
 
     @FXML private void cancelAction() {
         editSubheadingVBox.setVisible(false);
-
+        enterCustomNoteVBox.setVisible(false);
     }
 
     private void moveTreeItemAction(int direction) {
@@ -473,5 +483,30 @@ public class CreateLessonPlanController {
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
+    }
+
+    @FXML void moveCardAction() {
+
+    }
+
+    @FXML void enterCustomNoteHandler() {
+        enterCustomNoteVBox.setVisible(true);
+        if (App.getCurrentLessonPlan().getCustomNote() != null) {
+            customNoteLabel.setText("Edit Custom Note");
+            customNoteTextArea.setText(App.getCurrentLessonPlan().getCustomNote());
+        } else {
+            customNoteLabel.setText("Enter Custom Note");
+            customNoteTextArea.setText(null);
+        }
+    }
+
+    @FXML void confirmCustomNoteAction() {
+        App.getCurrentLessonPlan().setCustomNote(customNoteTextArea.getText());
+        if (App.getCurrentLessonPlan().getCustomNote() == null) {
+            customNoteBtn.setText("Enter Custom Note");
+        } else {
+            customNoteBtn.setText("Edit Custom Note");
+        }
+        enterCustomNoteVBox.setVisible(false);
     }
 }

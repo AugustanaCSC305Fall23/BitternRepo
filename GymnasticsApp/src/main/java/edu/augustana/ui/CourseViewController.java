@@ -35,7 +35,6 @@ public class CourseViewController {
     private TreeViewManager treeViewManager;
 
     // Non FXML
-   // private static Course currentCourse;
     private CourseModel courseModel;
     private TitleEditor titleEditor;
     private List<Button> buttonsList = new ArrayList<>();
@@ -43,10 +42,13 @@ public class CourseViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-//        if (currentCourse == null) {
-//            currentCourse = new Course();
-//        }
-        courseListView.setOnMouseClicked(e -> checkIfItemSelected());
+        courseListView.setOnMouseClicked(e -> {
+            try {
+                checkNumClicks(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         courseModel = new CourseModel();
         addLessonsToCourseList();
         undoRedoHandler = new UndoRedoHandler(App.getCurrentCourse());
@@ -80,11 +82,13 @@ public class CourseViewController {
         App.setRoot("home");
     }
 
-    @FXML void checkNumClicks(MouseEvent e) throws IOException {
-        if (e.getClickCount() == 2) {
-            editLessonPlanHandler();
-        } else if (e.getClickCount() == 1) {
-            checkIfItemSelected();
+    private void checkNumClicks(MouseEvent e) throws IOException {
+        if (e.getTarget() != null) {
+            if (e.getClickCount() == 2) {
+                editLessonPlanHandler();
+            } else if (e.getClickCount() == 1) {
+                checkIfItemSelected();
+            }
         }
     }
 

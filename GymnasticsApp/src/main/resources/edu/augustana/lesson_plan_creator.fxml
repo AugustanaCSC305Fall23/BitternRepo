@@ -7,6 +7,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
@@ -27,43 +28,65 @@
    <children>
       <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
          <children>
-            <GridPane hgap="20.0" layoutX="57.0" vgap="10.0" AnchorPane.leftAnchor="40.0">
+            <GridPane hgap="20.0" layoutX="57.0" vgap="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="10.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <CheckComboBox fx:id="genderDropdown" prefWidth="140.0" title="Gender">
+                  <CheckComboBox id="dropdown" fx:id="genderDropdown" prefWidth="160.0" styleClass="dropdown" stylesheets="@mainStylesheet.css" title="Gender">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </CheckComboBox>
-                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="140.0" title="Model Gender" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <CheckComboBox fx:id="eventDropdown" prefWidth="140.0" title="Event" GridPane.columnIndex="1" />
-                  <CheckComboBox fx:id="levelDropdown" prefWidth="140.0" title="Level" GridPane.rowIndex="1" />
+                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="170.0" title="Model Gender" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <CheckComboBox fx:id="eventDropdown" prefWidth="170.0" title="Event" GridPane.columnIndex="1" />
+                  <CheckComboBox fx:id="levelDropdown" prefWidth="160.0" title="Level" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Clear Filters" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="375.0" AnchorPane.topAnchor="20.0">
+            <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" prefWidth="80.0" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Clear Filters" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Georgia" size="16.0" />
                </font>
             </Button>
-            <Label layoutX="684.0" layoutY="18.0" text="Search: " textFill="WHITE" AnchorPane.leftAnchor="575.0">
+            <Label text="Search: " textFill="WHITE" AnchorPane.leftAnchor="575.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="searchField" layoutX="807.0" layoutY="13.0" onKeyPressed="#searchAction" prefWidth="385.0" AnchorPane.leftAnchor="655.0">
+            <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="385.0" AnchorPane.leftAnchor="655.0" AnchorPane.topAnchor="10.0">
                <font>
                   <Font size="21.0" />
                </font>
             </TextField>
          </children>
       </AnchorPane>
+      <Button mnemonicParsing="false" onAction="#undo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Undo" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="Georgia" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" onAction="#redo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Redo" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="Georgia" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="Georgia" size="21.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Return to course outline">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
       <SplitPane dividerPositions="0.6" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="115.0">
          <items>
             <AnchorPane styleClass="medium-blue" stylesheets="@mainStylesheet.css">
@@ -153,7 +176,7 @@
             </AnchorPane>
             <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" onMouseClicked="#deselectTreeViewItem" styleClass="medium-blue" stylesheets="@mainStylesheet.css" SplitPane.resizableWithParent="false">
                <children>
-                  <TextField fx:id="lessonTitleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
+                  <TextField fx:id="lessonTitleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="36.0" />
                      </font>
@@ -165,8 +188,8 @@
                         </Tooltip>
                      </tooltip>
                   </TextField>
-                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="474.0" prefWidth="439.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="110.0" />
-                  <HBox spacing="70.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
+                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="450.0" prefWidth="435.0" stylesheets="@mainStylesheet.css" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="80.0" />
+                  <HBox alignment="CENTER" spacing="70.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeCardFromLessonPlan" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Delete Card">
                            <font>
@@ -180,13 +203,10 @@
                               </Tooltip>
                            </tooltip>
                         </Button>
-                        <Button fx:id="editEventHeadingBtn" mnemonicParsing="false" onAction="#editEventHeadingAction" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Edit Event Heading" wrapText="true">
+                        <Button fx:id="customNoteBtn" mnemonicParsing="false" onAction="#enterCustomNoteHandler" styleClass="lesson-plan-button" text="Enter Custom Note">
                            <font>
                               <Font name="Georgia" size="18.0" />
                            </font>
-                           <tooltip>
-                              <Tooltip text="Edit title of selected event heading" />
-                           </tooltip>
                         </Button>
                         <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Print">
                            <font>
@@ -198,7 +218,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <VBox fx:id="upArrow" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="250.0">
+                  <VBox fx:id="upArrow" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="220.0">
                      <children>
                         <Polygon fill="#c7ccd1" points="-30.200000762939453, 24.40008544921875, 7.599998474121094, 23.60000991821289, -9.400001525878906, 1.9999523162841797" stroke="BLACK" strokeType="INSIDE">
                            <VBox.margin>
@@ -212,7 +232,7 @@
                         </Rectangle>
                      </children>
                   </VBox>
-                  <VBox fx:id="downArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="315.0">
+                  <VBox fx:id="downArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="285.0">
                      <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7ccd1" height="25.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
                            <VBox.margin>
@@ -268,8 +288,8 @@
                         </TextField>
                         <HBox alignment="BOTTOM_CENTER" spacing="100.0">
                            <children>
-                              <Button fx:id="okBtn" mnemonicParsing="false" onAction="#setEventHeadingAction" text="Ok" />
-                              <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+                              <Button mnemonicParsing="false" onAction="#setEventHeadingAction" text="Ok" />
+                              <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
                            </children>
                            <VBox.margin>
                               <Insets top="30.0" />
@@ -280,31 +300,70 @@
                         <Insets bottom="25.0" left="15.0" right="15.0" top="10.0" />
                      </padding>
                   </VBox>
+                  <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Button fx:id="editEventHeadingBtn" mnemonicParsing="false" onAction="#editEventHeadingAction" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Edit Event Heading" visible="false" wrapText="true">
+                           <font>
+                              <Font name="Georgia" size="15.0" />
+                           </font>
+                           <tooltip>
+                              <Tooltip text="Edit title of selected event heading">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font></Tooltip>
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="moveBtn" mnemonicParsing="false" onAction="#moveCardAction" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Move" visible="false">
+                           <tooltip>
+                              <Tooltip text="Move card to different event heading" />
+                           </tooltip>
+                           <font>
+                              <Font name="Georgia" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </items>
       </SplitPane>
-      <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
-         <font>
-            <Font name="Georgia" size="21.0" />
-         </font>
-         <tooltip>
-            <Tooltip text="Return to course outline">
+      <VBox fx:id="enterCustomNoteVBox" alignment="CENTER" style="-fx-border-color: black;" styleClass="dark-blue" visible="false" AnchorPane.leftAnchor="600.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <Label fx:id="customNoteLabel" alignment="CENTER" contentDisplay="CENTER" text="Enter Custom Note" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="11.0" />
+                  <Font name="Georgia" size="24.0" />
                </font>
-            </Tooltip>
-         </tooltip>
-      </Button>
-      <Button mnemonicParsing="false" onAction="#undo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Undo" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="20.0">
-         <font>
-            <Font name="Georgia" size="14.0" />
-         </font>
-      </Button>
-      <Button mnemonicParsing="false" onAction="#redo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Redo" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="20.0">
-         <font>
-            <Font name="Georgia" size="14.0" />
-         </font>
-      </Button>
+               <VBox.margin>
+                  <Insets bottom="15.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextArea fx:id="customNoteTextArea" prefHeight="300.0" prefWidth="400.0" promptText="Enter comment here">
+               <VBox.margin>
+                  <Insets right="25.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextArea>
+            <HBox alignment="BOTTOM_CENTER" spacing="100.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#confirmCustomNoteAction" text="Ok">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font></Button>
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font></Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="30.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>
