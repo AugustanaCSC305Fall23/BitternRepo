@@ -34,7 +34,7 @@ public class TreeViewManager {
     private void displayLessonPlan(TreeItem<String> root){
         if(!lessonPlan.isLessonPlanEmpty()){
             Card card;
-            for (ListIterator<EventSubcategory> it = lessonPlan.getLessonPlan().listIterator(); it.hasNext();) {
+            for (ListIterator<EventSubcategory> it = lessonPlan.getLessonPlanIndexedMap().listIterator(); it.hasNext();) {
                 EventSubcategory event = it.next();
                 TreeItem<String> newEvent = new TreeItem<>(event.getEventHeading());
                 for(String cardID : event.getCardIDList()){
@@ -70,7 +70,7 @@ public class TreeViewManager {
         } else{
             if (!App.getCurrentLessonPlan().cardInPlanList(card)){
                 App.getCurrentLessonPlan().addCardToEvent(card);
-                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlan().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
         }
         expandTreeItem(root);
@@ -111,8 +111,8 @@ public class TreeViewManager {
      * @return the updated root
      */
     public TreeItem<String> moveEvent(EventSubcategory selectedEvent, int direction, TreeItem<String> root){
-        int index = lessonPlan.getLessonPlan().get(selectedEvent.getEventHeading());
-        lessonPlan.getLessonPlan().moveByOne(direction, index);
+        int index = lessonPlan.getLessonPlanIndexedMap().get(selectedEvent.getEventHeading());
+        lessonPlan.getLessonPlanIndexedMap().moveByOne(direction, index);
         removeFromTreeView(root);
         return root;
     }

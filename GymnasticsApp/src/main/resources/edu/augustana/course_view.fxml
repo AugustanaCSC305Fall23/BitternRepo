@@ -134,5 +134,7 @@
          </children>
       </VBox>
       <TreeView fx:id="lessonPlanTreeView" layoutX="92.0" layoutY="209.0" prefHeight="474.0" prefWidth="439.0" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="215.0" />
+      <Button layoutX="209.0" layoutY="179.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
+      <Button layoutX="390.0" layoutY="179.0" mnemonicParsing="false" onAction="#redo" text="Redo" />
    </children>
 </AnchorPane>

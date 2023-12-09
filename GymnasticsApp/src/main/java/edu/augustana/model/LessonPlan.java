@@ -4,12 +4,12 @@ import edu.augustana.structures.*;
 
 import java.util.*;
 
-public class LessonPlan implements Cloneable{
+public class LessonPlan implements Cloneable, Undoable{
     private String title;
-    private IndexedMap lessonPlan;
+    private IndexedMap lessonPlanIndexedMap;
 
     public LessonPlan() {
-        lessonPlan = new IndexedMap();
+        lessonPlanIndexedMap = new IndexedMap();
         title = "Untitled";
     }
 
@@ -25,29 +25,29 @@ public class LessonPlan implements Cloneable{
     public void addEventToPlanList(Card card){
         List<String> cardDisplay = new ArrayList<>();
         cardDisplay.add(card.getUniqueID());
-        lessonPlan.addEventSubcategory(new EventSubcategory(card.getEvent(), card.getUniqueID()));
+        lessonPlanIndexedMap.addEventSubcategory(new EventSubcategory(card.getEvent(), card.getUniqueID()));
     }
 
     public void addCardToEvent(Card card){
-        EventSubcategory addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
+        EventSubcategory addTo = lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(card.getEvent()));
         addTo.addCardIDToList(card.getUniqueID());
     }
     public boolean eventInPlanList(Card card){
-        if(lessonPlan.contains(card.getEvent())){
+        if(lessonPlanIndexedMap.contains(card.getEvent())){
             return true;
         }
         return false;
     }
     public boolean isLessonPlanEmpty(){
-        return (lessonPlan.isEmpty());
+        return (lessonPlanIndexedMap.isEmpty());
     }
 
     public void setEventInPlanList(IndexedMap lessonPlan){
-        this.lessonPlan = lessonPlan;
+        this.lessonPlanIndexedMap = lessonPlan;
     }
 
     public boolean cardInPlanList(Card card){
-        return (lessonPlan.get(lessonPlan.get(card.getEvent())).containsCardID(card.getUniqueID()));
+        return (lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(card.getEvent())).containsCardID(card.getUniqueID()));
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(IndexedMap mapOfIDs){
@@ -64,8 +64,8 @@ public class LessonPlan implements Cloneable{
         }
         return  mapOfCardsFromID;
     }
-    public IndexedMap getLessonPlan(){
-        return lessonPlan;
+    public IndexedMap getLessonPlanIndexedMap(){
+        return lessonPlanIndexedMap;
     }
 
     public List<String> getEquipmentFromMap(Map<String, List<Card>> eventToCardsMap) {
@@ -95,7 +95,7 @@ public class LessonPlan implements Cloneable{
     public void removeCard(String cardDisplayedTitle, UndoRedoHandler undoRedoHandler) {
         String cardIDToRemove = null;
         String eventToChange = null;
-        for (ListIterator<EventSubcategory> it = lessonPlan.listIterator(); it.hasNext(); ) {
+        for (ListIterator<EventSubcategory> it = lessonPlanIndexedMap.listIterator(); it.hasNext(); ) {
             EventSubcategory event = it.next();
             for (String id : event.getCardIDList()) {
                 if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
@@ -105,11 +105,11 @@ public class LessonPlan implements Cloneable{
             }
         }
         if (cardIDToRemove != null) {
-            lessonPlan.get(lessonPlan.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
+            lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
             //undoRedoHandler.saveState();
         }
-        if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardIDList().isEmpty()){
-            lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
+        if(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().isEmpty()){
+            lessonPlanIndexedMap.remove(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)));
         }
     }
 
@@ -127,7 +127,7 @@ public class LessonPlan implements Cloneable{
          */
                 LessonPlan clone = new LessonPlan();
                 clone.title = this.getTitle();
-                clone.lessonPlan = this.lessonPlan.clone();
+                clone.lessonPlanIndexedMap = this.lessonPlanIndexedMap.clone();
                 return clone;
         }
 
@@ -136,17 +136,17 @@ public class LessonPlan implements Cloneable{
      * For use by the Undo/Redo mechanism
      * @param copyOfPreviousState
      */
-    public void restoreState(LessonPlan copyOfPreviousState) {
-        this.title = copyOfPreviousState.title;
-        this.lessonPlan = copyOfPreviousState.lessonPlan;
-
+    public void restoreState(Undoable copyOfPreviousState) {
+        LessonPlan copyOfPreviousLessonState = (LessonPlan) copyOfPreviousState;
+        this.title = copyOfPreviousLessonState.title;
+        this.lessonPlanIndexedMap = copyOfPreviousLessonState.lessonPlanIndexedMap;
     }
 
     @Override
     public String toString() {
         return "LessonPlan{" +
                 "title='" + title + '\'' +
-                ", lessonPlan=" + lessonPlan +
+                ", lessonPlan=" + lessonPlanIndexedMap +
                 '}';
     }
 }

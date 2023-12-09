@@ -1,6 +1,5 @@
 package edu.augustana.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class CourseViewController {
     private TreeViewManager treeViewManager;
 
     // Non FXML
-    private static Course currentCourse;
+   // private static Course currentCourse;
     private CourseModel courseModel;
     private TitleEditor titleEditor;
     private List<Button> buttonsList = new ArrayList<>();
@@ -43,14 +42,15 @@ public class CourseViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        if (currentCourse == null) {
-            currentCourse = new Course();
-        }
+//        if (currentCourse == null) {
+//            currentCourse = new Course();
+//        }
         courseListView.setOnMouseClicked(e -> checkIfItemSelected());
         courseModel = new CourseModel();
         addLessonsToCourseList();
+        undoRedoHandler = new UndoRedoHandler(App.getCurrentCourse());
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
-        titleEditor.initializeTitleFieldEvents(undoRedoHandler);
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentCourse().clone());
         titleEditor.setTitleFieldText();
         setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {
@@ -205,6 +205,9 @@ public class CourseViewController {
                 courseListView.getItems().remove(lessonPlanToDelete);
                 App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
                 App.setCurrentLessonPlan(null);
+                undoRedoHandler.saveState(App.getCurrentCourse().clone());
+                System.out.println(undoRedoHandler);
+                System.out.println();
             }
         }
 
@@ -225,16 +228,17 @@ public class CourseViewController {
         if (lessonPlanToDuplicate != null) {
             LessonPlan copyOfLessonPlan = new LessonPlan();
             copyOfLessonPlan.setTitle(lessonPlanToDuplicate.getTitle());
-            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getLessonPlan());
+            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getLessonPlanIndexedMap());
             App.getCurrentCourse().getLessonPlanList().add(lessonPlanToDuplicate);
             courseListView.getItems().add(copyOfLessonPlan);
+            undoRedoHandler.saveState(App.getCurrentCourse());
         }
     }
 
     @FXML public void printLessonPlanHandler(ActionEvent actionEvent) throws IOException {
         LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToDuplicate != null) {
-            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlan());
+            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlanIndexedMap());
             String lessonPlanTitle = lessonPlanToDuplicate.getTitle();
 
             boolean cardDisplay;
@@ -253,6 +257,23 @@ public class CourseViewController {
             new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
             App.setRoot("print_preview");
         }
+    }
+
+    @FXML
+    public void undo() {
+        undoRedoHandler.undo(App.getCurrentCourse());
+        titleEditor.setTitleFieldText();
+        courseListView.getItems().clear();
+        addLessonsToCourseList();
+
+    }
+
+    @FXML
+    public void redo() {
+        undoRedoHandler.redo(App.getCurrentCourse());
+        titleEditor.setTitleFieldText();
+        courseListView.getItems().clear();
+        addLessonsToCourseList();
     }
 
 }

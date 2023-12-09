@@ -106,9 +106,9 @@ public class CreateLessonPlanController {
         setUpTreeView();
 
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
-        titleEditor.initializeTitleFieldEvents(undoRedoHandler);
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentLessonPlan().clone());
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState();
+        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         disableButtons();
 
         upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
@@ -296,7 +296,7 @@ public class CreateLessonPlanController {
                 treeViewManager.addToTreeView(cardView.getCard(), root);
                 cardView.setEffect(null);
             }
-            undoRedoHandler.saveState();
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
             selectedCards.clear();
             disableButtons();
         }
@@ -334,20 +334,20 @@ public class CreateLessonPlanController {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
             App.getCurrentLessonPlan().removeCard(cardToRemove, undoRedoHandler);
             treeViewManager.removeFromTreeView(root);
-            undoRedoHandler.saveState();
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
 
     @FXML
     public void undo() {
-        undoRedoHandler.undo();
+        undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
 
     @FXML
     public void redo() {
-        undoRedoHandler.redo();
+        undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
@@ -361,7 +361,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void printLessonPlan() throws IOException {
-        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlan());
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
         boolean cardDisplay;
@@ -414,7 +414,7 @@ public class CreateLessonPlanController {
     @FXML private void setEventHeading(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER){
             String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-            EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventToChange));
+            EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventToChange));
             treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
             editEventHeadingTextField.setVisible(false);
             lessonPlanTreeView.setEffect(null);
@@ -423,8 +423,8 @@ public class CreateLessonPlanController {
 
     private void moveTreeItemAction(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-        if(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading) >= 0){
-            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
+        if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
+            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
         }
     }
