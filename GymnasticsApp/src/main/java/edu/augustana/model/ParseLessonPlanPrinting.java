@@ -81,8 +81,17 @@ public class ParseLessonPlanPrinting {
                 titleFont = new Font("Times New Roman", 35);
             }
         }  else {
-            pageHeight = pgLayout.getPrintableHeight();
-            pageWidth = pgLayout.getPrintableWidth();
+            System.out.println(isPrinting);
+
+            if (isPrinting) {
+                pageHeight = pgLayout.getPrintableHeight();
+                pageWidth = pgLayout.getPrintableWidth();
+            } else {
+                pageHeight = pgLayout.getPrintableHeight() * 1.75;
+                pageWidth = pgLayout.getPrintableWidth() * 1.75;
+                eventTitleTemplate = new Font("Times New Roman", 20);
+                titleFont = new Font("Times New Roman", 35);
+            }
         }
 
         if (PrintStaging.getCardDisplay()) {

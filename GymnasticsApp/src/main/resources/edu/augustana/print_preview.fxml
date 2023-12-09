@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -20,11 +21,14 @@
       </Label>
    </top>
    <center>
-      <AnchorPane fx:id="mainPane" BorderPane.alignment="CENTER">
+      <ScrollPane BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="5.0" left="150.0" />
+            <Insets bottom="5.0" left="150.0" right="100.0" />
          </BorderPane.margin>
-      </AnchorPane>
+         <content>
+            <AnchorPane fx:id="mainPane" />
+         </content>
+      </ScrollPane>
    </center>
    <right>
       <VBox spacing="30.0" BorderPane.alignment="CENTER">
@@ -41,7 +45,7 @@
             </Button>
          </children>
          <BorderPane.margin>
-            <Insets right="20.0" top="20.0" />
+            <Insets right="50.0" top="20.0" />
          </BorderPane.margin>
       </VBox>
    </right>
