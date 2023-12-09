@@ -1,6 +1,8 @@
 package edu.augustana.ui;
 
 import edu.augustana.App;
+import edu.augustana.model.UndoRedoHandler;
+import edu.augustana.model.Undoable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -19,11 +21,12 @@ public class TitleEditor {
        this.courseOrLessonPlan = courseOrLessonPlan;
     }
 
-    public void initializeTitleFieldEvents() {
+    public void initializeTitleFieldEvents(UndoRedoHandler undoRedoHandler, Undoable undoableClone) {
         titleField.setOnMouseClicked(e -> editTitle());
         titleField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 lockInTitle();
+                undoRedoHandler.saveState(undoableClone);
             }
         });
     }

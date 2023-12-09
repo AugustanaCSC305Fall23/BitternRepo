@@ -3,7 +3,7 @@ package edu.augustana.ui;
 import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
-import edu.augustana.structures.Category;
+import edu.augustana.structures.EventSubcategory;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
@@ -73,14 +73,16 @@ public class CreateLessonPlanController {
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
+
     @FXML private TreeView<String> lessonPlanTreeView;
 
 
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private List<CardView> selectedCards = new ArrayList<>();
+    private List<CardView> favoriteCardsSelected = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
-    TreeItem<String> root = new TreeItem<>();
-    TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
+    private TreeItem<String> root = new TreeItem<>();
+    private TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
 
     private UndoRedoHandler undoRedoHandler;
     private TitleEditor titleEditor;
@@ -104,10 +106,10 @@ public class CreateLessonPlanController {
         setUpTreeView();
 
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
-        titleEditor.initializeTitleFieldEvents();
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentLessonPlan().clone());
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState();
-        setDisableButtons(true);
+        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
+        disableButtons();
 
         upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
         downArrow.setOnMouseClicked(e -> moveTreeItemAction(1));
@@ -203,9 +205,15 @@ public class CreateLessonPlanController {
             if (!selectedCards.contains(cardViewSelected)) {
                 cardViewSelected.setEffect(new InnerShadow(30, Color.ORCHID));
                 selectedCards.add(cardViewSelected);
+                if (favoriteCardsTab.isSelected()) {
+                    favoriteCardsSelected.add(cardViewSelected);
+                }
             } else {
                 cardViewSelected.setEffect(null);
                 selectedCards.remove(cardViewSelected);
+                if (favoriteCardsTab.isSelected()) {
+                    favoriteCardsSelected.remove(cardViewSelected);
+                }
             }
             exitZoomedView();
             checkSelectedCardsStatus();
@@ -214,16 +222,21 @@ public class CreateLessonPlanController {
 
     private void checkSelectedCardsStatus() {
         if (selectedCards.isEmpty()) {
-            setDisableButtons(true);
-        } else {
-            setDisableButtons(false);
+            disableButtons();
+        } else if (allCardsTab.isSelected()) {
+            addCardBtn.setDisable(false);
+            favoriteBtn.setDisable(false);
+            removeFavoriteBtn.setDisable(true);
+        } else if (favoriteCardsTab.isSelected()) {
+            addCardBtn.setDisable(false);
+            removeFavoriteBtn.setDisable(favoriteCardsSelected.isEmpty());
         }
     }
 
-    private void setDisableButtons(boolean disable) {
-        addCardBtn.setDisable(disable);
-        favoriteBtn.setDisable(disable);
-        removeFavoriteBtn.setDisable(disable);
+    private void disableButtons() {
+        addCardBtn.setDisable(true);
+        favoriteBtn.setDisable(true);
+        removeFavoriteBtn.setDisable(true);
     }
 
     // Used code from MovieTrackerApp
@@ -283,8 +296,9 @@ public class CreateLessonPlanController {
                 treeViewManager.addToTreeView(cardView.getCard(), root);
                 cardView.setEffect(null);
             }
-            undoRedoHandler.saveState();
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
             selectedCards.clear();
+            disableButtons();
         }
     }
     @FXML void addCardsToFavorites() throws IOException {
@@ -295,6 +309,7 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             selectedCards.clear();
+            disableButtons();
         }
     }
 
@@ -317,20 +332,22 @@ public class CreateLessonPlanController {
     public void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
-            App.getCurrentLessonPlan().removeCard(cardToRemove);
+            App.getCurrentLessonPlan().removeCard(cardToRemove, undoRedoHandler);
             treeViewManager.removeFromTreeView(root);
-            undoRedoHandler.saveState();
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
 
+    @FXML
     public void undo() {
-        undoRedoHandler.undo();
+        undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
 
+    @FXML
     public void redo() {
-        undoRedoHandler.redo();
+        undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
@@ -344,7 +361,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void printLessonPlan() throws IOException {
-        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlan());
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
         boolean cardDisplay;
@@ -397,8 +414,8 @@ public class CreateLessonPlanController {
     @FXML private void setEventHeading(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER){
             String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-            Category categoryOfEvent = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventToChange));
-            treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), categoryOfEvent, root);
+            EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventToChange));
+            treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
             editEventHeadingTextField.setVisible(false);
             lessonPlanTreeView.setEffect(null);
         }
@@ -406,9 +423,9 @@ public class CreateLessonPlanController {
 
     private void moveTreeItemAction(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-        if(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading) >= 0){
-            Category categoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
-            treeViewManager.moveEvent(categoryToMove, direction, root);
+        if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
+            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
+            treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
         }
     }
 }

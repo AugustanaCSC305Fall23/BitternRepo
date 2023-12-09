@@ -11,7 +11,7 @@ import java.io.*;
 
 public class CourseModel {
 
-    private LessonPlan selectedLessonPlan;
+    private static LessonPlan selectedLessonPlan;
     public void createNewCourse() {
         App.setCurrentCourse(new Course());
         App.setCurrentCourseFile(null);

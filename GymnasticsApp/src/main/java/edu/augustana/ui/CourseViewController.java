@@ -1,6 +1,5 @@
 package edu.augustana.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,30 +29,49 @@ public class CourseViewController {
     @FXML private TextField courseTitleField;
     @FXML private Menu recentFilesMenu;
 
+    @FXML private TreeView<String> lessonPlanTreeView;
+    private TreeItem<String> root = new TreeItem<>();
+    private TreeViewManager treeViewManager;
+
     // Non FXML
-    private static Course currentCourse;
+   // private static Course currentCourse;
     private CourseModel courseModel;
     private TitleEditor titleEditor;
     private List<Button> buttonsList = new ArrayList<>();
+    private UndoRedoHandler undoRedoHandler;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        if (currentCourse == null) {
-            currentCourse = new Course();
-        }
+//        if (currentCourse == null) {
+//            currentCourse = new Course();
+//        }
         courseListView.setOnMouseClicked(e -> checkIfItemSelected());
         courseModel = new CourseModel();
         addLessonsToCourseList();
+        undoRedoHandler = new UndoRedoHandler(App.getCurrentCourse());
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
-        titleEditor.initializeTitleFieldEvents();
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentCourse().clone());
         titleEditor.setTitleFieldText();
         setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {
             if (node instanceof Button) {
                 Button btn = (Button) node;
-                buttonsList.add(btn);
+                if (btn != createNewLessonPlanBtn) {
+                    buttonsList.add(btn);
+                }
             }
         }
+    }
+
+    private void displayTreeView(LessonPlan lessonPlan){
+        //https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+        //To help with tree view
+        root = new TreeItem<>(lessonPlan.getTitle());
+        lessonPlanTreeView.setRoot(root);
+        lessonPlanTreeView.setShowRoot(false);
+        treeViewManager = new TreeViewManager(lessonPlan);
+        treeViewManager.setUpTreeView(root);
+        lessonPlanTreeView.setVisible(true);
     }
 
     @FXML private void goToHome() throws IOException {
@@ -62,18 +80,28 @@ public class CourseViewController {
 
     private void checkIfItemSelected() {
         if (!courseListView.getSelectionModel().isEmpty()) {
-            for (Button btn : buttonsList) {
-                btn.setDisable(false);
-            }
-            courseModel.setSelectedLessonPlan(courseListView.getSelectionModel().getSelectedItem());
+            disableButtons(false);
+            LessonPlan selectedLesson = courseListView.getSelectionModel().getSelectedItem();
+            courseModel.setSelectedLessonPlan(selectedLesson);
+            displayTreeView(selectedLesson);
         } else {
-            for (Button btn : buttonsList) {
-                if (btn != createNewLessonPlanBtn) {
-                    btn.setDisable(true);
-                }
-            }
+            disableButtons(true);
             courseModel.setSelectedLessonPlan(null);
+            lessonPlanTreeView.setVisible(false);
         }
+    }
+
+    private void disableButtons(boolean disable) {
+        for (Button btn : buttonsList) {
+            btn.setDisable(disable);
+        }
+    }
+
+    @FXML void deselectLessonPlan() {
+        courseModel.setSelectedLessonPlan(null);
+        courseListView.getSelectionModel().clearSelection();
+        lessonPlanTreeView.setVisible(false);
+        disableButtons(true);
     }
 
     @FXML private void createNewCourseHandler() {
@@ -177,6 +205,9 @@ public class CourseViewController {
                 courseListView.getItems().remove(lessonPlanToDelete);
                 App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
                 App.setCurrentLessonPlan(null);
+                undoRedoHandler.saveState(App.getCurrentCourse().clone());
+                System.out.println(undoRedoHandler);
+                System.out.println();
             }
         }
 
@@ -197,16 +228,17 @@ public class CourseViewController {
         if (lessonPlanToDuplicate != null) {
             LessonPlan copyOfLessonPlan = new LessonPlan();
             copyOfLessonPlan.setTitle(lessonPlanToDuplicate.getTitle());
-            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getLessonPlan());
+            copyOfLessonPlan.setEventInPlanList(lessonPlanToDuplicate.getLessonPlanIndexedMap());
             App.getCurrentCourse().getLessonPlanList().add(lessonPlanToDuplicate);
             courseListView.getItems().add(copyOfLessonPlan);
+            undoRedoHandler.saveState(App.getCurrentCourse());
         }
     }
 
     @FXML public void printLessonPlanHandler(ActionEvent actionEvent) throws IOException {
         LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToDuplicate != null) {
-            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlan());
+            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlanIndexedMap());
             String lessonPlanTitle = lessonPlanToDuplicate.getTitle();
 
             boolean cardDisplay;
@@ -225,6 +257,23 @@ public class CourseViewController {
             new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
             App.setRoot("print_preview");
         }
+    }
+
+    @FXML
+    public void undo() {
+        undoRedoHandler.undo(App.getCurrentCourse());
+        titleEditor.setTitleFieldText();
+        courseListView.getItems().clear();
+        addLessonsToCourseList();
+
+    }
+
+    @FXML
+    public void redo() {
+        undoRedoHandler.redo(App.getCurrentCourse());
+        titleEditor.setTitleFieldText();
+        courseListView.getItems().clear();
+        addLessonsToCourseList();
     }
 
 }

@@ -61,7 +61,7 @@ public class FavoriteCards {
      * @throws IOException if favoriteCards file is not found
      */
     public void deleteFavorite(Card card) throws IOException {
-        if(favoriteCards.contains(card)){
+        if (favoriteCards.contains(card)){
             favoriteCards.remove(card);
         }
         reWriteFavoritesFile();

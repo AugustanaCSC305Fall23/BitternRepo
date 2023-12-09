@@ -4,7 +4,7 @@ import edu.augustana.App;
 import edu.augustana.model.Card;
 import edu.augustana.model.CardDatabase;
 import edu.augustana.model.LessonPlan;
-import edu.augustana.structures.Category;
+import edu.augustana.structures.EventSubcategory;
 import javafx.scene.control.TreeItem;
 
 import java.util.ListIterator;
@@ -34,10 +34,10 @@ public class TreeViewManager {
     private void displayLessonPlan(TreeItem<String> root){
         if(!lessonPlan.isLessonPlanEmpty()){
             Card card;
-            for (ListIterator<Category> it = lessonPlan.getLessonPlan().listIterator(); it.hasNext();) {
-                Category event = it.next();
-                TreeItem<String> newEvent = new TreeItem<>(event.getCategoryHeading());
-                for(String cardID : event.getCardsInList()){
+            for (ListIterator<EventSubcategory> it = lessonPlan.getLessonPlanIndexedMap().listIterator(); it.hasNext();) {
+                EventSubcategory event = it.next();
+                TreeItem<String> newEvent = new TreeItem<>(event.getEventHeading());
+                for(String cardID : event.getCardIDList()){
                     card = CardDatabase.getFullCardCollection().getCardByID(cardID);
                     newEvent.getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
                 }
@@ -70,7 +70,7 @@ public class TreeViewManager {
         } else{
             if (!App.getCurrentLessonPlan().cardInPlanList(card)){
                 App.getCurrentLessonPlan().addCardToEvent(card);
-                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlan().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
             }
         }
         expandTreeItem(root);
@@ -96,8 +96,8 @@ public class TreeViewManager {
      * @param root of the treeview
      * @return the root containing the updates
      */
-    public TreeItem<String> setHeadingInTreeView(String newHeading, Category headingToEdit, TreeItem<String> root){
-        headingToEdit.setCategoryHeading(newHeading);
+    public TreeItem<String> setHeadingInTreeView(String newHeading, EventSubcategory headingToEdit, TreeItem<String> root){
+        headingToEdit.setEventHeading(newHeading);
         removeFromTreeView(root);
         return root;
     }
@@ -110,9 +110,9 @@ public class TreeViewManager {
      * @param root of tree view
      * @return the updated root
      */
-    public TreeItem<String> moveEvent(Category selectedEvent, int direction, TreeItem<String> root){
-        int index = lessonPlan.getLessonPlan().get(selectedEvent.getCategoryHeading());
-        lessonPlan.getLessonPlan().moveByOne(direction, index);
+    public TreeItem<String> moveEvent(EventSubcategory selectedEvent, int direction, TreeItem<String> root){
+        int index = lessonPlan.getLessonPlanIndexedMap().get(selectedEvent.getEventHeading());
+        lessonPlan.getLessonPlanIndexedMap().moveByOne(direction, index);
         removeFromTreeView(root);
         return root;
     }

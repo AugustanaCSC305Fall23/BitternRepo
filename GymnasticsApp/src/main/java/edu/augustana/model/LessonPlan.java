@@ -4,18 +4,19 @@ import edu.augustana.structures.*;
 
 import java.util.*;
 
-public class LessonPlan implements Cloneable{
+public class LessonPlan implements Cloneable, Undoable{
     private String title;
-    private IndexedMap lessonPlan;
+    private IndexedMap lessonPlanIndexedMap;
 
     public LessonPlan() {
-        lessonPlan = new IndexedMap();
+        lessonPlanIndexedMap = new IndexedMap();
         title = "Untitled";
     }
 
     public String getTitle() {
         return title;
     }
+
 
     public void setTitle(String newTitle) {
         title = newTitle;
@@ -24,48 +25,47 @@ public class LessonPlan implements Cloneable{
     public void addEventToPlanList(Card card){
         List<String> cardDisplay = new ArrayList<>();
         cardDisplay.add(card.getUniqueID());
-        lessonPlan.add(new Category(card.getEvent(), card.getUniqueID()));
+        lessonPlanIndexedMap.addEventSubcategory(new EventSubcategory(card.getEvent(), card.getUniqueID()));
     }
 
-    //rename this method
     public void addCardToEvent(Card card){
-        Category addTo = lessonPlan.get(lessonPlan.get(card.getEvent()));
-        addTo.addCardToList(card.getUniqueID());
+        EventSubcategory addTo = lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(card.getEvent()));
+        addTo.addCardIDToList(card.getUniqueID());
     }
     public boolean eventInPlanList(Card card){
-        if(lessonPlan.contains(card.getEvent())){
+        if(lessonPlanIndexedMap.contains(card.getEvent())){
             return true;
         }
         return false;
     }
     public boolean isLessonPlanEmpty(){
-        return (lessonPlan.isEmpty());
+        return (lessonPlanIndexedMap.isEmpty());
     }
 
     public void setEventInPlanList(IndexedMap lessonPlan){
-        this.lessonPlan = lessonPlan;
+        this.lessonPlanIndexedMap = lessonPlan;
     }
 
     public boolean cardInPlanList(Card card){
-        return (lessonPlan.get(lessonPlan.get(card.getEvent())).contains(card.getUniqueID()));
+        return (lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(card.getEvent())).containsCardID(card.getUniqueID()));
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(IndexedMap mapOfIDs){
         Map<String, List<Card>> mapOfCardsFromID = new TreeMap<>();
         if(!mapOfIDs.isEmpty()) {
-            for (ListIterator<Category> it = mapOfIDs.listIterator(); it.hasNext(); ) {
-                Category category = it.next();
+            for (ListIterator<EventSubcategory> it = mapOfIDs.listIterator(); it.hasNext(); ) {
+                EventSubcategory eventSubcategory = it.next();
                 List<Card> cardsFromID = new ArrayList<>();
-                for (String cardID : category.getCardsInList()) {
+                for (String cardID : eventSubcategory.getCardIDList()) {
                     cardsFromID.add(CardDatabase.getFullCardCollection().getCardByID(cardID));
                 }
-                mapOfCardsFromID.put(category.getCategoryHeading(), cardsFromID);
+                mapOfCardsFromID.put(eventSubcategory.getEventHeading(), cardsFromID);
             }
         }
         return  mapOfCardsFromID;
     }
-    public IndexedMap getLessonPlan(){
-        return lessonPlan;
+    public IndexedMap getLessonPlanIndexedMap(){
+        return lessonPlanIndexedMap;
     }
 
     public List<String> getEquipmentFromMap(Map<String, List<Card>> eventToCardsMap) {
@@ -92,23 +92,24 @@ public class LessonPlan implements Cloneable{
         return equipmentListFinal;
     }
 
-    public void removeCard(String cardDisplayedTitle) {
+    public void removeCard(String cardDisplayedTitle, UndoRedoHandler undoRedoHandler) {
         String cardIDToRemove = null;
         String eventToChange = null;
-        for (ListIterator<Category> it = lessonPlan.listIterator(); it.hasNext(); ) {
-            Category event = it.next();
-            for (String id : event.getCardsInList()) {
+        for (ListIterator<EventSubcategory> it = lessonPlanIndexedMap.listIterator(); it.hasNext(); ) {
+            EventSubcategory event = it.next();
+            for (String id : event.getCardIDList()) {
                 if (CardDatabase.getFullCardCollection().getCardByID(id).getDisplayedTitle().equals(cardDisplayedTitle)) {
                     cardIDToRemove = id;
-                    eventToChange = event.getCategoryHeading();
+                    eventToChange = event.getEventHeading();
                 }
             }
         }
         if (cardIDToRemove != null) {
-            lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().remove(cardIDToRemove);
+            lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
+            //undoRedoHandler.saveState();
         }
-        if(lessonPlan.get(lessonPlan.get(eventToChange)).getCardsInList().isEmpty()){
-            lessonPlan.remove(lessonPlan.get(lessonPlan.get(eventToChange)));
+        if(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().isEmpty()){
+            lessonPlanIndexedMap.remove(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)));
         }
     }
 
@@ -126,23 +127,26 @@ public class LessonPlan implements Cloneable{
          */
                 LessonPlan clone = new LessonPlan();
                 clone.title = this.getTitle();
-                clone.lessonPlan = this.lessonPlan.clone();
+                clone.lessonPlanIndexedMap = this.lessonPlanIndexedMap.clone();
                 return clone;
         }
-
-    @Override
-    public String toString() {
-        return title;
-    }
 
 
     /**
      * For use by the Undo/Redo mechanism
      * @param copyOfPreviousState
      */
-    public void restoreState(LessonPlan copyOfPreviousState) {
-        this.title = copyOfPreviousState.title;
-        this.lessonPlan = copyOfPreviousState.lessonPlan;
+    public void restoreState(Undoable copyOfPreviousState) {
+        LessonPlan copyOfPreviousLessonState = (LessonPlan) copyOfPreviousState;
+        this.title = copyOfPreviousLessonState.title;
+        this.lessonPlanIndexedMap = copyOfPreviousLessonState.lessonPlanIndexedMap;
+    }
 
+    @Override
+    public String toString() {
+        return "LessonPlan{" +
+                "title='" + title + '\'' +
+                ", lessonPlan=" + lessonPlanIndexedMap +
+                '}';
     }
 }
