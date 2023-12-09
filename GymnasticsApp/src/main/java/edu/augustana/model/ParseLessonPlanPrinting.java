@@ -41,6 +41,8 @@ public class ParseLessonPlanPrinting {
 
     private String lessonPlanTitle;
 
+    private String coachComment;
+
     private boolean isPrinting;
 
     private Font titleFont = new Font("Times New Roman Bold", 30);
@@ -157,15 +159,19 @@ public class ParseLessonPlanPrinting {
         TextFlow equipmentTF = new TextFlow();
         // Adds equipment
         if (PrintStaging.getEquipmentDisplay()) {
-            if (PrintStaging.getLandscapeDisplay()) {
-                addEquipment(landscapeHeightScale, equipmentTF, dummyBox, dummyRoot, currentPane, pageContents);
-            } else {
-                addEquipment(portraitHeightScale, equipmentTF, dummyBox, dummyRoot, currentPane, pageContents);
-            }
+            addEquipment(portraitHeightScale, equipmentTF, dummyBox, dummyRoot, currentPane, pageContents);
+
         }
 
+        // Adds coach comment
+        TextFlow commentTF = new TextFlow();
+        coachComment = App.getCurrentLessonPlan().getCustomNote();
+        if (coachComment != null) {
+            if (!(coachComment.isEmpty()) && !(coachComment.isBlank())) {
+                addCoachComment(portraitHeightScale, commentTF, currentPane, pageContents);
 
-
+            }
+        }
     }
 
     private void addCardImageToPage(VBox dummyBox, Group dummyRoot, double runningPageHeight, VBox pageContents, Pane currentPane) {
@@ -317,6 +323,14 @@ public class ParseLessonPlanPrinting {
         if (PrintStaging.getEquipmentDisplay()) {
             addEquipment(portraitHeightScale, equipmentTF, dummyBox, dummyRoot, currentPane, pageContents);
         }
+
+        // Adds coach comment
+        coachComment = App.getCurrentLessonPlan().getCustomNote();
+        System.out.println(coachComment);
+        TextFlow commentTF = new TextFlow();
+        if (!(coachComment.isEmpty()) && !(coachComment.isBlank())) {
+            addCoachComment(portraitHeightScale, commentTF, currentPane, pageContents);
+        }
     }
 
     private void initializeLabelToCardLabelsMap() {
@@ -344,6 +358,31 @@ public class ParseLessonPlanPrinting {
             }
             labelToCardLabelsMap.put(eventLabel, eventCards);
         }
+    }
+
+    private void addCoachComment(double equipmentHeightScale, TextFlow commentTF, Pane currentPane, VBox pageContents) {
+        String commentTitle = "Lesson Plan Note: \n";
+        Text commentText = new Text(commentTitle + coachComment);
+        Font font = new Font("Times New Roman", 15 * equipmentHeightScale);
+        if (isPrinting) {
+            font = new Font("Times New Roman", 15 );
+        }
+        commentText.setFont(font);
+        commentTF = new TextFlow(commentText);
+        commentTF.setMaxWidth(pageWidth);
+
+        currentPane = new Pane();
+        currentPane.setMaxHeight(pageHeight);
+        currentPane.setMaxWidth(pageWidth);
+
+        pageContents = new VBox();
+        pageContents.setAlignment(Pos.CENTER);
+        pageContents.setMaxHeight(pageHeight);
+        currentPane.getChildren().add(pageContents);
+
+        pageContents.getChildren().add(commentTF);
+
+        pages.add(currentPane);
     }
 
     private void addEquipment(double equipmentHeightScale, TextFlow equipmentTF, VBox dummyBox, Group dummyRoot, Pane currentPane, VBox pageContents) {

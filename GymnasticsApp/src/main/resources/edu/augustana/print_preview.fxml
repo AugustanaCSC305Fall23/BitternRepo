@@ -23,7 +23,7 @@
    <center>
       <ScrollPane BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="5.0" left="150.0" right="100.0" />
+            <Insets bottom="5.0" left="150.0" right="10.0" />
          </BorderPane.margin>
          <content>
             <AnchorPane fx:id="mainPane" />
