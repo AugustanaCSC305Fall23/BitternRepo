@@ -118,12 +118,12 @@ public class PrintStaging {
             pagePane.setStyle("-fx-background-color: white");
             if (landscapeDisplay) {
                 // "Rotates" pagination so that it is in landscape mode
-                pagePane.setPrefHeight(pgLayout.getPrintableWidth());
-                pagePane.setPrefWidth(pgLayout.getPrintableHeight());
+                pagePane.setPrefHeight(pgLayout.getPrintableWidth() * 1.25);
+                pagePane.setPrefWidth(pgLayout.getPrintableHeight() * 1.75);
                 box.getChildren().add(pagePane);
             } else {
-                pagePane.setPrefHeight(pgLayout.getPrintableHeight());
-                pagePane.setPrefWidth(pgLayout.getPrintableWidth());
+                pagePane.setPrefHeight(pgLayout.getPrintableHeight() * 1.75);
+                pagePane.setPrefWidth(pgLayout.getPrintableWidth() * 1.75);
                 box.getChildren().add(pagePane);
             }
         }
@@ -176,7 +176,7 @@ public class PrintStaging {
                         printNode.getChildren().add(cardImageView);
                     } else {
                         Pane page = lessonPlan.getPages().get(p - 1);
-                        if (PrintStaging.getLandscapeDisplay()) {
+                        if (getLandscapeDisplay()) {
                             printerJob.getJobSettings().setPageLayout(pageLandscapeLayout);
                             printNode.setPrefHeight(printerJob.getJobSettings().getPageLayout().getPrintableWidth());
                             printNode.setPrefWidth(printerJob.getJobSettings().getPageLayout().getPrintableHeight());

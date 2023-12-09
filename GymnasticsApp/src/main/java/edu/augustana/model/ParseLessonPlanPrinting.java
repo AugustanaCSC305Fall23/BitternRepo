@@ -44,12 +44,17 @@ public class ParseLessonPlanPrinting {
 
     private String lessonPlanTitle;
 
+    private boolean isPrinting;
+
+    private Font titleFont = new Font("Times New Roman Bold", 30);
+
+    private Font eventTitleTemplate = new Font("Times New Roman Bold", 15);
+
 
     // ---------- FXML ----------
     @FXML
     private Label lessonPlanTitleLabel = new Label();
-    @FXML
-    private Font eventTitleTemplate = new Font("Times New Roman", 15);
+
     @FXML
     private FlowPane eventCardsTemplate = new FlowPane();
     @FXML
@@ -58,17 +63,35 @@ public class ParseLessonPlanPrinting {
 
     // The goal of this class is to set up the layout of each page and to set up the
     // list of Nodes that will represent the pages of the lesson plan
-    public ParseLessonPlanPrinting(PrinterJob printerJob) throws MalformedURLException {
+    public ParseLessonPlanPrinting(PrinterJob printerJob, boolean is_printing) throws MalformedURLException {
 
+        isPrinting = is_printing;
         PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
 
         if (PrintStaging.getLandscapeDisplay()) {
             // Switches the height and width, so it can parse through landscape mode
-            pageHeight = pgLayout.getPrintableWidth();
-            pageWidth = pgLayout.getPrintableHeight();
-        } else {
-            pageHeight = pgLayout.getPrintableHeight();
-            pageWidth = pgLayout.getPrintableWidth();
+            // Used only for the print preview
+            if (isPrinting) {
+                pageHeight = pgLayout.getPrintableWidth();
+                pageWidth = pgLayout.getPrintableHeight();
+            } else {
+                pageHeight = pgLayout.getPrintableWidth() * 1.25;
+                pageWidth = pgLayout.getPrintableHeight() * 1.75;
+                eventTitleTemplate = new Font("Times New Roman", 20);
+                titleFont = new Font("Times New Roman", 35);
+            }
+        }  else {
+            System.out.println(isPrinting);
+
+            if (isPrinting) {
+                pageHeight = pgLayout.getPrintableHeight();
+                pageWidth = pgLayout.getPrintableWidth();
+            } else {
+                pageHeight = pgLayout.getPrintableHeight() * 1.75;
+                pageWidth = pgLayout.getPrintableWidth() * 1.75;
+                eventTitleTemplate = new Font("Times New Roman", 20);
+                titleFont = new Font("Times New Roman", 35);
+            }
         }
 
         if (PrintStaging.getCardDisplay()) {
@@ -442,7 +465,6 @@ public class ParseLessonPlanPrinting {
 
     private void initializeTitle() {
         lessonPlanTitle = PrintStaging.getLessonPlanTitle();
-        Font titleFont = new Font("Times New Roman", 30);
         lessonPlanTitleLabel.setText(lessonPlanTitle);
         lessonPlanTitleLabel.setFont(titleFont);
     }
