@@ -48,7 +48,7 @@ public class LessonPlan implements Cloneable, Undoable{
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(IndexedMap mapOfIDs){
-        Map<String, List<Card>> mapOfCardsFromID = new TreeMap<>();
+        Map<String, List<Card>> mapOfCardsFromID = new LinkedHashMap<>();
         if(!mapOfIDs.isEmpty()) {
             for (ListIterator<EventSubcategory> it = mapOfIDs.listIterator(); it.hasNext(); ) {
                 EventSubcategory eventSubcategory = it.next();
