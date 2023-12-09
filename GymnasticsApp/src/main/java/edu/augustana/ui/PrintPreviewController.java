@@ -129,11 +129,8 @@ public class PrintPreviewController {
 
 
     public void endPrinting() {
-        titleLabel.setText("Printing sent.\n" +
-                "If saved as PDF, you can find it in the saved file.\n" );
-
+        titleLabel.setText("Success!");
         titleLabel.setAlignment(Pos.CENTER);
-
         printAllButton.setVisible(false);
         mainPane.setVisible(false);
     }

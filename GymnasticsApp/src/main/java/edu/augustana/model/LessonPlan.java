@@ -33,10 +33,7 @@ public class LessonPlan implements Cloneable, Undoable{
         addTo.addCardIDToList(card.getUniqueID());
     }
     public boolean eventInPlanList(Card card){
-        if(lessonPlanIndexedMap.contains(card.getEvent())){
-            return true;
-        }
-        return false;
+        return lessonPlanIndexedMap.contains(card.getEvent());
     }
     public boolean isLessonPlanEmpty(){
         return (lessonPlanIndexedMap.isEmpty());
@@ -79,8 +76,7 @@ public class LessonPlan implements Cloneable, Undoable{
         }
 
         List<String> equipmentListFinal = new ArrayList<>();
-        for (int i = 0; i < equipmentList.size(); i++) {
-            String equipment = equipmentList.get(i);
+        for (String equipment : equipmentList) {
             equipment = equipment.trim();
             if (!equipmentListFinal.contains(equipment)) {
                 if (!equipment.equals("None")) {
@@ -125,10 +121,10 @@ public class LessonPlan implements Cloneable, Undoable{
          * Based this method on the clone() method in Drawing class of
          * DrawingApp
          */
-                LessonPlan clone = new LessonPlan();
-                clone.title = this.getTitle();
-                clone.lessonPlanIndexedMap = this.lessonPlanIndexedMap.clone();
-                return clone;
+        LessonPlan clone = new LessonPlan();
+        clone.title = this.getTitle();
+        clone.lessonPlanIndexedMap = this.lessonPlanIndexedMap.clone();
+        return clone;
         }
 
 
