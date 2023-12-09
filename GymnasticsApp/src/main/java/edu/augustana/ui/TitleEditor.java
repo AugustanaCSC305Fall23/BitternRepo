@@ -2,6 +2,7 @@ package edu.augustana.ui;
 
 import edu.augustana.App;
 import edu.augustana.model.UndoRedoHandler;
+import edu.augustana.model.Undoable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -20,12 +21,12 @@ public class TitleEditor {
        this.courseOrLessonPlan = courseOrLessonPlan;
     }
 
-    public void initializeTitleFieldEvents(UndoRedoHandler undoRedoHandler) {
+    public void initializeTitleFieldEvents(UndoRedoHandler undoRedoHandler, Undoable undoableClone) {
         titleField.setOnMouseClicked(e -> editTitle());
         titleField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 lockInTitle();
-                undoRedoHandler.saveState();
+                undoRedoHandler.saveState(undoableClone);
             }
         });
     }
@@ -40,7 +41,7 @@ public class TitleEditor {
         }
     }
 
-    public void editTitle() {
+    private void editTitle() {
         titleField.setFont(editingFont);
         titleField.setEditable(true);
         if (titleField.getText().equals(titleField.getPromptText())) {
@@ -48,7 +49,7 @@ public class TitleEditor {
         }
     }
 
-    public void lockInTitle() {
+    private void lockInTitle() {
         titleField.setFont(titleFont);
         if (titleField.getText().isEmpty()) {
             displayPromptText();
@@ -68,7 +69,7 @@ public class TitleEditor {
         titleField.setEditable(false);
     }
 
-    public void displayActualTitle() {
+    private void displayActualTitle() {
         if (courseOrLessonPlan == 'L') {
             titleField.setText(App.getCurrentLessonPlan().getTitle());
         }  else if (courseOrLessonPlan == 'C') {
@@ -78,7 +79,7 @@ public class TitleEditor {
         titleField.setFont(titleFont);
     }
 
-    public void displayPromptText() {
+    private void displayPromptText() {
         titleField.setText(titleField.getPromptText());
         titleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
         titleField.setFont(new Font("System Italic", titleFont.getSize()));

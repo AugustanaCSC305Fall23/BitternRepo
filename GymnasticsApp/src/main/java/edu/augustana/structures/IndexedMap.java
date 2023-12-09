@@ -15,7 +15,7 @@ public class IndexedMap implements Cloneable{
         return eventSubcategoryList;
     }
     public int size(){
-        return 0;
+        return eventSubcategoryList.size();
     }
     public boolean isEmpty(){
         return eventSubcategoryList.isEmpty();
@@ -32,8 +32,8 @@ public class IndexedMap implements Cloneable{
         }
     }
 
-    public boolean remove(EventSubcategory o) {
-        return eventSubcategoryList.remove(o);
+    public void remove(EventSubcategory o) {
+        eventSubcategoryList.remove(o);
     }
 
     public void clear() {
@@ -94,9 +94,11 @@ public class IndexedMap implements Cloneable{
     }
     public void moveEventByOne(int direction, int index){
         //moves by one index for each call to method
-        EventSubcategory temp = eventSubcategoryList.get(direction + index);
-        eventSubcategoryList.set(direction + index, eventSubcategoryList.get(index));
-        eventSubcategoryList.set(index, temp);
+        if (direction + index >= 0 && direction + index < eventSubcategoryList.size()) {
+            EventSubcategory temp = eventSubcategoryList.get(direction + index);
+            eventSubcategoryList.set(direction + index, eventSubcategoryList.get(index));
+            eventSubcategoryList.set(index, temp);
+        }
     }
     @Override
     public String toString(){

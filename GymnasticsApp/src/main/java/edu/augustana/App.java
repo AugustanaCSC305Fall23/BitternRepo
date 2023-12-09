@@ -35,7 +35,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("home"), width - 25, height - 80);
 
         // Used https://stackoverflow.com/questions/68768778/javafx-button-hover-effect for adding stylesheet
-        scene.getStylesheets().add(this.getClass().getResource("button.css").toExternalForm());
+        scene.getStylesheets().add(this.getClass().getResource("mainStylesheet.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

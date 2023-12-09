@@ -37,9 +37,11 @@ public class EventSubcategory implements Cloneable {
         cardIDList.addAll(IDList);
     }
     public void moveCardByOne(int direction, int index){
-        String temp = cardIDList.get(direction + index);
-        cardIDList.set(direction + index, cardIDList.get(index));
-        cardIDList.set(index, temp);
+        if (direction + index >= 0 && direction + index < cardIDList.size()) {
+            String temp = cardIDList.get(direction + index);
+            cardIDList.set(direction + index, cardIDList.get(index));
+            cardIDList.set(index, temp);
+        }
     }
 
     public boolean containsCardID(String cardID){

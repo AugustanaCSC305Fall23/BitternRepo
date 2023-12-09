@@ -15,17 +15,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.print.*;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.*;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Window;
 
 public class PrintPreviewController {
@@ -48,10 +49,7 @@ public class PrintPreviewController {
     private Button returnButton;
 
     @FXML
-    private VBox mainVBox;
-
-    @FXML
-    private HBox mainHBox;
+    private AnchorPane mainPane;
 
     @FXML
     private Label titleLabel;
@@ -65,6 +63,9 @@ public class PrintPreviewController {
 
 
     // ---------- Experimental Data Fields ----------
+
+    @FXML
+    private Group mainGroup;
 
 
 
@@ -89,9 +90,10 @@ public class PrintPreviewController {
                     }
                 }
             });
-            mainVBox.getChildren().addAll(pagination);
+            mainPane.getChildren().addAll(pagination);
+
         } else {
-            lessonPlan = new ParseLessonPlanPrinting(printerJob);
+            lessonPlan = new ParseLessonPlanPrinting(printerJob, false);
             ArrayList<Pane> pages = lessonPlan.getPages();
             int numPages = lessonPlan.getPages().size();
             Pagination pagination = new Pagination(numPages);
@@ -103,16 +105,19 @@ public class PrintPreviewController {
                     return PrintStaging.createPage(pageIndex, pages, printerJob);
                 }
             });
-            mainVBox.getChildren().addAll(pagination);
-            mainVBox.setAlignment(Pos.CENTER);
-            mainHBox.setAlignment(Pos.CENTER);
+
+            mainPane.getChildren().add(pagination);
+
         }
     }
 
     @FXML
     void printAllCards(ActionEvent event) throws MalformedURLException {
-        Window window = mainVBox.getScene().getWindow();
-        PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlan);
+        Window window = mainPane.getScene().getWindow();
+
+        ParseLessonPlanPrinting lessonPlanPrint = new ParseLessonPlanPrinting(printerJob, true);
+
+        PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlanPrint);
         endPrinting();
 
     }
@@ -124,13 +129,10 @@ public class PrintPreviewController {
 
 
     public void endPrinting() {
-        titleLabel.setText("Printing sent.\n" +
-                "If saved as PDF, you can find it in the saved file.\n" );
-
+        titleLabel.setText("Success!");
         titleLabel.setAlignment(Pos.CENTER);
-
         printAllButton.setVisible(false);
-        mainVBox.setVisible(false);
+        mainPane.setVisible(false);
     }
 
 }

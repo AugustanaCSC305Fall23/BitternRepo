@@ -4,12 +4,14 @@ import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
 import edu.augustana.structures.EventSubcategory;
+import edu.augustana.structures.IndexedMap;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
@@ -53,8 +55,10 @@ public class CreateLessonPlanController {
     @FXML private Button removeFavoriteBtn;
     @FXML private TextField lessonTitleField;
 
-    @FXML private Button editEventHeadingBtn;
+    @FXML private VBox editSubheadingVBox;
     @FXML private TextField editEventHeadingTextField;
+    @FXML private Button editEventHeadingBtn;
+    @FXML private Button deleteBtn;
 
     @FXML private VBox upArrow;
     @FXML private VBox downArrow;
@@ -81,9 +85,9 @@ public class CreateLessonPlanController {
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private List<CardView> selectedCards = new ArrayList<>();
     private List<CardView> favoriteCardsSelected = new ArrayList<>();
-    private List<CardView> cardViewList = new ArrayList<>();
+    private final List<CardView> cardViewList = new ArrayList<>();
     private TreeItem<String> root = new TreeItem<>();
-    private TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
+    private final TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
 
     private UndoRedoHandler undoRedoHandler;
     private TitleEditor titleEditor;
@@ -105,15 +109,12 @@ public class CreateLessonPlanController {
         cardsTabPane.getSelectionModel().select(allCardsTab);
         drawCardSet(findAndSetFlowPane(), cardViewList);
         setUpTreeView();
-
+        lessonPlanTreeView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> treeViewItemSelectedAction());
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
-        titleEditor.initializeTitleFieldEvents(undoRedoHandler);
+        titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentLessonPlan().clone());
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState();
+        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         disableButtons();
-
-        upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
-        downArrow.setOnMouseClicked(e -> moveTreeItemAction(1));
     }
 
     private void setUpTreeView(){
@@ -122,7 +123,7 @@ public class CreateLessonPlanController {
         root = new TreeItem<>(App.getCurrentLessonPlan().getTitle());
         lessonPlanTreeView.setRoot(root);
         lessonPlanTreeView.setShowRoot(false);
-        treeViewManager.setUpTreeView(root);
+        treeViewManager.displayTreeView(root);
     }
 
     private void createDropdowns() {
@@ -139,7 +140,7 @@ public class CreateLessonPlanController {
     private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
             cardsFlowPane.getChildren().add(cardView);
-            cardView.setOnMouseClicked(this::selectCardAction);
+            cardView.setOnMouseClicked(this::checkNumClicks);
             Animation delayAnim = new PauseTransition(Duration.seconds(1));
 
             cardView.setOnMouseEntered(e -> {
@@ -157,6 +158,19 @@ public class CreateLessonPlanController {
                 delayAnim.stop();
                 exitZoomedView();
             });
+        }
+    }
+
+    private void checkNumClicks(MouseEvent e) {
+        if (e.getTarget() instanceof CardView) {
+            CardView cardView = (CardView) e.getTarget();
+            if (e.getClickCount() == 2) {
+                treeViewManager.addToTreeView(cardView.getCard(), root);
+                cardView.setEffect(null);
+                undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
+            } else if (e.getClickCount() == 1) {
+                selectCardAction(cardView);
+            }
         }
     }
 
@@ -187,12 +201,7 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void goToHome() throws IOException {
-        App.setRoot("home");
-    }
-
-    @FXML
-    void returnToCourseHandler() throws IOException {
+    @FXML void returnToCourseHandler() throws IOException {
         App.setRoot("course_view");
     }
 
@@ -200,25 +209,23 @@ public class CreateLessonPlanController {
         return dropdown.getCheckModel().getCheckedItems();
     }
 
-    private void selectCardAction(MouseEvent event) {
-        if (event.getTarget() instanceof CardView) {
-            CardView cardViewSelected = (CardView) event.getTarget();
-            if (!selectedCards.contains(cardViewSelected)) {
-                cardViewSelected.setEffect(new InnerShadow(30, Color.ORCHID));
-                selectedCards.add(cardViewSelected);
-                if (favoriteCardsTab.isSelected()) {
-                    favoriteCardsSelected.add(cardViewSelected);
-                }
-            } else {
-                cardViewSelected.setEffect(null);
-                selectedCards.remove(cardViewSelected);
-                if (favoriteCardsTab.isSelected()) {
-                    favoriteCardsSelected.remove(cardViewSelected);
-                }
+    private void selectCardAction(CardView cardViewSelected) {
+        if (!selectedCards.contains(cardViewSelected)) {
+            cardViewSelected.setEffect(new InnerShadow(40, Color.valueOf("#78c6f7")));
+            selectedCards.add(cardViewSelected);
+            if (favoriteCardsTab.isSelected()) {
+                favoriteCardsSelected.add(cardViewSelected);
             }
-            exitZoomedView();
-            checkSelectedCardsStatus();
+        } else {
+            cardViewSelected.setEffect(null);
+            selectedCards.remove(cardViewSelected);
+            if (favoriteCardsTab.isSelected()) {
+                favoriteCardsSelected.remove(cardViewSelected);
+            }
         }
+        exitZoomedView();
+        checkSelectedCardsStatus();
+        deselectTreeViewItem();
     }
 
     private void checkSelectedCardsStatus() {
@@ -260,11 +267,10 @@ public class CreateLessonPlanController {
         boolean includeThisCard = combinedFilter.matchesFilters(cardView.getCard());
         cardView.setVisible(includeThisCard);
         cardView.setManaged(includeThisCard);
-        cardView.setOnMouseClicked(this::selectCardAction);
+        cardView.setOnMouseClicked(this::checkNumClicks);
     }
 
-    @FXML
-    void clearFiltersAction() {
+    @FXML void clearFiltersAction() {
         for (CardView cardView : cardViewList) {
             cardView.setVisible(true);
             cardView.setManaged(true);
@@ -290,14 +296,13 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML
-    void addCardsToLessonPlan() {
+    @FXML void addCardsToLessonPlan() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
                 treeViewManager.addToTreeView(cardView.getCard(), root);
                 cardView.setEffect(null);
             }
-            undoRedoHandler.saveState();
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
             selectedCards.clear();
             disableButtons();
         }
@@ -314,8 +319,7 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML
-    void removeFavoriteAction() throws IOException {
+    @FXML void removeFavoriteAction() throws IOException {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
@@ -329,31 +333,28 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML
-    public void removeCardFromLessonPlan() {
+    @FXML void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
             App.getCurrentLessonPlan().removeCard(cardToRemove, undoRedoHandler);
             treeViewManager.removeFromTreeView(root);
-            undoRedoHandler.saveState();
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
 
-    @FXML
-    public void undo() {
-        undoRedoHandler.undo();
+    @FXML void undo() {
+        undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
 
-    @FXML
-    public void redo() {
-        undoRedoHandler.redo();
+    @FXML void redo() {
+        undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
     }
 
-    @FXML private void giveWarning(String message) {
+    private void giveWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
         alert.setContentText(message);
@@ -362,7 +363,7 @@ public class CreateLessonPlanController {
 
     @FXML
     void printLessonPlan() throws IOException {
-        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlan());
+        Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
         boolean cardDisplay;
@@ -408,31 +409,77 @@ public class CreateLessonPlanController {
             return allCardsFlowPane;
         }
     }
+
+    private void treeViewItemSelectedAction() {
+        if (!lessonPlanTreeView.getSelectionModel().isEmpty() &&
+                !lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
+            editEventHeadingBtn.setDisable(false);
+            int selectedIndex = lessonPlanTreeView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex != 0) {
+                upArrow.setOnMouseClicked(e -> moveTreeItemAction(-1));
+                upArrow.setCursor(Cursor.HAND);
+            } else {
+                disableArrowButton(upArrow);
+            }
+            downArrow.setOnMouseClicked(e -> moveTreeItemAction(1));
+            downArrow.setCursor(Cursor.HAND);
+            deleteBtn.setDisable(true);
+        } else if (lessonPlanTreeView.getSelectionModel().isEmpty()) {
+            editEventHeadingBtn.setDisable(true);
+            disableArrowButton(upArrow);
+            disableArrowButton(downArrow);
+            deleteBtn.setDisable(true);
+        } else if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
+            editEventHeadingBtn.setDisable(true);
+            disableArrowButton(upArrow);
+            disableArrowButton(downArrow);
+            deleteBtn.setDisable(false);
+        }
+    }
+
+    private void disableArrowButton(VBox arrowBtn) {
+        arrowBtn.setOnMouseClicked(null);
+        arrowBtn.setCursor(Cursor.DEFAULT);
+    }
+
+    @FXML void deselectTreeViewItem() {
+        if (!lessonPlanTreeView.getSelectionModel().isEmpty()) {
+            lessonPlanTreeView.getSelectionModel().clearSelection();
+        }
+        treeViewItemSelectedAction();
+    }
+
     @FXML private void editEventHeadingAction() {
-        lessonPlanTreeView.setEffect(new BoxBlur());
+        editEventHeadingTextField.clear();
+        editSubheadingVBox.setVisible(true);
         editEventHeadingTextField.setVisible(true);
     }
-    @FXML private void setEventHeading(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER){
-            String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-            EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventToChange));
-            treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
-            editEventHeadingTextField.setVisible(false);
-            lessonPlanTreeView.setEffect(null);
-        }
+
+    @FXML private void setEventHeadingAction() {
+        String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+        EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventToChange));
+        treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
+        editSubheadingVBox.setVisible(false);
+    }
+
+    @FXML private void cancelAction() {
+        editSubheadingVBox.setVisible(false);
+
     }
 
     private void moveTreeItemAction(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-        if(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading) >= 0){
-            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(eventHeading));
+        if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
+            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }else{
             String displayTitle = eventHeading;
             String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(displayTitle);
             Card cardFromID = CardDatabase.getFullCardCollection().getCardByID(cardID);
-            EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlan().get(App.getCurrentLessonPlan().getLessonPlan().get(cardFromID.getEvent()));
+            EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardFromID.getEvent()));
             treeViewManager.moveCard(subcategory, cardID, direction, root);
+            undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
 }
