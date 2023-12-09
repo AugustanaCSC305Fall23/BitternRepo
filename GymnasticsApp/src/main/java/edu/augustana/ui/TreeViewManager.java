@@ -98,10 +98,18 @@ public class TreeViewManager {
      * @param direction int to move the event (-1 for up and 1 for down)
      * @param root of tree view
      */
-    public void moveEvent(EventSubcategory selectedEvent, int direction, TreeItem<String> root){
+    public TreeItem<String> moveEvent(EventSubcategory selectedEvent, int direction, TreeItem<String> root){
         int index = lessonPlan.getLessonPlanIndexedMap().get(selectedEvent.getEventHeading());
-        lessonPlan.getLessonPlanIndexedMap().moveByOne(direction, index);
+        lessonPlan.getLessonPlanIndexedMap().moveEventByOne(direction, index);
         removeFromTreeView(root);
+        return root;
+    }
+
+    public TreeItem<String> moveCard(EventSubcategory event, String selectedCardID, int direction, TreeItem<String> root){
+        int index = event.getCardIDList().indexOf(selectedCardID);
+        lessonPlan.getLessonPlanIndexedMap().moveCardByOne(direction, index, event);
+        removeFromTreeView(root);
+        return root;
     }
 
 }

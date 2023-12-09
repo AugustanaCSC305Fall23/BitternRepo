@@ -20,4 +20,5 @@ public class CardCollection {
     public Set<String> getSetOfCardIds() {
         return mapFromIdToCard.keySet();
     }
+
 }

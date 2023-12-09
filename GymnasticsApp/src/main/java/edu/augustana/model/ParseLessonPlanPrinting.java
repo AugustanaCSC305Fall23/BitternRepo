@@ -20,10 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -102,7 +99,7 @@ public class ParseLessonPlanPrinting {
     }
 
     private void parseLessonPlanImages(PageLayout pgLayout) throws MalformedURLException {
-        labelToFlowPaneMap = new HashMap<Label, FlowPane>();
+        labelToFlowPaneMap = new LinkedHashMap<Label, FlowPane>();
         eventToCardsMap = PrintStaging.getEventToCardMap();
 
         initializeTitle();
@@ -312,7 +309,7 @@ public class ParseLessonPlanPrinting {
     }
 
     private void parseLessonPlanText(PageLayout pgLayout) throws MalformedURLException {
-        labelToCardLabelsMap = new HashMap<Label, List<Label>>();
+        labelToCardLabelsMap = new LinkedHashMap<Label, List<Label>>();
         eventToCardsMap = PrintStaging.getEventToCardMap();
 
         initializeTitle();
