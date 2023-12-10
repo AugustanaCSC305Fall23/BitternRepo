@@ -64,7 +64,8 @@ public class TreeViewManager {
         } else{
             if (!App.getCurrentLessonPlan().cardInPlanList(card)){
                 App.getCurrentLessonPlan().addCardToEvent(card);
-                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(card.getEvent())).getChildren().add(new TreeItem<String>(card.getCode() + ", " + card.getTitle()));
+                TreeItem<String> treeItem = new TreeItem<String>(card.getCode() + ", " + card.getTitle());
+                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(card.getEvent())).getChildren().add(treeItem);
             }
         }
         expandTreeItem(root);
