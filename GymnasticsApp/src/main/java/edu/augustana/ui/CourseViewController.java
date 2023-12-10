@@ -31,6 +31,15 @@ public class CourseViewController {
     @FXML private Menu recentFilesMenu;
 
     @FXML private TreeView<String> lessonPlanTreeView;
+
+    @FXML private VBox printSetupVBox;
+    @FXML private CheckBox cardImagesCheckbox;
+    @FXML private CheckBox textOnlyCheckbox;
+    @FXML private CheckBox landscapeCheckbox;
+    @FXML private CheckBox portraitCheckbox;
+    @FXML private CheckBox yesEquipmentCheckbox;
+    @FXML private CheckBox noEquipmentCheckbox;
+
     private TreeItem<String> root = new TreeItem<>();
     private TreeViewManager treeViewManager;
 
@@ -248,27 +257,71 @@ public class CourseViewController {
         }
     }
 
-    @FXML void printLessonPlanHandler() throws IOException {
-        LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
-        if (lessonPlanToDuplicate != null) {
-            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlanIndexedMap());
-            String lessonPlanTitle = lessonPlanToDuplicate.getTitle();
-
-            boolean cardDisplay;
-            boolean landscapeDisplay = false;
-
-            cardDisplay = PrintStaging.promptCardDisplay();
-
-            if (cardDisplay) {
-                landscapeDisplay = PrintStaging.promptPageFormat();
+    @FXML void printLessonPlanHandler() {
+        if (courseListView.getSelectionModel().getSelectedItem() != null) {
+            for (Node child : printSetupVBox.getChildren()) {
+                if (child instanceof CheckBox) {
+                    CheckBox checkbox = (CheckBox) child;
+                    checkbox.setSelected(false);
+                }
             }
-
-            boolean equipmentDisplay = PrintStaging.promptForEquipment();
-
-            new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
-            App.setRoot("print_preview");
+            printSetupVBox.setVisible(true);
+            setCheckBoxActions();
         }
     }
+
+    private void setCheckBoxActions() {
+        cardImagesCheckbox.setOnAction(e -> textOnlyCheckbox.setSelected(false));
+        textOnlyCheckbox.setOnAction(e -> cardImagesCheckbox.setSelected(false));
+        landscapeCheckbox.setOnAction(e -> portraitCheckbox.setSelected(false));
+        portraitCheckbox.setOnAction(e -> landscapeCheckbox.setSelected(false));
+        yesEquipmentCheckbox.setOnAction(e -> noEquipmentCheckbox.setSelected(false));
+        noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
+    }
+
+    @FXML void setUpPrint() throws IOException {
+        LessonPlan lessonPlanToPrint = courseListView.getSelectionModel().getSelectedItem();
+        Map<String, List<Card>> eventToCardMap = lessonPlanToPrint.getMapOfCardsFromID(lessonPlanToPrint.getLessonPlanIndexedMap());
+        String lessonPlanTitle = lessonPlanToPrint.getTitle();
+
+        boolean cardDisplay = true;
+        boolean landscapeDisplay = true;
+        boolean equipmentDisplay = true;
+        if (cardImagesCheckbox.isSelected()) {
+            cardDisplay = true;
+        } else if (textOnlyCheckbox.isSelected()) {
+            cardDisplay = false;
+        } else {
+            giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        if (landscapeCheckbox.isSelected()) {
+            landscapeDisplay = true;
+        } else if (portraitCheckbox.isSelected()) {
+            landscapeDisplay = false;
+        } else {
+            giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        if (yesEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = true;
+        } else if (noEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = false;
+        } else {
+            giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
+        App.setRoot("print_preview");
+    }
+
+    @FXML void cancelPrint() {
+        printSetupVBox.setVisible(false);
+    }
+
 
     @FXML void undo() {
         undoRedoHandler.undo(App.getCurrentCourse());
@@ -276,7 +329,6 @@ public class CourseViewController {
         courseListView.getItems().clear();
         addLessonsToCourseList();
         undoRedoHandler.saveState(App.getCurrentCourse().clone());
-
     }
 
     @FXML void redo() {
@@ -324,6 +376,13 @@ public class CourseViewController {
         for(LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()){
             courseListView.getItems().add(lessonPlan);
         }
+    }
+
+    private void giveWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }

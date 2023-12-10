@@ -6,7 +6,6 @@ import edu.augustana.filters.*;
 import edu.augustana.structures.EventSubcategory;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -65,6 +64,14 @@ public class CreateLessonPlanController {
 
     @FXML private VBox upArrow;
     @FXML private VBox downArrow;
+
+    @FXML private VBox printSetupVBox;
+    @FXML private CheckBox cardImagesCheckbox;
+    @FXML private CheckBox textOnlyCheckbox;
+    @FXML private CheckBox landscapeCheckbox;
+    @FXML private CheckBox portraitCheckbox;
+    @FXML private CheckBox yesEquipmentCheckbox;
+    @FXML private CheckBox noEquipmentCheckbox;
 
 
     // zoomed-in card elements
@@ -375,25 +382,66 @@ public class CreateLessonPlanController {
     }
 
     @FXML
-    void printLessonPlan() throws IOException {
+    void printLessonPlanHandler() {
+        for (Node child : printSetupVBox.getChildren()) {
+            if (child instanceof CheckBox) {
+                CheckBox checkbox = (CheckBox) child;
+                checkbox.setSelected(false);
+            }
+        }
+        printSetupVBox.setVisible(true);
+        setCheckBoxActions();
+    }
+
+    private void setCheckBoxActions() {
+        cardImagesCheckbox.setOnAction(e -> textOnlyCheckbox.setSelected(false));
+        textOnlyCheckbox.setOnAction(e -> cardImagesCheckbox.setSelected(false));
+        landscapeCheckbox.setOnAction(e -> portraitCheckbox.setSelected(false));
+        portraitCheckbox.setOnAction(e -> landscapeCheckbox.setSelected(false));
+        yesEquipmentCheckbox.setOnAction(e -> noEquipmentCheckbox.setSelected(false));
+        noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
+    }
+
+    @FXML void setUpPrint() throws IOException {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
-        boolean cardDisplay;
-        boolean landscapeDisplay = false;
-
-        // If true, show cards. Else, show text only
-        cardDisplay = PrintStaging.promptCardDisplay();
-
-        // If true shows landscape mode. Else, show portrait mode
-        if (cardDisplay) {
-            landscapeDisplay = PrintStaging.promptPageFormat();
+        boolean cardDisplay = true;
+        boolean landscapeDisplay = true;
+        boolean equipmentDisplay = true;
+        if (cardImagesCheckbox.isSelected()) {
+            cardDisplay = true;
+        } else if (textOnlyCheckbox.isSelected()) {
+            cardDisplay = false;
+        } else {
+            giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
         }
 
-        boolean equipmentDisplay = PrintStaging.promptForEquipment();
+        if (landscapeCheckbox.isSelected()) {
+            landscapeDisplay = true;
+        } else if (portraitCheckbox.isSelected()) {
+            landscapeDisplay = false;
+        } else {
+            giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        if (yesEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = true;
+        } else if (noEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = false;
+        } else {
+            giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
 
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay, equipmentDisplay);
         App.setRoot("print_preview");
+    }
+
+    @FXML void cancelPrint() {
+        printSetupVBox.setVisible(false);
     }
 
     @FXML
@@ -490,8 +538,7 @@ public class CreateLessonPlanController {
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }else{
-            String displayTitle = eventHeading;
-            String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(displayTitle);
+            String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(eventHeading);
             Card cardFromID = CardDatabase.getFullCardCollection().getCardByID(cardID);
             EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardFromID.getEvent()));
             treeViewManager.moveCard(subcategory, cardID, direction, root);
