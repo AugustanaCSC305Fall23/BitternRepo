@@ -1,5 +1,6 @@
 package edu.augustana.model;
 
+import edu.augustana.App;
 import edu.augustana.structures.*;
 
 import java.util.*;
@@ -7,6 +8,7 @@ import java.util.*;
 public class LessonPlan implements Cloneable, Undoable{
     private String title;
     private IndexedMap lessonPlanIndexedMap;
+    private String customNote;
 
     public LessonPlan() {
         lessonPlanIndexedMap = new IndexedMap();
@@ -114,11 +116,19 @@ public class LessonPlan implements Cloneable, Undoable{
         }
         if (cardIDToRemove != null) {
             lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
-            //undoRedoHandler.saveState();
         }
         if(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().isEmpty()){
             lessonPlanIndexedMap.remove(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)));
         }
+        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
+    }
+
+    public void setCustomNote(String note) {
+        customNote = note;
+    }
+
+    public String getCustomNote() {
+        return customNote;
     }
 
     /**

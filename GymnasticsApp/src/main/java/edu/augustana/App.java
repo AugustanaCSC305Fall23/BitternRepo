@@ -3,14 +3,17 @@ package edu.augustana;
 import com.opencsv.exceptions.CsvValidationException;
 import edu.augustana.model.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.prefs.Preferences;
 
 /**
@@ -24,24 +27,36 @@ public class App extends Application {
     private static LessonPlan currentLessonPlan;
     private static FavoriteCards favoriteCards;
     private static RecentFilesManager recentFilesManager = new RecentFilesManager();
-    @Override
-    public void start(Stage stage) throws IOException, CsvValidationException {
-        CardDatabase.addCardsFromAllCSVFiles();
-        favoriteCards = new FavoriteCards();
-        // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
-        // to help figure out how to get the dimensions of the screen.
-        double height = Screen.getPrimary().getBounds().getHeight();
-        double width = Screen.getPrimary().getBounds().getWidth();
-        scene = new Scene(loadFXML("home"), width - 25, height - 80);
 
-        // Used https://stackoverflow.com/questions/68768778/javafx-button-hover-effect for adding stylesheet
-        scene.getStylesheets().add(this.getClass().getResource("mainStylesheet.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+    // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
+    // to help figure out how to get the dimensions of the screen.
+    // Used https://stackoverflow.com/questions/68768778/javafx-button-hover-effect for adding stylesheet
+    @Override
+    public void start(Stage stage) {
+        try {
+            CardDatabase.addCardsFromAllCSVFiles();
+            favoriteCards = new FavoriteCards();
+            double height = Screen.getPrimary().getBounds().getHeight();
+            double width = Screen.getPrimary().getBounds().getWidth();
+            scene = new Scene(loadFXML("home"), width - 25, height - 80);
+            scene.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("mainStylesheet.css")).toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            giveWarning("Could not load software.");
+            Platform.exit();
+        } catch (CsvValidationException e) {
+            giveWarning("Error reading from csv files. Check your card pack folders.");
+            Platform.exit();
+        }
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static void setRoot(String fxml) {
+        try {
+            scene.setRoot(loadFXML(fxml));
+        } catch (IOException e) {
+            giveWarning("Couldn't find fxml file");
+        }
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -74,6 +89,13 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void giveWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }

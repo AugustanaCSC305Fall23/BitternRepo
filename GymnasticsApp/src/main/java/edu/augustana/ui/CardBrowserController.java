@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -42,7 +43,7 @@ public class CardBrowserController {
     @FXML private Pane cardsAnchorPane;
 
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
-            "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
+            "Horizontal Bar", "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
@@ -68,14 +69,18 @@ public class CardBrowserController {
     private final FilterHandler filterHandler = new FilterHandler();
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() throws MalformedURLException {
+    void initialize() {
         createDropdowns();
-        for (String cardId : fullCardCollection.getSetOfCardIds()) {
-            CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
-            cardViewList.add(newCardView);
+        try {
+            for (String cardId : fullCardCollection.getSetOfCardIds()) {
+                CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
+                cardViewList.add(newCardView);
+            }
+            drawCardSet();
+            disableButtons(true);
+        } catch (MalformedURLException e) {
+            App.giveWarning("Couldn't load card images. Check your thumbnails folder in the card pack.");
         }
-        drawCardSet();
-        disableButtons(true);
     }
     
     private void createDropdowns() {
@@ -90,39 +95,37 @@ public class CardBrowserController {
     }
 
     @FXML
-    private void goToHome() throws IOException {
+    private void goToHome() {
         App.setRoot("home");
     }
 
-    private void drawCardSet() throws MalformedURLException {
+    private void drawCardSet() {
         for (CardView cardView : cardViewList) {
             cardView.setOnMouseClicked(this::selectCardAction);
             cardsFlowPane.getChildren().add(cardView);
         }
     }
 
-    @FXML void zoomAction() throws MalformedURLException {
+    @FXML void zoomAction() {
         zoomInOnImage(selectedCards.get(selectedCards.size() - 1));
     }
 
-    private void zoomInOnImage(CardView cardView) throws MalformedURLException {
-        eventLabel.setText(cardView.getCard().getEvent());
-        zoomedInCard.setImage(cardView.getCard().getImage());
-        String equipment = "Equipment: ";
-        for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
-            if (i != 0) {
-                equipment = equipment + ", ";
+    private void zoomInOnImage(CardView cardView) {
+        try {
+            zoomedInCard.setImage(cardView.getCard().getImage());
+            eventLabel.setText(cardView.getCard().getEvent());
+            String equipment = "Equipment: ";
+            for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
+                if (i != 0) {
+                    equipment = equipment + ", ";
+                }
+                equipment = equipment + cardView.getCard().getEquipment()[i];
             }
-            equipment = equipment + cardView.getCard().getEquipment()[i];
+            equipmentLabel.setText(equipment);
+            zoomedInCardVBox.setVisible(true);
+        } catch (MalformedURLException e) {
+            App.giveWarning("Couldn't find image to zoom in on. Check your card pack folder.");
         }
-        equipmentLabel.setText(equipment);
-        zoomedInCardVBox.setVisible(true);
-        /* GaussianBlur blur = new GaussianBlur();
-        for (Node child : cardsAnchorPane.getChildren()) {
-            if (child != zoomedInCardVBox) {
-                child.setEffect(blur);
-            }
-        } */
     }
 
     @FXML void exitZoomedView() {
@@ -195,7 +198,7 @@ public class CardBrowserController {
     }
 
     @FXML
-    void printSelectedCards() throws IOException {
+    void printSelectedCards() {
         if (selectedCards != null){
             List<Card> cardsToPrint = new ArrayList<>();
             for (CardView cardView : selectedCards) {

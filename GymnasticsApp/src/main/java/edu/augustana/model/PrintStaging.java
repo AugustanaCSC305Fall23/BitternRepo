@@ -30,12 +30,33 @@ public class PrintStaging {
     private static boolean cardDisplay;
     private static boolean equipmentDisplay;
 
- // Constructors
+    // Constructors
+
+    /**
+     * The PrintStaging object for the Card Browser. Holds the information for the needed UI components and helps with
+     * displaying and printing the needed items.
+     *
+     * @param cardList - List of selected cards to be printed
+     * @param fxml - the previous fxml the screen was at so when you click "return," it
+     *               returns you to that fxml
+     */
     public PrintStaging(List<Card> cardList, String fxml) {
         past_fxml = fxml;
         printCardList = cardList;
     }
 
+    /**
+     * The PrintStaging object for the lesson plan creator. Holds the needed information for the UI components and helps with
+     * displaying and printing the needed items.
+     *
+     * @param title - title of the lesson plan.
+     * @param map - the map containing the event headings and a list of cards associated with the event
+     * @param fxml - the previous fxml the screen was at so when you click "return," it
+     *               returns you to that fxml
+     * @param card_display - if true the print preview should show card images. Otherwise, it is text only.
+     * @param landscape_display - if true the print preview should be in landscape mode. Otherwise, it is in portrait mode.
+     * @param equipment_display - if true the print preview should display equipment at the end of the lesson plan.
+     */
     public PrintStaging(String title, Map<String, List<Card>> map, String fxml, boolean card_display, boolean landscape_display, boolean equipment_display) {
         lessonPlanTitle = title;
         eventToCardMap = map;
@@ -45,7 +66,7 @@ public class PrintStaging {
         equipmentDisplay = equipment_display;
     }
 
-// Getters
+    // Getters
     public static Map<String, List<Card>> getEventToCardMap() {
         return eventToCardMap;
     }
@@ -74,12 +95,19 @@ public class PrintStaging {
         return equipmentDisplay;
     }
 
-// Creates Pages for PrintPreviewController
     // Used https://coderanch.com/t/709329/java/JavaFX-approach-dividing-text-blob
     // and https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/pagination.htm
     // which heavily influenced the creation of the methods below.
 
-    // Creates pages for individual cards (from Card Browser)
+    /**
+     * Creates the pages for individual cards and formats them for the pagination and actual printing.
+     *
+     * @param pageIndex - the number of cards to print.
+     * @param cardsToPrint - the list of cards that are to be printed.
+     * @param pj - the PrinterJob object that represents the printer and it's parameters.
+     * @return a VBox that is composed of the page contents for the pagination.
+     * @throws MalformedURLException
+     */
     public static VBox createPage(int pageIndex, List<Card> cardsToPrint, PrinterJob pj) throws MalformedURLException {
         PageLayout pg = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
@@ -97,7 +125,6 @@ public class PrintStaging {
             ImageView fullSizeImageView = createFullSizeImageView(cardToPrint, pg);
 
 
-
             whitePaperPane.getChildren().add(fullSizeImageView);
 
             box.getChildren().add(whitePaperPane);
@@ -107,7 +134,14 @@ public class PrintStaging {
         return box;
     }
 
-    // Creates pages for a lesson plan
+    /**
+     * Creates the pages for individual cards and formats them for the pagination.
+     *
+     * @param pageIndex - the number of cards to print.
+     * @param pages - list of pages for the lesson plan.
+     * @param pj - the PrinterJob object that represents the printer and it's parameters.
+     * @return a VBox that is composed of the page contents for the pagination.
+     */
     public static VBox createPage(int pageIndex, ArrayList<Pane> pages, PrinterJob pj) {
         PageLayout pgLayout = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
@@ -135,13 +169,22 @@ public class PrintStaging {
         return 1;
     }
 
-    public static ImageView createFullSizeImageView(Card card, PageLayout pgLayout) throws MalformedURLException {
+    private static ImageView createFullSizeImageView(Card card, PageLayout pgLayout) throws MalformedURLException {
         ImageView fullSizeImageView = new ImageView(card.getImage());
         fullSizeImageView.setFitWidth(pgLayout.getPrintableWidth() - 10);
         fullSizeImageView.setFitHeight(pgLayout.getPrintableWidth() * .75);
         return fullSizeImageView;
     }
 
+    /**
+     * Stages the needed items for the physical process of printing and helps format them.
+     *
+     * @param window - the computer window.
+     * @param printerJob - the PrinterJob object that represents the printer and it's parameters.
+     * @param cardsToPrint - the cards to print if the fxml is card_browser
+     * @param lessonPlan - the lesson plan to print if the fxml is lesson_plan_creator.
+     * @throws MalformedURLException
+     */
     public static void printAllCards(Window window, PrinterJob printerJob, List<Card> cardsToPrint, ParseLessonPlanPrinting lessonPlan) throws MalformedURLException {
         if (printerJob != null && printerJob.showPrintDialog(window)) {
             PageRange pgRange = new PageRange(1, 1);
@@ -150,7 +193,6 @@ public class PrintStaging {
             } else {
                 pgRange = new PageRange(1, lessonPlan.getPages().size());
             }
-
 
             // Used https://stackoverflow.com/questions/28102141/javafx-8-webengine-print-method-unable-to-print-in-landscape
             // to create landscape mode for a lesson plan
@@ -165,7 +207,7 @@ public class PrintStaging {
 
             boolean printed = false;
             for (PageRange pr : js.getPageRanges()) {
-                for (int p = pr.getStartPage(); p <= pr.getEndPage(); p++){        // This loops through the selected page range
+                for (int p = pr.getStartPage(); p <= pr.getEndPage(); p++) {        // This loops through the selected page range
                     Pane printNode = new Pane();
                     printNode.setPrefHeight(pgLayout.getPrintableHeight());
                     printNode.setPrefWidth(pgLayout.getPrintableWidth());
@@ -188,48 +230,7 @@ public class PrintStaging {
                     printed = printerJob.printPage(printerJob.getJobSettings().getPageLayout(), printNode);
                 }
             }
-            if(printed) printerJob.endJob();
+            if (printed) printerJob.endJob();
         }
     }
-
-    public static boolean promptCardDisplay() {
-        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
-        ButtonType cardImageBtn = new ButtonType("Card Image", ButtonBar.ButtonData.OK_DONE);
-        ButtonType textOnlyBtn = new ButtonType("Text Only", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be show card images, or be text only?", cardImageBtn, textOnlyBtn);
-        alert.setTitle("Confirm");
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        return result.orElse(textOnlyBtn) == cardImageBtn;
-    }
-
-    public static boolean promptPageFormat() {
-        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
-        ButtonType landscapeBtn = new ButtonType("Landscape", ButtonBar.ButtonData.OK_DONE);
-        ButtonType portraitBtn = new ButtonType("Portrait", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be in Landscape or Portrait mode?", landscapeBtn, portraitBtn);
-        alert.setTitle("Confirm");
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        return result.orElse(portraitBtn) == landscapeBtn;
-    }
-
-    public static boolean promptForEquipment() {
-        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
-        ButtonType yesBtn = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-        ButtonType noBtn = new ButtonType("No", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like a list of all needed equipment printed with your lesson plan?", yesBtn, noBtn);
-        alert.setTitle("Confirm");
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        return result.orElse(noBtn) == yesBtn;
-    }
-
-
-
-
-
 }
