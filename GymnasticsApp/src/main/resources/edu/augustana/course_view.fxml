@@ -65,10 +65,10 @@
               <MenuItem mnemonicParsing="false" onAction="#exitHandler" text="Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" style="-fx-border-color: gray;" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
+          <Menu mnemonicParsing="false" style="-fx-border-color: gray;" text="About">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#aboutMenuHandler" text="About" />
+               </items>
           </Menu>
         </menus>
          <contextMenu>

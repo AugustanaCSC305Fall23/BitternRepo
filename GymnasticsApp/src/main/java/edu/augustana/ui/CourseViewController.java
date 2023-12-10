@@ -213,6 +213,10 @@ public class CourseViewController {
         setUpRecentFilesMenu();
     }
 
+    @FXML private void aboutMenuHandler() {
+        App.setRoot("about_menu");
+    }
+
     @FXML void exitHandler() {
         Platform.exit();
     }
