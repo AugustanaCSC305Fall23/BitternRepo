@@ -25,17 +25,17 @@ public class UndoRedoHandler {
         redoStack.clear();
     }
 
-    public void undo(Undoable stateToUndo) {
+    public void undo(Undoable undoableToUndo) {
         if (undoStack.size() != 1) {
             redoStack.push(undoStack.pop());
-            stateToUndo.restoreState(undoStack.peek().clone());
+            undoableToUndo.restoreState(undoStack.peek().clone());
         }
     }
 
-    public void redo(Undoable stateToRedo) {
+    public void redo(Undoable undoableToRedo) {
         if (!redoStack.isEmpty()) {
             Undoable temp = redoStack.pop();
-            stateToRedo.restoreState(temp.clone());
+            undoableToRedo.restoreState(temp.clone());
             undoStack.push(temp);
         }
     }

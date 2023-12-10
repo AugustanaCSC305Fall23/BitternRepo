@@ -21,12 +21,11 @@ public class TitleEditor {
        this.courseOrLessonPlan = courseOrLessonPlan;
     }
 
-    public void initializeTitleFieldEvents(UndoRedoHandler undoRedoHandler, Undoable undoableClone) {
+    public void initializeTitleFieldEvents() {
         titleField.setOnMouseClicked(e -> editTitle());
         titleField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 lockInTitle();
-                undoRedoHandler.saveState(undoableClone);
             }
         });
     }

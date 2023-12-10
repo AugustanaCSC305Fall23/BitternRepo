@@ -134,7 +134,7 @@ public class CreateLessonPlanController {
         setUpTreeView();
         lessonPlanTreeView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> treeViewItemSelectedAction());
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
-        titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentLessonPlan().clone());
+        titleEditor.initializeTitleFieldEvents();
         titleEditor.setTitleFieldText();
         disableButtons();
         if (App.getCurrentLessonPlan().getCustomNote() != null) {
@@ -384,13 +384,13 @@ public class CreateLessonPlanController {
     @FXML void undo() {
         undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
-        titleEditor.setTitleFieldText();
+        //titleEditor.setTitleFieldText();
     }
 
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
-        titleEditor.setTitleFieldText();
+        //titleEditor.setTitleFieldText();
     }
 
     @FXML

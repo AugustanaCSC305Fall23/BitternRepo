@@ -58,7 +58,7 @@ public class CourseViewController {
         addLessonsToCourseList();
         undoRedoHandler = new UndoRedoHandler(App.getCurrentCourse());
         titleEditor = new TitleEditor(courseTitleField, new Font("Britannic Bold", 45.0), new Font("Britannic Bold", 45.0), 'C');
-        titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentCourse().clone());
+        titleEditor.initializeTitleFieldEvents();
         titleEditor.setTitleFieldText();
         setUpRecentFilesMenu();
         for (Node node : buttonBar.getChildren()) {
@@ -353,14 +353,12 @@ public class CourseViewController {
 
     @FXML void undo() {
         undoRedoHandler.undo(App.getCurrentCourse());
-        titleEditor.setTitleFieldText();
         courseListView.getItems().clear();
         addLessonsToCourseList();
     }
 
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentCourse());
-        titleEditor.setTitleFieldText();
         courseListView.getItems().clear();
         addLessonsToCourseList();
     }
