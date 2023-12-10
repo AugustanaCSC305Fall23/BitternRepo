@@ -30,7 +30,7 @@ public class PrintStaging {
     private static boolean cardDisplay;
     private static boolean equipmentDisplay;
 
- // Constructors
+    // Constructors
     public PrintStaging(List<Card> cardList, String fxml) {
         past_fxml = fxml;
         printCardList = cardList;
@@ -45,7 +45,7 @@ public class PrintStaging {
         equipmentDisplay = equipment_display;
     }
 
-// Getters
+    // Getters
     public static Map<String, List<Card>> getEventToCardMap() {
         return eventToCardMap;
     }
@@ -97,7 +97,6 @@ public class PrintStaging {
             ImageView fullSizeImageView = createFullSizeImageView(cardToPrint, pg);
 
 
-
             whitePaperPane.getChildren().add(fullSizeImageView);
 
             box.getChildren().add(whitePaperPane);
@@ -135,7 +134,7 @@ public class PrintStaging {
         return 1;
     }
 
-    public static ImageView createFullSizeImageView(Card card, PageLayout pgLayout) throws MalformedURLException {
+    private static ImageView createFullSizeImageView(Card card, PageLayout pgLayout) throws MalformedURLException {
         ImageView fullSizeImageView = new ImageView(card.getImage());
         fullSizeImageView.setFitWidth(pgLayout.getPrintableWidth() - 10);
         fullSizeImageView.setFitHeight(pgLayout.getPrintableWidth() * .75);
@@ -151,7 +150,6 @@ public class PrintStaging {
                 pgRange = new PageRange(1, lessonPlan.getPages().size());
             }
 
-
             // Used https://stackoverflow.com/questions/28102141/javafx-8-webengine-print-method-unable-to-print-in-landscape
             // to create landscape mode for a lesson plan
             Printer printer = Printer.getDefaultPrinter();
@@ -165,7 +163,7 @@ public class PrintStaging {
 
             boolean printed = false;
             for (PageRange pr : js.getPageRanges()) {
-                for (int p = pr.getStartPage(); p <= pr.getEndPage(); p++){        // This loops through the selected page range
+                for (int p = pr.getStartPage(); p <= pr.getEndPage(); p++) {        // This loops through the selected page range
                     Pane printNode = new Pane();
                     printNode.setPrefHeight(pgLayout.getPrintableHeight());
                     printNode.setPrefWidth(pgLayout.getPrintableWidth());
@@ -188,48 +186,7 @@ public class PrintStaging {
                     printed = printerJob.printPage(printerJob.getJobSettings().getPageLayout(), printNode);
                 }
             }
-            if(printed) printerJob.endJob();
+            if (printed) printerJob.endJob();
         }
     }
-
-    public static boolean promptCardDisplay() {
-        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
-        ButtonType cardImageBtn = new ButtonType("Card Image", ButtonBar.ButtonData.OK_DONE);
-        ButtonType textOnlyBtn = new ButtonType("Text Only", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be show card images, or be text only?", cardImageBtn, textOnlyBtn);
-        alert.setTitle("Confirm");
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        return result.orElse(textOnlyBtn) == cardImageBtn;
-    }
-
-    public static boolean promptPageFormat() {
-        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
-        ButtonType landscapeBtn = new ButtonType("Landscape", ButtonBar.ButtonData.OK_DONE);
-        ButtonType portraitBtn = new ButtonType("Portrait", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like the page to be in Landscape or Portrait mode?", landscapeBtn, portraitBtn);
-        alert.setTitle("Confirm");
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        return result.orElse(portraitBtn) == landscapeBtn;
-    }
-
-    public static boolean promptForEquipment() {
-        // Used https://stackoverflow.com/questions/36309385/how-to-change-the-text-of-yes-no-buttons-in-javafx-8-alert-dialogs
-        ButtonType yesBtn = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-        ButtonType noBtn = new ButtonType("No", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like a list of all needed equipment printed with your lesson plan?", yesBtn, noBtn);
-        alert.setTitle("Confirm");
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        return result.orElse(noBtn) == yesBtn;
-    }
-
-
-
-
-
 }

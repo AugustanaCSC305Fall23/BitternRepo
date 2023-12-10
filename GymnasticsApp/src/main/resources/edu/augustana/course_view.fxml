@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,9 +14,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
@@ -44,9 +50,9 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <MenuBar AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <MenuBar style="-fx-padding: 0; -fx-spacing: 0;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" style="-fx-border-color: gray;" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#createNewCourseHandler" text="Create New Course" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -59,7 +65,7 @@
               <MenuItem mnemonicParsing="false" onAction="#exitHandler" text="Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" style="-fx-border-color: gray;" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
@@ -72,6 +78,13 @@
               </items>
             </ContextMenu>
          </contextMenu>
+         <effect>
+            <DropShadow height="10.0" radius="4.5" width="10.0">
+               <color>
+                  <Color red="0.6627451181411743" green="0.6627451181411743" blue="0.6627451181411743" />
+               </color>
+            </DropShadow>
+         </effect>
       </MenuBar>
       <HBox fx:id="buttonBar" alignment="CENTER" spacing="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="120.0">
          <children>
@@ -103,7 +116,7 @@
             </Button>
          </children>
       </HBox>
-      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" onMouseClicked="#checkNumClicks" prefHeight="553.0" prefWidth="603.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="215.0" />
+      <ListView fx:id="courseListView" layoutX="46.0" layoutY="199.0" prefHeight="553.0" prefWidth="603.0" styleClass="list-view-cell" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="190.0" />
       <Line endX="2000.0" fill="#269fd7" stroke="#eceff2" strokeLineCap="BUTT" strokeWidth="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
       <VBox fx:id="upArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="680.0" AnchorPane.topAnchor="375.0">
          <children>
@@ -118,6 +131,9 @@
                </VBox.margin>
             </Rectangle>
          </children>
+         <effect>
+            <DropShadow height="8.0" radius="3.5" width="8.0" />
+         </effect>
       </VBox>
       <VBox fx:id="downArrow" layoutX="20.0" layoutY="20.0" AnchorPane.leftAnchor="680.0" AnchorPane.topAnchor="450.0">
          <children>
@@ -132,9 +148,111 @@
                </VBox.margin>
             </Polygon>
          </children>
+         <effect>
+            <DropShadow height="8.0" radius="3.5" width="8.0" />
+         </effect>
       </VBox>
       <TreeView fx:id="lessonPlanTreeView" layoutX="92.0" layoutY="209.0" prefHeight="474.0" prefWidth="439.0" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="215.0" />
-      <Button layoutX="209.0" layoutY="179.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
-      <Button layoutX="390.0" layoutY="179.0" mnemonicParsing="false" onAction="#redo" text="Redo" />
+      <Button layoutX="209.0" layoutY="179.0" mnemonicParsing="false" onAction="#undo" text="Undo" AnchorPane.bottomAnchor="20.0">
+         <font>
+            <Font name="Georgia" size="16.0" />
+         </font></Button>
+      <Button layoutX="390.0" layoutY="179.0" mnemonicParsing="false" onAction="#redo" text="Redo" AnchorPane.bottomAnchor="20.0">
+         <font>
+            <Font name="Georgia" size="16.0" />
+         </font></Button>
+      <VBox fx:id="printSetupVBox" spacing="15.0" style="-fx-background-color: #6a99cb; -fx-border-color: black; -fx-border-width: 2;" styleClass="list-cell" visible="false" AnchorPane.leftAnchor="425.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Print Setup" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets left="190.0" top="15.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Georgia Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label text="What would you like the page to display?">
+               <VBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox spacing="50.0">
+               <children>
+                  <CheckBox fx:id="cardImagesCheckbox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Card Images" />
+                  <CheckBox fx:id="textOnlyCheckbox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Text Only" />
+               </children>
+               <VBox.margin>
+                  <Insets left="35.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="What orientation would you like the page to be displayed in?">
+               <VBox.margin>
+                  <Insets left="15.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <HBox layoutX="10.0" layoutY="28.0" spacing="50.0">
+               <children>
+                  <CheckBox fx:id="landscapeCheckbox" mnemonicParsing="false" text="Landscape" />
+                  <CheckBox fx:id="portraitCheckbox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Portrait" />
+               </children>
+               <VBox.margin>
+                  <Insets left="35.0" right="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="Would you like a list of equipment printed with your lesson plan?">
+               <VBox.margin>
+                  <Insets left="15.0" right="10.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <HBox spacing="50.0">
+               <children>
+                  <CheckBox fx:id="yesEquipmentCheckbox" mnemonicParsing="false" text="Yes" />
+                  <CheckBox fx:id="noEquipmentCheckbox" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="No" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="35.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" spacing="100.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#setUpPrint" style="-fx-background-color: silver;" text="Ok">
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#cancelPrint" style="-fx-background-color: silver;" text="Cancel">
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </VBox>
    </children>
+   <effect>
+      <InnerShadow choke="0.2" height="15.0" radius="7.0" width="15.0">
+         <color>
+            <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+         </color>
+      </InnerShadow>
+   </effect>
 </AnchorPane>
