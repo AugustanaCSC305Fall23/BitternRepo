@@ -42,6 +42,7 @@
     -fx-background-color: #cae9ff;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
+    -fx-effect: innershadow(three-pass-box, #c0c0c0, 10, 0.2, 0, 0);
 }
 
 .button:hover {
@@ -54,6 +55,7 @@
     -fx-background-color: #bde0fe;
 }
 
+// used Bing AI for help with adding effect in stylesheet
 .lesson-plan-button {
     -fx-border-width: 1;
     -fx-border-color: black;
@@ -61,6 +63,18 @@
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     -fx-text-style: Georgia;
+    -fx-effect: innershadow(three-pass-box, #c0c0c0, 10, 0.2, 0, 0);
+}
+
+.card-browser-button {
+    -fx-border-width: 1;
+    -fx-border-color: black;
+    -fx-background-color: #014f86;
+    -fx-text-fill: #d3d3d3;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-text-style: Georgia;
+    -fx-effect: dropshadow(three-pass-box, #d3d3d3, 10, 0.2, 0, 0);
 }
 
 .list-view {
@@ -95,5 +109,11 @@
 .tree-view {
     -fx-background-color: #cae9ff;
     -fx-border-color: black;
+    -fx-border-width: 1;
+}
+
+.menu-bar {
+    -fx-font: 14pt "Georgia";
+    -fx-border-color: #808080;
     -fx-border-width: 1;
 }

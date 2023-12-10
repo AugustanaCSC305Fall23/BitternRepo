@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.ImageView?>
@@ -17,7 +18,7 @@
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="264.0" prefWidth="1093.0" text="Welcome To &#10;Gymnastics Planner Pro" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
          <font>
-            <Font name="Georgia" size="79.0" />
+            <Font name="Georgia Bold" size="80.0" />
          </font>
          <effect>
             <Lighting light="$null" specularConstant="0.86" specularExponent="25.87">
@@ -30,38 +31,38 @@
       <Separator prefWidth="200.0" style="-fx-background-color: black;" />
       <HBox alignment="CENTER" prefHeight="259.0" prefWidth="1094.0" spacing="50.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openCourseEditorAndCreator" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openCourseEditorAndCreator" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #808080; -fx-border-width: 0.5;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Georgia Bold" size="25.0" />
                </font>
                <effect>
-                  <DropShadow>
+                  <DropShadow height="40.0" radius="19.5" width="40.0">
                      <color>
-                        <Color red="0.017370371147990227" green="0.013918128795921803" blue="0.2210526317358017" />
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
                      </color>
                   </DropShadow>
                </effect>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Serif Bold" size="25.0" />
-               </font>
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color red="0.01568627543747425" green="0.01568627543747425" blue="0.21960784494876862" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10;" text="Exit" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #808080; -fx-border-width: 0.5;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Georgia Bold" size="25.0" />
                </font>
                <effect>
-                  <DropShadow>
+                  <DropShadow height="40.0" radius="19.5" width="40.0">
                      <color>
-                        <Color red="0.01568627543747425" green="0.01568627543747425" blue="0.21960784494876862" />
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #808080; -fx-border-width: 0.5;" text="Exit" textAlignment="CENTER">
+               <font>
+                  <Font name="Georgia Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="40.0" radius="19.5" width="40.0">
+                     <color>
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
                      </color>
                   </DropShadow>
                </effect>
@@ -72,4 +73,11 @@
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
+   <effect>
+      <InnerShadow choke="0.2" height="20.0" radius="9.5" width="20.0">
+         <color>
+            <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+         </color>
+      </InnerShadow>
+   </effect>
 </VBox>

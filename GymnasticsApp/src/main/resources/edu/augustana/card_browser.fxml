@@ -9,11 +9,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
@@ -58,7 +60,7 @@
                            </VBox.margin>
                         </Label>
                         <CheckComboBox fx:id="eventDropdown" prefWidth="200.0" showCheckedCount="true" />
-                        <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" style="-fx-background-color: silver;" text="Clear Filters" wrapText="true">
+                        <Button fx:id="clearFiltersBtn" mnemonicParsing="false" onAction="#clearFiltersAction" styleClass="card-browser-button" text="Clear Filters" wrapText="true">
                            <font>
                               <Font name="Georgia" size="24.0" />
                            </font>
@@ -72,6 +74,13 @@
                      </children>
                   </VBox>
                </children>
+               <effect>
+                  <InnerShadow choke="0.1" height="15.0" radius="7.0" width="15.0">
+                     <color>
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                     </color>
+                  </InnerShadow>
+               </effect>
             </AnchorPane>
             <AnchorPane fx:id="cardsAnchorPane" styleClass="medium-blue" stylesheets="@mainStylesheet.css">
                <children>
@@ -106,7 +115,7 @@
                         </Button>
                         <Label fx:id="eventLabel" alignment="TOP_CENTER" contentDisplay="CENTER" text="Label" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                            <font>
-                              <Font name="Georgia" size="36.0" />
+                              <Font name="Georgia Bold" size="36.0" />
                            </font>
                            <VBox.margin>
                               <Insets />
@@ -127,7 +136,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button fx:id="zoomBtn" mnemonicParsing="false" onAction="#zoomAction" style="-fx-background-color: silver;" text="Zoom in" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+                  <Button fx:id="zoomBtn" mnemonicParsing="false" onAction="#zoomAction" styleClass="card-browser-button" text="Zoom in" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
                      <font>
                         <Font name="Georgia" size="25.0" />
                      </font>
@@ -139,6 +148,13 @@
                      </tooltip>
                   </Button>
                </children>
+               <effect>
+                  <InnerShadow choke="0.1" height="15.0" radius="7.0" width="15.0">
+                     <color>
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                     </color>
+                  </InnerShadow>
+               </effect>
             </AnchorPane>
         </items>
       </SplitPane>
@@ -147,18 +163,22 @@
             <Font size="32.0" />
          </font>
       </TextField>
-      <Button fx:id="printCardBtn" alignment="CENTER" mnemonicParsing="false" onAction="#printSelectedCards" style="-fx-background-color: silver;" text="Print" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <Button fx:id="printCardBtn" alignment="CENTER" mnemonicParsing="false" onAction="#printSelectedCards" style="-fx-background-color: #6a99cb;" text="Print" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="Georgia" size="25.0" />
          </font>
-         <effect>
-            <DropShadow />
-         </effect>
          <tooltip>
             <Tooltip text="Print selected card(s)" />
          </tooltip>
+         <effect>
+            <DropShadow height="15.0" radius="7.0" width="15.0">
+               <color>
+                  <Color red="0.7529411911964417" green="0.7529411911964417" blue="0.7529411911964417" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
-      <Button fx:id="homeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: silver;" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <Button fx:id="homeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToHome" styleClass="card-browser-button" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font name="Georgia" size="25.0" />
          </font>
@@ -170,4 +190,11 @@
          </tooltip>
       </Button>
    </children>
+   <effect>
+      <InnerShadow choke="0.2" height="30.0" radius="14.5" width="30.0">
+         <color>
+            <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+         </color>
+      </InnerShadow>
+   </effect>
 </AnchorPane>
