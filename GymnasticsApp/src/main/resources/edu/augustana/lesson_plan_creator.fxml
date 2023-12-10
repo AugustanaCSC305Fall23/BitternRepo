@@ -390,6 +390,10 @@
                         </Button>
                      </children>
                   </HBox>
+                  <HBox fx:id="eventsHBox" alignment="CENTER" layoutX="82.0" layoutY="216.0" prefHeight="130.0" prefWidth="424.0" spacing="10.0">
+                     <children>
+                        <FlowPane fx:id="eventFlowPane" alignment="CENTER" prefHeight="130.0" prefWidth="441.0" />
+                     </children></HBox>
                </children>
                <effect>
                   <InnerShadow choke="0.01" height="10.0" radius="4.5" width="10.0">

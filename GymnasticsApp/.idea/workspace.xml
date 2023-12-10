@@ -10,6 +10,11 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/about_menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/about_menu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" afterDir="false" />
+      =======
+      <change beforePath="$PROJECT_DIR$/cardpacks/favoriteCards" beforeDir="false" afterPath="$PROJECT_DIR$/cardpacks/favoriteCards" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
+      &gt;&gt;&gt;&gt;&gt;&gt;&gt; dc7ab494bfea7c1aec761c81ec3be2bd5dba0f7e
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,14 +43,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "git-widget-placeholder": "aboutMenu",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.46896553"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="edu.augustana" />
@@ -109,6 +111,16 @@
       <updated>1702227486191</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" log-message="true" type="java-exception">
+          <properties class="java.util.ConcurrentModificationException" package="java.util" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/App_java$App.ic" NAME="App Coverage Results" MODIFIED="1700529996976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

@@ -356,7 +356,6 @@ public class CourseViewController {
         titleEditor.setTitleFieldText();
         courseListView.getItems().clear();
         addLessonsToCourseList();
-        undoRedoHandler.saveState(App.getCurrentCourse().clone());
     }
 
     @FXML void redo() {
@@ -364,7 +363,6 @@ public class CourseViewController {
         titleEditor.setTitleFieldText();
         courseListView.getItems().clear();
         addLessonsToCourseList();
-        undoRedoHandler.saveState(App.getCurrentCourse().clone());
     }
     public void moveLessonPlan(int direction){
         if (App.getCurrentCourse().getLessonPlanList().size() > 1) {
