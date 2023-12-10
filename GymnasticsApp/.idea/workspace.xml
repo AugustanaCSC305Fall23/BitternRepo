@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="f1d5fc7b-3755-4cfb-aab3-4df18796afe4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/LessonPlan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/course_view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/HomeScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/HomeScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/PrintPreviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/PrintPreviewController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +23,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "main"
+    "git-widget-placeholder": "exceptionHandling",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java"
   }
 }]]></component>
   <component name="TaskManager">

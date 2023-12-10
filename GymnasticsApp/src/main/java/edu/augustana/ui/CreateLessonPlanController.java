@@ -6,6 +6,7 @@ import edu.augustana.filters.*;
 import edu.augustana.structures.EventSubcategory;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -104,7 +105,7 @@ public class CreateLessonPlanController {
     private final FilterHandler filterHandler = new FilterHandler();
 
     @FXML
-    private void initialize() throws MalformedURLException {
+    private void initialize() {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         editEventHeadingTextField.setVisible(false);
@@ -112,7 +113,13 @@ public class CreateLessonPlanController {
             createDropdowns();
         }
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
-            CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
+            CardView newCardView = null;
+            try {
+                newCardView = new CardView(fullCardCollection.getCardByID(cardId));
+            } catch (MalformedURLException e) {
+                App.giveWarning("Card images couldn't be loaded. Please check your card packs folders and make sure your thumbnails are of type .jpg");
+                Platform.exit();
+            }
             cardViewList.add(newCardView);
         }
         cardsTabPane.getSelectionModel().select(allCardsTab);
@@ -158,13 +165,7 @@ public class CreateLessonPlanController {
             cardView.setOnMouseEntered(e -> {
                 cardView.setCursor(Cursor.HAND);
                 delayAnim.playFromStart();
-                delayAnim.setOnFinished(event -> {
-                    try {
-                        zoomInOnImage(cardView);
-                    } catch (MalformedURLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                delayAnim.setOnFinished(event -> zoomInOnImage(cardView));
             });
 
             cardView.setOnMouseExited(e -> {
@@ -187,9 +188,10 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void zoomInOnImage(CardView cardView) throws MalformedURLException {
-        eventLabel.setText(cardView.getCard().getEvent());
-        zoomedInCard.setImage(cardView.getCard().getImage());
+    @FXML void zoomInOnImage(CardView cardView) {
+        try {
+            zoomedInCard.setImage(cardView.getCard().getImage());
+            eventLabel.setText(cardView.getCard().getEvent());
             String equipment = "Equipment: ";
             for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
                 if (i != 0) {
@@ -205,6 +207,9 @@ public class CreateLessonPlanController {
                     child.setEffect(blur);
                 }
             }
+        } catch (MalformedURLException e) {
+            zoomedInCardVBox.setVisible(false);
+        }
     }
 
     @FXML void exitZoomedView() {
@@ -214,7 +219,7 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void returnToCourseHandler() throws IOException {
+    @FXML void returnToCourseHandler() {
         App.setRoot("course_view");
     }
 
@@ -323,12 +328,16 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void addCardsToFavorites() throws IOException {
+    @FXML void addCardsToFavorites() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
-                App.getFavoriteCards().addFavorite(card);
-                cardView.setEffect(null);
+                try {
+                    App.getFavoriteCards().addFavorite(card);
+                    cardView.setEffect(null);
+                } catch (IOException e) {
+                    App.giveWarning("Couldn't access favorites.");
+                }
             }
             selectedCards.clear();
             disableButtons();
@@ -337,17 +346,21 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void removeFavoriteAction() throws IOException {
+    @FXML void removeFavoriteAction() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
-                App.getFavoriteCards().deleteFavorite(card);
+                try {
+                    App.getFavoriteCards().deleteFavorite(card);
+                } catch (IOException e) {
+                    App.giveWarning("Couldn't access favorites.");
+                }
                 App.getFavoriteCards().removeFavoriteCardView(cardView);
                 favoriteCardsFlowPane.getChildren().remove(cardView);
             }
             selectedCards.clear();
         } else {
-            giveWarning("No card selected.");
+            App.giveWarning("No card selected.");
         }
     }
 
@@ -374,13 +387,6 @@ public class CreateLessonPlanController {
         undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
-    private void giveWarning(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     @FXML
     void printLessonPlanHandler() {
         for (Node child : printSetupVBox.getChildren()) {
@@ -402,7 +408,7 @@ public class CreateLessonPlanController {
         noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
     }
 
-    @FXML void setUpPrint() throws IOException {
+    @FXML void setUpPrint() {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
@@ -414,7 +420,7 @@ public class CreateLessonPlanController {
         } else if (textOnlyCheckbox.isSelected()) {
             cardDisplay = false;
         } else {
-            giveWarning("Please make a selection for each prompt");
+            App.giveWarning("Please make a selection for each prompt");
             printLessonPlanHandler();
         }
 
@@ -423,7 +429,7 @@ public class CreateLessonPlanController {
         } else if (portraitCheckbox.isSelected()) {
             landscapeDisplay = false;
         } else {
-            giveWarning("Please make a selection for each prompt");
+            App.giveWarning("Please make a selection for each prompt");
             printLessonPlanHandler();
         }
 
@@ -432,7 +438,7 @@ public class CreateLessonPlanController {
         } else if (noEquipmentCheckbox.isSelected()) {
             equipmentDisplay = false;
         } else {
-            giveWarning("Please make a selection for each prompt");
+            App.giveWarning("Please make a selection for each prompt");
             printLessonPlanHandler();
         }
 

@@ -11,6 +11,7 @@ import edu.augustana.App;
 import edu.augustana.model.Card;
 import edu.augustana.model.ParseLessonPlanPrinting;
 import edu.augustana.model.PrintStaging;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -18,10 +19,7 @@ import javafx.print.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
@@ -36,12 +34,6 @@ public class PrintPreviewController {
     // which heavily influenced the creation of this class.
 
     // ---------- FXML Data Fields ----------
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
     @FXML
     private Button printAllButton;
 
@@ -61,16 +53,8 @@ public class PrintPreviewController {
 
     private ParseLessonPlanPrinting lessonPlan;
 
-
-    // ---------- Experimental Data Fields ----------
-
     @FXML
-    private Group mainGroup;
-
-
-
-    @FXML
-    void initialize() throws MalformedURLException {
+    void initialize() {
         printerJob = PrinterJob.createPrinterJob();
         if (PrintStaging.getFXML().equals("card_browser")) {
 
@@ -93,7 +77,12 @@ public class PrintPreviewController {
             mainPane.getChildren().addAll(pagination);
 
         } else {
-            lessonPlan = new ParseLessonPlanPrinting(printerJob, false);
+            try {
+                lessonPlan = new ParseLessonPlanPrinting(printerJob, false);
+            } catch (MalformedURLException e) {
+                App.giveWarning("Failed to print lesson plans");
+                Platform.exit();
+            }
             ArrayList<Pane> pages = lessonPlan.getPages();
             int numPages = lessonPlan.getPages().size();
             Pagination pagination = new Pagination(numPages);
@@ -112,18 +101,21 @@ public class PrintPreviewController {
     }
 
     @FXML
-    void printAllCards(ActionEvent event) throws MalformedURLException {
+    void printAllCards() {
         Window window = mainPane.getScene().getWindow();
 
-        ParseLessonPlanPrinting lessonPlanPrint = new ParseLessonPlanPrinting(printerJob, true);
-
-        PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlanPrint);
-        endPrinting();
-
+        ParseLessonPlanPrinting lessonPlanPrint = null;
+        try {
+            lessonPlanPrint = new ParseLessonPlanPrinting(printerJob, true);
+            PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlanPrint);
+            endPrinting();
+        } catch (MalformedURLException e) {
+            App.giveWarning("Failed to print cards");
+        }
     }
 
     @FXML
-    void returnToPrevScreen(ActionEvent event) throws IOException {
+    void returnToPrevScreen() {
         App.setRoot(PrintStaging.getFXML());
     }
 
@@ -134,5 +126,4 @@ public class PrintPreviewController {
         printAllButton.setVisible(false);
         mainPane.setVisible(false);
     }
-
 }

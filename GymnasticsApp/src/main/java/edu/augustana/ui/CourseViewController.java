@@ -52,13 +52,7 @@ public class CourseViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        courseListView.setOnMouseClicked(e -> {
-            try {
-                checkNumClicks(e);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+        courseListView.setOnMouseClicked(this::checkNumClicks);
         courseListView.selectionModelProperty().addListener((obs,oldVal,newVal) -> checkIfItemSelected());
         courseModel = new CourseModel();
         addLessonsToCourseList();
@@ -89,11 +83,11 @@ public class CourseViewController {
         lessonPlanTreeView.setEditable(false);
     }
 
-    @FXML void goToHome() throws IOException {
+    @FXML void goToHome() {
         App.setRoot("home");
     }
 
-    private void checkNumClicks(MouseEvent e) throws IOException {
+    private void checkNumClicks(MouseEvent e) {
         if (e.getTarget() != null) {
             if (e.getClickCount() == 2) {
                 editLessonPlanHandler();
@@ -198,14 +192,18 @@ public class CourseViewController {
         setUpRecentFilesMenu();
     }
 
-    @FXML void createLessonPlanHandler() throws IOException {
+    @FXML void createLessonPlanHandler() {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
         App.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
     }
 
-    private void openRecentFileHandler(String filePath) throws IOException {
-        courseModel.openRecentFile(filePath);
+    private void openRecentFileHandler(String filePath) {
+        try {
+            courseModel.openRecentFile(filePath);
+        } catch (IOException e) {
+            App.giveWarning("Failed to open file");
+        }
         courseTitleField.setText(App.getCurrentCourse().getTitle());
         courseListView.getItems().clear();
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
@@ -228,18 +226,14 @@ public class CourseViewController {
             if (!RecentFilesManager.getUserPreferences().get(recentFileNum, "empty").equals("empty")) {
                 MenuItem recentFile = new MenuItem(RecentFilesManager.getUserPreferences().get(recentFileNum, "empty"));
                 recentFile.setOnAction(event -> {
-                    try {
-                        openRecentFileHandler(recentFile.getText());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    openRecentFileHandler(recentFile.getText());
                 });
                 recentFilesMenu.getItems().add(recentFile);
             }
         }
     }
 
-    @FXML void editLessonPlanHandler() throws IOException {
+    @FXML void editLessonPlanHandler() {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
@@ -308,7 +302,7 @@ public class CourseViewController {
         noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
     }
 
-    @FXML void setUpPrint() throws IOException {
+    @FXML void setUpPrint() {
         LessonPlan lessonPlanToPrint = courseListView.getSelectionModel().getSelectedItem();
         Map<String, List<Card>> eventToCardMap = lessonPlanToPrint.getMapOfCardsFromID(lessonPlanToPrint.getLessonPlanIndexedMap());
         String lessonPlanTitle = lessonPlanToPrint.getTitle();
@@ -321,7 +315,7 @@ public class CourseViewController {
         } else if (textOnlyCheckbox.isSelected()) {
             cardDisplay = false;
         } else {
-            giveWarning("Please make a selection for each prompt");
+            App.giveWarning("Please make a selection for each prompt");
             printLessonPlanHandler();
         }
 
@@ -330,7 +324,7 @@ public class CourseViewController {
         } else if (portraitCheckbox.isSelected()) {
             landscapeDisplay = false;
         } else {
-            giveWarning("Please make a selection for each prompt");
+            App.giveWarning("Please make a selection for each prompt");
             printLessonPlanHandler();
         }
 
@@ -339,7 +333,7 @@ public class CourseViewController {
         } else if (noEquipmentCheckbox.isSelected()) {
             equipmentDisplay = false;
         } else {
-            giveWarning("Please make a selection for each prompt");
+            App.giveWarning("Please make a selection for each prompt");
             printLessonPlanHandler();
         }
 
@@ -407,12 +401,4 @@ public class CourseViewController {
             courseListView.getItems().add(lessonPlan);
         }
     }
-
-    private void giveWarning(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 }
