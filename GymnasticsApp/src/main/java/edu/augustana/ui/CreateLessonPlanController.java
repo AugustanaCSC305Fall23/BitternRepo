@@ -71,6 +71,14 @@ public class CreateLessonPlanController {
     @FXML private VBox upArrow;
     @FXML private VBox downArrow;
 
+    @FXML private VBox printSetupVBox;
+    @FXML private CheckBox cardImagesCheckbox;
+    @FXML private CheckBox textOnlyCheckbox;
+    @FXML private CheckBox landscapeCheckbox;
+    @FXML private CheckBox portraitCheckbox;
+    @FXML private CheckBox yesEquipmentCheckbox;
+    @FXML private CheckBox noEquipmentCheckbox;
+
 
     // zoomed-in card elements
     @FXML private VBox zoomedInCardVBox;
@@ -82,7 +90,7 @@ public class CreateLessonPlanController {
 
     // filter choices
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
-            "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
+            "Horizontal Bar", "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
     public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
     public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
     public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
@@ -102,7 +110,7 @@ public class CreateLessonPlanController {
     private final FilterHandler filterHandler = new FilterHandler();
 
     @FXML
-    private void initialize() throws MalformedURLException {
+    private void initialize() {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         eventsHBox.setVisible(false);
@@ -112,7 +120,13 @@ public class CreateLessonPlanController {
             createDropdowns();
         }
         for (String cardId : fullCardCollection.getSetOfCardIds()) {
-            CardView newCardView = new CardView(fullCardCollection.getCardByID(cardId));
+            CardView newCardView = null;
+            try {
+                newCardView = new CardView(fullCardCollection.getCardByID(cardId));
+            } catch (MalformedURLException e) {
+                App.giveWarning("Card images couldn't be loaded. Please check your card packs folders and make sure your thumbnails are of type .jpg");
+                Platform.exit();
+            }
             cardViewList.add(newCardView);
         }
         cardsTabPane.getSelectionModel().select(allCardsTab);
@@ -122,7 +136,6 @@ public class CreateLessonPlanController {
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
         titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentLessonPlan().clone());
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         disableButtons();
         if (App.getCurrentLessonPlan().getCustomNote() != null) {
             customNoteBtn.setText("Edit Custom Note");
@@ -158,13 +171,7 @@ public class CreateLessonPlanController {
             cardView.setOnMouseEntered(e -> {
                 cardView.setCursor(Cursor.HAND);
                 delayAnim.playFromStart();
-                delayAnim.setOnFinished(event -> {
-                    try {
-                        zoomInOnImage(cardView);
-                    } catch (MalformedURLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                delayAnim.setOnFinished(event -> zoomInOnImage(cardView));
             });
 
             cardView.setOnMouseExited(e -> {
@@ -187,9 +194,10 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void zoomInOnImage(CardView cardView) throws MalformedURLException {
-        eventLabel.setText(cardView.getCard().getEvent());
-        zoomedInCard.setImage(cardView.getCard().getImage());
+    @FXML void zoomInOnImage(CardView cardView) {
+        try {
+            zoomedInCard.setImage(cardView.getCard().getImage());
+            eventLabel.setText(cardView.getCard().getEvent());
             String equipment = "Equipment: ";
             for (int i = 0; i < cardView.getCard().getEquipment().length; i++) {
                 if (i != 0) {
@@ -205,6 +213,9 @@ public class CreateLessonPlanController {
                     child.setEffect(blur);
                 }
             }
+        } catch (MalformedURLException e) {
+            zoomedInCardVBox.setVisible(false);
+        }
     }
 
     @FXML void exitZoomedView() {
@@ -214,7 +225,7 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void returnToCourseHandler() throws IOException {
+    @FXML void returnToCourseHandler() {
         App.setRoot("course_view");
     }
 
@@ -316,6 +327,8 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
+            System.out.println("undo stack after add: " + undoRedoHandler.getUndoStack());
+            System.out.println();
             selectedCards.clear();
             disableButtons();
             lessonTitleField.deselect();
@@ -323,12 +336,16 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void addCardsToFavorites() throws IOException {
+    @FXML void addCardsToFavorites() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
-                App.getFavoriteCards().addFavorite(card);
-                cardView.setEffect(null);
+                try {
+                    App.getFavoriteCards().addFavorite(card);
+                    cardView.setEffect(null);
+                } catch (IOException e) {
+                    App.giveWarning("Couldn't access favorites.");
+                }
             }
             selectedCards.clear();
             disableButtons();
@@ -337,17 +354,21 @@ public class CreateLessonPlanController {
         }
     }
 
-    @FXML void removeFavoriteAction() throws IOException {
+    @FXML void removeFavoriteAction() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
                 Card card = cardView.getCard();
-                App.getFavoriteCards().deleteFavorite(card);
+                try {
+                    App.getFavoriteCards().deleteFavorite(card);
+                } catch (IOException e) {
+                    App.giveWarning("Couldn't access favorites.");
+                }
                 App.getFavoriteCards().removeFavoriteCardView(cardView);
                 favoriteCardsFlowPane.getChildren().remove(cardView);
             }
             selectedCards.clear();
         } else {
-            giveWarning("No card selected.");
+            App.giveWarning("No card selected.");
         }
     }
 
@@ -364,43 +385,75 @@ public class CreateLessonPlanController {
         undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
-    }
-
-    private void giveWarning(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     @FXML
-    void printLessonPlan() throws IOException {
+    void printLessonPlanHandler() {
+        for (Node child : printSetupVBox.getChildren()) {
+            if (child instanceof CheckBox) {
+                CheckBox checkbox = (CheckBox) child;
+                checkbox.setSelected(false);
+            }
+        }
+        printSetupVBox.setVisible(true);
+        setCheckBoxActions();
+    }
+
+    private void setCheckBoxActions() {
+        cardImagesCheckbox.setOnAction(e -> textOnlyCheckbox.setSelected(false));
+        textOnlyCheckbox.setOnAction(e -> cardImagesCheckbox.setSelected(false));
+        landscapeCheckbox.setOnAction(e -> portraitCheckbox.setSelected(false));
+        portraitCheckbox.setOnAction(e -> landscapeCheckbox.setSelected(false));
+        yesEquipmentCheckbox.setOnAction(e -> noEquipmentCheckbox.setSelected(false));
+        noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
+    }
+
+    @FXML void setUpPrint() {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
 
-        boolean cardDisplay;
-        boolean landscapeDisplay = false;
-
-        // If true, show cards. Else, show text only
-        cardDisplay = PrintStaging.promptCardDisplay();
-
-        // If true shows landscape mode. Else, show portrait mode
-        if (cardDisplay) {
-            landscapeDisplay = PrintStaging.promptPageFormat();
+        boolean cardDisplay = true;
+        boolean landscapeDisplay = true;
+        boolean equipmentDisplay = true;
+        if (cardImagesCheckbox.isSelected()) {
+            cardDisplay = true;
+        } else if (textOnlyCheckbox.isSelected()) {
+            cardDisplay = false;
+        } else {
+            App.giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
         }
 
-        boolean equipmentDisplay = PrintStaging.promptForEquipment();
+        if (landscapeCheckbox.isSelected()) {
+            landscapeDisplay = true;
+        } else if (portraitCheckbox.isSelected()) {
+            landscapeDisplay = false;
+        } else {
+            App.giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        if (yesEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = true;
+        } else if (noEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = false;
+        } else {
+            App.giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
 
         new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay, equipmentDisplay);
         App.setRoot("print_preview");
+    }
+
+    @FXML void cancelPrint() {
+        printSetupVBox.setVisible(false);
     }
 
     @FXML
@@ -437,32 +490,51 @@ public class CreateLessonPlanController {
             moveBtn.setVisible(false);
             int selectedIndex = lessonPlanTreeView.getSelectionModel().getSelectedIndex();
             if (selectedIndex != 0) {
-                upArrow.setOnMouseClicked(e -> moveEventSubheadingAction(-1));
-                upArrow.setCursor(Cursor.HAND);
+                upArrow.setOnMouseClicked(e -> reorderEventSubheadings(-1));
+                enableArrowActions(upArrow);
             } else {
-                disableArrowButton(upArrow);
+                disableArrow(upArrow);
             }
-            downArrow.setOnMouseClicked(e -> moveEventSubheadingAction(1));
-            downArrow.setCursor(Cursor.HAND);
+            downArrow.setOnMouseClicked(e -> reorderEventSubheadings(1));
+            enableArrowActions(downArrow);
             deleteBtn.setDisable(true);
         } else if (lessonPlanTreeView.getSelectionModel().isEmpty()) {
             editEventHeadingBtn.setVisible(false);
             moveBtn.setVisible(false);
-            disableArrowButton(upArrow);
-            disableArrowButton(downArrow);
+            disableArrow(upArrow);
+            disableArrow(downArrow);
             deleteBtn.setDisable(true);
         } else if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
             editEventHeadingBtn.setDisable(true);
             moveBtn.setVisible(true);
-            upArrow.setOnMouseClicked(e -> moveEventSubheadingAction(-1));
-            downArrow.setOnMouseClicked(e -> moveEventSubheadingAction(1));
+            upArrow.setOnMouseClicked(e -> reorderCards(-1));
+            downArrow.setOnMouseClicked(e -> reorderCards(1));
+            enableArrowActions(upArrow);
+            enableArrowActions(downArrow);
             deleteBtn.setDisable(false);
         }
     }
 
-    private void disableArrowButton(VBox arrowBtn) {
-        arrowBtn.setOnMouseClicked(null);
-        arrowBtn.setCursor(Cursor.DEFAULT);
+    private void enableArrowActions(VBox arrow) {
+        arrow.setOnMouseEntered(e -> {
+            setArrowScale(arrow, 1.25);
+        });
+        arrow.setOnMouseExited(e -> {
+            setArrowScale(arrow, 1);
+        });
+        arrow.setCursor(Cursor.HAND);
+    }
+
+    private void setArrowScale(VBox arrow, double scale) {
+        arrow.setScaleX(scale);
+        arrow.setScaleY(scale);
+    }
+
+    private void disableArrow(VBox arrow) {
+        arrow.setOnMouseClicked(null);
+        arrow.setOnMouseEntered(null);
+        arrow.setOnMouseExited(null);
+        arrow.setCursor(Cursor.DEFAULT);
     }
 
     @FXML void deselectTreeViewItem() {
@@ -490,15 +562,19 @@ public class CreateLessonPlanController {
         enterCustomNoteVBox.setVisible(false);
     }
 
-    private void moveEventSubheadingAction(int direction) {
+    private void reorderEventSubheadings(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
         if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
             EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
-        }else{
-            String displayTitle = eventHeading;
-            String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(displayTitle);
+        }
+    }
+
+    private void reorderCards(int direction) {
+        String cardName = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+        if (App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardName) < 0){
+            String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(cardName);
             Card cardFromID = CardDatabase.getFullCardCollection().getCardByID(cardID);
             EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardFromID.getEvent()));
             treeViewManager.moveCard(subcategory, cardID, direction, root);

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
@@ -11,6 +13,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,6 +23,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -38,46 +43,81 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <CheckComboBox id="dropdown" fx:id="genderDropdown" prefWidth="160.0" styleClass="dropdown" stylesheets="@mainStylesheet.css" title="Gender">
+                  <CheckComboBox fx:id="genderDropdown" prefWidth="160.0" stylesheets="@mainStylesheet.css" title="Gender">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <effect>
+                        <InnerShadow choke="0.02" height="10.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                           </color>
+                        </InnerShadow>
+                     </effect>
                   </CheckComboBox>
-                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="170.0" title="Model Gender" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <CheckComboBox fx:id="eventDropdown" prefWidth="170.0" title="Event" GridPane.columnIndex="1" />
-                  <CheckComboBox fx:id="levelDropdown" prefWidth="160.0" title="Level" GridPane.rowIndex="1" />
+                  <CheckComboBox fx:id="modelSexDropdown" prefWidth="170.0" title="Model Gender" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <effect>
+                        <InnerShadow choke="0.02" height="10.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                           </color>
+                        </InnerShadow>
+                     </effect></CheckComboBox>
+                  <CheckComboBox fx:id="eventDropdown" prefWidth="170.0" title="Event" GridPane.columnIndex="1">
+                     <effect>
+                        <InnerShadow choke="0.02" height="10.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                           </color>
+                        </InnerShadow>
+                     </effect></CheckComboBox>
+                  <CheckComboBox fx:id="levelDropdown" prefWidth="160.0" title="Level" GridPane.rowIndex="1">
+                     <effect>
+                        <InnerShadow choke="0.02" height="10.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                           </color>
+                        </InnerShadow>
+                     </effect></CheckComboBox>
                </children>
             </GridPane>
             <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" prefWidth="80.0" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Clear Filters" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="15.0">
                <font>
-                  <Font name="Georgia" size="16.0" />
+                  <Font name="Georgia" size="18.0" />
                </font>
             </Button>
-            <Label text="Search: " textFill="WHITE" AnchorPane.leftAnchor="575.0" AnchorPane.topAnchor="15.0">
+            <Label text="Search: " textFill="WHITE" AnchorPane.leftAnchor="575.0" AnchorPane.topAnchor="25.0">
                <font>
                   <Font size="24.0" />
                </font>
+               <effect>
+                  <DropShadow height="10.0" radius="4.5" width="10.0">
+                     <color>
+                        <Color red="0.6627451181411743" green="0.6627451181411743" blue="0.6627451181411743" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </Label>
-            <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="385.0" AnchorPane.leftAnchor="655.0" AnchorPane.topAnchor="10.0">
+            <TextField fx:id="searchField" onKeyPressed="#searchAction" prefWidth="385.0" AnchorPane.leftAnchor="655.0" AnchorPane.topAnchor="20.0">
                <font>
                   <Font size="21.0" />
                </font>
             </TextField>
          </children>
       </AnchorPane>
-      <Button mnemonicParsing="false" onAction="#undo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Undo" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="20.0">
+      <Button mnemonicParsing="false" onAction="#undo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Undo" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="25.0">
          <font>
-            <Font name="Georgia" size="14.0" />
+            <Font name="Georgia" size="16.0" />
          </font>
       </Button>
-      <Button mnemonicParsing="false" onAction="#redo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Redo" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="20.0">
+      <Button mnemonicParsing="false" onAction="#redo" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Redo" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="25.0">
          <font>
-            <Font name="Georgia" size="14.0" />
+            <Font name="Georgia" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <Button fx:id="returnToCourseBtn" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#returnToCourseHandler" style="-fx-background-color: Lavender;" text="Back" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>
-            <Font name="Georgia" size="21.0" />
+            <Font name="Georgia" size="25.0" />
          </font>
          <tooltip>
             <Tooltip text="Return to course outline">
@@ -102,7 +142,14 @@
                                           <FlowPane fx:id="allCardsFlowPane" hgap="10.0" prefWrapLength="850.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" vgap="10.0">
                                              <padding>
                                                 <Insets left="12.0" />
-                                             </padding></FlowPane>
+                                             </padding>
+                                             <effect>
+                                                <InnerShadow choke="0.02" height="15.0" radius="7.0" width="15.0">
+                                                   <color>
+                                                      <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                                                   </color>
+                                                </InnerShadow>
+                                             </effect></FlowPane>
                                        </content>
                                     </ScrollPane>
                                  </children>
@@ -126,6 +173,13 @@
                         </content>
                       </Tab>
                     </tabs>
+                     <effect>
+                        <InnerShadow choke="0.02" height="10.0" radius="4.5" width="10.0">
+                           <color>
+                              <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                           </color>
+                        </InnerShadow>
+                     </effect>
                   </TabPane>
                   <HBox alignment="BOTTOM_CENTER" spacing="80.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <children>
@@ -176,7 +230,7 @@
             </AnchorPane>
             <AnchorPane fx:id="lessonOutlinePane" minHeight="0.0" minWidth="0.0" onMouseClicked="#deselectTreeViewItem" styleClass="medium-blue" stylesheets="@mainStylesheet.css" SplitPane.resizableWithParent="false">
                <children>
-                  <TextField fx:id="lessonTitleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                  <TextField fx:id="lessonTitleField" alignment="CENTER" editable="false" promptText="(Enter Lesson Title)" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="586.8" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Italic" size="36.0" />
                      </font>
@@ -188,7 +242,14 @@
                         </Tooltip>
                      </tooltip>
                   </TextField>
-                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="450.0" prefWidth="435.0" stylesheets="@mainStylesheet.css" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="80.0" />
+                  <TreeView fx:id="lessonPlanTreeView" layoutX="82.0" layoutY="199.0" prefHeight="450.0" prefWidth="435.0" stylesheets="@mainStylesheet.css" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="85.0">
+                     <effect>
+                        <DropShadow height="15.0" radius="7.0" width="15.0">
+                           <color>
+                              <Color red="0.6627451181411743" green="0.6627451181411743" blue="0.6627451181411743" />
+                           </color>
+                        </DropShadow>
+                     </effect></TreeView>
                   <HBox alignment="CENTER" spacing="70.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeCardFromLessonPlan" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Delete Card">
@@ -208,7 +269,7 @@
                               <Font name="Georgia" size="18.0" />
                            </font>
                         </Button>
-                        <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlan" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Print">
+                        <Button fx:id="printBtn" mnemonicParsing="false" onAction="#printLessonPlanHandler" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Print">
                            <font>
                               <Font name="Georgia" size="18.0" />
                            </font>
@@ -231,6 +292,9 @@
                            </VBox.margin>
                         </Rectangle>
                      </children>
+                     <effect>
+                        <DropShadow height="8.0" radius="3.5" width="8.0" />
+                     </effect>
                   </VBox>
                   <VBox fx:id="downArrow" layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="285.0">
                      <children>
@@ -245,6 +309,9 @@
                            </VBox.margin>
                         </Polygon>
                      </children>
+                     <effect>
+                        <DropShadow height="8.0" radius="3.5" width="8.0" />
+                     </effect>
                   </VBox>
                   <VBox fx:id="zoomedInCardVBox" alignment="CENTER" spacing="10.0" style="-fx-border-color: black;" styleClass="dark-blue" stylesheets="@mainStylesheet.css" visible="false" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="40.0">
                      <children>
@@ -328,6 +395,13 @@
                         <FlowPane fx:id="eventFlowPane" alignment="CENTER" prefHeight="130.0" prefWidth="441.0" />
                      </children></HBox>
                </children>
+               <effect>
+                  <InnerShadow choke="0.01" height="10.0" radius="4.5" width="10.0">
+                     <color>
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                     </color>
+                  </InnerShadow>
+               </effect>
             </AnchorPane>
          </items>
       </SplitPane>
@@ -369,5 +443,98 @@
             <Insets bottom="20.0" left="30.0" />
          </padding>
       </VBox>
+      <VBox fx:id="printSetupVBox" layoutX="10.0" layoutY="10.0" spacing="15.0" style="-fx-background-color: #6a99cb; -fx-border-color: black; -fx-border-width: 2;" styleClass="list-cell" visible="false" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Print Setup" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets left="190.0" top="15.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Georgia Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label text="What would you like the page to display?">
+               <VBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox spacing="50.0">
+               <children>
+                  <CheckBox fx:id="cardImagesCheckbox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Card Images" />
+                  <CheckBox fx:id="textOnlyCheckbox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Text Only" />
+               </children>
+               <VBox.margin>
+                  <Insets left="35.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="What orientation would you like the page to be displayed in?">
+               <VBox.margin>
+                  <Insets left="15.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <HBox layoutX="10.0" layoutY="28.0" spacing="50.0">
+               <children>
+                  <CheckBox fx:id="landscapeCheckbox" mnemonicParsing="false" text="Landscape" />
+                  <CheckBox fx:id="portraitCheckbox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Portrait" />
+               </children>
+               <VBox.margin>
+                  <Insets left="35.0" right="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="Would you like a list of equipment printed with your lesson plan?">
+               <VBox.margin>
+                  <Insets left="15.0" right="10.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <HBox spacing="50.0">
+               <children>
+                  <CheckBox fx:id="yesEquipmentCheckbox" mnemonicParsing="false" text="Yes" />
+                  <CheckBox fx:id="noEquipmentCheckbox" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="No" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="35.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" spacing="100.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#setUpPrint" style="-fx-background-color: silver;" text="Ok">
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#cancelPrint" style="-fx-background-color: silver;" text="Cancel">
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </VBox>
    </children>
+   <effect>
+      <InnerShadow choke="0.2" height="25.0" radius="12.0" width="25.0">
+         <color>
+            <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+         </color>
+      </InnerShadow>
+   </effect>
 </AnchorPane>

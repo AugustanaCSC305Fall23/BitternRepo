@@ -11,6 +11,7 @@ import edu.augustana.model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +32,15 @@ public class CourseViewController {
     @FXML private Menu recentFilesMenu;
 
     @FXML private TreeView<String> lessonPlanTreeView;
+
+    @FXML private VBox printSetupVBox;
+    @FXML private CheckBox cardImagesCheckbox;
+    @FXML private CheckBox textOnlyCheckbox;
+    @FXML private CheckBox landscapeCheckbox;
+    @FXML private CheckBox portraitCheckbox;
+    @FXML private CheckBox yesEquipmentCheckbox;
+    @FXML private CheckBox noEquipmentCheckbox;
+
     private TreeItem<String> root = new TreeItem<>();
     private TreeViewManager treeViewManager;
 
@@ -42,13 +52,8 @@ public class CourseViewController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        courseListView.setOnMouseClicked(e -> {
-            try {
-                checkNumClicks(e);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+        courseListView.setOnMouseClicked(this::checkNumClicks);
+        courseListView.selectionModelProperty().addListener((obs,oldVal,newVal) -> checkIfItemSelected());
         courseModel = new CourseModel();
         addLessonsToCourseList();
         undoRedoHandler = new UndoRedoHandler(App.getCurrentCourse());
@@ -64,8 +69,6 @@ public class CourseViewController {
                 }
             }
         }
-        upArrow.setOnMouseClicked(e -> moveLessonPlan(-1));
-        downArrow.setOnMouseClicked(e -> moveLessonPlan(1));
     }
 
     private void displayTreeView(LessonPlan lessonPlan){
@@ -80,11 +83,11 @@ public class CourseViewController {
         lessonPlanTreeView.setEditable(false);
     }
 
-    @FXML void goToHome() throws IOException {
+    @FXML void goToHome() {
         App.setRoot("home");
     }
 
-    private void checkNumClicks(MouseEvent e) throws IOException {
+    private void checkNumClicks(MouseEvent e) {
         if (e.getTarget() != null) {
             if (e.getClickCount() == 2) {
                 editLessonPlanHandler();
@@ -100,11 +103,39 @@ public class CourseViewController {
             LessonPlan selectedLesson = courseListView.getSelectionModel().getSelectedItem();
             courseModel.setSelectedLessonPlan(selectedLesson);
             displayTreeView(selectedLesson);
+            upArrow.setOnMouseClicked(e -> moveLessonPlan(-1));
+            downArrow.setOnMouseClicked(e -> moveLessonPlan(1));
+            enableArrowActions(upArrow);
+            enableArrowActions(downArrow);
         } else {
             disableButtons(true);
             courseModel.setSelectedLessonPlan(null);
             lessonPlanTreeView.setVisible(false);
+            disableArrow(upArrow);
+            disableArrow(downArrow);
         }
+    }
+
+    private void enableArrowActions(VBox arrow) {
+        arrow.setOnMouseEntered(e -> {
+            setArrowScale(arrow, 1.25);
+        });
+        arrow.setOnMouseExited(e -> {
+            setArrowScale(arrow, 1);
+        });
+        arrow.setCursor(Cursor.HAND);
+    }
+
+    private void setArrowScale(VBox arrow, double scale) {
+        arrow.setScaleX(scale);
+        arrow.setScaleY(scale);
+    }
+
+    private void disableArrow(VBox arrow) {
+        arrow.setOnMouseClicked(null);
+        arrow.setOnMouseEntered(null);
+        arrow.setOnMouseExited(null);
+        arrow.setCursor(Cursor.DEFAULT);
     }
 
     private void disableButtons(boolean disable) {
@@ -118,6 +149,7 @@ public class CourseViewController {
         courseListView.getSelectionModel().clearSelection();
         lessonPlanTreeView.setVisible(false);
         disableButtons(true);
+        checkIfItemSelected();
     }
 
     @FXML void createNewCourseHandler() {
@@ -160,14 +192,18 @@ public class CourseViewController {
         setUpRecentFilesMenu();
     }
 
-    @FXML void createLessonPlanHandler() throws IOException {
+    @FXML void createLessonPlanHandler() {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
         App.setCurrentLessonPlan(lessonPlan);
         App.setRoot("lesson_plan_creator");
     }
 
-    @FXML void openRecentFileHandler(String filePath) throws IOException {
-        courseModel.openRecentFile(filePath);
+    private void openRecentFileHandler(String filePath) {
+        try {
+            courseModel.openRecentFile(filePath);
+        } catch (IOException e) {
+            App.giveWarning("Failed to open file");
+        }
         courseTitleField.setText(App.getCurrentCourse().getTitle());
         courseListView.getItems().clear();
         for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
@@ -181,7 +217,7 @@ public class CourseViewController {
         Platform.exit();
     }
 
-    @FXML void setUpRecentFilesMenu() {
+    private void setUpRecentFilesMenu() {
         //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/MenuItem.html
         //https://stackoverflow.com/questions/57074185/how-to-use-setonaction-event-on-javafx
         recentFilesMenu.getItems().clear();
@@ -190,18 +226,14 @@ public class CourseViewController {
             if (!RecentFilesManager.getUserPreferences().get(recentFileNum, "empty").equals("empty")) {
                 MenuItem recentFile = new MenuItem(RecentFilesManager.getUserPreferences().get(recentFileNum, "empty"));
                 recentFile.setOnAction(event -> {
-                    try {
-                        openRecentFileHandler(recentFile.getText());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    openRecentFileHandler(recentFile.getText());
                 });
                 recentFilesMenu.getItems().add(recentFile);
             }
         }
     }
 
-    @FXML void editLessonPlanHandler() throws IOException {
+    @FXML void editLessonPlanHandler() {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToEdit != null) {
             App.setCurrentLessonPlan(lessonPlanToEdit);
@@ -222,12 +254,13 @@ public class CourseViewController {
                 App.getCurrentCourse().getLessonPlanList().remove(lessonPlanToDelete);
                 App.setCurrentLessonPlan(null);
                 undoRedoHandler.saveState(App.getCurrentCourse().clone());
+                lessonPlanTreeView.setVisible(false);
             }
         }
 
     }
 
-    @FXML void addLessonsToCourseList() {
+    private void addLessonsToCourseList() {
         List<LessonPlan> lessonPlanList = App.getCurrentCourse().getLessonPlanList();
         if (!(lessonPlanList.isEmpty())) {
             for (LessonPlan lesson: lessonPlanList) {
@@ -248,27 +281,71 @@ public class CourseViewController {
         }
     }
 
-    @FXML void printLessonPlanHandler() throws IOException {
-        LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
-        if (lessonPlanToDuplicate != null) {
-            Map<String, List<Card>> eventToCardMap = lessonPlanToDuplicate.getMapOfCardsFromID(lessonPlanToDuplicate.getLessonPlanIndexedMap());
-            String lessonPlanTitle = lessonPlanToDuplicate.getTitle();
-
-            boolean cardDisplay;
-            boolean landscapeDisplay = false;
-
-            cardDisplay = PrintStaging.promptCardDisplay();
-
-            if (cardDisplay) {
-                landscapeDisplay = PrintStaging.promptPageFormat();
+    @FXML void printLessonPlanHandler() {
+        if (courseListView.getSelectionModel().getSelectedItem() != null) {
+            for (Node child : printSetupVBox.getChildren()) {
+                if (child instanceof CheckBox) {
+                    CheckBox checkbox = (CheckBox) child;
+                    checkbox.setSelected(false);
+                }
             }
-
-            boolean equipmentDisplay = PrintStaging.promptForEquipment();
-
-            new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
-            App.setRoot("print_preview");
+            printSetupVBox.setVisible(true);
+            setCheckBoxActions();
         }
     }
+
+    private void setCheckBoxActions() {
+        cardImagesCheckbox.setOnAction(e -> textOnlyCheckbox.setSelected(false));
+        textOnlyCheckbox.setOnAction(e -> cardImagesCheckbox.setSelected(false));
+        landscapeCheckbox.setOnAction(e -> portraitCheckbox.setSelected(false));
+        portraitCheckbox.setOnAction(e -> landscapeCheckbox.setSelected(false));
+        yesEquipmentCheckbox.setOnAction(e -> noEquipmentCheckbox.setSelected(false));
+        noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
+    }
+
+    @FXML void setUpPrint() {
+        LessonPlan lessonPlanToPrint = courseListView.getSelectionModel().getSelectedItem();
+        Map<String, List<Card>> eventToCardMap = lessonPlanToPrint.getMapOfCardsFromID(lessonPlanToPrint.getLessonPlanIndexedMap());
+        String lessonPlanTitle = lessonPlanToPrint.getTitle();
+
+        boolean cardDisplay = true;
+        boolean landscapeDisplay = true;
+        boolean equipmentDisplay = true;
+        if (cardImagesCheckbox.isSelected()) {
+            cardDisplay = true;
+        } else if (textOnlyCheckbox.isSelected()) {
+            cardDisplay = false;
+        } else {
+            App.giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        if (landscapeCheckbox.isSelected()) {
+            landscapeDisplay = true;
+        } else if (portraitCheckbox.isSelected()) {
+            landscapeDisplay = false;
+        } else {
+            App.giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        if (yesEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = true;
+        } else if (noEquipmentCheckbox.isSelected()) {
+            equipmentDisplay = false;
+        } else {
+            App.giveWarning("Please make a selection for each prompt");
+            printLessonPlanHandler();
+        }
+
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
+        App.setRoot("print_preview");
+    }
+
+    @FXML void cancelPrint() {
+        printSetupVBox.setVisible(false);
+    }
+
 
     @FXML void undo() {
         undoRedoHandler.undo(App.getCurrentCourse());
@@ -276,7 +353,6 @@ public class CourseViewController {
         courseListView.getItems().clear();
         addLessonsToCourseList();
         undoRedoHandler.saveState(App.getCurrentCourse().clone());
-
     }
 
     @FXML void redo() {
@@ -287,7 +363,7 @@ public class CourseViewController {
         undoRedoHandler.saveState(App.getCurrentCourse().clone());
     }
     public void moveLessonPlan(int direction){
-        if(App.getCurrentCourse().getLessonPlanList().size() > 1) {
+        if (App.getCurrentCourse().getLessonPlanList().size() > 1) {
             LessonPlan lessonPlan = courseListView.getSelectionModel().getSelectedItem();
             int index = App.getCurrentCourse().getLessonPlanList().indexOf(lessonPlan);
             if (index == 0 && direction == -1) {
@@ -300,6 +376,7 @@ public class CourseViewController {
                 App.getCurrentCourse().getLessonPlanList().set(index, temp);
             }
             reDrawListview();
+            undoRedoHandler.saveState(App.getCurrentCourse().clone());
         }
     }
 
@@ -325,5 +402,4 @@ public class CourseViewController {
             courseListView.getItems().add(lessonPlan);
         }
     }
-
 }
