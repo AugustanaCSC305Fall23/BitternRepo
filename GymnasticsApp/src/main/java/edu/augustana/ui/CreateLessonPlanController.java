@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
@@ -52,6 +53,10 @@ public class CreateLessonPlanController {
     @FXML private Button favoriteBtn;
     @FXML private Button removeFavoriteBtn;
     @FXML private TextField lessonTitleField;
+
+
+    @FXML private HBox eventsHBox;
+    @FXML private FlowPane eventFlowPane;
 
     @FXML private VBox editSubheadingVBox;
     @FXML private TextField editEventHeadingTextField;
@@ -100,6 +105,8 @@ public class CreateLessonPlanController {
     private void initialize() throws MalformedURLException {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
+        eventsHBox.setVisible(false);
+        eventFlowPane.setVisible(false);
         editEventHeadingTextField.setVisible(false);
         if (eventDropdown.getItems().isEmpty()) {
             createDropdowns();
@@ -500,7 +507,51 @@ public class CreateLessonPlanController {
     }
 
     @FXML void moveCardAction() {
+        if(lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()){
+            lessonPlanTreeView.setEffect(new BoxBlur());
+            eventsHBox.setVisible(true);
+            eventFlowPane.setVisible(true);
+            setUpHBox(lessonPlanTreeView.getSelectionModel().getSelectedItem().getParent().getValue());
+        }
+    }
+    private void setUpHBox(String currentSubHeading){
+        eventFlowPane.getChildren().clear();
+        for (ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext(); ) {
+            EventSubcategory event = it.next();
+            Button eventBtn = new Button();
+            eventBtn.setText(event.getEventHeading());
+            eventFlowPane.getChildren().add(eventBtn);
+            eventBtn.setOnMouseClicked(e -> moveCardHandler(eventBtn.getText(), lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue(), currentSubHeading));
+        }
+    }
 
+    //why is this so hard
+    private void moveCardHandler(String event, String cardDisplayTitle, String currentSubheading){
+        System.out.println("hi");
+        Card card = CardDatabase.getFullCardCollection().getCardByID(App.getCurrentLessonPlan().getIDFromDisplayTitle(cardDisplayTitle));
+        if(!currentSubheading.equals(event)){
+            for (ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext(); ) {
+                EventSubcategory subcategory = it.next();
+                if (subcategory.getEventHeading().equals(currentSubheading)) {
+                    for (String cardID : subcategory.getCardIDList()) {
+                        if (card.equals(CardDatabase.getFullCardCollection().getCardByID(cardID))) {
+                            subcategory.getCardIDList().remove(cardID);
+                        }
+                    }
+                }
+                treeViewManager.removeFromTreeView(root);
+            }
+            for(ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext();){
+                EventSubcategory subcategory = it.next();
+                if(subcategory.getEventHeading().equals(event)){
+                    subcategory.getCardIDList().add(card.getUniqueID());
+                }
+            }
+        }
+        treeViewManager.removeFromTreeView(root);
+        eventFlowPane.setVisible(false);
+        eventsHBox.setVisible(false);
+        lessonPlanTreeView.setEffect(null);
     }
 
     @FXML void enterCustomNoteHandler() {

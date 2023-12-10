@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="907b8f2c-6cf7-478d-bf9a-d717d2914630" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cardpacks/favoriteCards" beforeDir="false" afterPath="$PROJECT_DIR$/cardpacks/favoriteCards" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CreateLessonPlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/edu/augustana/lesson_plan_creator.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,11 +22,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "main"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="edu.augustana" />
@@ -82,6 +83,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" log-message="true" type="java-exception">
+          <properties class="java.util.ConcurrentModificationException" package="java.util" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/App_java$App.ic" NAME="App Coverage Results" MODIFIED="1700529996976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
