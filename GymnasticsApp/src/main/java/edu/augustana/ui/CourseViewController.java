@@ -64,6 +64,8 @@ public class CourseViewController {
                 }
             }
         }
+        upArrow.setOnMouseClicked(e -> moveLessonPlan(-1));
+        downArrow.setOnMouseClicked(e -> moveLessonPlan(1));
     }
 
     private void displayTreeView(LessonPlan lessonPlan){
@@ -283,6 +285,45 @@ public class CourseViewController {
         titleEditor.setTitleFieldText();
         courseListView.getItems().clear();
         addLessonsToCourseList();
+    }
+    public void moveLessonPlan(int direction){
+        if(App.getCurrentCourse().getLessonPlanList().size() > 1) {
+            LessonPlan lessonPlan = courseListView.getSelectionModel().getSelectedItem();
+            int index = App.getCurrentCourse().getLessonPlanList().indexOf(lessonPlan);
+            if (index == 0 && direction == -1) {
+                wrapDown();
+            } else if (index == App.getCurrentCourse().getLessonPlanList().size() - 1 && direction == 1) {
+                wrapUp();
+            } else {
+                LessonPlan temp = App.getCurrentCourse().getLessonPlanList().get(index + direction);
+                App.getCurrentCourse().getLessonPlanList().set(direction + index, App.getCurrentCourse().getLessonPlanList().get(index));
+                App.getCurrentCourse().getLessonPlanList().set(index, temp);
+            }
+            reDrawListview();
+        }
+    }
+
+    private void wrapDown(){
+        LessonPlan temp = App.getCurrentCourse().getLessonPlanList().get(0);
+        for(int i = 1; i < App.getCurrentCourse().getLessonPlanList().size(); i++){
+            App.getCurrentCourse().getLessonPlanList().set(i - 1, App.getCurrentCourse().getLessonPlanList().get(i));
+        }
+        App.getCurrentCourse().getLessonPlanList().set(App.getCurrentCourse().getLessonPlanList().size() - 1, temp);
+    }
+
+    private void wrapUp(){
+        LessonPlan temp = App.getCurrentCourse().getLessonPlanList().get(App.getCurrentCourse().getLessonPlanList().size() - 1);
+        for(int i = App.getCurrentCourse().getLessonPlanList().size() - 2; i >= 0; i--){
+            App.getCurrentCourse().getLessonPlanList().set(i + 1, App.getCurrentCourse().getLessonPlanList().get(i));
+        }
+        App.getCurrentCourse().getLessonPlanList().set(0, temp);
+    }
+
+    private void reDrawListview(){
+        courseListView.getItems().clear();
+        for(LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()){
+            courseListView.getItems().add(lessonPlan);
+        }
     }
 
 }

@@ -440,8 +440,8 @@ public class CreateLessonPlanController {
         } else if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
             editEventHeadingBtn.setDisable(true);
             moveBtn.setVisible(true);
-            disableArrowButton(upArrow);
-            disableArrowButton(downArrow);
+            upArrow.setOnMouseClicked(e -> moveEventSubheadingAction(-1));
+            downArrow.setOnMouseClicked(e -> moveEventSubheadingAction(1));
             deleteBtn.setDisable(false);
         }
     }
