@@ -83,7 +83,7 @@
             </GridPane>
             <Button fx:id="clearFiltersButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearFiltersAction" prefWidth="80.0" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Clear Filters" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="15.0">
                <font>
-                  <Font name="Georgia" size="16.0" />
+                  <Font name="Georgia" size="18.0" />
                </font>
             </Button>
             <Label text="Search: " textFill="WHITE" AnchorPane.leftAnchor="575.0" AnchorPane.topAnchor="25.0">
