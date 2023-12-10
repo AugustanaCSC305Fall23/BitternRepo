@@ -100,6 +100,9 @@ public class PrintPreviewController {
         }
     }
 
+    /**
+     * When the print button is clicked, initializes the process of printing.
+     */
     @FXML
     void printAllCards() {
         Window window = mainPane.getScene().getWindow();
@@ -114,13 +117,18 @@ public class PrintPreviewController {
         }
     }
 
+    /**
+     * Returns to the screen before the print preview.
+     */
     @FXML
     void returnToPrevScreen() {
         App.setRoot(PrintStaging.getFXML());
     }
 
-
-    public void endPrinting() {
+    /**
+     * Ends the process of printing.
+     */
+    private void endPrinting() {
         titleLabel.setText("Success!");
         titleLabel.setAlignment(Pos.CENTER);
         printAllButton.setVisible(false);

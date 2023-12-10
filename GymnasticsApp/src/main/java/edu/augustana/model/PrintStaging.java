@@ -31,11 +31,32 @@ public class PrintStaging {
     private static boolean equipmentDisplay;
 
     // Constructors
+
+    /**
+     * The PrintStaging object for the Card Browser. Holds the information for the needed UI components and helps with
+     * displaying and printing the needed items.
+     *
+     * @param cardList - List of selected cards to be printed
+     * @param fxml - the previous fxml the screen was at so when you click "return," it
+     *               returns you to that fxml
+     */
     public PrintStaging(List<Card> cardList, String fxml) {
         past_fxml = fxml;
         printCardList = cardList;
     }
 
+    /**
+     * The PrintStaging object for the lesson plan creator. Holds the needed information for the UI components and helps with
+     * displaying and printing the needed items.
+     *
+     * @param title - title of the lesson plan.
+     * @param map - the map containing the event headings and a list of cards associated with the event
+     * @param fxml - the previous fxml the screen was at so when you click "return," it
+     *               returns you to that fxml
+     * @param card_display - if true the print preview should show card images. Otherwise, it is text only.
+     * @param landscape_display - if true the print preview should be in landscape mode. Otherwise, it is in portrait mode.
+     * @param equipment_display - if true the print preview should display equipment at the end of the lesson plan.
+     */
     public PrintStaging(String title, Map<String, List<Card>> map, String fxml, boolean card_display, boolean landscape_display, boolean equipment_display) {
         lessonPlanTitle = title;
         eventToCardMap = map;
@@ -74,12 +95,19 @@ public class PrintStaging {
         return equipmentDisplay;
     }
 
-// Creates Pages for PrintPreviewController
     // Used https://coderanch.com/t/709329/java/JavaFX-approach-dividing-text-blob
     // and https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/pagination.htm
     // which heavily influenced the creation of the methods below.
 
-    // Creates pages for individual cards (from Card Browser)
+    /**
+     * Creates the pages for individual cards and formats them for the pagination and actual printing.
+     *
+     * @param pageIndex - the number of cards to print.
+     * @param cardsToPrint - the list of cards that are to be printed.
+     * @param pj - the PrinterJob object that represents the printer and it's parameters.
+     * @return a VBox that is composed of the page contents for the pagination.
+     * @throws MalformedURLException
+     */
     public static VBox createPage(int pageIndex, List<Card> cardsToPrint, PrinterJob pj) throws MalformedURLException {
         PageLayout pg = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
@@ -106,7 +134,14 @@ public class PrintStaging {
         return box;
     }
 
-    // Creates pages for a lesson plan
+    /**
+     * Creates the pages for individual cards and formats them for the pagination.
+     *
+     * @param pageIndex - the number of cards to print.
+     * @param pages - list of pages for the lesson plan.
+     * @param pj - the PrinterJob object that represents the printer and it's parameters.
+     * @return a VBox that is composed of the page contents for the pagination.
+     */
     public static VBox createPage(int pageIndex, ArrayList<Pane> pages, PrinterJob pj) {
         PageLayout pgLayout = pj.getJobSettings().getPageLayout();
         VBox box = new VBox();
@@ -141,6 +176,15 @@ public class PrintStaging {
         return fullSizeImageView;
     }
 
+    /**
+     * Stages the needed items for the physical process of printing and helps format them.
+     *
+     * @param window - the computer window.
+     * @param printerJob - the PrinterJob object that represents the printer and it's parameters.
+     * @param cardsToPrint - the cards to print if the fxml is card_browser
+     * @param lessonPlan - the lesson plan to print if the fxml is lesson_plan_creator.
+     * @throws MalformedURLException
+     */
     public static void printAllCards(Window window, PrinterJob printerJob, List<Card> cardsToPrint, ParseLessonPlanPrinting lessonPlan) throws MalformedURLException {
         if (printerJob != null && printerJob.showPrintDialog(window)) {
             PageRange pgRange = new PageRange(1, 1);
