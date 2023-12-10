@@ -11,6 +11,7 @@ import edu.augustana.model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -58,6 +59,7 @@ public class CourseViewController {
                 throw new RuntimeException(ex);
             }
         });
+        courseListView.selectionModelProperty().addListener((obs,oldVal,newVal) -> checkIfItemSelected());
         courseModel = new CourseModel();
         addLessonsToCourseList();
         undoRedoHandler = new UndoRedoHandler(App.getCurrentCourse());
@@ -73,8 +75,6 @@ public class CourseViewController {
                 }
             }
         }
-        upArrow.setOnMouseClicked(e -> moveLessonPlan(-1));
-        downArrow.setOnMouseClicked(e -> moveLessonPlan(1));
     }
 
     private void displayTreeView(LessonPlan lessonPlan){
@@ -109,11 +109,39 @@ public class CourseViewController {
             LessonPlan selectedLesson = courseListView.getSelectionModel().getSelectedItem();
             courseModel.setSelectedLessonPlan(selectedLesson);
             displayTreeView(selectedLesson);
+            upArrow.setOnMouseClicked(e -> moveLessonPlan(-1));
+            downArrow.setOnMouseClicked(e -> moveLessonPlan(1));
+            enableArrowActions(upArrow);
+            enableArrowActions(downArrow);
         } else {
             disableButtons(true);
             courseModel.setSelectedLessonPlan(null);
             lessonPlanTreeView.setVisible(false);
+            disableArrow(upArrow);
+            disableArrow(downArrow);
         }
+    }
+
+    private void enableArrowActions(VBox arrow) {
+        arrow.setOnMouseEntered(e -> {
+            setArrowScale(arrow, 1.25);
+        });
+        arrow.setOnMouseExited(e -> {
+            setArrowScale(arrow, 1);
+        });
+        arrow.setCursor(Cursor.HAND);
+    }
+
+    private void setArrowScale(VBox arrow, double scale) {
+        arrow.setScaleX(scale);
+        arrow.setScaleY(scale);
+    }
+
+    private void disableArrow(VBox arrow) {
+        arrow.setOnMouseClicked(null);
+        arrow.setOnMouseEntered(null);
+        arrow.setOnMouseExited(null);
+        arrow.setCursor(Cursor.DEFAULT);
     }
 
     private void disableButtons(boolean disable) {
@@ -127,6 +155,7 @@ public class CourseViewController {
         courseListView.getSelectionModel().clearSelection();
         lessonPlanTreeView.setVisible(false);
         disableButtons(true);
+        checkIfItemSelected();
     }
 
     @FXML void createNewCourseHandler() {
@@ -175,7 +204,7 @@ public class CourseViewController {
         App.setRoot("lesson_plan_creator");
     }
 
-    @FXML void openRecentFileHandler(String filePath) throws IOException {
+    private void openRecentFileHandler(String filePath) throws IOException {
         courseModel.openRecentFile(filePath);
         courseTitleField.setText(App.getCurrentCourse().getTitle());
         courseListView.getItems().clear();
@@ -190,7 +219,7 @@ public class CourseViewController {
         Platform.exit();
     }
 
-    @FXML void setUpRecentFilesMenu() {
+    private void setUpRecentFilesMenu() {
         //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/MenuItem.html
         //https://stackoverflow.com/questions/57074185/how-to-use-setonaction-event-on-javafx
         recentFilesMenu.getItems().clear();
@@ -236,7 +265,7 @@ public class CourseViewController {
 
     }
 
-    @FXML void addLessonsToCourseList() {
+    private void addLessonsToCourseList() {
         List<LessonPlan> lessonPlanList = App.getCurrentCourse().getLessonPlanList();
         if (!(lessonPlanList.isEmpty())) {
             for (LessonPlan lesson: lessonPlanList) {
@@ -339,7 +368,7 @@ public class CourseViewController {
         undoRedoHandler.saveState(App.getCurrentCourse().clone());
     }
     public void moveLessonPlan(int direction){
-        if(App.getCurrentCourse().getLessonPlanList().size() > 1) {
+        if (App.getCurrentCourse().getLessonPlanList().size() > 1) {
             LessonPlan lessonPlan = courseListView.getSelectionModel().getSelectedItem();
             int index = App.getCurrentCourse().getLessonPlanList().indexOf(lessonPlan);
             if (index == 0 && direction == -1) {
@@ -352,6 +381,7 @@ public class CourseViewController {
                 App.getCurrentCourse().getLessonPlanList().set(index, temp);
             }
             reDrawListview();
+            undoRedoHandler.saveState(App.getCurrentCourse().clone());
         }
     }
 

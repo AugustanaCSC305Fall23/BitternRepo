@@ -131,6 +131,9 @@
                </VBox.margin>
             </Rectangle>
          </children>
+         <effect>
+            <DropShadow height="8.0" radius="3.5" width="8.0" />
+         </effect>
       </VBox>
       <VBox fx:id="downArrow" layoutX="20.0" layoutY="20.0" AnchorPane.leftAnchor="680.0" AnchorPane.topAnchor="450.0">
          <children>
@@ -145,6 +148,9 @@
                </VBox.margin>
             </Polygon>
          </children>
+         <effect>
+            <DropShadow height="8.0" radius="3.5" width="8.0" />
+         </effect>
       </VBox>
       <TreeView fx:id="lessonPlanTreeView" layoutX="92.0" layoutY="209.0" prefHeight="474.0" prefWidth="439.0" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="215.0" />
       <Button layoutX="209.0" layoutY="179.0" mnemonicParsing="false" onAction="#undo" text="Undo" AnchorPane.bottomAnchor="20.0">

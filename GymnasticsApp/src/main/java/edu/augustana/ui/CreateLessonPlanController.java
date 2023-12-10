@@ -478,32 +478,51 @@ public class CreateLessonPlanController {
             moveBtn.setVisible(false);
             int selectedIndex = lessonPlanTreeView.getSelectionModel().getSelectedIndex();
             if (selectedIndex != 0) {
-                upArrow.setOnMouseClicked(e -> moveEventSubheadingAction(-1));
-                upArrow.setCursor(Cursor.HAND);
+                upArrow.setOnMouseClicked(e -> reorderEventSubheadings(-1));
+                enableArrowActions(upArrow);
             } else {
-                disableArrowButton(upArrow);
+                disableArrow(upArrow);
             }
-            downArrow.setOnMouseClicked(e -> moveEventSubheadingAction(1));
-            downArrow.setCursor(Cursor.HAND);
+            downArrow.setOnMouseClicked(e -> reorderEventSubheadings(1));
+            enableArrowActions(downArrow);
             deleteBtn.setDisable(true);
         } else if (lessonPlanTreeView.getSelectionModel().isEmpty()) {
             editEventHeadingBtn.setVisible(false);
             moveBtn.setVisible(false);
-            disableArrowButton(upArrow);
-            disableArrowButton(downArrow);
+            disableArrow(upArrow);
+            disableArrow(downArrow);
             deleteBtn.setDisable(true);
         } else if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
             editEventHeadingBtn.setDisable(true);
             moveBtn.setVisible(true);
-            upArrow.setOnMouseClicked(e -> moveEventSubheadingAction(-1));
-            downArrow.setOnMouseClicked(e -> moveEventSubheadingAction(1));
+            upArrow.setOnMouseClicked(e -> reorderCards(-1));
+            downArrow.setOnMouseClicked(e -> reorderCards(1));
+            enableArrowActions(upArrow);
+            enableArrowActions(downArrow);
             deleteBtn.setDisable(false);
         }
     }
 
-    private void disableArrowButton(VBox arrowBtn) {
-        arrowBtn.setOnMouseClicked(null);
-        arrowBtn.setCursor(Cursor.DEFAULT);
+    private void enableArrowActions(VBox arrow) {
+        arrow.setOnMouseEntered(e -> {
+            setArrowScale(arrow, 1.25);
+        });
+        arrow.setOnMouseExited(e -> {
+            setArrowScale(arrow, 1);
+        });
+        arrow.setCursor(Cursor.HAND);
+    }
+
+    private void setArrowScale(VBox arrow, double scale) {
+        arrow.setScaleX(scale);
+        arrow.setScaleY(scale);
+    }
+
+    private void disableArrow(VBox arrow) {
+        arrow.setOnMouseClicked(null);
+        arrow.setOnMouseEntered(null);
+        arrow.setOnMouseExited(null);
+        arrow.setCursor(Cursor.DEFAULT);
     }
 
     @FXML void deselectTreeViewItem() {
@@ -531,14 +550,19 @@ public class CreateLessonPlanController {
         enterCustomNoteVBox.setVisible(false);
     }
 
-    private void moveEventSubheadingAction(int direction) {
+    private void reorderEventSubheadings(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
         if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
             EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
-        }else{
-            String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(eventHeading);
+        }
+    }
+
+    private void reorderCards(int direction) {
+        String cardName = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+        if (App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardName) < 0){
+            String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(cardName);
             Card cardFromID = CardDatabase.getFullCardCollection().getCardByID(cardID);
             EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardFromID.getEvent()));
             treeViewManager.moveCard(subcategory, cardID, direction, root);
