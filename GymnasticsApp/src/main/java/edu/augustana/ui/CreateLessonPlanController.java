@@ -129,7 +129,6 @@ public class CreateLessonPlanController {
         titleEditor = new TitleEditor(lessonTitleField, new Font("Georgia", 36.0), new Font("Georgia Bold", 36.0), 'L');
         titleEditor.initializeTitleFieldEvents(undoRedoHandler, App.getCurrentLessonPlan().clone());
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         disableButtons();
         if (App.getCurrentLessonPlan().getCustomNote() != null) {
             customNoteBtn.setText("Edit Custom Note");
@@ -321,6 +320,8 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
+            System.out.println("undo stack after add: " + undoRedoHandler.getUndoStack());
+            System.out.println();
             selectedCards.clear();
             disableButtons();
             lessonTitleField.deselect();
@@ -377,14 +378,12 @@ public class CreateLessonPlanController {
         undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
         titleEditor.setTitleFieldText();
-        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
     @FXML
