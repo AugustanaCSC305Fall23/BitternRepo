@@ -2,6 +2,7 @@ package edu.augustana.structures;
 
 import edu.augustana.model.Card;
 import edu.augustana.model.CardDatabase;
+import javafx.scene.control.TreeItem;
 
 import java.util.List;
 
@@ -13,10 +14,6 @@ public class EventSubcategory implements Cloneable {
     public EventSubcategory(String heading, String cardID){
         eventHeading = heading;
         cardIDList.add(cardID);
-    }
-    public EventSubcategory(String heading, List<String> IDList){
-        eventHeading = heading;
-        cardIDList = IDList;
     }
     public List<String> getCardIDList(){
         return cardIDList;
@@ -59,6 +56,10 @@ public class EventSubcategory implements Cloneable {
             listOfCards.add(CardDatabase.getFullCardCollection().getCardByID(id));
         }
         return listOfCards;
+    }
+
+    public void removeCard(int index) {
+        cardIDList.remove(index);
     }
 
     @Override

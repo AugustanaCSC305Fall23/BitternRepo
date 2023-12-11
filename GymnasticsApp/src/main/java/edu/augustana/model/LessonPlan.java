@@ -31,7 +31,7 @@ public class LessonPlan implements Cloneable, Undoable{
     }
 
     public void addCardToEvent(Card card){
-        EventSubcategory addTo = lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(card.getEvent()));
+        EventSubcategory addTo = lessonPlanIndexedMap.getEventAtIndex(lessonPlanIndexedMap.getDirection(card.getEvent()));
         addTo.addCardIDToList(card.getUniqueID());
     }
     public boolean eventInPlanList(Card card){
@@ -46,7 +46,7 @@ public class LessonPlan implements Cloneable, Undoable{
     }
 
     public boolean cardInPlanList(Card card){
-        return (lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(card.getEvent())).containsCardID(card.getUniqueID()));
+        return (lessonPlanIndexedMap.getEventAtIndex(lessonPlanIndexedMap.getDirection(card.getEvent())).containsCardID(card.getUniqueID()));
     }
 
     public Map<String, List<Card>> getMapOfCardsFromID(IndexedMap mapOfIDs){
@@ -102,7 +102,7 @@ public class LessonPlan implements Cloneable, Undoable{
         return "";
     }
 
-    public void removeCard(String cardDisplayedTitle, UndoRedoHandler undoRedoHandler) {
+    public void removeCard(String cardDisplayedTitle) {
         String cardIDToRemove = null;
         String eventToChange = null;
         for (ListIterator<EventSubcategory> it = lessonPlanIndexedMap.listIterator(); it.hasNext(); ) {
@@ -115,12 +115,11 @@ public class LessonPlan implements Cloneable, Undoable{
             }
         }
         if (cardIDToRemove != null) {
-            lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().remove(cardIDToRemove);
+            lessonPlanIndexedMap.getEventAtIndex(lessonPlanIndexedMap.getDirection(eventToChange)).getCardIDList().remove(cardIDToRemove);
         }
-        if(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)).getCardIDList().isEmpty()){
-            lessonPlanIndexedMap.remove(lessonPlanIndexedMap.get(lessonPlanIndexedMap.get(eventToChange)));
+        if(lessonPlanIndexedMap.getEventAtIndex(lessonPlanIndexedMap.getDirection(eventToChange)).getCardIDList().isEmpty()){
+            lessonPlanIndexedMap.remove(lessonPlanIndexedMap.getEventAtIndex(lessonPlanIndexedMap.getDirection(eventToChange)));
         }
-        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
     public void setCustomNote(String note) {
