@@ -14,7 +14,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.HomeScreenController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.HomeScreenController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="298.0" text="Welcome To &#10;Gymnastics Planner Pro" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
          <font>
@@ -31,7 +31,19 @@
       <Separator prefWidth="200.0" style="-fx-background-color: black;" />
       <HBox alignment="CENTER" prefHeight="259.0" prefWidth="1094.0" spacing="50.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openCourseEditorAndCreator" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openCourseEditorAndCreator" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: gray;" text="Open Course Editor/Creator" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Georgia Bold" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow height="45.0" radius="20.75" width="40.0">
+                     <color>
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: gray;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Georgia Bold" size="25.0" />
                </font>
@@ -43,19 +55,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#browseCardsHandler" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10;" text="Browse All Cards" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Georgia Bold" size="25.0" />
-               </font>
-               <effect>
-                  <DropShadow height="40.0" radius="19.5" width="40.0">
-                     <color>
-                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10;" text="Exit" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #6a99cb; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: gray;" text="Exit" textAlignment="CENTER">
                <font>
                   <Font name="Georgia Bold" size="25.0" />
                </font>

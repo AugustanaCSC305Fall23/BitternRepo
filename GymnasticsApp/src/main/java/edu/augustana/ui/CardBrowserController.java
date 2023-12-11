@@ -32,37 +32,35 @@ public class CardBrowserController {
     @FXML private Button zoomBtn;
 
     @FXML private FlowPane cardsFlowPane;
-
     @FXML private Pane cardsAnchorPane;
 
-    public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
-            "Horizontal Bar", "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
-    public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
-    public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
-    public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
-
-    List<CheckComboBox<String>> listOfDropdowns;
-
+    // filter dropdowns and search field
     @FXML private CheckComboBox<String> eventDropdown;
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
     @FXML private CheckComboBox<String> modelSexDropdown;
+    @FXML private TextField searchField;
 
     // zoomed-in card elements
     @FXML private VBox zoomedInCardVBox;
     @FXML private Label eventLabel;
     @FXML private ImageView zoomedInCard;
     @FXML private Label equipmentLabel;
+
+    // non-fxml elements
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
-
-    @FXML private TextField searchField;
-
+    public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
+            "Horizontal Bar", "Parallel Bars", "Pommel Horse", "Rings", "Strength", "Trampoline", "Uneven Bars", "Vault"});
+    public static final ObservableList<String> genderFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl", "Neutral"});
+    public static final ObservableList<String> levelFilterChoices = FXCollections.observableArrayList(new String[]{"Beginner", "Advanced Beginner", "Intermediate", "Advanced"});
+    public static final ObservableList<String> modelSexFilterChoices = FXCollections.observableArrayList(new String[]{"Boy", "Girl"});
+    private List<CheckComboBox<String>> listOfDropdowns;
     private List<CardView> selectedCards = new ArrayList<>();
     private final List<CardView> cardViewList = new ArrayList<>();
     private final FilterHandler filterHandler = new FilterHandler();
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    // Initializes the UI for the card browser
+    @FXML void initialize() {
         createDropdowns();
         try {
             for (String cardId : fullCardCollection.getSetOfCardIds()) {
@@ -75,7 +73,8 @@ public class CardBrowserController {
             App.giveWarning("Couldn't load card images. Check your thumbnails folder in the card pack.");
         }
     }
-    
+
+    // Adds the filter choices to the dropdowns and adds listeners
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
         genderDropdown.getItems().addAll(genderFilterChoices);
@@ -87,11 +86,7 @@ public class CardBrowserController {
         }
     }
 
-    @FXML
-    private void goToHome() {
-        App.setRoot("home");
-    }
-
+    // Draws the cards on the screen
     private void drawCardSet() {
         for (CardView cardView : cardViewList) {
             cardView.setOnMouseClicked(this::selectCardAction);
@@ -99,6 +94,9 @@ public class CardBrowserController {
         }
     }
 
+    /**
+     * Zooms in on the most recently selected image
+     */
     @FXML void zoomAction() {
         zoomInOnImage(selectedCards.get(selectedCards.size() - 1));
     }
@@ -121,6 +119,9 @@ public class CardBrowserController {
         }
     }
 
+    /**
+     * Closes out of the zoomed view of the card
+     */
     @FXML void exitZoomedView() {
         zoomedInCardVBox.setVisible(false);
         for (Node child : cardsAnchorPane.getChildren()) {
@@ -132,6 +133,7 @@ public class CardBrowserController {
         return dropdown.getCheckModel().getCheckedItems();
     }
 
+    // Sets the shadow effect on the cards and sets buttons to be enabled when a card is selected
     private void selectCardAction(MouseEvent event){
         if (event.getTarget() instanceof CardView) {
             CardView cardViewSelected = (CardView) event.getTarget();
@@ -151,8 +153,7 @@ public class CardBrowserController {
         zoomBtn.setDisable(disable);
     }
 
-    // Used code from MovieTrackerApp
-    @FXML void updateFilteredVisibleCards() {
+    private void updateFilteredVisibleCards() {
         List<String> searchTermList = Arrays.asList(searchField.getText().split("\\s+"));
         List<String> checkedEvents = getCheckedItems(eventDropdown);
         List<String> checkedGenders = getCheckedItems(genderDropdown);
@@ -167,8 +168,8 @@ public class CardBrowserController {
         }
     }
 
-    @FXML
-    private void clearFiltersAction() {
+    // Clears the applied filters, resetting the dropdowns and the cards displayed
+    @FXML private void clearFiltersAction() {
         for (CardView cardView : cardViewList) {
             cardView.setVisible(true);
             cardView.setManaged(true);
@@ -184,14 +185,17 @@ public class CardBrowserController {
         }
     }
 
+    // Updates the visible cards to match the search text when the Enter key is pressed
     @FXML void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             updateFilteredVisibleCards();
         }
     }
 
-    @FXML
-    void printSelectedCards() {
+    /**
+     * Sets up the printing for the selected cards
+     */
+    @FXML void printSelectedCards() {
         if (selectedCards != null){
             List<Card> cardsToPrint = new ArrayList<>();
             for (CardView cardView : selectedCards) {
@@ -201,5 +205,12 @@ public class CardBrowserController {
             selectedCards.clear();
             App.setRoot("print_preview");
         }
+    }
+
+    /**
+     * Switches to the home screen.
+     */
+    @FXML private void goToHome() {
+        App.setRoot("home");
     }
 }

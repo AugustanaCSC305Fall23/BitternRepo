@@ -46,15 +46,16 @@ public class CreateLessonPlanController {
     @FXML private CheckComboBox<String> genderDropdown;
     @FXML private CheckComboBox<String> levelDropdown;
     @FXML private CheckComboBox<String> modelSexDropdown;
-    List<CheckComboBox<String>> listOfDropdowns;
+    @FXML private TextField searchField;
 
+    // panes and tabs
     @FXML private FlowPane allCardsFlowPane;
     @FXML private Tab allCardsTab;
     @FXML private FlowPane favoriteCardsFlowPane;
     @FXML private TabPane cardsTabPane;
     @FXML private Tab favoriteCardsTab;
+    @FXML private AnchorPane lessonOutlinePane;
 
-    @FXML private TextField searchField;
     @FXML private Button addCardBtn;
     @FXML private Button favoriteBtn;
     @FXML private Button removeFavoriteBtn;
@@ -64,9 +65,12 @@ public class CreateLessonPlanController {
     @FXML private HBox eventsHBox;
     @FXML private FlowPane eventFlowPane;
 
+    // elements for editing subheading
     @FXML private VBox editSubheadingVBox;
     @FXML private TextField editEventHeadingTextField;
     @FXML private Button editEventHeadingBtn;
+
+    // elements for moving card between subheading
     @FXML private ChoiceBox<String> subheadingDropdown;
     @FXML private Button moveBtn;
     @FXML private VBox moveCardPromptVBox;
@@ -76,9 +80,11 @@ public class CreateLessonPlanController {
     @FXML private TextArea customNoteTextArea;
     @FXML private Label customNoteLabel;
 
+    // arrows
     @FXML private VBox upArrow;
     @FXML private VBox downArrow;
 
+    // elements for print setup prompt
     @FXML private VBox printSetupVBox;
     @FXML private CheckBox cardImagesCheckbox;
     @FXML private CheckBox textOnlyCheckbox;
@@ -87,14 +93,11 @@ public class CreateLessonPlanController {
     @FXML private CheckBox yesEquipmentCheckbox;
     @FXML private CheckBox noEquipmentCheckbox;
 
-
     // zoomed-in card elements
     @FXML private VBox zoomedInCardVBox;
     @FXML private Label eventLabel;
     @FXML private ImageView zoomedInCard;
     @FXML private Label equipmentLabel;
-
-    @FXML private AnchorPane lessonOutlinePane;
 
     // filter choices
     public static final ObservableList<String> eventFilterChoices = FXCollections.observableArrayList(new String[]{"Beam", "Floor",
@@ -105,11 +108,12 @@ public class CreateLessonPlanController {
 
     @FXML private TreeView<String> lessonPlanTreeView;
 
-
+    // non-fxml elements
     private static final CardCollection fullCardCollection = CardDatabase.getFullCardCollection();
     private List<CardView> selectedCards = new ArrayList<>();
     private List<CardView> favoriteCardsSelected = new ArrayList<>();
     private final List<CardView> cardViewList = new ArrayList<>();
+    private List<CheckComboBox<String>> listOfDropdowns;
     private TreeItem<String> root = new TreeItem<>();
     private final TreeViewManager treeViewManager = new TreeViewManager(App.getCurrentLessonPlan());
 
@@ -118,9 +122,8 @@ public class CreateLessonPlanController {
     private final FilterHandler filterHandler = new FilterHandler();
 
     /**
-     * Initializes the UI for the lesson plan controller.
+     * Initializes the UI for the lesson plan controller
      */
-
     @FXML private void initialize() {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
@@ -162,6 +165,7 @@ public class CreateLessonPlanController {
         treeViewManager.displayTreeView(root);
     }
 
+    // Adds filter choices to dropdowns and adds listeners
     private void createDropdowns() {
         eventDropdown.getItems().addAll(eventFilterChoices);
         genderDropdown.getItems().addAll(genderFilterChoices);
@@ -173,6 +177,7 @@ public class CreateLessonPlanController {
         }
     }
 
+    // Draws the cards on the screen and sets hover functionality for card views
     private void drawCardSet(FlowPane cardsFlowPane, List<CardView> cardViewList) {
         for (CardView cardView : cardViewList) {
             cardsFlowPane.getChildren().add(cardView);
@@ -192,6 +197,7 @@ public class CreateLessonPlanController {
         }
     }
 
+    // Checks if a card was clicked on once or twice and calls method to perform action accordingly
     private void checkNumClicks(MouseEvent e) {
         if (e.getTarget() instanceof CardView) {
             CardView cardView = (CardView) e.getTarget();
@@ -243,13 +249,6 @@ public class CreateLessonPlanController {
         for (Node child : lessonOutlinePane.getChildren()) {
             child.setEffect(null);
         }
-    }
-
-    /**
-     * Switches back to course_view.fxml when "Back" button is pushed
-     */
-    @FXML void returnToCourseHandler() {
-        App.setRoot("course_view");
     }
 
     private static List<String> getCheckedItems(CheckComboBox<String> dropdown) {
@@ -344,7 +343,7 @@ public class CreateLessonPlanController {
     /**
      * When the enter button gets pressed from the search bar,
      * the displayed cards will be filtered by what is in the search bar
-     * @param event key pressed
+     * @param event - the key that was pressed
      */
     @FXML void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -354,7 +353,7 @@ public class CreateLessonPlanController {
 
     /**
      * Checks to see if a card has been selected and checks to see if it
-     * has not already been added and if both of those conditions are met then
+     * has not already been added. If both of those conditions are met then
      * the card will be added to the lesson plan and that change will be reflected
      * in the lesson plan TreeView
      */
@@ -375,7 +374,7 @@ public class CreateLessonPlanController {
     /**
      * When the "Add to favorites" button gets pressed, it checks to see that any card
      * has been selected and if cards were selected, making sure that it is not already
-     * a favorite card, if both of those conditions are true, then it will add it to
+     * a favorite card. If both of those conditions are true, then it will add it to
      * FavoriteCards
      */
     @FXML void addCardsToFavorites() {
@@ -397,9 +396,8 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Takes the selected card and removes it from the favorites section.
+     * Removes selected cards from the favorites collection
      */
-
     @FXML void removeFavoriteAction() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
@@ -419,9 +417,8 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Takes the selected card from the lesson plan outline and removes it from the outline.
+     * Removes the selected card from the lesson plan outline
      */
-
     @FXML void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
@@ -434,27 +431,22 @@ public class CreateLessonPlanController {
     /**
      * Undoes the most recent action from the TreeView (lesson plan outline).
      */
-
     @FXML void undo() {
         undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
-        //titleEditor.setTitleFieldText();
     }
 
     /**
      * Redoes the most recent undo.
      */
-
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
-        //titleEditor.setTitleFieldText();
     }
 
     /**
      * Displays the menu screen for the printing function when you click "Print".
      */
-
     @FXML
     void printLessonPlanHandler() {
         for (Node child : printSetupVBox.getChildren()) {
@@ -467,6 +459,10 @@ public class CreateLessonPlanController {
         setCheckBoxActions();
     }
 
+    /**
+     * Makes it so that either the Card Images or Text Only checkbox can be selected but not both,
+     * and the same for landscape or portrait and yes equipment or no equipment
+     */
     private void setCheckBoxActions() {
         cardImagesCheckbox.setOnAction(e -> textOnlyCheckbox.setSelected(false));
         textOnlyCheckbox.setOnAction(e -> cardImagesCheckbox.setSelected(false));
@@ -477,10 +473,9 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Sets up the process for showing the print preview. Represented by the "OK" button in the
-     * printLessonPlanHandler menu.
+     * Sets up the process for showing the print preview based on the user's checkbox selections.
+     * Called when the "OK" button in the printLessonPlanHandler menu is pressed.
      */
-
     @FXML void setUpPrint() {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
         String lessonPlanTitle = App.getCurrentLessonPlan().getTitle();
@@ -520,17 +515,15 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Represents the "Cancel" button in the printLessonPlanHandler menu.
+     * Hides the print setup VBox when the "Cancel" button in the printLessonPlanHandler menu is clicked.
      */
-
     @FXML void cancelPrint() {
         printSetupVBox.setVisible(false);
     }
 
     /**
-     * Action for when the "All Cards" tab is clicked.
+     * Action for when the "All Cards" tab is clicked. Switches to the flow pane with all the cards.
      */
-
     @FXML
     void switchToAllCards() {
         if(!(favoriteCardsTab == null)){
@@ -540,9 +533,9 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Action for when the "Favorite Cards" tab is clicked.
+     * Action for when the "Favorite Cards" tab is clicked. Switches to the flow pane with only the
+     * favorite cards.
      */
-
     @FXML
     void switchToFavoriteCards() {
         allCardsTab.getContent().setVisible(false);
@@ -554,6 +547,8 @@ public class CreateLessonPlanController {
             drawCardSet(favoriteCardsFlowPane, App.getFavoriteCards().getFavoritesCardView());
         }
     }
+
+    // Returns the flow pane to show based on the selected tab
     private FlowPane findAndSetFlowPane(){
         if(favoriteCardsTab.isSelected()){
             return favoriteCardsFlowPane;
@@ -562,6 +557,8 @@ public class CreateLessonPlanController {
         }
     }
 
+    // Determines if an event subheading or a card was clicked in the tree view and makes the
+    // buttons on the screen respond accordingly
     private void treeViewItemSelectedAction() {
         if (!lessonPlanTreeView.getSelectionModel().isEmpty() &&
                 !lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
@@ -619,7 +616,6 @@ public class CreateLessonPlanController {
     /**
      * Deselects the item from the lesson plan outline (TreeView).
      */
-
     @FXML void deselectTreeViewItem() {
         if (!lessonPlanTreeView.getSelectionModel().isEmpty()) {
             lessonPlanTreeView.getSelectionModel().clearSelection();
@@ -630,7 +626,6 @@ public class CreateLessonPlanController {
     /**
      * Opens the prompt to edit the selected event subheading.
      */
-
     @FXML private void editEventHeadingAction() {
         editEventHeadingTextField.clear();
         editSubheadingVBox.setVisible(true);
@@ -638,9 +633,8 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Finalizes and add the new event subheading.
+     * Replaces the desired event subheading with the new subheading typed in by the user.
      */
-
     @FXML private void setEventHeadingAction() {
         String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
         EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().getEventAtIndex(App.getCurrentLessonPlan().getLessonPlanIndexedMap().getDirection(eventToChange));
@@ -649,9 +643,8 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Cancels the creation of a custom note.
+     * Cancels an action.
      */
-
     @FXML private void cancelAction() {
         editSubheadingVBox.setVisible(false);
         enterCustomNoteVBox.setVisible(false);
@@ -680,9 +673,8 @@ public class CreateLessonPlanController {
     }
 
     /**
-     * Shows the list of available subheadings which you can choose to put a card in.
+     * Shows the list of available subheadings which the user can choose to put a card in.
      */
-
     @FXML void promptMoveCard() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()){
             lessonPlanTreeView.setEffect(new BoxBlur());
@@ -690,6 +682,8 @@ public class CreateLessonPlanController {
             moveCardPromptVBox.setVisible(true);
         }
     }
+
+    // Adds all the subheadings in the tree view to the dropdown
     private void setUpSubheadingDropdown() {
         subheadingDropdown.getItems().clear();
         ListIterator<EventSubcategory> iterator = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator();
@@ -705,7 +699,6 @@ public class CreateLessonPlanController {
     /**
      * Moves the card from one event to a different one within the lesson plan.
      */
-
     @FXML void moveCardHandler(){
         lessonPlanTreeView.setEffect(null);
         moveCardPromptVBox.setVisible(false);
@@ -738,7 +731,6 @@ public class CreateLessonPlanController {
     /**
      * Opens the custom note editor.
      */
-
     @FXML void enterCustomNoteHandler() {
         enterCustomNoteVBox.setVisible(true);
         if (App.getCurrentLessonPlan().getCustomNote() != null) {
@@ -753,7 +745,6 @@ public class CreateLessonPlanController {
     /**
      * Adds the custom note and modifies the UI accordingly.
      */
-
     @FXML void confirmCustomNoteAction() {
         App.getCurrentLessonPlan().setCustomNote(customNoteTextArea.getText());
         if (App.getCurrentLessonPlan().getCustomNote() == null) {
@@ -762,5 +753,12 @@ public class CreateLessonPlanController {
             customNoteBtn.setText("Edit Custom Note");
         }
         enterCustomNoteVBox.setVisible(false);
+    }
+
+    /**
+     * Switches back to course_view.fxml when "Back" button is pushed
+     */
+    @FXML void returnToCourseHandler() {
+        App.setRoot("course_view");
     }
 }
