@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
@@ -380,7 +381,7 @@
                                  </font></Tooltip>
                            </tooltip>
                         </Button>
-                        <Button fx:id="moveBtn" mnemonicParsing="false" onAction="#moveCardAction" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Move" visible="false">
+                        <Button fx:id="moveBtn" mnemonicParsing="false" onAction="#promptMoveCard" styleClass="lesson-plan-button" stylesheets="@mainStylesheet.css" text="Move" visible="false">
                            <tooltip>
                               <Tooltip text="Move card to different event heading" />
                            </tooltip>
@@ -394,6 +395,31 @@
                      <children>
                         <FlowPane fx:id="eventFlowPane" alignment="CENTER" prefHeight="130.0" prefWidth="441.0" />
                      </children></HBox>
+                  <VBox fx:id="moveCardPromptVBox" alignment="CENTER" style="-fx-border-color: black; -fx-border-width: 2;" styleClass="dark-blue" stylesheets="@mainStylesheet.css" visible="false" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="200.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Select event subheading to move to:" textFill="WHITE" wrapText="true">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="subheadingDropdown" prefWidth="200.0" styleClass="tree-cell" />
+                        <HBox alignment="BOTTOM_CENTER" spacing="100.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#moveCardHandler" text="Ok" />
+                              <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="25.0" left="15.0" right="15.0" top="10.0" />
+                     </padding>
+                  </VBox>
                </children>
                <effect>
                   <InnerShadow choke="0.01" height="10.0" radius="4.5" width="10.0">

@@ -4,6 +4,7 @@ import edu.augustana.App;
 import edu.augustana.model.*;
 import edu.augustana.filters.*;
 import edu.augustana.structures.EventSubcategory;
+import edu.augustana.structures.IndexedMap;
 import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.*;
 
@@ -61,7 +63,9 @@ public class CreateLessonPlanController {
     @FXML private VBox editSubheadingVBox;
     @FXML private TextField editEventHeadingTextField;
     @FXML private Button editEventHeadingBtn;
+    @FXML private ChoiceBox<String> subheadingDropdown;
     @FXML private Button moveBtn;
+    @FXML private VBox moveCardPromptVBox;
     @FXML private Button deleteBtn;
     @FXML private Button customNoteBtn;
     @FXML private VBox enterCustomNoteVBox;
@@ -375,8 +379,8 @@ public class CreateLessonPlanController {
     @FXML void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
-            App.getCurrentLessonPlan().removeCard(cardToRemove, undoRedoHandler);
-            treeViewManager.removeFromTreeView(root);
+            App.getCurrentLessonPlan().removeCard(cardToRemove);
+            treeViewManager.redrawTreeView(root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
@@ -552,7 +556,7 @@ public class CreateLessonPlanController {
 
     @FXML private void setEventHeadingAction() {
         String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-        EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventToChange));
+        EventSubcategory eventSubcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().getEventAtIndex(App.getCurrentLessonPlan().getLessonPlanIndexedMap().getDirection(eventToChange));
         treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
         editSubheadingVBox.setVisible(false);
     }
@@ -560,12 +564,14 @@ public class CreateLessonPlanController {
     @FXML private void cancelAction() {
         editSubheadingVBox.setVisible(false);
         enterCustomNoteVBox.setVisible(false);
+        moveCardPromptVBox.setVisible(false);
+        lessonPlanTreeView.setEffect(null);
     }
 
     private void reorderEventSubheadings(int direction) {
         String eventHeading = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-        if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading) >= 0){
-            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(eventHeading));
+        if(App.getCurrentLessonPlan().getLessonPlanIndexedMap().getDirection(eventHeading) >= 0){
+            EventSubcategory eventSubcategoryToMove = App.getCurrentLessonPlan().getLessonPlanIndexedMap().getEventAtIndex(App.getCurrentLessonPlan().getLessonPlanIndexedMap().getDirection(eventHeading));
             treeViewManager.moveEvent(eventSubcategoryToMove, direction, root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
@@ -573,61 +579,62 @@ public class CreateLessonPlanController {
 
     private void reorderCards(int direction) {
         String cardName = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
-        if (App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardName) < 0){
+        if (App.getCurrentLessonPlan().getLessonPlanIndexedMap().getDirection(cardName) < 0){
             String cardID = App.getCurrentLessonPlan().getIDFromDisplayTitle(cardName);
             Card cardFromID = CardDatabase.getFullCardCollection().getCardByID(cardID);
-            EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(cardFromID.getEvent()));
+            EventSubcategory subcategory = App.getCurrentLessonPlan().getLessonPlanIndexedMap().getEventAtIndex(App.getCurrentLessonPlan().getLessonPlanIndexedMap().getDirection(cardFromID.getEvent()));
             treeViewManager.moveCard(subcategory, cardID, direction, root);
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
         }
     }
 
-    @FXML void moveCardAction() {
-        if(lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()){
+    @FXML void promptMoveCard() {
+        if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()){
             lessonPlanTreeView.setEffect(new BoxBlur());
-            eventsHBox.setVisible(true);
-            eventFlowPane.setVisible(true);
-            setUpHBox(lessonPlanTreeView.getSelectionModel().getSelectedItem().getParent().getValue());
-        }
-    }
-    private void setUpHBox(String currentSubHeading){
-        eventFlowPane.getChildren().clear();
-        for (ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext(); ) {
-            EventSubcategory event = it.next();
-            Button eventBtn = new Button();
-            eventBtn.setText(event.getEventHeading());
-            eventFlowPane.getChildren().add(eventBtn);
-            eventBtn.setOnMouseClicked(e -> moveCardHandler(eventBtn.getText(), lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue(), currentSubHeading));
+            setUpSubheadingDropdown();
+            moveCardPromptVBox.setVisible(true);
         }
     }
 
-    //why is this so hard
-    private void moveCardHandler(String event, String cardDisplayTitle, String currentSubheading){
-        System.out.println("hi");
-        Card card = CardDatabase.getFullCardCollection().getCardByID(App.getCurrentLessonPlan().getIDFromDisplayTitle(cardDisplayTitle));
-        if(!currentSubheading.equals(event)){
-            for (ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext(); ) {
+    private void setUpSubheadingDropdown() {
+        subheadingDropdown.getItems().clear();
+        ListIterator<EventSubcategory> iterator = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator();
+        while (iterator.hasNext()) {
+            EventSubcategory next = iterator.next();
+            String currentSubheadingName = lessonPlanTreeView.getSelectionModel().getSelectedItem().getParent().getValue();
+            if (!(next.getEventHeading().equals(currentSubheadingName))) {
+                subheadingDropdown.getItems().add(next.getEventHeading());
+            }
+        }
+    }
+
+    @FXML void moveCardHandler(){
+        lessonPlanTreeView.setEffect(null);
+        moveCardPromptVBox.setVisible(false);
+        try {
+            String cardDisplayTitle = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
+            Card card = CardDatabase.getFullCardCollection().getCardByID(App.getCurrentLessonPlan().getIDFromDisplayTitle(cardDisplayTitle));
+            String desiredEvent = subheadingDropdown.getSelectionModel().getSelectedItem();
+            ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator();
+            while (it.hasNext()) {
                 EventSubcategory subcategory = it.next();
-                if (subcategory.getEventHeading().equals(currentSubheading)) {
-                    for (String cardID : subcategory.getCardIDList()) {
-                        if (card.equals(CardDatabase.getFullCardCollection().getCardByID(cardID))) {
-                            subcategory.getCardIDList().remove(cardID);
-                        }
+                String currentSubheadingName = lessonPlanTreeView.getSelectionModel().getSelectedItem().getParent().getValue();
+                if (subcategory.getEventHeading().equals(currentSubheadingName)) {
+                    subcategory.getCardIDList().removeIf(cardID -> card.equals(CardDatabase.getFullCardCollection().getCardByID(cardID)));
+                    if (subcategory.getCardIDList().isEmpty()) {
+                        IndexedMap lessonPlanIndexedMap = App.getCurrentLessonPlan().getLessonPlanIndexedMap();
+                        lessonPlanIndexedMap.remove(subcategory);
                     }
                 }
-                treeViewManager.removeFromTreeView(root);
-            }
-            for(ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext();){
-                EventSubcategory subcategory = it.next();
-                if(subcategory.getEventHeading().equals(event)){
+                if(subcategory.getEventHeading().equals(desiredEvent)){
                     subcategory.getCardIDList().add(card.getUniqueID());
                 }
             }
+        } catch (ConcurrentModificationException | NullPointerException e) {
+            App.giveWarning("Failed to move card");
         }
-        treeViewManager.removeFromTreeView(root);
-        eventFlowPane.setVisible(false);
-        eventsHBox.setVisible(false);
-        lessonPlanTreeView.setEffect(null);
+        treeViewManager.redrawTreeView(root);
+        undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
     @FXML void enterCustomNoteHandler() {

@@ -65,7 +65,7 @@ public class TreeViewManager {
             if (!App.getCurrentLessonPlan().cardInPlanList(card)){
                 App.getCurrentLessonPlan().addCardToEvent(card);
                 TreeItem<String> treeItem = new TreeItem<String>(card.getCode() + ", " + card.getTitle());
-                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().get(card.getEvent())).getChildren().add(treeItem);
+                root.getChildren().get(App.getCurrentLessonPlan().getLessonPlanIndexedMap().getDirection(card.getEvent())).getChildren().add(treeItem);
             }
         }
         expandTreeItem(root);
@@ -75,7 +75,7 @@ public class TreeViewManager {
      * Clears and constructs the TreeView based on the lesson plan
      * @param root of the TreeView
      */
-    public void removeFromTreeView(TreeItem<String> root){
+    public void redrawTreeView(TreeItem<String> root){
         root.getChildren().clear();
         displayTreeView(root);
     }
@@ -89,7 +89,7 @@ public class TreeViewManager {
      */
     public void setHeadingInTreeView(String newHeading, EventSubcategory headingToEdit, TreeItem<String> root){
         headingToEdit.setEventHeading(newHeading);
-        removeFromTreeView(root);
+        redrawTreeView(root);
     }
 
     /**
@@ -100,16 +100,16 @@ public class TreeViewManager {
      * @param root of tree view
      */
     public TreeItem<String> moveEvent(EventSubcategory selectedEvent, int direction, TreeItem<String> root){
-        int index = lessonPlan.getLessonPlanIndexedMap().get(selectedEvent.getEventHeading());
+        int index = lessonPlan.getLessonPlanIndexedMap().getDirection(selectedEvent.getEventHeading());
         lessonPlan.getLessonPlanIndexedMap().moveEventByOne(direction, index);
-        removeFromTreeView(root);
+        redrawTreeView(root);
         return root;
     }
 
     public TreeItem<String> moveCard(EventSubcategory event, String selectedCardID, int direction, TreeItem<String> root){
         int index = event.getCardIDList().indexOf(selectedCardID);
         lessonPlan.getLessonPlanIndexedMap().moveCardByOne(direction, index, event);
-        removeFromTreeView(root);
+        redrawTreeView(root);
         return root;
     }
 
