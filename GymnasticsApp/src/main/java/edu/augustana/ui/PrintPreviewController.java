@@ -108,9 +108,16 @@ public class PrintPreviewController {
         Window window = mainPane.getScene().getWindow();
 
         ParseLessonPlanPrinting lessonPlanPrint = null;
+
+
         try {
-            lessonPlanPrint = new ParseLessonPlanPrinting(printerJob, true);
-            PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlanPrint);
+
+            if (PrintStaging.getFXML().equals("card_browser")) {
+                PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlanPrint);
+            } else {
+                lessonPlanPrint = new ParseLessonPlanPrinting(printerJob, true);
+                PrintStaging.printAllCards(window, printerJob, cardsToPrint, lessonPlanPrint);
+            }
             endPrinting();
         } catch (MalformedURLException e) {
             App.giveWarning("Failed to print cards");
