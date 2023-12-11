@@ -16,5 +16,8 @@ Special Features:
 Known Bugs/Issues:
 -Course and Lesson Plan titles are not undoable/redoable
 -A file path can be saved to recent files multiple times
--When moving a card from one event to another, sometimes it throws an exception
--If trying to print a lesson without opening the lesson plan editor first from a saved file on your computer, an exception occurs.
+
+
+
+Presentation:
+https://docs.google.com/presentation/d/1KtSFlSmlW-dV7Nfyva0Zp-1ZaDDPlT_yNhumImiir9M/edit?usp=sharing
