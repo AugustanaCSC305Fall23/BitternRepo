@@ -66,6 +66,11 @@
     -fx-text-fill: white;
 }
 
+.list-cell:hover {
+    -fx-background-color: #014f86;
+    -fx-text-fill: white;
+}
+
 /* Used https://stackoverflow.com/questions/29220712/simple-way-to-change-javafx-treeview-background-and-text-color */
 .tree-cell {
     -fx-background-color: #cae9ff;

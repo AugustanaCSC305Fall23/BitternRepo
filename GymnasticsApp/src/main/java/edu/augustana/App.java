@@ -55,7 +55,7 @@ public class App extends Application {
         try {
             scene.setRoot(loadFXML(fxml));
         } catch (IOException e) {
-            giveWarning("Couldn't find fxml file");
+            giveWarning("Failed to load");
         }
     }
 

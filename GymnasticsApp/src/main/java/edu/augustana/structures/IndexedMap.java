@@ -40,7 +40,7 @@ public class IndexedMap implements Cloneable{
         eventSubcategoryList.clear();
     }
 
-    public EventSubcategory get(int index) {
+    public EventSubcategory getEventAtIndex(int index) {
         return eventSubcategoryList.get(index);
     }
     public Boolean contains(String heading){
@@ -51,8 +51,7 @@ public class IndexedMap implements Cloneable{
         }
         return false;
     }
-    public int get(String category){
-        //TODO:
+    public int getDirection(String category){
         for(int i = 0; i < eventSubcategoryList.size(); i++){
             if(eventSubcategoryList.get(i).getEventHeading().equals(category)){
                 return i;
@@ -80,10 +79,6 @@ public class IndexedMap implements Cloneable{
 
     public ListIterator<EventSubcategory> listIterator() {
         return eventSubcategoryList.listIterator();
-    }
-
-    public ListIterator<EventSubcategory> listIterator(int index) {
-        return eventSubcategoryList.listIterator(index);
     }
 
     public List<EventSubcategory> subList(int fromIndex, int toIndex) {
