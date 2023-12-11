@@ -342,6 +342,7 @@ public class CourseViewController {
             printLessonPlanHandler();
         }
 
+        new PrintStaging(lessonPlanTitle, eventToCardMap, "lesson_plan_creator", cardDisplay, landscapeDisplay, equipmentDisplay);
         new PrintStaging(lessonPlanTitle, eventToCardMap, "course_view", cardDisplay, landscapeDisplay, equipmentDisplay);
         App.setRoot("print_preview");
     }

@@ -73,6 +73,7 @@ public class ParseLessonPlanPrinting {
         isPrinting = is_printing;
         PageLayout pgLayout = printerJob.getJobSettings().getPageLayout();
 
+
         if (PrintStaging.getLandscapeDisplay()) {
             // Switches the height and width, so it can parse through landscape mode
             // Used only for the print preview
