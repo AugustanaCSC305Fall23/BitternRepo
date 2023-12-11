@@ -509,7 +509,7 @@ public class CreateLessonPlanController {
             disableArrow(downArrow);
             deleteBtn.setDisable(true);
         } else if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()) {
-            editEventHeadingBtn.setDisable(true);
+            editEventHeadingBtn.setVisible(false);
             moveBtn.setVisible(true);
             upArrow.setOnMouseClicked(e -> reorderCards(-1));
             downArrow.setOnMouseClicked(e -> reorderCards(1));
