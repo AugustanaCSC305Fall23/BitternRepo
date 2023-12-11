@@ -5,7 +5,7 @@ import edu.augustana.model.Card;
 import java.util.List;
 
 public class LevelFilter implements CardFilter {
-    private final List<String> levelFilterList;
+    private List<String> levelFilterList;
 
     public LevelFilter(List<String> levelFilterList) {
         this.levelFilterList = levelFilterList;

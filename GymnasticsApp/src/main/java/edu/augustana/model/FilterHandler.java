@@ -21,8 +21,8 @@ public class FilterHandler {
         CardFilter eventFilter = new EventFilter(checkForTramp(checkedEvents));
         CardFilter genderFilter = new GenderFilter(convertGenderWordsToCharacters(checkedGenders));
         CardFilter levelFilter = new LevelFilter(convertLevelWordsToKeys(checkedLevels));
-        CardFilter modelSexFilter = new ModelGenderFilter(convertGenderWordsToCharacters(checkedModelGenders));
-        return new CombinedAndFilter(searchFilter, eventFilter, genderFilter, levelFilter, modelSexFilter);
+        CardFilter modelGenderFilter = new ModelGenderFilter(convertGenderWordsToCharacters(checkedModelGenders));
+        return new CombinedAndFilter(searchFilter, eventFilter, genderFilter, levelFilter, modelGenderFilter);
     }
 
     // Checks to see if trampoline is a desired filter
