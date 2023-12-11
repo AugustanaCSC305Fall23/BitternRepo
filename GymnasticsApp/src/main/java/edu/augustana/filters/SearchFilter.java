@@ -31,12 +31,12 @@ public class SearchFilter implements CardFilter {
         return (card.getTitle().toLowerCase().contains(term)
                 || card.getEvent().toLowerCase().contains(term)
                 || card.getEvent().equalsIgnoreCase("ALL")
-                || matchesGender(term, card)
                 || matchesLevel(term, card)
                 || card.getCategory().toLowerCase().contains(term)
                 || card.getCode().toLowerCase().contains(term)
                 || isKeyword(term, card)
-                || isInEquipmentList(term, card));
+                || isInEquipmentList(term, card))
+                || matchesGender(term, card);
     }
 
     // Checks to see if the term is one of the keywords for the card
@@ -74,7 +74,7 @@ public class SearchFilter implements CardFilter {
 
     // Checks to see if the term matches the card's gender or a synonym
     private boolean matchesGender(String term, Card card) {
-        if (card.getGender().equalsIgnoreCase("N") || isNeutralSynonym(term)) {
+        if (isNeutralSynonym(term)) {
             return true;
         } else if (card.getGender().equalsIgnoreCase("M") && isBoySynonym(term)) {
             return true;
