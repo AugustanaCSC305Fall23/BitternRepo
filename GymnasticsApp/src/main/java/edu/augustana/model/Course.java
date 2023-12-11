@@ -3,15 +3,25 @@ package edu.augustana.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a course
+ */
 public class Course implements Cloneable, Undoable {
     private String title;
     private ArrayList<LessonPlan> lessonPlanList;
 
+    /**
+     * Creates a new course
+     */
     public Course() {
         lessonPlanList = new ArrayList<>();
         title = "Untitled";
     }
 
+    /**
+     * Creates a new lesson plan and adds it to the course's lessonPlanList
+     * @return The new lesson plan
+     */
     public LessonPlan createNewLessonPlan() {
         LessonPlan newLessonPlan = new LessonPlan();
         this.getLessonPlanList().add(newLessonPlan);
@@ -47,10 +57,11 @@ public class Course implements Cloneable, Undoable {
         this.title = copyOfPreviousCourseState.title;
         this.lessonPlanList = copyOfPreviousCourseState.lessonPlanList;
     }
+
     @Override
     public String toString() {
         return "Course{" +
-                "courseTitle='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", lessonPlanList=" + lessonPlanList +
                 '}';
     }

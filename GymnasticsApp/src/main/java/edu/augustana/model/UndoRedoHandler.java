@@ -1,7 +1,5 @@
 package edu.augustana.model;
 
-import edu.augustana.App;
-
 import java.util.Stack;
 
 /**
@@ -20,11 +18,19 @@ public class UndoRedoHandler {
         undoStack.push(undoable.clone());
     }
 
+    /**
+     * Stores the passed-in Undoable state in the undo stack and clears the redo stack
+     * @param state The Undoable state to store
+     */
     public void saveState(Undoable state) {
         undoStack.push(state);
         redoStack.clear();
     }
 
+    /**
+     * Undoes the previous Undoable state
+     * @param undoableToUndo The Undoable to undo
+     */
     public void undo(Undoable undoableToUndo) {
         if (undoStack.size() != 1) {
             redoStack.push(undoStack.pop());
@@ -32,6 +38,10 @@ public class UndoRedoHandler {
         }
     }
 
+    /**
+     * Reverts the previous undo
+     * @param undoableToRedo The Undoable to revert
+     */
     public void redo(Undoable undoableToRedo) {
         if (!redoStack.isEmpty()) {
             Undoable temp = redoStack.pop();
@@ -39,8 +49,6 @@ public class UndoRedoHandler {
             undoStack.push(temp);
         }
     }
-
-    public Stack<Undoable> getUndoStack() { return undoStack; }
 
     @Override
     public String toString() {

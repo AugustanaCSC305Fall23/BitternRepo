@@ -3,18 +3,14 @@ package edu.augustana.ui;
 import edu.augustana.*;
 import edu.augustana.filters.CardFilter;
 import edu.augustana.model.*;
-import edu.augustana.filters.SearchFilter;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -22,9 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 import javafx.scene.layout.Pane;
@@ -34,7 +28,6 @@ import org.controlsfx.control.CheckComboBox;
 
 public class CardBrowserController {
 
-    @FXML private Button homeButton;
     @FXML private Button printCardBtn;
     @FXML private Button zoomBtn;
 

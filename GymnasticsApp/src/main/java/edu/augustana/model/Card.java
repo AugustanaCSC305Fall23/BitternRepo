@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 
+/**
+ * Represents a card.
+ */
 public class Card {
 
     private String code;
@@ -23,6 +26,11 @@ public class Card {
     private Image thumbnail;
     private String displayedTitle;
 
+    /**
+     * Creates a card with the data contained in the passed-in array
+     * @param cardDataArray The array containing the data to assign to each field
+     * @throws MalformedURLException If the URL for the getThumbnail method is malformed
+     */
     public Card(String[] cardDataArray) throws MalformedURLException {
         code = cardDataArray[0].strip();
         event = cardDataArray[1].strip();
@@ -60,14 +68,6 @@ public class Card {
         return title;
     }
 
-    public String getPackFolder() {
-        return packFolder;
-    }
-
-    public String getImageName() {
-        return imageName;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -101,24 +101,26 @@ public class Card {
     }
     public String getDisplayedTitle() { return displayedTitle;}
 
-
     @Override
     public String toString() {
         return "Card{" +
-                "code=" + code +
-                "\nevent=" + event +
-                "\ncategory=" + category +
-                "\ntitle=" + title +
-                "\npackFolder=" + packFolder +
-                "\nimageName=" + imageName +
-                "\ngender=" + gender +
-                "\nmodelSex=" + modelSex +
-                "\nlevel=" + level +
-                "\nequipment=" + Arrays.toString(equipment) +
-                "\nkeywords=" + Arrays.toString(keywords) +
-                "}\n";
-        }
-
+                "code='" + code + '\'' +
+                ", event='" + event + '\'' +
+                ", category='" + category + '\'' +
+                ", title='" + title + '\'' +
+                ", packFolder='" + packFolder + '\'' +
+                ", imageName='" + imageName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", modelSex='" + modelSex + '\'' +
+                ", level='" + level + '\'' +
+                ", equipment=" + Arrays.toString(equipment) +
+                ", keywords=" + Arrays.toString(keywords) +
+                ", uniqueID='" + uniqueID + '\'' +
+                ", image=" + image +
+                ", thumbnail=" + thumbnail +
+                ", displayedTitle='" + displayedTitle + '\'' +
+                '}';
+    }
 }
 
 

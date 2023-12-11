@@ -56,7 +56,7 @@ public class TreeViewManager {
      * @param root of the TreeView
      */
     public void addToTreeView(Card card, TreeItem<String> root){
-        if (!App.getCurrentLessonPlan().eventInPlanList(card)){
+        if (!App.getCurrentLessonPlan().isEventInPlanList(card)){
             App.getCurrentLessonPlan().addEventToPlanList(card);
             TreeItem<String> newEvent = new TreeItem<>(card.getEvent());
             newEvent.getChildren().add(new TreeItem<>(card.getCode() + ", " + card.getTitle()));
