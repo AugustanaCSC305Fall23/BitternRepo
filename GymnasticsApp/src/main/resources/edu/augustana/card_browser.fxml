@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<AnchorPane styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CardBrowserController">
+<AnchorPane styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CardBrowserController">
    <children>
       <SplitPane centerShape="false" dividerPositions="0.1985611510791367" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="80.0">
         <items>
@@ -112,9 +112,9 @@
             </AnchorPane>
             <AnchorPane fx:id="cardsAnchorPane" styleClass="medium-blue" stylesheets="@mainStylesheet.css">
                <children>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="627.0" prefWidth="1202.0" style="-fx-background-color: cornflowerblue;" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="627.0" prefWidth="1202.0" style="-fx-background-color: cornflowerblue;" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <content>
-                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefWrapLength="700.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" vgap="10.0">
+                        <FlowPane fx:id="cardsFlowPane" hgap="10.0" prefHeight="626.0" prefWidth="1114.0" prefWrapLength="1100.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" vgap="10.0">
                            <padding>
                               <Insets left="10.0" top="10.0" />
                            </padding>

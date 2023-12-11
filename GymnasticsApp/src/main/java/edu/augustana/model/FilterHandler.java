@@ -11,7 +11,7 @@ public class FilterHandler {
         CardFilter eventFilter = new EventFilter(checkForTramp(checkedEvents));
         CardFilter genderFilter = new GenderFilter(convertGenderWordsToCharacters(checkedGenders));
         CardFilter levelFilter = new LevelFilter(convertLevelWordsToKeys(checkedLevels));
-        CardFilter modelSexFilter = new ModelSexFilter(convertGenderWordsToCharacters(checkedModelSexes));
+        CardFilter modelSexFilter = new ModelGenderFilter(convertGenderWordsToCharacters(checkedModelSexes));
         return new CombinedAndFilter(searchFilter, eventFilter, genderFilter, levelFilter, modelSexFilter);
     }
 

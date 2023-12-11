@@ -4,10 +4,10 @@ import edu.augustana.model.Card;
 
 import java.util.List;
 
-public class ModelSexFilter implements CardFilter {
+public class ModelGenderFilter implements CardFilter {
     private List<String> modelSexFilterList;
 
-    public ModelSexFilter(List<String> modelSexFilterList) {
+    public ModelGenderFilter(List<String> modelSexFilterList) {
         this.modelSexFilterList = modelSexFilterList;
     }
 
