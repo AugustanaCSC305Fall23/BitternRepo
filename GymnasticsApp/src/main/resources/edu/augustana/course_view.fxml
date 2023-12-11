@@ -25,7 +25,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#deselectLessonPlan" prefHeight="800.0" prefWidth="1400.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#deselectLessonPlan" prefHeight="800.0" prefWidth="1400.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
    <children>
       <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" promptText="(Enter Course Title)" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -152,7 +152,7 @@
             <DropShadow height="8.0" radius="3.5" width="8.0" />
          </effect>
       </VBox>
-      <TreeView fx:id="lessonPlanTreeView" layoutX="92.0" layoutY="209.0" prefHeight="474.0" prefWidth="439.0" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="215.0" />
+      <TreeView fx:id="lessonPlanTreeView" layoutX="92.0" layoutY="209.0" prefHeight="474.0" prefWidth="439.0" visible="false" AnchorPane.bottomAnchor="111.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="215.0" />
       <Button layoutX="209.0" layoutY="179.0" mnemonicParsing="false" onAction="#undo" text="Undo" AnchorPane.bottomAnchor="20.0">
          <font>
             <Font name="Georgia" size="16.0" />

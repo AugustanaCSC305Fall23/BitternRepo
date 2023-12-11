@@ -5,57 +5,56 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.AboutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.AboutController">
    <children>
       <Button layoutX="74.0" layoutY="45.0" mnemonicParsing="false" onAction="#returnToCourseHandler" text="Return To Course Outline">
          <font>
             <Font name="Georgia" size="20.0" />
          </font>
       </Button>
-      <Label layoutX="624.0" layoutY="79.0" prefHeight="82.0" prefWidth="249.0" text="Credits" textFill="WHITE">
+      <Label layoutX="547.0" layoutY="87.0" prefHeight="82.0" prefWidth="249.0" text="Credits" textFill="WHITE" AnchorPane.leftAnchor="547.0">
          <font>
             <Font name="Georgia" size="72.0" />
          </font>
       </Label>
       <Label layoutX="109.0" layoutY="207.0" text="Developers:" textFill="WHITE" AnchorPane.topAnchor="200.0">
          <font>
-            <Font name="Georgia" size="48.0" />
+            <Font name="Georgia" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="103.0" layoutY="271.0" prefHeight="347.0" prefWidth="282.0" text="Jessica Cotturone&#10;&#10;Isabelle Smart&#10;&#10;Lucas Clayton&#10;&#10;Greyson Hansen&#10;" textFill="WHITE" AnchorPane.topAnchor="265.0">
+      <Label layoutX="102.0" layoutY="241.0" prefHeight="347.0" prefWidth="282.0" text="Jessica Cotturone&#10;&#10;Isabelle Smart&#10;&#10;Lucas Clayton&#10;&#10;Greyson Hansen&#10;" textFill="WHITE" AnchorPane.topAnchor="241.0">
+         <font>
+            <Font name="Georgia" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="515.0" layoutY="200.0" text="Project Supervisor:" textFill="WHITE" AnchorPane.topAnchor="200.0">
          <font>
             <Font name="Georgia" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="524.0" layoutY="210.0" text="Project Supervisor:" textFill="WHITE" AnchorPane.topAnchor="200.0">
+      <Label layoutX="524.0" layoutY="282.0" text="Dr. Forrest Stonedahl" textFill="WHITE" AnchorPane.topAnchor="282.0">
          <font>
-            <Font name="Georgia" size="48.0" />
+            <Font name="Georgia" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="545.0" layoutY="334.0" text="Dr. Forrest Stonedahl" textFill="WHITE" AnchorPane.topAnchor="290.0">
+      <Label layoutX="515.0" layoutY="391.0" text="Product Designer &amp;&#10;Gym Prof Logo:" textFill="WHITE" AnchorPane.topAnchor="391.0">
          <font>
             <Font name="Georgia" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="535.0" layoutY="445.0" text="Product Designer &amp;&#10;Gym Prof Logo:" textFill="WHITE" AnchorPane.topAnchor="400.0">
+      <Label layoutX="530.0" layoutY="531.0" text="Dr. Samantha Keehn" textFill="WHITE" AnchorPane.topAnchor="531.0">
          <font>
-            <Font name="Georgia" size="48.0" />
+            <Font name="Georgia" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="564.0" layoutY="595.0" text="Dr. Samantha Keehn" textFill="WHITE" AnchorPane.topAnchor="550.0">
+      <Label layoutX="939.0" layoutY="200.0" text="Third-Party Java &#10;Libraries:" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="200.0">
          <font>
             <Font name="Georgia" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="980.0" layoutY="217.0" text="Third-Party Java &#10;Libraries:" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="200.0">
+      <Label layoutX="996.0" layoutY="317.0" prefHeight="347.0" prefWidth="231.0" text="GSON&#10;&#10;OpenJFX&#10;&#10;OpenCSV&#10;&#10;JUnit&#10;&#10;ControlsFX" textFill="WHITE" AnchorPane.topAnchor="317.0">
          <font>
-            <Font name="Georgia" size="48.0" />
-         </font>
-      </Label>
-      <Label layoutX="1039.0" layoutY="339.0" prefHeight="246.0" prefWidth="312.0" text="GSON&#10;OpenJFX&#10;OpenCSV&#10;JUnit&#10;ControlsFX&#10;" textFill="WHITE" AnchorPane.topAnchor="320.0">
-         <font>
-            <Font name="Georgia" size="36.0" />
+            <Font name="Georgia" size="30.0" />
          </font>
       </Label>
    </children>

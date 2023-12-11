@@ -49,7 +49,7 @@ public class ParseLessonPlanPrinting {
 
     private Font eventTitleTemplate = new Font("Times New Roman Bold", 15);
 
-    double landscapeHeightScale = 1.25;
+    double landscapeHeightScale = 1.6;
 
     double portraitHeightScale = 1.75;
 
@@ -388,10 +388,10 @@ public class ParseLessonPlanPrinting {
     private void addEquipment(double equipmentHeightScale, TextFlow equipmentTF, VBox dummyBox, Group dummyRoot, Pane currentPane, VBox pageContents) {
         List<String> equipmentList = App.getCurrentLessonPlan().getEquipmentFromMap(eventToCardsMap);
         if (equipmentList != null && (!(equipmentList.isEmpty()))) {
-            String equipmentSentence = "EQUIPMENT: \n" + equipmentList.get(0);
-            String equipmentString = "Equipment: \n" + "   *" + equipmentList.get(0);
+            String equipmentSentence = "  EQUIPMENT: \n" + equipmentList.get(0);
+            String equipmentString = "  Equipment: \n" + "   *" + equipmentList.get(0);
             for (int x = 1; x < equipmentList.size(); x++) {
-                equipmentString = equipmentString + "\n   *" + equipmentList.get(x);
+                equipmentString = equipmentString + "\n     *" + equipmentList.get(x);
                 equipmentSentence = equipmentSentence + ", " + equipmentList.get(x);
             }
 
