@@ -1,31 +1,25 @@
 package edu.augustana.ui;
 
-import java.io.IOException;
+
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import edu.augustana.App;
 import edu.augustana.model.Card;
 import edu.augustana.model.ParseLessonPlanPrinting;
 import edu.augustana.model.PrintStaging;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.print.*;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
-import javafx.scene.text.Font;
-import javafx.stage.Screen;
 import javafx.stage.Window;
+
+
+/**
+ * Controls the print preview screen
+ */
 
 public class PrintPreviewController {
 

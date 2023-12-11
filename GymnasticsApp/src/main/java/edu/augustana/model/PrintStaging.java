@@ -1,24 +1,18 @@
 package edu.augustana.model;
-import edu.augustana.ui.CardView;
-import javafx.fxml.FXML;
+
 import javafx.print.*;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
-
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import static java.awt.SystemColor.window;
+/**
+ * Class utilized for staging information and pages for the print preview and the physical process of printing.
+ */
 
 public class PrintStaging {
     private static String past_fxml;

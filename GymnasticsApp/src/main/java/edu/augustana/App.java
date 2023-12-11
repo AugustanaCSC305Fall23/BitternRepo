@@ -31,6 +31,12 @@ public class App extends Application {
     // Used https://genuinecoder.com/javafx-get-screen-size-of-all-connected-monitors/
     // to help figure out how to get the dimensions of the screen.
     // Used https://stackoverflow.com/questions/68768778/javafx-button-hover-effect for adding stylesheet
+
+    /**
+     * Starts the application.
+     *
+     * @param stage - the stage javafx object in which the UI components are held.
+     */
     @Override
     public void start(Stage stage) {
         try {
@@ -51,6 +57,11 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Changes the screen from one fxml file to another.
+     *
+     * @param fxml - the title of the fxml file in which the screen will change to.
+     */
     public static void setRoot(String fxml) {
         try {
             scene.setRoot(loadFXML(fxml));
@@ -85,12 +96,16 @@ public class App extends Application {
         return recentFilesManager;
     }
 
-    public static void setRecentFilesManager(RecentFilesManager recentFilesManager) { App.recentFilesManager = recentFilesManager; }
 
     public static void main(String[] args) {
         launch();
     }
 
+    /**
+     * Pops a warning up on the screen with the given message.
+     *
+     * @param message - the message that the warning pertains to.
+     */
     public static void giveWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");

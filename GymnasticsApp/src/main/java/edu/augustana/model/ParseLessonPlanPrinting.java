@@ -1,6 +1,3 @@
-// Throughout the creation of this class, I heavily utilized https://coderanch.com/t/709329/java/JavaFX-approach-dividing-text-blob
-// and this class is based off of one of the classes shown on this website
-
 package edu.augustana.model;
 
 import edu.augustana.App;
@@ -26,6 +23,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Screen;
 
+/**
+ * Class utilized for parsing through a lesson plan and creating the required pages for the given lesson plan.
+ * Throughout the creation of this class, I heavily utilized https://coderanch.com/t/709329/java/JavaFX-approach-dividing-text-blob
+ * and this class is based off of one of the classes shown on this website
+ */
 
 public class ParseLessonPlanPrinting {
 
