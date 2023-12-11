@@ -5,7 +5,7 @@ import edu.augustana.model.Card;
 import java.util.List;
 
 public class GenderFilter implements CardFilter {
-    private List<String> genderFilterList;
+    private final List<String> genderFilterList;
 
     public GenderFilter(List<String> genderFilterList) {
         this.genderFilterList = genderFilterList;

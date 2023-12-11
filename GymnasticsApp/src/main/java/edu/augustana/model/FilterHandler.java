@@ -6,40 +6,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilterHandler {
-    public CardFilter getCombinedFilter(List<String> searchTermList, List<String> checkedEvents, List<String> checkedGenders, List<String> checkedLevels, List<String> checkedModelSexes) {
+
+    /**
+     * Creates a combined filter with all the different types of filters
+     * @param searchTermList - the list of terms to search for
+     * @param checkedEvents - the list of desired events to filter for
+     * @param checkedGenders - the list of desired genders to filter for
+     * @param checkedLevels - the list of desired levels to filter for
+     * @param checkedModelGenders - the list of desired model genders to filter for
+     * @return the combined filter
+     */
+    public CardFilter getCombinedFilter(List<String> searchTermList, List<String> checkedEvents, List<String> checkedGenders, List<String> checkedLevels, List<String> checkedModelGenders) {
         CardFilter searchFilter = new SearchFilter(searchTermList);
         CardFilter eventFilter = new EventFilter(checkForTramp(checkedEvents));
         CardFilter genderFilter = new GenderFilter(convertGenderWordsToCharacters(checkedGenders));
         CardFilter levelFilter = new LevelFilter(convertLevelWordsToKeys(checkedLevels));
-        CardFilter modelSexFilter = new ModelGenderFilter(convertGenderWordsToCharacters(checkedModelSexes));
+        CardFilter modelSexFilter = new ModelGenderFilter(convertGenderWordsToCharacters(checkedModelGenders));
         return new CombinedAndFilter(searchFilter, eventFilter, genderFilter, levelFilter, modelSexFilter);
     }
 
-    public List<String> checkForTramp(List<String> checkedEventFilters){
+    // Checks to see if trampoline is a desired filter
+    private List<String> checkForTramp(List<String> checkedEventFilters){
         List<String> matchingCSVEvents = new ArrayList<>();
-        for(int i = 0; i < checkedEventFilters.size(); i++){
-            if(checkedEventFilters.get(i).equals("Trampoline")){
+        for (String checkedEventFilter : checkedEventFilters) {
+            if (checkedEventFilter.equals("Trampoline")) {
                 matchingCSVEvents.add("Tramp");
-            }else matchingCSVEvents.add(checkedEventFilters.get(i));
+            } else matchingCSVEvents.add(checkedEventFilter);
         }
         return matchingCSVEvents;
     }
-    public List<String> convertLevelWordsToKeys(List<String> checkedLevelFilters){
+
+    // Converts the words Beginner, Advanced Beginner, Intermediate, and Advanced into
+    // B, AB, I, and A so that they match the data in the CSV file
+    private List<String> convertLevelWordsToKeys(List<String> checkedLevelFilters){
         List<String> matchingLevelKey = new ArrayList<>();
-        for (int i = 0; i < checkedLevelFilters.size(); i++){
-            if (checkedLevelFilters.get(i).equals("Beginner")){
+        for (String checkedLevelFilter : checkedLevelFilters) {
+            if (checkedLevelFilter.equals("Beginner")) {
                 matchingLevelKey.add("B");
-            }else if(checkedLevelFilters.get(i).equals("Advanced Beginner")){
+            } else if (checkedLevelFilter.equals("Advanced Beginner")) {
                 matchingLevelKey.add("AB");
-            }else if(checkedLevelFilters.get(i).equals("Intermediate")){
+            } else if (checkedLevelFilter.equals("Intermediate")) {
                 matchingLevelKey.add("I");
-            }else{
+            } else {
                 matchingLevelKey.add("A");
             }
         }
         return matchingLevelKey;
     }
 
+    /**
+     * Converts the letter abbreviations A, AB, I, and B into their equivalent level words:
+     * Advanced, Advanced Beginner, Intermediate, and Beginner, for use when searching
+     * @param cardLevels - the String containing the card level abbreviations
+     * @return a list of the card levels in words
+     */
     public List<String> convertLevelKeysToWords(String cardLevels) {
         String[] cardLevelSymbols;
         if (cardLevels.contains(",")) {
@@ -67,12 +87,12 @@ public class FilterHandler {
     }
 
     // Used to change "Male", "Female", and "Neutral" to "M", "F", and "N" so it matches the data in the csv file
-    public List<String> convertGenderWordsToCharacters(List<String> checkedFilters) {
+    private List<String> convertGenderWordsToCharacters(List<String> checkedFilters) {
         List<String> shorterFilterList = new ArrayList<>();
-        for (int i = 0; i < checkedFilters.size(); i++) {
-            if (checkedFilters.get(i).equals("Boy")) {
+        for (String checkedFilter : checkedFilters) {
+            if (checkedFilter.equals("Boy")) {
                 shorterFilterList.add("M");
-            } else if (checkedFilters.get(i).equals("Girl")) {
+            } else if (checkedFilter.equals("Girl")) {
                 shorterFilterList.add("F");
             } else {
                 shorterFilterList.add("N");

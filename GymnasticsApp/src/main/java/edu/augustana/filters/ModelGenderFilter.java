@@ -5,14 +5,14 @@ import edu.augustana.model.Card;
 import java.util.List;
 
 public class ModelGenderFilter implements CardFilter {
-    private List<String> modelSexFilterList;
+    private final List<String> modelGenderFilterList;
 
-    public ModelGenderFilter(List<String> modelSexFilterList) {
-        this.modelSexFilterList = modelSexFilterList;
+    public ModelGenderFilter(List<String> modelGenderFilterList) {
+        this.modelGenderFilterList = modelGenderFilterList;
     }
 
     @Override
     public boolean matchesFilters(Card card){
-        return modelSexFilterList.isEmpty() || modelSexFilterList.contains(card.getModelSex());
+        return modelGenderFilterList.isEmpty() || modelGenderFilterList.contains(card.getModelSex());
     }
 }

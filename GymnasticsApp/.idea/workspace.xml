@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e47ccf3-b53f-4e24-b8a8-27e701724220" name="Changes" comment="">
+    <list default="true" id="d4800175-f8ca-4479-b106-6e9ee956c097" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/Card.java" afterDir="false" />
@@ -15,6 +15,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/RecentFilesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/RecentFilesManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/UndoRedoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/UndoRedoHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/AboutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/AboutController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CardBrowserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/CourseViewController.java" afterDir="false" />
 =======
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/model/FavoriteCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/model/FavoriteCards.java" afterDir="false" />
@@ -24,6 +25,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/HomeScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/HomeScreenController.java" afterDir="false" />
 >>>>>>> threading
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/TreeViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/augustana/ui/TreeViewManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +38,7 @@
 <<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "main"
+    "git-widget-placeholder": "Merging main"
   }
 }]]></component>
 =======
