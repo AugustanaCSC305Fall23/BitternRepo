@@ -17,6 +17,11 @@ import java.util.ListIterator;
 
 public class TreeViewManager {
     private LessonPlan lessonPlan;
+
+    /**
+     * Sets the lesson plan of the tree view
+     * @param lessonPlan - LessonPlan the TreeView is displaying
+     */
     public TreeViewManager(LessonPlan lessonPlan){
         this.lessonPlan = lessonPlan;
     }
@@ -84,7 +89,7 @@ public class TreeViewManager {
      * Changes the heading displayed in the TreeView to what the user entered and makes that change in the
      * lesson plan itself
      * @param newHeading String of the user-entered heading
-     * @param headingToEdit Category containing the heading to be changed
+     * @param headingToEdit EventSubcategory containing the heading to be changed
      * @param root of the treeview
      */
     public void setHeadingInTreeView(String newHeading, EventSubcategory headingToEdit, TreeItem<String> root){
@@ -93,9 +98,9 @@ public class TreeViewManager {
     }
 
     /**
-     * Adds changes the order of the categories from the controller
-     * in the controller and the lesson plan's indexed map
-     * @param selectedEvent Category to be moved
+     * Changes the order of the categories in a lesson plan
+     * and has that change be reflected in the lesson plan's TreeView
+     * @param selectedEvent EventSubcategory to be moved
      * @param direction int to move the event (-1 for up and 1 for down)
      * @param root of tree view
      */
@@ -106,6 +111,15 @@ public class TreeViewManager {
         return root;
     }
 
+    /**
+     * Changes the order of the cards in a selected EventSubcategory and
+     * reflects that change in the TreeView for that lesson plan
+     * @param event EventSubcategory the card is in
+     * @param selectedCardID a String of the card's uniqueId
+     * @param direction int (-1 for up and 1 for down)
+     * @param root TreeItem of the TreeView
+     * @return updated root
+     */
     public TreeItem<String> moveCard(EventSubcategory event, String selectedCardID, int direction, TreeItem<String> root){
         int index = event.getCardIDList().indexOf(selectedCardID);
         lessonPlan.getLessonPlanIndexedMap().moveCardByOne(direction, index, event);

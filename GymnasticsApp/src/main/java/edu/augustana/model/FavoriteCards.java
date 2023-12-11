@@ -40,10 +40,9 @@ public class FavoriteCards {
     }
 
     /**
-     *
+     * adds the card's uniqueID to the favoriteCards file
+     * and creates a cardView of the card
      * @param card to be added to list of favorite cards
-     *             adds the card's uniqueID to the favoriteCards file
-     *             creates a cardView of the card
      * @throws IOException if the favoriteCards file is not found
      */
     public void addFavorite(Card card) throws IOException {
@@ -57,7 +56,9 @@ public class FavoriteCards {
     }
 
     /**
-     * @param card being removed from a list of favorite cards
+     * Removes a card from the list of favorite cards and rewrites
+     * the file with the updated list of favorite cards
+     * @param card Card being removed
      * @throws IOException if favoriteCards file is not found
      */
     public void deleteFavorite(Card card) throws IOException {
@@ -68,17 +69,14 @@ public class FavoriteCards {
     }
 
     /**
-     * @param cardView to be removed from list of favorites
+     * Removes the CardView from the list of CardViews of cards
+     * that have been favorited
+     * @param cardView CardView to be removed
      */
     public void removeFavoriteCardView(CardView cardView){
         favoritesCardView.remove(cardView);
     }
 
-    /**
-     * Clears the favorite cards file and rewrite the favorite cards list
-     * after the card to be deleted has been removed from it
-     * @throws IOException if the favoriteCards file is not found
-     */
     private void reWriteFavoritesFile() throws IOException {
         FileWriter fileWriter = new FileWriter(favCardsFile, false);
         fileWriter.flush();
@@ -89,6 +87,7 @@ public class FavoriteCards {
         }
         reWriter.close();
     }
+
     public List<Card> getFavoriteCardsList(){
         return favoriteCards;
     }

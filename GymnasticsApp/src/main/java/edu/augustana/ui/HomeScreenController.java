@@ -19,6 +19,9 @@ public class HomeScreenController {
 
     @FXML private ImageView logoView = new ImageView();
 
+    /**
+     * Adds the logo onto the screen when opened
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         String logoURL = null;
@@ -31,17 +34,25 @@ public class HomeScreenController {
         logoView.setEffect(new DropShadow(5, Color.BLACK));
     }
 
-    @FXML
-    void exitApp() {
+    /**
+     * Exits the app when the exit button is pushed
+     */
+    @FXML void exitApp() {
         Platform.exit();
     }
-    @FXML
-    private void browseCardsHandler() {
+    /**
+     * Switched to the card_browser.fxml when the "Browse all cards" button is pushed
+     */
+    @FXML private void browseCardsHandler() {
         App.setRoot("card_browser");
     }
 
-    @FXML
-    private void openCourseEditorAndCreator() {
+    /**
+     * Creates a new course if there is not a course currently being worked on
+     * and switches to course_view.fxml when the "Open course editor/creator" button
+     * is pushed
+     */
+    @FXML private void openCourseEditorAndCreator() {
         if (App.getCurrentCourse() == null) {
             App.setCurrentCourse(new Course());
         }
