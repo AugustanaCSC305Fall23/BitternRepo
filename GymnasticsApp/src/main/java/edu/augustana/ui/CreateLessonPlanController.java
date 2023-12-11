@@ -331,8 +331,6 @@ public class CreateLessonPlanController {
                 cardView.setEffect(null);
             }
             undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
-            System.out.println("undo stack after add: " + undoRedoHandler.getUndoStack());
-            System.out.println();
             selectedCards.clear();
             disableButtons();
             lessonTitleField.deselect();
