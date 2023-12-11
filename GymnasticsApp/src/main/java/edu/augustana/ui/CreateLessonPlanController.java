@@ -456,6 +456,9 @@ public class CreateLessonPlanController {
         printSetupVBox.setVisible(false);
     }
 
+    /**
+     * Action for when the "All Cards" tab is clicked
+     */
     @FXML
     void switchToAllCards() {
         if(!(favoriteCardsTab == null)){
@@ -603,19 +606,13 @@ public class CreateLessonPlanController {
 
     //why is this so hard
     private void moveCardHandler(String event, String cardDisplayTitle, String currentSubheading){
-        System.out.println("hi");
         Card card = CardDatabase.getFullCardCollection().getCardByID(App.getCurrentLessonPlan().getIDFromDisplayTitle(cardDisplayTitle));
         if(!currentSubheading.equals(event)){
             for (ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext(); ) {
                 EventSubcategory subcategory = it.next();
                 if (subcategory.getEventHeading().equals(currentSubheading)) {
-                    for (String cardID : subcategory.getCardIDList()) {
-                        if (card.equals(CardDatabase.getFullCardCollection().getCardByID(cardID))) {
-                            subcategory.getCardIDList().remove(cardID);
-                        }
-                    }
+                    subcategory.getCardIDList().remove(card.getUniqueID());
                 }
-                treeViewManager.removeFromTreeView(root);
             }
             for(ListIterator<EventSubcategory> it = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator(); it.hasNext();){
                 EventSubcategory subcategory = it.next();
