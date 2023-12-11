@@ -9,7 +9,6 @@ import java.util.Optional;
 import edu.augustana.App;
 import edu.augustana.model.*;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -20,6 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Window;
 
+/**
+ * Controls the Course View screen
+ */
 public class CourseViewController {
 
     @FXML private ListView<LessonPlan> courseListView = new ListView<>();
@@ -50,7 +52,11 @@ public class CourseViewController {
     private List<Button> buttonsList = new ArrayList<>();
     private UndoRedoHandler undoRedoHandler;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * This method is called by the FXMLLoader when initialization is complete. Sets up
+     * many of the controls.
+     */
+    @FXML
     void initialize() {
         courseListView.setOnMouseClicked(this::checkNumClicks);
         courseListView.selectionModelProperty().addListener((obs,oldVal,newVal) -> checkIfItemSelected());
@@ -83,6 +89,9 @@ public class CourseViewController {
         lessonPlanTreeView.setEditable(false);
     }
 
+    /**
+     * Goes to the home screen
+     */
     @FXML void goToHome() {
         App.setRoot("home");
     }
@@ -144,6 +153,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Deselects the selected lesson plan
+     */
     @FXML void deselectLessonPlan() {
         courseModel.setSelectedLessonPlan(null);
         courseListView.getSelectionModel().clearSelection();
@@ -152,6 +164,9 @@ public class CourseViewController {
         checkIfItemSelected();
     }
 
+    /**
+     * Creates a new course
+     */
     @FXML void createNewCourseHandler() {
         courseModel.createNewCourse();
         courseListView.getItems().clear();
@@ -160,6 +175,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Opens a file and displays the course from that file
+     */
     @FXML void openCourseHandler() {
         Window mainWindow = courseListView.getScene().getWindow();
         if (courseModel.openCourseFromFiles(mainWindow)) {
@@ -173,6 +191,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Saves the course to its file
+     */
     @FXML void saveCourseHandler() {
         try {
             courseModel.saveCourse();
@@ -181,6 +202,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Saves the course to a new file
+     */
     @FXML void saveCourseAsHandler() {
         Window mainWindow = courseListView.getScene().getWindow();
         try {
@@ -192,6 +216,9 @@ public class CourseViewController {
         setUpRecentFilesMenu();
     }
 
+    /**
+     * Creates a new lesson plan in the course
+     */
     @FXML void createLessonPlanHandler() {
         LessonPlan lessonPlan = App.getCurrentCourse().createNewLessonPlan();
         App.setCurrentLessonPlan(lessonPlan);
@@ -213,10 +240,16 @@ public class CourseViewController {
         setUpRecentFilesMenu();
     }
 
+    /**
+     * Opens the about menu
+     */
     @FXML private void aboutMenuHandler() {
         App.setRoot("about_menu");
     }
 
+    /**
+     * Closes the application
+     */
     @FXML void exitHandler() {
         Platform.exit();
     }
@@ -237,6 +270,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Opens the selected lesson plan in the lesson plan creator
+     */
     @FXML void editLessonPlanHandler() {
         LessonPlan lessonPlanToEdit = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToEdit != null) {
@@ -247,6 +283,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Removes the selected lesson plan from the course
+     */
     @FXML void removeLessonPlanHandler() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Are you sure you want to delete this lesson plan?");
@@ -273,6 +312,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Duplicates the selected lesson plan in the course
+     */
     @FXML void duplicateLessonPlanHandler() {
         LessonPlan lessonPlanToDuplicate = courseListView.getSelectionModel().getSelectedItem();
         if (lessonPlanToDuplicate != null) {
@@ -285,6 +327,9 @@ public class CourseViewController {
         }
     }
 
+    /**
+     * Opens the selected lesson plan in the print preview
+     */
     @FXML void printLessonPlanHandler() {
         if (courseListView.getSelectionModel().getSelectedItem() != null) {
             for (Node child : printSetupVBox.getChildren()) {
@@ -307,6 +352,9 @@ public class CourseViewController {
         noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
     }
 
+    /**
+     * Prompts the user to choose what settings they want before print
+     */
     @FXML void setUpPrint() {
         LessonPlan lessonPlanToPrint = courseListView.getSelectionModel().getSelectedItem();
         Map<String, List<Card>> eventToCardMap = lessonPlanToPrint.getMapOfCardsFromID(lessonPlanToPrint.getLessonPlanIndexedMap());
@@ -347,23 +395,31 @@ public class CourseViewController {
         App.setRoot("print_preview");
     }
 
+    /**
+     * Closes the print settings prompt screen
+     */
     @FXML void cancelPrint() {
         printSetupVBox.setVisible(false);
     }
 
-
+    /**
+     * Undoes the previous change to the course
+     */
     @FXML void undo() {
         undoRedoHandler.undo(App.getCurrentCourse());
         courseListView.getItems().clear();
         addLessonsToCourseList();
     }
 
+    /**
+     * Reverts the previous undo
+     */
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentCourse());
         courseListView.getItems().clear();
         addLessonsToCourseList();
     }
-    public void moveLessonPlan(int direction){
+    private void moveLessonPlan(int direction){
         if (App.getCurrentCourse().getLessonPlanList().size() > 1) {
             LessonPlan lessonPlan = courseListView.getSelectionModel().getSelectedItem();
             int index = App.getCurrentCourse().getLessonPlanList().indexOf(lessonPlan);
