@@ -5,7 +5,7 @@ import edu.augustana.model.Card;
 import java.util.List;
 
 public class EventFilter implements CardFilter {
-    private List<String> eventFilterList;
+    private final List<String> eventFilterList;
 
     public EventFilter(List<String> eventFilterList) {
         this.eventFilterList = eventFilterList;

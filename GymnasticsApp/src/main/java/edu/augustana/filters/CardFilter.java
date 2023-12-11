@@ -3,6 +3,7 @@ package edu.augustana.filters;
 import edu.augustana.model.Card;
 
 public interface CardFilter {
-    public boolean matchesFilters(Card card);
-    //public void resetDesiredFiltersList();
+
+    // Determines if a card matches the desired filters
+    boolean matchesFilters(Card card);
 }

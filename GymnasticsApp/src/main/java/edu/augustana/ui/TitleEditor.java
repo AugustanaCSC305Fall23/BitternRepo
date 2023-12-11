@@ -1,9 +1,6 @@
 package edu.augustana.ui;
 
 import edu.augustana.App;
-import edu.augustana.model.UndoRedoHandler;
-import edu.augustana.model.Undoable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
@@ -21,6 +18,11 @@ public class TitleEditor {
        this.courseOrLessonPlan = courseOrLessonPlan;
     }
 
+    /**
+     * Sets the on action events for the title field, so that when the mouse is clicked on
+     * the title field it becomes editable, and when the Enter key is pressed the text that the user
+     * has typed is locked in
+     */
     public void initializeTitleFieldEvents() {
         titleField.setOnMouseClicked(e -> editTitle());
         titleField.setOnKeyPressed(e -> {
@@ -30,6 +32,11 @@ public class TitleEditor {
         });
     }
 
+    /**
+     * Set the text of the title field to be the prompt text if the current lesson plan
+     * or current course is untitled. Otherwise, sets the text to be the current lesson plan title
+     * or current course, depending on if the user is in the lesson plan creator or the course view
+     */
     public void setTitleFieldText() {
         if (courseOrLessonPlan == 'L' && !App.getCurrentLessonPlan().getTitle().equals("Untitled")) {
             displayActualTitle();
@@ -40,6 +47,7 @@ public class TitleEditor {
         }
     }
 
+    // Sets the title field to be editable
     private void editTitle() {
         titleField.setFont(editingFont);
         titleField.setEditable(true);
@@ -48,6 +56,11 @@ public class TitleEditor {
         }
     }
 
+    /**
+     * Sets the current lesson plan title or current course title, depending what screen the
+     * user is currently on, to be the text typed in the text field. Sets the text field to not be editable.
+     * Gives a warning if the user tries to enter an empty title.
+      */
     private void lockInTitle() {
         titleField.setFont(titleFont);
         if (titleField.getText().isEmpty()) {
@@ -57,7 +70,7 @@ public class TitleEditor {
             } else if (courseOrLessonPlan == 'C') {
                 App.getCurrentCourse().setTitle("Untitled");
             }
-            giveWarning("Cannot have empty title.");
+            App.giveWarning("Cannot have empty title.");
         } else {
             if (courseOrLessonPlan == 'L') {
                 App.getCurrentLessonPlan().setTitle(titleField.getText());
@@ -68,6 +81,7 @@ public class TitleEditor {
         titleField.setEditable(false);
     }
 
+    // Displays the title of the lesson plan or course in the text field
     private void displayActualTitle() {
         if (courseOrLessonPlan == 'L') {
             titleField.setText(App.getCurrentLessonPlan().getTitle());
@@ -78,16 +92,10 @@ public class TitleEditor {
         titleField.setFont(titleFont);
     }
 
+    // Displays the prompt text in the text field for when the current title is Untitled
     private void displayPromptText() {
         titleField.setText(titleField.getPromptText());
         titleField.setStyle("-fx-text-fill: lightGray;" + "-fx-background-color: transparent");
         titleField.setFont(new Font("System Italic", titleFont.getSize()));
-    }
-
-    private void giveWarning(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

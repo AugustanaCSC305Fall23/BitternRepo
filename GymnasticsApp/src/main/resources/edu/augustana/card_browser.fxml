@@ -191,7 +191,7 @@
             <Font size="32.0" />
          </font>
       </TextField>
-      <Button fx:id="printCardBtn" alignment="CENTER" mnemonicParsing="false" onAction="#printSelectedCards" style="-fx-background-color: #6a99cb;" text="Print" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <Button fx:id="printCardBtn" alignment="CENTER" mnemonicParsing="false" onAction="#printSelectedCards" styleClass="card-browser-button" text="Print" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="Georgia" size="25.0" />
          </font>
