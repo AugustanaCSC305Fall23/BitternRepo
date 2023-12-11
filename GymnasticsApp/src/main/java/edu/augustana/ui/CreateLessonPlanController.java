@@ -113,8 +113,7 @@ public class CreateLessonPlanController {
     private TitleEditor titleEditor;
     private final FilterHandler filterHandler = new FilterHandler();
 
-    @FXML
-    private void initialize() {
+    @FXML private void initialize() {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
         //and https://stackoverflow.com/questions/46336643/javafx-how-to-add-itmes-in-checkcombobox
         eventsHBox.setVisible(false);
@@ -198,6 +197,11 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * Makes the image of the card being hovered over enlarged and
+     * displays the equipment that card requires
+     * @param cardView being hovered over
+     */
     @FXML void zoomInOnImage(CardView cardView) {
         try {
             zoomedInCard.setImage(cardView.getCard().getImage());
@@ -222,6 +226,10 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * Sets the vBox where the image was enlarged in no
+     * longer visible
+     */
     @FXML void exitZoomedView() {
         zoomedInCardVBox.setVisible(false);
         for (Node child : lessonOutlinePane.getChildren()) {
@@ -229,6 +237,9 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * Switches back to course_view.fxml when "Back" button is pushed
+     */
     @FXML void returnToCourseHandler() {
         App.setRoot("course_view");
     }
@@ -298,6 +309,10 @@ public class CreateLessonPlanController {
         cardView.setOnMouseClicked(this::checkNumClicks);
     }
 
+    /**
+     * Unselects any selected item in the filter dropdowns
+     * and redraws the CardViews to include the rest of the cards
+     */
     @FXML void clearFiltersAction() {
         for (CardView cardView : cardViewList) {
             cardView.setVisible(true);
@@ -318,12 +333,23 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * When the enter button gets pressed from the search bar,
+     * the displayed cards will be filtered by what is in the search bar
+     * @param event key pressed
+     */
     @FXML void searchAction(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             updateFilteredVisibleCards();
         }
     }
 
+    /**
+     * Checks to see if a card has been selected and checks to see if it
+     * has not already been added and if both of those conditions are met then
+     * the card will be added to the lesson plan and that change will be reflected
+     * in the lesson plan TreeView
+     */
     @FXML void addCardsToLessonPlan() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
@@ -338,6 +364,12 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * When the "Add to favorites" button gets pressed, it checks to see that any card
+     * has been selected and if cards were selected, making sure that it is not already
+     * a favorite card, if both of those conditions are true, then it will add it to
+     * FavoriteCards
+     */
     @FXML void addCardsToFavorites() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
@@ -458,6 +490,9 @@ public class CreateLessonPlanController {
         printSetupVBox.setVisible(false);
     }
 
+    /**
+     * Action for when the "All Cards" tab is clicked
+     */
     @FXML
     void switchToAllCards() {
         if(!(favoriteCardsTab == null)){
@@ -593,7 +628,6 @@ public class CreateLessonPlanController {
             moveCardPromptVBox.setVisible(true);
         }
     }
-
     private void setUpSubheadingDropdown() {
         subheadingDropdown.getItems().clear();
         ListIterator<EventSubcategory> iterator = App.getCurrentLessonPlan().getLessonPlanIndexedMap().listIterator();

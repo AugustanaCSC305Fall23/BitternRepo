@@ -8,41 +8,61 @@ public class IndexedMap implements Cloneable{
     public IndexedMap(){
 
     }
-    public IndexedMap(EventSubcategory eventSubcategory){
-        eventSubcategoryList.add(eventSubcategory);
-    }
+
     public List<EventSubcategory> getEventSubcategoryList(){
         return eventSubcategoryList;
     }
+
+    /**
+     * Returns the number of elements in the list
+     * @return number of elements in the list
+     */
     public int size(){
         return eventSubcategoryList.size();
     }
+
+    /**
+     * Looks to see if the list is empty
+     * @return true if the list is empty and false otherwise
+     */
     public boolean isEmpty(){
         return eventSubcategoryList.isEmpty();
     }
+
+    /**
+     * Adds an EventSubcategory onto the end of the list of
+     * EventSubcategories in this map
+     * @param eventSubcategory EventSubcategory to add to the list
+     */
     public void addEventSubcategory(EventSubcategory eventSubcategory) {
         eventSubcategoryList.add(eventSubcategory);
     }
 
-    public void addEventSubcategory(String eventHeading, String cardID){
-        for(int i = 0; i < eventSubcategoryList.size(); i++){
-            if(eventSubcategoryList.get(i).getEventHeading().equalsIgnoreCase(eventHeading)){
-                eventSubcategoryList.get(i).addCardIDToList(cardID);
-            }
-        }
-    }
-
+    /**
+     * Removes a given EventSubcategory if the element is there and
+     * if it is not in the list then the list remains how it is
+     * @param o EventSubcategory to be removed
+     */
     public void remove(EventSubcategory o) {
         eventSubcategoryList.remove(o);
     }
 
-    public void clear() {
-        eventSubcategoryList.clear();
-    }
-
+    /**
+     * Returns the EventSubcategory at a given position in the list
+     * @param index of the element to return
+     * @return the EventSubcategory at that index
+     */
     public EventSubcategory getEventAtIndex(int index) {
         return eventSubcategoryList.get(index);
     }
+
+    /**
+     * Checks to see if any of the EventSubcategories in the list
+     * have a given heading
+     * @param heading to be looked for
+     * @return true if one of the EventSubcategories has the heading
+     * and false otherwise
+     */
     public Boolean contains(String heading){
         for(int i = 0; i < eventSubcategoryList.size(); i++){
             if(eventSubcategoryList.get(i).getEventHeading().equalsIgnoreCase(heading)){
@@ -51,6 +71,13 @@ public class IndexedMap implements Cloneable{
         }
         return false;
     }
+
+    /**
+     * Returns the position of an EventSubcategory with a given
+     * heading
+     * @param category heading of the given EventSubcategory
+     * @return the index of a specific EventSubcategory by its heading
+     */
     public int getDirection(String category){
         for(int i = 0; i < eventSubcategoryList.size(); i++){
             if(eventSubcategoryList.get(i).getEventHeading().equals(category)){
@@ -60,35 +87,30 @@ public class IndexedMap implements Cloneable{
         return -1;
     }
 
-    public EventSubcategory set(int index, EventSubcategory element) {
-        return eventSubcategoryList.set(index, element);
-    }
-
-    public void addEventSubcategory(int index, EventSubcategory element) {
-        eventSubcategoryList.add(index, element);
-    }
-
-    public int indexOf(EventSubcategory eventSubcategory) {
-        for(int i = 0; i < eventSubcategoryList.size(); i++){
-            if(eventSubcategoryList.get(i).equals(eventSubcategory)){
-                return i;
-            }
-        }
-        return -1;
-    }
-
+    /**
+     * Returns a list iterator over the EventSubcategories in this list
+     * @return list iterator over the EventSubcategories in this list
+     */
     public ListIterator<EventSubcategory> listIterator() {
         return eventSubcategoryList.listIterator();
     }
 
-    public List<EventSubcategory> subList(int fromIndex, int toIndex) {
-        return eventSubcategoryList.subList(fromIndex, toIndex);
-    }
+    /**
+     * Moves the card up or down 1 in the EventSubcategory it currently is in
+     * @param direction for the card to be moved (-1 for up and 1 for down)
+     * @param index of the card in the EventSubcategory
+     * @param subcategory EventSubcategory the card is in
+     */
     public void moveCardByOne(int direction, int index, EventSubcategory subcategory){
         subcategory.moveCardByOne(direction, index);
     }
+
+    /**
+     * Moves a given EventSubcategory up or down by 1
+     * @param direction for the event to be moved (-1 for up and 1 for down)
+     * @param index of the EventSubcategory to be moved
+     */
     public void moveEventByOne(int direction, int index){
-        //moves by one index for each call to method
         if (direction + index >= 0 && direction + index < eventSubcategoryList.size()) {
             EventSubcategory temp = eventSubcategoryList.get(direction + index);
             eventSubcategoryList.set(direction + index, eventSubcategoryList.get(index));
@@ -117,7 +139,6 @@ public class IndexedMap implements Cloneable{
             for (EventSubcategory eventSubcategory : eventSubcategoryList) {
                 clone.addEventSubcategory(eventSubcategory.clone());
             }
-            //clone.indexedMap = new ArrayList<>(clone.indexedMap);
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

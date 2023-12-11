@@ -25,7 +25,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#deselectLessonPlan" prefHeight="800.0" prefWidth="1400.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#deselectLessonPlan" prefHeight="800.0" prefWidth="1400.0" styleClass="dark-blue" stylesheets="@mainStylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ui.CourseViewController">
    <children>
       <TextField fx:id="courseTitleField" alignment="CENTER" editable="false" promptText="(Enter Course Title)" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -40,7 +40,7 @@
          </tooltip></TextField>
       <Button fx:id="homeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#goToHome" text="Home" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
-            <Font size="23.0" />
+            <Font name="Georgia" size="23.0" />
          </font>
          <tooltip>
             <Tooltip text="Return to home screen">

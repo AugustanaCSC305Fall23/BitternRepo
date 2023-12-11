@@ -11,6 +11,13 @@ import java.util.ArrayList;
 public class EventSubcategory implements Cloneable {
     private String eventHeading;
     private List<String> cardIDList = new ArrayList<>(); //a list of the card IDs in the heading
+
+    /**
+     * Makes an EventSubheading object setting the heading and
+     * adding the card's unique ID to the
+     * @param heading String - the name of the subcategory
+     * @param cardID String - the UniqueID of the card
+     */
     public EventSubcategory(String heading, String cardID){
         eventHeading = heading;
         cardIDList.add(cardID);
@@ -19,6 +26,11 @@ public class EventSubcategory implements Cloneable {
         return cardIDList;
     }
 
+    /**
+     * Adds the uniqueID of the card to the end of the list of card ID's
+     * @param cardId String - unique ID of the card to be added
+     *               to the subcategory
+     */
     public void addCardIDToList(String cardId){
         cardIDList.add(cardId);
     }
@@ -30,9 +42,13 @@ public class EventSubcategory implements Cloneable {
     public String getEventHeading(){
         return eventHeading;
     }
-    public void setCardIDList(List<String> IDList){
-        cardIDList.addAll(IDList);
-    }
+
+    /**
+     * Moves a card by its unique ID higher or lower by one in
+     * the list of card ID's
+     * @param direction int (-1 for up and 1 for down)
+     * @param index of the card's unique ID in the list
+     */
     public void moveCardByOne(int direction, int index){
         if (direction + index >= 0 && direction + index < cardIDList.size()) {
             String temp = cardIDList.get(direction + index);
@@ -41,6 +57,12 @@ public class EventSubcategory implements Cloneable {
         }
     }
 
+    /**
+     * Checks if a given card's uniqueID is in the list of card ID's for
+     * this specific EventSubcategory
+     * @param cardID String - uniqueID of a card to be checked
+     * @return true if the ID is in the list and false otherwise
+     */
     public boolean containsCardID(String cardID){
         for(String id : cardIDList){
             if(cardID.equalsIgnoreCase(id)){
