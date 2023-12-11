@@ -152,7 +152,7 @@ public class PrintStaging {
             pagePane.setStyle("-fx-background-color: white");
             if (landscapeDisplay) {
                 // "Rotates" pagination so that it is in landscape mode
-                pagePane.setPrefHeight(pgLayout.getPrintableWidth() * 1.25);
+                pagePane.setPrefHeight(pgLayout.getPrintableWidth() * 1.6);
                 pagePane.setPrefWidth(pgLayout.getPrintableHeight() * 1.75);
                 box.getChildren().add(pagePane);
             } else {
