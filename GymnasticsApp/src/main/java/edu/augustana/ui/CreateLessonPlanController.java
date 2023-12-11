@@ -35,6 +35,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.*;
 
+/**
+ * Controls the Lesson Plan Editor screen.
+ */
+
 public class CreateLessonPlanController {
 
     // dropdowns
@@ -112,6 +116,10 @@ public class CreateLessonPlanController {
     private final UndoRedoHandler undoRedoHandler = new UndoRedoHandler(App.getCurrentLessonPlan());;
     private TitleEditor titleEditor;
     private final FilterHandler filterHandler = new FilterHandler();
+
+    /**
+     * Initializes the UI for the lesson plan controller.
+     */
 
     @FXML private void initialize() {
         //https://stackoverflow.com/questions/26186572/selecting-multiple-items-from-combobox
@@ -388,6 +396,10 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * Takes the selected card and removes it from the favorites section.
+     */
+
     @FXML void removeFavoriteAction() {
         if (!selectedCards.isEmpty()) {
             for (CardView cardView : selectedCards) {
@@ -406,6 +418,10 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * Takes the selected card from the lesson plan outline and removes it from the outline.
+     */
+
     @FXML void removeCardFromLessonPlan() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem() != null) {
             String cardToRemove = (lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue());
@@ -415,17 +431,29 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * Undoes the most recent action from the TreeView (lesson plan outline).
+     */
+
     @FXML void undo() {
         undoRedoHandler.undo(App.getCurrentLessonPlan());
         setUpTreeView();
         //titleEditor.setTitleFieldText();
     }
 
+    /**
+     * Redoes the most recent undo.
+     */
+
     @FXML void redo() {
         undoRedoHandler.redo(App.getCurrentLessonPlan());
         setUpTreeView();
         //titleEditor.setTitleFieldText();
     }
+
+    /**
+     * Displays the menu screen for the printing function when you click "Print".
+     */
 
     @FXML
     void printLessonPlanHandler() {
@@ -447,6 +475,11 @@ public class CreateLessonPlanController {
         yesEquipmentCheckbox.setOnAction(e -> noEquipmentCheckbox.setSelected(false));
         noEquipmentCheckbox.setOnAction(e -> yesEquipmentCheckbox.setSelected(false));
     }
+
+    /**
+     * Sets up the process for showing the print preview. Represented by the "OK" button in the
+     * printLessonPlanHandler menu.
+     */
 
     @FXML void setUpPrint() {
         Map<String, List<Card>> eventToCardMap = App.getCurrentLessonPlan().getMapOfCardsFromID(App.getCurrentLessonPlan().getLessonPlanIndexedMap());
@@ -486,13 +519,18 @@ public class CreateLessonPlanController {
         App.setRoot("print_preview");
     }
 
+    /**
+     * Represents the "Cancel" button in the printLessonPlanHandler menu.
+     */
+
     @FXML void cancelPrint() {
         printSetupVBox.setVisible(false);
     }
 
     /**
-     * Action for when the "All Cards" tab is clicked
+     * Action for when the "All Cards" tab is clicked.
      */
+
     @FXML
     void switchToAllCards() {
         if(!(favoriteCardsTab == null)){
@@ -500,6 +538,10 @@ public class CreateLessonPlanController {
         }
         allCardsTab.getContent().setVisible(true);
     }
+
+    /**
+     * Action for when the "Favorite Cards" tab is clicked.
+     */
 
     @FXML
     void switchToFavoriteCards() {
@@ -574,6 +616,10 @@ public class CreateLessonPlanController {
         arrow.setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * Deselects the item from the lesson plan outline (TreeView).
+     */
+
     @FXML void deselectTreeViewItem() {
         if (!lessonPlanTreeView.getSelectionModel().isEmpty()) {
             lessonPlanTreeView.getSelectionModel().clearSelection();
@@ -581,11 +627,19 @@ public class CreateLessonPlanController {
         treeViewItemSelectedAction();
     }
 
+    /**
+     * Opens the prompt to edit the selected event subheading.
+     */
+
     @FXML private void editEventHeadingAction() {
         editEventHeadingTextField.clear();
         editSubheadingVBox.setVisible(true);
         editEventHeadingTextField.setVisible(true);
     }
+
+    /**
+     * Finalizes and add the new event subheading.
+     */
 
     @FXML private void setEventHeadingAction() {
         String eventToChange = lessonPlanTreeView.getSelectionModel().getSelectedItem().getValue();
@@ -593,6 +647,10 @@ public class CreateLessonPlanController {
         treeViewManager.setHeadingInTreeView(editEventHeadingTextField.getText(), eventSubcategory, root);
         editSubheadingVBox.setVisible(false);
     }
+
+    /**
+     * Cancels the creation of a custom note.
+     */
 
     @FXML private void cancelAction() {
         editSubheadingVBox.setVisible(false);
@@ -621,6 +679,10 @@ public class CreateLessonPlanController {
         }
     }
 
+    /**
+     * Shows the list of available subheadings which you can choose to put a card in.
+     */
+
     @FXML void promptMoveCard() {
         if (lessonPlanTreeView.getSelectionModel().getSelectedItem().isLeaf()){
             lessonPlanTreeView.setEffect(new BoxBlur());
@@ -639,6 +701,10 @@ public class CreateLessonPlanController {
             }
         }
     }
+
+    /**
+     * Moves the card from one event to a different one within the lesson plan.
+     */
 
     @FXML void moveCardHandler(){
         lessonPlanTreeView.setEffect(null);
@@ -669,6 +735,10 @@ public class CreateLessonPlanController {
         undoRedoHandler.saveState(App.getCurrentLessonPlan().clone());
     }
 
+    /**
+     * Opens the custom note editor.
+     */
+
     @FXML void enterCustomNoteHandler() {
         enterCustomNoteVBox.setVisible(true);
         if (App.getCurrentLessonPlan().getCustomNote() != null) {
@@ -679,6 +749,10 @@ public class CreateLessonPlanController {
             customNoteTextArea.setText(null);
         }
     }
+
+    /**
+     * Adds the custom note and modifies the UI accordingly.
+     */
 
     @FXML void confirmCustomNoteAction() {
         App.getCurrentLessonPlan().setCustomNote(customNoteTextArea.getText());
